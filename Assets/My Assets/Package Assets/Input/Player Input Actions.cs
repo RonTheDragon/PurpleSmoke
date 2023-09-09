@@ -44,6 +44,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""1037fadd-fae2-4164-8800-6d86023cce39"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""b9ee0caa-ad3c-4830-8f7c-6bbb85bbea5b"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""5f327589-d415-4e11-bacd-e8a18e4eebf6"",
+                    ""path"": ""<Mouse>/delta/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""345bd35c-6031-4643-b7d2-5e299597bbc2"",
+                    ""path"": ""<Mouse>/delta/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f970b209-6b5c-4af1-b268-c92740fbb61e"",
+                    ""path"": ""<Mouse>/delta/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""19f488d9-f01d-4aa0-af41-6d9bb0067bcc"",
+                    ""path"": ""<Mouse>/delta/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -122,6 +186,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Walk = m_Player.FindAction("Walk", throwIfNotFound: true);
+        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,12 +250,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Walk;
+    private readonly InputAction m_Player_Look;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Walk => m_Wrapper.m_Player_Walk;
+        public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -206,6 +273,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -216,6 +286,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -237,5 +310,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnJump(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
     }
 }
