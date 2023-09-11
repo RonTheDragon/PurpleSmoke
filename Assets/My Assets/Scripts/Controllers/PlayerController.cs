@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private PlayerLook _playerLook => GetComponent<PlayerLook>();
     private PlayerJump _playerJump => GetComponent<PlayerJump>();
     private PlayerGravity _playerGravity => GetComponent<PlayerGravity>();
+    private PlayerGroundCheck _playerGroundCheck => GetComponent<PlayerGroundCheck>();
 
     private void Start()
     {
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         _playerJump.SetPlayerController(this);
         _playerGravity.SetPlayerController(this);
         _playerLook.SetPlayerController(this);
+        _playerGroundCheck.SetPlayerController(this);
     }
 
     public void HideMouse()
@@ -64,6 +66,11 @@ public class PlayerController : MonoBehaviour
     public Transform GetCameraHolder()
     {
         return _cameraHolder;
+    }
+
+    public PlayerGroundCheck GetPlayerGroundCheck()
+    {
+        return _playerGroundCheck;
     }
 
     public void Jump(InputAction.CallbackContext context)

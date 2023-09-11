@@ -6,15 +6,15 @@ using UnityEngine;
 public class PlayerJump : PlayerMovement
 {
     private PlayerGravity _gravity;
+    private PlayerGroundCheck _groundCheck;
     [SerializeField] private float _jumpPower = 10.0f;
     [SerializeField] private float _loseJumpPowerMult = 1f;
-    [SerializeField] private LayerMask _jumpableLayer;
+    
     private float _currentJumpForce;
 
     [SerializeField] private float _fallWhenReachVelocity = 1f;
 
-    [SerializeField] private Vector3 GroundedPosition = Vector3.down;
-    [SerializeField] private Vector3 GroundedSize = Vector3.one;
+    
 
     private void Update()
     {
@@ -25,6 +25,7 @@ public class PlayerJump : PlayerMovement
     {
         base.SetPlayerController(controller);
         _gravity = controller.GetPlayerGravity();
+        _groundCheck = controller.GetPlayerGroundCheck();
     }
 
     private void TryToMoveUpwards()
@@ -59,7 +60,7 @@ public class PlayerJump : PlayerMovement
 
     public void TryToInitiateJump()
     {
-        if (IsGrounded())
+        if (_groundCheck.IsGrounded())
         {
             InitiateJump();
         }
@@ -71,14 +72,7 @@ public class PlayerJump : PlayerMovement
         _currentJumpForce = _jumpPower;
     }
 
-    private bool IsGrounded()
-    {
-        if (Physics.CheckBox(transform.position+ GroundedPosition, GroundedSize, quaternion.identity, _jumpableLayer))
-        {
-            return true;
-        }
-        return false;
-    }
+    
 
     private bool IsJumping()
     {
@@ -89,16 +83,5 @@ public class PlayerJump : PlayerMovement
         return false;
     }
 
-    private void OnDrawGizmos()
-    {
-        if (IsGrounded())
-        {
-            Gizmos.color = Color.green;
-        }
-        else
-        {
-            Gizmos.color= Color.red;
-        }
-        Gizmos.DrawCube(transform.position + GroundedPosition, GroundedSize);
-    }
+    
 }

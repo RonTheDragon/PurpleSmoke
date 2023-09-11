@@ -3,11 +3,25 @@ using UnityEngine;
 public class PlayerGravity : PlayerMovement
 {
     [SerializeField] private float _gravityPower = 1.0f;
-    private float _currentFallingSpeed = 0f;
+    private PlayerGroundCheck _groundCheck;
+    [ReadOnly][SerializeField] private float _currentFallingSpeed = 0f;
     private bool _bCanFall = true;
     private void Update()
     {
         TryFalling();
+    }
+
+    public override void SetPlayerController(PlayerController controller)
+    {
+        base.SetPlayerController(controller);
+        _groundCheck = controller.GetPlayerGroundCheck();
+        _groundCheck.OnGroundCheckChange += (b) =>
+        {
+            if (b == false)
+            {
+                ResetFall();
+            }
+        };
     }
 
     private void TryFalling()
@@ -21,22 +35,16 @@ public class PlayerGravity : PlayerMovement
 
     private bool IsFalling()
     {
-        bool Falling = false;
         if (_bCanFall)
         {
-            Falling=true;
+            return true;
         }
-        return Falling;
+        return false;
     }
 
     public void SetCanFall(bool new_bCanFall)
     {
         _bCanFall = new_bCanFall;
-    }
-
-    public void ResetFall()
-    {
-        _currentFallingSpeed = 0;
     }
 
     private void FallDown()
@@ -47,5 +55,9 @@ public class PlayerGravity : PlayerMovement
     private void IncreaseFallingSpeed()
     {
         _currentFallingSpeed += _gravityPower * Time.deltaTime;
+    }
+    public void ResetFall()
+    {
+        _currentFallingSpeed = 0;
     }
 }
