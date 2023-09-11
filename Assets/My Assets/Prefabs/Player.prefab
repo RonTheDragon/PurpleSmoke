@@ -70,19 +70,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3003871278305401989}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: Jump
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 3c7a2090-de10-43dc-b0e2-3e4dca24286e
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
@@ -124,7 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f77f977ec35c711408ceb916170c0ae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSpeed: 10
+  _currentSpeed: 0
+  _walkingSpeed: 10
+  _airMovementSpeed: 1
   _currentTurnSpeed: 0.1
 --- !u!114 &667451998946173399
 MonoBehaviour:
@@ -141,6 +131,7 @@ MonoBehaviour:
   _jumpPower: 10
   _loseJumpPowerMult: 3
   _fallWhenReachVelocity: 1
+  _doubleJump: 0
 --- !u!114 &1102558573159325040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gravityPower: 20
+  _currentFallingSpeed: 0
 --- !u!143 &5965372218068205818
 CharacterController:
   m_ObjectHideFlags: 0
@@ -208,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GroundedPosition: {x: 0, y: -1, z: 0}
-  GroundedSize: {x: 1, y: 1, z: 1}
+  GroundedSize: {x: 1, y: 0.1, z: 1}
   _jumpableLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -684,6 +676,7 @@ GameObject:
   - component: {fileID: 6858586117724133060}
   - component: {fileID: 5015452363077729401}
   - component: {fileID: 1238948084909794765}
+  - component: {fileID: 5098889762688221674}
   m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
@@ -755,6 +748,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1238948084909794765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5295539644992041386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5098889762688221674
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

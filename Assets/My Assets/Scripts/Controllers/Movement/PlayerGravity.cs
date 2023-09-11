@@ -15,13 +15,7 @@ public class PlayerGravity : PlayerMovement
     {
         base.SetPlayerController(controller);
         _groundCheck = controller.GetPlayerGroundCheck();
-        _groundCheck.OnGroundCheckChange += (b) =>
-        {
-            if (b == false)
-            {
-                ResetFall();
-            }
-        };
+        _groundCheck.OnGroundCheckChange += (b) => { ResetFall(); };
     }
 
     private void TryFalling()
@@ -29,13 +23,13 @@ public class PlayerGravity : PlayerMovement
         if (IsFalling())
         {
             FallDown();
-            IncreaseFallingSpeed();
+            IncreaseFallingSpeed();   
         }
     }
 
     private bool IsFalling()
     {
-        if (_bCanFall)
+        if (_bCanFall && !_groundCheck.IsGrounded())
         {
             return true;
         }

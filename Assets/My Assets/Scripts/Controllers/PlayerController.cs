@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     {
         _actions = new PlayerInputActions();
         _actions.Enable();
+        _actions.Player.Jump.performed += Jump;
     }
 
     private void InitializePlayerMovements()
@@ -75,12 +76,18 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        _playerJump.TryToInitiateJump();
+        _playerJump.TryToInitiateJump(_actions.Player.Walk.ReadValue<Vector2>());
     }
 
     private void Update()
     {
         _playerWalk.Walk(_actions.Player.Walk.ReadValue<Vector2>());
         _playerLook.Look(_actions.Player.Look.ReadValue<Vector2>());
+    }
+
+    public void StopCharacterController()
+    {
+        _characterController.enabled = false;
+        _characterController.enabled = true;
     }
 }

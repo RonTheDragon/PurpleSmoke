@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class PlayerWalk : PlayerMovement
 {
-    [SerializeField] private float _movementSpeed;
+    [ReadOnly][SerializeField] private float _currentSpeed;
+    [SerializeField] private float _walkingSpeed;
+    [SerializeField] private float _airMovementSpeed;
     [SerializeField] private float _currentTurnSpeed = 0.1f;
 
     private Transform _playerBody;
     private Camera _camera;
     private float _currentTurnVelocity;
+    private PlayerGroundCheck _groundCheck;
 
     private Vector2 _normalizedDirection;
     private float _targetAngle;
@@ -19,6 +22,9 @@ public class PlayerWalk : PlayerMovement
         base.SetPlayerController(controller);
         _playerBody = controller.GetPlayerBody();
         _camera = controller.GetCamera();
+        _groundCheck = controller.GetPlayerGroundCheck();
+        _groundCheck.OnGroundCheckChange += ChangeSpeedToAir;
+        _currentSpeed = _walkingSpeed;
     }
 
     public void Walk(Vector2 direction)
@@ -47,6 +53,19 @@ public class PlayerWalk : PlayerMovement
     private void MovePlayer()
     {
         _moveDirection = Quaternion.Euler(0, _targetAngle, 0) * Vector3.forward;
-        _characterController.Move(_moveDirection * _movementSpeed * Time.deltaTime);
+        _characterController.Move(_moveDirection * _currentSpeed * Time.deltaTime);
     }
+
+    private void ChangeSpeedToAir(bool ground)
+    {
+        if (ground)
+        {
+            _currentSpeed = _walkingSpeed;
+        }
+        else
+        {
+            _currentSpeed = _airMovementSpeed;
+        }
+    }
+
 }
