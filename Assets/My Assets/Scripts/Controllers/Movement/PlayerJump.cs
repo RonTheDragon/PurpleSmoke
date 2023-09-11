@@ -138,5 +138,9 @@ public class PlayerJump : PlayerMovement
         }
     }
 
+    public bool CanGlide()
+    {
+        return !_doubleJump;
+    }
     
 }
