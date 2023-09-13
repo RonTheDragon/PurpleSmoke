@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
-public class PlayerJump : PlayerComponent
+public class PlayerJump : MonoBehaviour, IPlayerComponent
 {
     private PlayerGravity _gravity;
     private PlayerGroundCheck _groundCheck;
     private Camera _camera;
+    private CharacterController _characterController;
+
     [SerializeField] private float _jumpPower = 10.0f;
     [SerializeField] private float _loseJumpPowerMult = 1f;
     [SerializeField] private float _jumpMovementPower = 5;
@@ -24,18 +23,19 @@ public class PlayerJump : PlayerComponent
 
     
 
-    private void Update()
+    private void PlayerUpdate()
     {
         TryToMoveUpwards();
     }
 
-    public override void SetPlayerComponents(PlayerComponentsRefrences controller)
+    public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        base.SetPlayerComponents(controller);
-        _gravity = controller.GetPlayerGravity();
-        _camera = controller.GetCamera();
-        _groundCheck = controller.GetPlayerGroundCheck();
+        _characterController = playerComponents.GetCharacterController();
+        _gravity = playerComponents.GetPlayerGravity();
+        _camera = playerComponents.GetCamera();
+        _groundCheck = playerComponents.GetPlayerGroundCheck();
         _groundCheck.OnGroundCheckChange += ResetDoubleJump;
+        playerComponents.OnUpdate += PlayerUpdate;
     }
 
     private void TryToMoveUpwards()
@@ -97,10 +97,16 @@ public class PlayerJump : PlayerComponent
 
     private void InitiateJump() 
     {
-        _playerComponents.StopCharacterController();
+        StopCharacterController();
         _gravity.SetCanFall(false);
         _currentJumpForce = _jumpPower;
         HandleJumpMovement();
+    }
+
+    private void StopCharacterController()
+    {
+        _characterController.enabled = false;
+        _characterController.enabled = true;
     }
 
     private void HandleJumpMovement()

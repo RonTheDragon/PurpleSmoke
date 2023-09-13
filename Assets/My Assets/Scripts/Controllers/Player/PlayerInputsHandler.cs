@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.LowLevel;
 
-public class PlayerInputsHandler : PlayerComponent
+public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
 {
     [SerializeField] private PlayerInput _playerInput;
     private PlayerInputActions _actions;
@@ -14,12 +11,12 @@ public class PlayerInputsHandler : PlayerComponent
     private PlayerJump _playerJump;
 
 
-    public override void SetPlayerComponents(PlayerComponentsRefrences playerComponents)
+    public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        base.SetPlayerComponents(playerComponents);
         _playerWalk = playerComponents.GetPlayerWalk();
         _playerJump = playerComponents.GetPlayerJump();
         _playerLook = playerComponents.GetPlayerLook();
+        playerComponents.OnUpdate += PlayerUpdate;
 
         InitializeInputActions();
         HideMouse();
@@ -38,7 +35,7 @@ public class PlayerInputsHandler : PlayerComponent
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void Update()
+    private void PlayerUpdate()
     {
         _playerWalk.Walk(_actions.Player.Walk.ReadValue<Vector2>());
         _playerLook.Look(_actions.Player.Look.ReadValue<Vector2>());

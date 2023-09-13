@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class PlayerWalk : PlayerComponent
+public class PlayerWalk : MonoBehaviour,IPlayerComponent
 {
     [ReadOnly][SerializeField] private float _currentSpeed;
     [SerializeField] private float _walkingSpeed;
     [SerializeField] private float _airMovementSpeed;
     [SerializeField] private float _currentTurnSpeed = 0.1f;
 
+    private CharacterController _characterController;
     private Transform _playerBody;
     private Camera _camera;
     private float _currentTurnVelocity;
@@ -17,9 +18,9 @@ public class PlayerWalk : PlayerComponent
     private float _angle;
     private Vector3 _moveDirection;
 
-    public override void SetPlayerComponents(PlayerComponentsRefrences playerComponents)
+    public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        base.SetPlayerComponents(playerComponents);
+        _characterController = playerComponents.GetCharacterController();
         _playerBody = playerComponents.GetPlayerBody();
         _camera = playerComponents.GetCamera();
         _groundCheck = playerComponents.GetPlayerGroundCheck();

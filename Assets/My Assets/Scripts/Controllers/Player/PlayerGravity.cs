@@ -1,21 +1,23 @@
 using UnityEngine;
 
-public class PlayerGravity : PlayerComponent
+public class PlayerGravity : MonoBehaviour, IPlayerComponent
 {
+    private CharacterController _characterController;
     [SerializeField] private float _gravityPower = 1.0f;
     private PlayerGroundCheck _groundCheck;
     [ReadOnly][SerializeField] private float _currentFallingSpeed = 0f;
     private bool _bCanFall = true;
-    private void Update()
+    private void PlayerUpdate()
     {
         TryFalling();
     }
 
-    public override void SetPlayerComponents(PlayerComponentsRefrences controller)
+    public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        base.SetPlayerComponents(controller);
-        _groundCheck = controller.GetPlayerGroundCheck();
+        _characterController = playerComponents.GetCharacterController();
+        _groundCheck = playerComponents.GetPlayerGroundCheck();
         _groundCheck.OnGroundCheckChange += (b) => { ResetFall(); };
+        playerComponents.OnUpdate += PlayerUpdate;
     }
 
     private void TryFalling()

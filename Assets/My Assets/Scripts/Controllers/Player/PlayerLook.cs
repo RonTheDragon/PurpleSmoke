@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerLook : PlayerComponent
+public class PlayerLook : MonoBehaviour, IPlayerComponent
 {
     [SerializeField] private Vector2 _mouseSpeed;
     [SerializeField] private Vector2 _mouseClampY = new Vector2(-70, 70);
@@ -9,10 +9,9 @@ public class PlayerLook : PlayerComponent
     private Transform _cameraHolder;
     private Vector2 _currentRotation = Vector2.zero;
 
-    public override void SetPlayerComponents(PlayerComponentsRefrences controller)
+    public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        base.SetPlayerComponents(controller);
-        _cameraHolder = controller.GetCameraHolder();
+        _cameraHolder = playerComponents.GetCameraHolder();
     }
 
     public void Look(Vector2 direction)

@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerComponentsRefrences : MonoBehaviour
 {
@@ -14,20 +14,26 @@ public class PlayerComponentsRefrences : MonoBehaviour
     [SerializeField] private PlayerGravity _playerGravity;
     [SerializeField] private PlayerGroundCheck _playerGroundCheck;
 
+    public Action OnUpdate;
+
     private void Start()
     {
-        InitializePlayerMovements();
+        InitializePlayerComponents();
+    }
+
+    private void Update()
+    {
+        OnUpdate?.Invoke();
     }
 
 
-    private void InitializePlayerMovements()
+    private void InitializePlayerComponents()
     {
-        _playerInputsHandler.SetPlayerComponents(this);
-        _playerWalk.SetPlayerComponents(this);
-        _playerJump.SetPlayerComponents(this);
-        _playerGravity.SetPlayerComponents(this);
-        _playerLook.SetPlayerComponents(this);
-        _playerGroundCheck.SetPlayerComponents(this);
+        _playerInputsHandler.InitializePlayerComponent(this);
+        _playerWalk.InitializePlayerComponent(this);
+        _playerJump.InitializePlayerComponent(this);
+        _playerGravity.InitializePlayerComponent(this);
+        _playerLook.InitializePlayerComponent(this);
     }
 
     public PlayerWalk GetPlayerWalk() 
@@ -74,11 +80,4 @@ public class PlayerComponentsRefrences : MonoBehaviour
     {
         return _playerGroundCheck;
     }
-
-    public void StopCharacterController()
-    {
-        _characterController.enabled = false;
-        _characterController.enabled = true;
-    }
-
 }
