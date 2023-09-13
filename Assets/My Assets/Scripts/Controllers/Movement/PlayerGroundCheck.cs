@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGroundCheck : PlayerMovement
+public class PlayerGroundCheck : PlayerComponent
 {
     [SerializeField] private Vector3 GroundedPosition = Vector3.down;
     [SerializeField] private Vector3 GroundedSize = Vector3.one;

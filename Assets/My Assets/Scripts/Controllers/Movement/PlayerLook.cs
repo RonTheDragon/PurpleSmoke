@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerLook : PlayerMovement
+public class PlayerLook : PlayerComponent
 {
     [SerializeField] private Vector2 _mouseSpeed;
     [SerializeField] private Vector2 _mouseClampY = new Vector2(-70, 70);
@@ -9,9 +9,9 @@ public class PlayerLook : PlayerMovement
     private Transform _cameraHolder;
     private Vector2 _currentRotation = Vector2.zero;
 
-    public override void SetPlayerController(PlayerController controller)
+    public override void SetPlayerComponents(PlayerComponentsRefrences controller)
     {
-        base.SetPlayerController(controller);
+        base.SetPlayerComponents(controller);
         _cameraHolder = controller.GetCameraHolder();
     }
 

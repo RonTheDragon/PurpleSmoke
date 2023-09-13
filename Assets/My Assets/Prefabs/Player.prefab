@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5506798683940635889}
   - component: {fileID: 7521279796219193195}
   - component: {fileID: 3003871278305401989}
+  - component: {fileID: 2439321068840235667}
   - component: {fileID: 5862413937232983314}
   - component: {fileID: 667451998946173399}
   - component: {fileID: 1102558573159325040}
@@ -100,6 +101,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerBody: {fileID: 3871459752362251521}
   _cameraHolder: {fileID: 1877480264227317488}
+  _mainCamera: {fileID: 5310138974357565822}
+  _playerInputsHandler: {fileID: 2439321068840235667}
+  _characterController: {fileID: 5965372218068205818}
+  _playerWalk: {fileID: 5862413937232983314}
+  _playerLook: {fileID: 6294502965475875628}
+  _playerJump: {fileID: 667451998946173399}
+  _playerGravity: {fileID: 1102558573159325040}
+  _playerGroundCheck: {fileID: 6556491150215850704}
+--- !u!114 &2439321068840235667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914006205527094507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8b6bf4151335f4fa782060f6f951ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerInput: {fileID: 7521279796219193195}
 --- !u!114 &5862413937232983314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentSpeed: 0
   _walkingSpeed: 10
-  _airMovementSpeed: 1
+  _airMovementSpeed: 3
   _currentTurnSpeed: 0.1
 --- !u!114 &667451998946173399
 MonoBehaviour:
@@ -130,8 +152,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _jumpPower: 10
   _loseJumpPowerMult: 3
+  _jumpMovementPower: 10
   _fallWhenReachVelocity: 1
   _doubleJump: 0
+  _currentJumpMovement: {x: 0, y: 0}
 --- !u!114 &1102558573159325040
 MonoBehaviour:
   m_ObjectHideFlags: 0

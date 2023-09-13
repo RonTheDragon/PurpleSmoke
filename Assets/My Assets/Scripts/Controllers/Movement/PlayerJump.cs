@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class PlayerJump : PlayerMovement
+public class PlayerJump : PlayerComponent
 {
     private PlayerGravity _gravity;
     private PlayerGroundCheck _groundCheck;
@@ -29,9 +29,9 @@ public class PlayerJump : PlayerMovement
         TryToMoveUpwards();
     }
 
-    public override void SetPlayerController(PlayerController controller)
+    public override void SetPlayerComponents(PlayerComponentsRefrences controller)
     {
-        base.SetPlayerController(controller);
+        base.SetPlayerComponents(controller);
         _gravity = controller.GetPlayerGravity();
         _camera = controller.GetCamera();
         _groundCheck = controller.GetPlayerGroundCheck();
@@ -97,7 +97,7 @@ public class PlayerJump : PlayerMovement
 
     private void InitiateJump() 
     {
-        _playerController.StopCharacterController();
+        _playerComponents.StopCharacterController();
         _gravity.SetCanFall(false);
         _currentJumpForce = _jumpPower;
         HandleJumpMovement();

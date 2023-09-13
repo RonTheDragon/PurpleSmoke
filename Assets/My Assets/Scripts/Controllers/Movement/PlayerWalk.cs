@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerWalk : PlayerMovement
+public class PlayerWalk : PlayerComponent
 {
     [ReadOnly][SerializeField] private float _currentSpeed;
     [SerializeField] private float _walkingSpeed;
@@ -17,12 +17,12 @@ public class PlayerWalk : PlayerMovement
     private float _angle;
     private Vector3 _moveDirection;
 
-    public override void SetPlayerController(PlayerController controller)
+    public override void SetPlayerComponents(PlayerComponentsRefrences playerComponents)
     {
-        base.SetPlayerController(controller);
-        _playerBody = controller.GetPlayerBody();
-        _camera = controller.GetCamera();
-        _groundCheck = controller.GetPlayerGroundCheck();
+        base.SetPlayerComponents(playerComponents);
+        _playerBody = playerComponents.GetPlayerBody();
+        _camera = playerComponents.GetCamera();
+        _groundCheck = playerComponents.GetPlayerGroundCheck();
         _groundCheck.OnGroundCheckChange += ChangeSpeedToAir;
         _currentSpeed = _walkingSpeed;
     }

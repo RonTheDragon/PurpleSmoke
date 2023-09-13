@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerGravity : PlayerMovement
+public class PlayerGravity : PlayerComponent
 {
     [SerializeField] private float _gravityPower = 1.0f;
     private PlayerGroundCheck _groundCheck;
@@ -11,9 +11,9 @@ public class PlayerGravity : PlayerMovement
         TryFalling();
     }
 
-    public override void SetPlayerController(PlayerController controller)
+    public override void SetPlayerComponents(PlayerComponentsRefrences controller)
     {
-        base.SetPlayerController(controller);
+        base.SetPlayerComponents(controller);
         _groundCheck = controller.GetPlayerGroundCheck();
         _groundCheck.OnGroundCheckChange += (b) => { ResetFall(); };
     }
