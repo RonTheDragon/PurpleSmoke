@@ -9,6 +9,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private PlayerWalk _playerWalk;
     private PlayerLook _playerLook;
     private PlayerJump _playerJump;
+    private PlayerGlide _playerGlide;
 
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
@@ -16,6 +17,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerWalk = playerComponents.GetPlayerWalk();
         _playerJump = playerComponents.GetPlayerJump();
         _playerLook = playerComponents.GetPlayerLook();
+        _playerGlide = playerComponents.GetPlayerGlide();
         playerComponents.OnUpdate += PlayerUpdate;
 
         InitializeInputActions();
@@ -27,6 +29,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _actions = new PlayerInputActions();
         _actions.Enable();
         _actions.Player.Jump.performed += Jump;
+        _actions.Player.StopGlide.performed += StopGlide;
     }
 
     public void HideMouse()
@@ -44,5 +47,11 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     public void Jump(InputAction.CallbackContext context)
     {
         _playerJump.TryToInitiateJump(_actions.Player.Walk.ReadValue<Vector2>());
+        _playerGlide.GlideInput();
+    }
+
+    public void StopGlide(InputAction.CallbackContext context)
+    {
+        _playerGlide.StopGlideInput();
     }
 }

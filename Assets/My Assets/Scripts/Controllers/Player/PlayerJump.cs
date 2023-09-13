@@ -10,8 +10,11 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     [SerializeField] private float _jumpPower = 10.0f;
     [SerializeField] private float _loseJumpPowerMult = 1f;
     [SerializeField] private float _jumpMovementPower = 5;
+    [SerializeField] private float _jumpCooldown = 0.2f;
 
     private float _currentJumpForce;
+
+    private float _currentJumpCooldown;
 
     [SerializeField] private float _fallWhenReachVelocity = 1f;
 
@@ -26,6 +29,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     private void PlayerUpdate()
     {
         TryToMoveUpwards();
+        JumpCooldown();
     }
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
@@ -47,6 +51,14 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
             MoveSideways();
             LoseSidewaysVelocity();
             EndJumpAndFall();
+        }
+    }
+
+    private void JumpCooldown()
+    {
+        if (_currentJumpCooldown > 0)
+        {
+            _currentJumpCooldown -= Time.deltaTime;
         }
     }
 
@@ -81,17 +93,28 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
         }
     }
 
+    public void CancelJumpForGlide()
+    {
+        _currentJumpForce = 0;
+        _currentJumpMovement = Vector2.zero;
+        _gravity.ResetFall();
+        StopCharacterController();
+    }
+
     public void TryToInitiateJump(Vector2 movement)
     {
-        _jumpMovementInput = movement;
-        if (_groundCheck.IsGrounded())
+        if (_currentJumpCooldown <= 0)
         {
-            InitiateJump();
-        }
-        else if (_doubleJump)
-        {
-            InitiateJump();
-            _doubleJump= false;
+            _jumpMovementInput = movement;
+            if (_groundCheck.IsGrounded())
+            {
+                InitiateJump();
+            }
+            else if (_doubleJump)
+            {
+                InitiateJump();
+                _doubleJump = false;
+            }
         }
     }
 
@@ -101,6 +124,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
         _gravity.SetCanFall(false);
         _currentJumpForce = _jumpPower;
         HandleJumpMovement();
+        _currentJumpCooldown = _jumpCooldown;
     }
 
     private void StopCharacterController()
@@ -146,7 +170,10 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
 
     public bool CanGlide()
     {
-        return !_doubleJump;
+        if (_currentJumpCooldown <= 0 && !_doubleJump)
+        {
+            return true;
+        }
+        return false;
     }
-    
 }
