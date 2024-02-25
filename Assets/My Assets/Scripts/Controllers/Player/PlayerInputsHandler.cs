@@ -4,12 +4,14 @@ using UnityEngine.InputSystem;
 public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
 {
     [SerializeField] private PlayerInput _playerInput;
-    private PlayerInputActions _actions;
 
     private PlayerWalk _playerWalk;
     private PlayerLook _playerLook;
     private PlayerJump _playerJump;
     private PlayerGlide _playerGlide;
+
+    private Vector2 _movementInput = Vector2.zero;
+    private Vector2 _lookInput=Vector2.zero;
 
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
@@ -20,16 +22,13 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerGlide = playerComponents.GetPlayerGlide();
         playerComponents.OnUpdate += PlayerUpdate;
 
-        InitializeInputActions();
         HideMouse();
     }
 
-    private void InitializeInputActions()
+    private void PlayerUpdate()
     {
-        _actions = new PlayerInputActions();
-        _actions.Enable();
-        _actions.Player.Jump.performed += Jump;
-        _actions.Player.StopGlide.performed += StopGlide;
+        _playerWalk.Walk(_movementInput);
+        _playerLook.Look(_lookInput);
     }
 
     public void HideMouse()
@@ -38,20 +37,24 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void PlayerUpdate()
+    public void Walk(InputAction.CallbackContext context)
     {
-        _playerWalk.Walk(_actions.Player.Walk.ReadValue<Vector2>());
-        _playerLook.Look(_actions.Player.Look.ReadValue<Vector2>());
+        _movementInput = context.ReadValue<Vector2>();
+    }
+
+    public void Look(InputAction.CallbackContext context)
+    {
+        _lookInput = context.ReadValue<Vector2>();
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        _playerJump.TryToInitiateJump(_actions.Player.Walk.ReadValue<Vector2>());
-        _playerGlide.GlideInput();
+        _playerJump?.TryToInitiateJump(_movementInput);
+        _playerGlide?.GlideInput();
     }
 
     public void StopGlide(InputAction.CallbackContext context)
     {
-        _playerGlide.StopGlideInput();
+        _playerGlide?.StopGlideInput();
     }
 }
