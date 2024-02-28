@@ -726,7 +726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 5310138974357565822}
   _cinemachine: {fileID: 2864857502938737504}
-  _skinnedMeshRenderer: {fileID: 2760832792571164720}
+  _skinnedMeshRenderer: {fileID: 4909403118593040636}
 --- !u!1001 &5944763891058228654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1524,12 +1524,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 227619365230231732}
   m_SourcePrefab: {fileID: 100100000, guid: 455bcdb030424464d89abe9982baf431, type: 3}
---- !u!137 &2760832792571164720 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8417361359673230750, guid: 455bcdb030424464d89abe9982baf431,
-    type: 3}
-  m_PrefabInstance: {fileID: 5944763891058228654}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3685542352165388433 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7036213049465896255, guid: 455bcdb030424464d89abe9982baf431,
@@ -1557,6 +1551,12 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!137 &4909403118593040636 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1630794972795428178, guid: 455bcdb030424464d89abe9982baf431,
+    type: 3}
+  m_PrefabInstance: {fileID: 5944763891058228654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6127906223936592453 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 455bcdb030424464d89abe9982baf431,
