@@ -9,6 +9,7 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
     [SerializeField] private string _jumpTrigger;
     [SerializeField] private string _flipTrigger;
     [SerializeField] private string _groundedBool;
+    [SerializeField] private string _glideBool;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -28,6 +29,11 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
             _currentWalk = walkInt;
             _animator.SetInteger(_walkInt, walkInt);
         }
+    }
+
+    public void ChangeGlide(bool glide)
+    {
+        _animator.SetBool(_glideBool, glide);
     }
 
     public void Jump()

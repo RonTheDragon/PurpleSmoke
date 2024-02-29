@@ -9,12 +9,14 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
     private PlayerJump _playerJump;
     private PlayerGravity _playerGravity;
     private PlayerGroundCheck _playerGroundCheck;
+    private PlayerAnimations _playerAnimations;
     private bool _bIsGliding;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _characterController = playerComponents.GetCharacterController();
         _playerJump = playerComponents.GetPlayerJump();
         _playerGravity = playerComponents.GetPlayerGravity();
+        _playerAnimations = playerComponents.GetPlayerAnimations();
         _playerGroundCheck = playerComponents.GetPlayerGroundCheck();
         _playerGroundCheck.OnGroundCheckChange += (b) => StopGlide();
         playerComponents.OnUpdate += PlayerUpdate;
@@ -42,11 +44,13 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
         _playerJump.CancelJumpForGlide();
         _playerGravity.SetCanFall(false);
         _bIsGliding = true;
+        _playerAnimations.ChangeGlide(true);
     }
 
     private void StopGlide()
     {
         _bIsGliding = false;
+        _playerAnimations.ChangeGlide(false);
     }
 
     private void PlayerUpdate() 
@@ -54,6 +58,7 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
         if ( _bIsGliding )
         {
             _characterController.Move(new Vector3(0, -_glideDownSpeed, 0) * Time.deltaTime);
+            _playerGroundCheck.IsGrounded();
         }
     }
 }
