@@ -14,6 +14,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
     [SerializeField] private PlayerGravity _playerGravity;
     [SerializeField] private PlayerGroundCheck _playerGroundCheck;
     [SerializeField] private PlayerGlide _playerGlide;
+    [SerializeField] private PlayerAnimations _playerAnimations;
 
     public Action OnUpdate;
 
@@ -36,6 +37,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
         _playerGravity.InitializePlayerComponent(this);
         _playerLook.InitializePlayerComponent(this);
         _playerGlide.InitializePlayerComponent(this);
+        _playerAnimations.InitializePlayerComponent(this);
     }
 
     public PlayerWalk GetPlayerWalk() 
@@ -86,5 +88,10 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public PlayerGlide GetPlayerGlide()
     {
         return _playerGlide;
+    }
+
+    public PlayerAnimations GetPlayerAnimations()
+    {
+        return _playerAnimations;
     }
 }

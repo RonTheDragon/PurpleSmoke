@@ -51,10 +51,14 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     {
         _playerJump?.TryToInitiateJump(_movementInput);
         _playerGlide?.GlideInput();
-    }
 
-    public void StopGlide(InputAction.CallbackContext context)
-    {
-        _playerGlide?.StopGlideInput();
+        if (context.phase == InputActionPhase.Started)
+        {
+            _playerGlide?.GlideInput();
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            _playerGlide?.StopGlideInput();
+        }
     }
 }

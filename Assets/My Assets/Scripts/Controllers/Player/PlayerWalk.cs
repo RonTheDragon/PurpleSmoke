@@ -12,6 +12,7 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
     private Camera _camera;
     private float _currentTurnVelocity;
     private PlayerGroundCheck _groundCheck;
+    private PlayerAnimations _playerAnimations;
 
     private Vector2 _normalizedDirection;
     private float _targetAngle;
@@ -23,6 +24,7 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
         _characterController = playerComponents.GetCharacterController();
         _playerBody = playerComponents.GetPlayerBody();
         _camera = playerComponents.GetCamera();
+        _playerAnimations = playerComponents.GetPlayerAnimations();
         _groundCheck = playerComponents.GetPlayerGroundCheck();
         _groundCheck.OnGroundCheckChange += ChangeSpeedToAir;
         _currentSpeed = _walkingSpeed;
@@ -36,6 +38,11 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
             _targetAngle = CalculateTargetAngle();
             RotatePlayer();
             MovePlayer();
+            _playerAnimations.ChangeWalk(1);
+        }
+        else
+        {
+            _playerAnimations.ChangeWalk(0);
         }
     }
 

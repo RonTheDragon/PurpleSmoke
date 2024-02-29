@@ -6,6 +6,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     private PlayerGroundCheck _groundCheck;
     private Camera _camera;
     private CharacterController _characterController;
+    private PlayerAnimations _playerAnimations;
 
     [SerializeField] private float _jumpPower = 10.0f;
     [SerializeField] private float _loseJumpPowerMult = 1f;
@@ -37,6 +38,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
         _characterController = playerComponents.GetCharacterController();
         _gravity = playerComponents.GetPlayerGravity();
         _camera = playerComponents.GetCamera();
+        _playerAnimations = playerComponents.GetPlayerAnimations();
         _groundCheck = playerComponents.GetPlayerGroundCheck();
         _groundCheck.OnGroundCheckChange += ResetDoubleJump;
         playerComponents.OnUpdate += PlayerUpdate;
@@ -109,11 +111,13 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
             if (_groundCheck.IsGrounded())
             {
                 InitiateJump();
+                _playerAnimations.Jump();
             }
             else if (_doubleJump)
             {
                 InitiateJump();
                 _doubleJump = false;
+                _playerAnimations.Flip();
             }
         }
     }
