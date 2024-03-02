@@ -103,6 +103,8 @@ GameObject:
   - component: {fileID: 6556491150215850704}
   - component: {fileID: 6015236659870033800}
   - component: {fileID: 5241674498842026262}
+  - component: {fileID: 7210688926855583114}
+  - component: {fileID: 2377819672940888538}
   m_Layer: 10
   m_Name: PlayerBody
   m_TagString: Untagged
@@ -232,6 +234,8 @@ MonoBehaviour:
   _playerGroundCheck: {fileID: 6556491150215850704}
   _playerGlide: {fileID: 6015236659870033800}
   _playerAnimations: {fileID: 5241674498842026262}
+  _playerHealth: {fileID: 7210688926855583114}
+  _playerKnockback: {fileID: 2377819672940888538}
 --- !u!114 &5677476338889415264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +387,32 @@ MonoBehaviour:
   _flipTrigger: Flip
   _groundedBool: Grounded
   _glideBool: Glide
+--- !u!114 &7210688926855583114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914006205527094507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ac0e57481fb7d42a52c5fde3a9a02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _currentHealth: 0
+--- !u!114 &2377819672940888538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914006205527094507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d9c9dfd888992246834197c606566e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2864857502938737504
 GameObject:
   m_ObjectHideFlags: 0
