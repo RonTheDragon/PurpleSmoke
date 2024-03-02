@@ -61,4 +61,28 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
             _playerGlide?.StopGlideInput();
         }
     }
+
+    public void LightAttack(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+
+        }
+    }
+
+    public void HeavyAttack(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+
+        }
+    }
 }
