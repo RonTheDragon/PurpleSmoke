@@ -4,10 +4,12 @@ public class PlayerKnockback : MonoBehaviour, IPlayerComponent
 {
     private CharacterController _characterController;
     private Vector3 _knockbackVelocity;
+    private PlayerGravity _playerGravity;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _characterController = playerComponents.GetCharacterController();
+        _playerGravity = playerComponents.GetPlayerGravity();
         playerComponents.OnUpdate += PlayerUpdate;
     }
 

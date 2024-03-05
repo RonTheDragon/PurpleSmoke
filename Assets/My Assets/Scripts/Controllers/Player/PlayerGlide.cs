@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGlide : MonoBehaviour , IPlayerComponent
@@ -58,7 +56,6 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
         if ( _bIsGliding )
         {
             _characterController.Move(new Vector3(0, -_glideDownSpeed, 0) * Time.deltaTime);
-            _playerGroundCheck.IsGrounded();
         }
     }
 }

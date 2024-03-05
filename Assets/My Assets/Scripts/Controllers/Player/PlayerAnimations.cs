@@ -46,4 +46,9 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
     {
         _animator.SetTrigger(_flipTrigger);
     }
+
+    public void PlayAnimation(string animationName)
+    {
+        _animator.SetTrigger(animationName);
+    }
 }

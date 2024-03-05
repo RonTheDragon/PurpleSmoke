@@ -31,6 +31,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     {
         TryToMoveUpwards();
         JumpCooldown();
+        _groundCheck.IsGrounded();
     }
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)

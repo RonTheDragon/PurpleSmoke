@@ -9,6 +9,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private PlayerLook _playerLook;
     private PlayerJump _playerJump;
     private PlayerGlide _playerGlide;
+    private PlayerCombatSystem _playerCombatSystem;
 
     private Vector2 _movementInput = Vector2.zero;
     private Vector2 _lookInput=Vector2.zero;
@@ -20,6 +21,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerJump = playerComponents.GetPlayerJump();
         _playerLook = playerComponents.GetPlayerLook();
         _playerGlide = playerComponents.GetPlayerGlide();
+        _playerCombatSystem = playerComponents.GetPlayerCombatSystem();
         playerComponents.OnUpdate += PlayerUpdate;
 
         HideMouse();
@@ -66,11 +68,11 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     {
         if (context.phase == InputActionPhase.Started)
         {
-
+            _playerCombatSystem?.OnLightAttack();
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-
+            _playerCombatSystem?.OnReleaseLightAttack();
         }
     }
 
@@ -78,11 +80,11 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     {
         if (context.phase == InputActionPhase.Started)
         {
-
+            _playerCombatSystem?.OnHeavyAttack();
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-
+            _playerCombatSystem?.OnReleaseHeavyAttack();
         }
     }
 }
