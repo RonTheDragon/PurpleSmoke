@@ -261,3 +261,8 @@ MonoBehaviour:
     m_Bits: 1343
   - serializedVersion: 2
     m_Bits: 1599
+  _playerColors:
+  - {fileID: 2100000, guid: 3ea4b48da56b1a9449fc32d3cd411d37, type: 2}
+  - {fileID: 2100000, guid: 281ea59703407d54c86046d3a8387bf7, type: 2}
+  - {fileID: 2100000, guid: 1a3754e3c906e1248930907ca9be1616, type: 2}
+  - {fileID: 2100000, guid: e06ebe67db8f0eb448af871fd87bc1ed, type: 2}

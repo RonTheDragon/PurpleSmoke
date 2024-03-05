@@ -7,6 +7,7 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     private PlayerGroundCheck _groundCheck;
     [ReadOnly][SerializeField] private float _currentFallingSpeed = 0f;
     private bool _bCanFall = true;
+
     private void PlayerUpdate()
     {
         TryFalling();
@@ -25,7 +26,10 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
         if (IsFalling())
         {
             FallDown();
-            IncreaseFallingSpeed();   
+            if (IsActuallyFalling())
+            {
+                IncreaseFallingSpeed();
+            }  
         }
     }
 
@@ -52,6 +56,22 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     {
         _currentFallingSpeed += _gravityPower * Time.deltaTime;
     }
+
+    private bool IsActuallyFalling()
+    {
+        if (_currentFallingSpeed < 1) return true;
+
+        if (_characterController.velocity.y < 0f)
+        {
+            return true;
+        }
+        else //we stuck.
+        {
+            _currentFallingSpeed=1;
+            return false;
+        }
+    }
+
     public void ResetFall()
     {
         _currentFallingSpeed = 0;

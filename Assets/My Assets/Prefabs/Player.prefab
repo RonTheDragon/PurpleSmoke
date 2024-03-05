@@ -2367,23 +2367,23 @@ MonoBehaviour:
   _lightAttacks:
   - AnimationName: Unarmed1
     Damage: 10
-    Knockback: {x: 10, y: 0}
+    Knockback: {x: 10, y: 10}
     CastTime: 0.5
   - AnimationName: Unarmed1
     Damage: 10
-    Knockback: {x: 10, y: 0}
+    Knockback: {x: 10, y: 10}
     CastTime: 0.5
   - AnimationName: Unarmed1
     Damage: 10
-    Knockback: {x: 10, y: 0}
+    Knockback: {x: 10, y: 10}
     CastTime: 0.5
   - AnimationName: Unarmed1
     Damage: 10
-    Knockback: {x: 10, y: 0}
+    Knockback: {x: 10, y: 10}
     CastTime: 0.5
   - AnimationName: Unarmed1
     Damage: 10
-    Knockback: {x: 10, y: 0}
+    Knockback: {x: 10, y: 10}
     CastTime: 0.5
   _currentCombo: 0
   _comboBreakTime: 1

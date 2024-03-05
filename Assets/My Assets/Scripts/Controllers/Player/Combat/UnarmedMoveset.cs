@@ -13,7 +13,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     {
         base.MoveSetStart(playerCombatSystem);
         _playerAnimations = _playerCombatSystem.GetAnimations();
-        _triggerDamage.SetOwner(gameObject);
+        _triggerDamage.SetOwner(transform.parent.gameObject);
     }
 
     public override void MoveSetUpdate()
