@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 {
+    public Action<float> OnChargeChange;
+
     private CharacterController _controller;
     private PlayerGroundCheck _groundCheck;
     private PlayerAnimations _animations;
@@ -77,6 +80,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     public void SetChargePercentage(float charge)
     {
         _currentChargePercentage = charge;
+        OnChargeChange?.Invoke(charge);
     }
 
     public float GetChargePercentage()

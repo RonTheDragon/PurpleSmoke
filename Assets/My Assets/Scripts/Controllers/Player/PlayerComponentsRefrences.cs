@@ -18,6 +18,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private PlayerKnockback _playerKnockback;
     [SerializeField] private PlayerCombatSystem _playerCombatSystem;
+    [SerializeField] private PlayerUI _playerUI;
 
     public Action OnUpdate;
 
@@ -34,6 +35,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
 
     private void InitializePlayerComponents()
     {
+        _playerUI.InitializePlayerComponent(this);
         _playerInputsHandler.InitializePlayerComponent(this);
         _playerWalk.InitializePlayerComponent(this);
         _playerJump.InitializePlayerComponent(this);
@@ -109,5 +111,10 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public PlayerCombatSystem GetPlayerCombatSystem()
     {
         return _playerCombatSystem;
+    }
+
+    public PlayerHealth GetPlayerHealth()
+    {
+        return _playerHealth;
     }
 }
