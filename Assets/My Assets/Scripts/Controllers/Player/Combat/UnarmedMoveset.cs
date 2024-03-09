@@ -58,6 +58,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     {
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _comboTimeLeft = _comboBreakTime + attack.CastTime;
+        _castTimeLeft = attack.CastTime;
         _triggerDamage.SetDamage(attack.Damage, attack.Knockback);
     }
 
