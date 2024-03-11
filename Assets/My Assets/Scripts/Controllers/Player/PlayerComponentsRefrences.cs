@@ -17,6 +17,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
     [SerializeField] private PlayerAnimations _playerAnimations;
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private PlayerKnockback _playerKnockback;
+    [SerializeField] private PlayerAttackMovement _playerAttackMovement;
     [SerializeField] private PlayerCombatSystem _playerCombatSystem;
     [SerializeField] private PlayerUI _playerUI;
 
@@ -45,6 +46,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
         _playerAnimations.InitializePlayerComponent(this);
         _playerHealth.InitializePlayerComponent(this);
         _playerKnockback.InitializePlayerComponent(this);
+        _playerAttackMovement.InitializePlayerComponent(this);
         _playerCombatSystem.InitializePlayerComponent(this);
     }
 
@@ -116,5 +118,10 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public PlayerHealth GetPlayerHealth()
     {
         return _playerHealth;
+    }
+
+    public PlayerAttackMovement GetPlayerAttackMovement()
+    {
+        return _playerAttackMovement;
     }
 }

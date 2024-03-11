@@ -58,4 +58,9 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
             _characterController.Move(new Vector3(0, -_glideDownSpeed, 0) * Time.deltaTime);
         }
     }
+
+    public bool IsGliding()
+    {
+        return _bIsGliding;
+    }
 }

@@ -18,6 +18,8 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
     private float _targetAngle;
     private float _angle;
     private Vector3 _moveDirection;
+    private bool _canMove = true;
+    private Vector2 _movementInput;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -32,9 +34,12 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
 
     public void Walk(Vector2 direction)
     {
-        if (direction.magnitude > 0)
+        _movementInput = direction;
+        if (!_canMove) { return; }
+
+        if (IsGettingMovementInput())
         {
-            _normalizedDirection = direction.normalized;
+            _normalizedDirection = _movementInput.normalized;
             _targetAngle = CalculateTargetAngle();
             RotatePlayer();
             MovePlayer();
@@ -44,6 +49,11 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
         {
             _playerAnimations.ChangeWalk(0);
         }
+    }
+
+    public bool IsGettingMovementInput()
+    {
+        return _movementInput.magnitude > 0;
     }
 
     private float CalculateTargetAngle()
@@ -74,6 +84,11 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
         {
             _currentSpeed = _airMovementSpeed;
         }
+    }
+
+    public void SetCanMove(bool canMove)
+    {
+        _canMove = canMove;
     }
 
 }

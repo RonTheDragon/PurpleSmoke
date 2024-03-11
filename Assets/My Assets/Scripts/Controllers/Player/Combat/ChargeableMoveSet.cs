@@ -33,11 +33,16 @@ public abstract class ChargeableMoveSet : CombatMoveSet
         }
     }
 
-    public void ResetCharge()
+    protected void ResetCharge()
     {
         _isCharging = false;
         _currentCharge = 0;
         _playerCombatSystem.SetChargePercentage(0);
+    }
+
+    public void ResetAttacks()
+    {
+        ResetCharge();
     }
 
     public float GetChargePercentage()

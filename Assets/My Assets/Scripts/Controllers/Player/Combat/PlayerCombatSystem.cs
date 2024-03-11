@@ -7,7 +7,11 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     private CharacterController _controller;
     private PlayerGroundCheck _groundCheck;
+    private PlayerGravity _gravity;
     private PlayerAnimations _animations;
+    private PlayerWalk _movement;
+    private PlayerAttackMovement _attackMovement;
+    private PlayerGlide _glide;
 
     private float _currentChargePercentage;
 
@@ -19,6 +23,10 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         _controller = playerComponents.GetCharacterController();
         _groundCheck = playerComponents.GetPlayerGroundCheck();
         _animations = playerComponents.GetPlayerAnimations();
+        _movement = playerComponents.GetPlayerWalk();
+        _attackMovement = playerComponents.GetPlayerAttackMovement();
+        _glide = playerComponents.GetPlayerGlide();
+        _gravity = playerComponents.GetPlayerGravity();
 
         TemporaryStart();
         playerComponents.OnUpdate += PlayerUpdate;
@@ -42,10 +50,23 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     {
         return _animations;
     }
+    public PlayerWalk GetMovement()
+    {
+        return _movement;
+    }
+    public PlayerAttackMovement GetAttackMovement()
+    {
+        return _attackMovement;
+    }
 
     public CombatMoveSet GetDefaultMoveSet()
     {
         return _defaultMoveSet;
+    }
+
+    public PlayerGravity GetGravity()
+    {
+        return _gravity;
     }
 
     private void PlayerUpdate()
@@ -59,22 +80,26 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public void OnLightAttack()
     {
-        _currentMoveSet?.OnLightAttack();
+        if (!_glide.IsGliding())
+            _currentMoveSet?.OnLightAttack();
     }
 
     public void OnReleaseLightAttack()
     {
-        _currentMoveSet?.OnReleaseLightAttack();
+        if (!_glide.IsGliding())
+            _currentMoveSet?.OnReleaseLightAttack();
     }
 
     public void OnHeavyAttack()
     {
-        _currentMoveSet?.OnHeavyAttack();
+        if (!_glide.IsGliding())
+            _currentMoveSet?.OnHeavyAttack();
     }
 
     public void OnReleaseHeavyAttack()
     {
-        _currentMoveSet?.OnReleaseHeavyAttack();
+        if (!_glide.IsGliding())
+            _currentMoveSet?.OnReleaseHeavyAttack();
     }
 
     public void SetChargePercentage(float charge)

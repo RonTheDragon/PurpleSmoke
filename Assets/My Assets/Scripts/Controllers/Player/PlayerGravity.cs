@@ -57,7 +57,7 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
         _currentFallingSpeed += _gravityPower * Time.deltaTime;
     }
 
-    private bool IsActuallyFalling()
+    public bool IsActuallyFalling()
     {
         if (_currentFallingSpeed < 1) return true;
 
