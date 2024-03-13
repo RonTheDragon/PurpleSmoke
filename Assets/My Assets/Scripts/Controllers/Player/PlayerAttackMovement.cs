@@ -12,6 +12,8 @@ public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
     private bool _crashingDown;
     private float _downMovementSpeed;
     public Action OnCrashedDown;
+    private bool _fallingCheckDelayed;
+    private float _fallingCheckDelayTimer;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -67,13 +69,40 @@ public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
         if (_crashingDown)
         {
             _characterController.Move(Vector3.down * _downMovementSpeed * Time.deltaTime);
-            if (_playerGravity.IsActuallyFalling() || _playerGroundCheck.IsGrounded())
+            if (StuckCheck() || _playerGroundCheck.IsGrounded())
             {
                 _crashingDown = false;
                 OnCrashedDown?.Invoke();
             }
         }
     }
+
+    private bool StuckCheck()
+    {
+        if (!_fallingCheckDelayed)
+        {
+            // Start the delay timer
+            _fallingCheckDelayTimer += Time.deltaTime;
+            if (_fallingCheckDelayTimer >= 0.5f)
+            {
+                _fallingCheckDelayed = true;
+            }
+            return false;
+        }
+        else
+        {
+            // Check if the player is actually falling after the delay
+            if (_playerGravity.IsActuallyFalling())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
 
     public void SetCrashingDownSpeed(float speed)
     {

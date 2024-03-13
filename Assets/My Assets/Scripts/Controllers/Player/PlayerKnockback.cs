@@ -17,7 +17,7 @@ public class PlayerKnockback : MonoBehaviour, IPlayerComponent
     {
         _playerGravity.ResetFall();
         Vector3 knockbackDirection = (transform.position - attackLocation).normalized;
-        _knockbackVelocity = new Vector3(knockbackDirection.x * knockback.x, knockback.y, 0);
+        _knockbackVelocity = new Vector3(knockbackDirection.x * knockback.x, knockback.y, knockbackDirection.z*knockback.x);
     }
 
     private void PlayerUpdate()

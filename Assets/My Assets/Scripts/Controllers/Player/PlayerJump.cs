@@ -96,7 +96,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
         }
     }
 
-    public void CancelJumpForGlide()
+    public void StopJumpMidAir()
     {
         _currentJumpForce = 0;
         _currentJumpMovement = Vector2.zero;

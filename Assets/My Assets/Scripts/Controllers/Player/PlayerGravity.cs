@@ -5,6 +5,7 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     private CharacterController _characterController;
     [SerializeField] private float _gravityPower = 1.0f;
     private PlayerGroundCheck _groundCheck;
+    private PlayerJump _playerJump;
     [ReadOnly][SerializeField] private float _currentFallingSpeed = 0f;
     private bool _bCanFall = true;
 
@@ -17,6 +18,7 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     {
         _characterController = playerComponents.GetCharacterController();
         _groundCheck = playerComponents.GetPlayerGroundCheck();
+        _playerJump = playerComponents.GetPlayerJump();
         _groundCheck.OnGroundCheckChange += (b) => { ResetFall(); };
         playerComponents.OnUpdate += PlayerUpdate;
     }
@@ -75,5 +77,11 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     public void ResetFall()
     {
         _currentFallingSpeed = 0;
+    }
+
+    public void StopInAir()
+    {
+        _playerJump.StopJumpMidAir();
+        _bCanFall = false;
     }
 }

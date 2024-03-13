@@ -18,7 +18,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     [SerializeField] private float _comboBreakTime;
     private float _comboTimeLeft;
     private float _castTimeLeft;
-    [SerializeField] private TriggerDamage _triggerDamage;
+    [SerializeField] private TriggerDamage[] _triggerDamage;
     [SerializeField] private ExplosionDamage _explosionDamage;
     private int _lastAttackType;
     private bool _attackedInAir;
@@ -33,7 +33,8 @@ public class UnarmedMoveset : ChargeableMoveSet
         _playerAttackMovement = _playerCombatSystem.GetAttackMovement();
         _playerGravity = _playerCombatSystem.GetGravity();
         _playerAttackMovement.OnCrashedDown += OnCrashedDown;
-        _triggerDamage.SetOwner(transform.parent.gameObject);
+        foreach (TriggerDamage trigger in _triggerDamage) {
+            trigger.SetOwner(transform.parent.gameObject); }
         _explosionDamage.SetOwner(transform.parent.gameObject);
     }
 
@@ -90,7 +91,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     private void LightInAir()
     {
         _playerMovement.SetCanMove(false);
-        _playerGravity.SetCanFall(false);
+        _playerGravity.StopInAir();
         _attackedInAir = true;
         PerformLightAttack(_lightAttackInAir);
         _playerAttackMovement.SetMovement(_lightAttackInAir.Movement);
@@ -122,10 +123,9 @@ public class UnarmedMoveset : ChargeableMoveSet
         else 
         {
             _currentChargedAttack = 2;
-            _playerMovement.SetCanMove(false);
-            _playerGravity.SetCanFall(false);
-            _playerGravity.ResetFall();
             PerformCharging(_heavyDownAttack);
+            _playerMovement.SetCanMove(false);
+            _playerGravity.StopInAir();
         }
 
         base.OnHeavyAttack();
@@ -134,7 +134,7 @@ public class UnarmedMoveset : ChargeableMoveSet
 
     public override void OnReleaseHeavyAttack()
     {
-        if (_castTimeLeft > 0) return;
+        if (_castTimeLeft > 0 || _currentCharge==0) return;
 
         switch (_currentChargedAttack)
         {
@@ -148,6 +148,7 @@ public class UnarmedMoveset : ChargeableMoveSet
             case 2:
                 PerformHeavyAttackExplosive(_heavyDownAttack);
                 _playerAttackMovement.SetCrashingDownSpeed(_heavyDownAttack.DownSpeed);
+                _playerAttackMovement.CrashDown();
                 _castTimeLeft = 100;
                 break;
             default:
@@ -163,11 +164,15 @@ public class UnarmedMoveset : ChargeableMoveSet
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _comboTimeLeft = _comboBreakTime + attack.CastTime;
         _castTimeLeft = attack.CastTime;
-        _triggerDamage.SetDamage(attack.Damage, attack.Knockback);
+        foreach (TriggerDamage trigger in _triggerDamage)
+        {
+            trigger.SetDamage(attack.Damage, attack.Knockback);
+        };
     }
 
     private void PerformCharging(HeavyAttack attack)
     {
+        _releaseWhenFullyCharged = attack.ReleaseOnFull;
         _maxCharge = attack.ChargeTime;
         _playerAnimations.PlayAnimation(attack.ChargeAnimationName);
     }
@@ -180,15 +185,22 @@ public class UnarmedMoveset : ChargeableMoveSet
 
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _castTimeLeft = attack.CastTime;
-        _explosionDamage.SetDamage(damage, knockback);
+        foreach (TriggerDamage trigger in _triggerDamage)
+        {
+            trigger.SetDamage(damage, knockback);
+        };
     }
 
     private void PerformHeavyAttackExplosive(HeavyDownAttack attack)
     {
-        PerformHeavyAttack(attack);
-
         float chargePercentage = GetChargePercentage();
+        float damage = Mathf.Lerp(attack.MinDamage, attack.MaxDamage, chargePercentage);
+        Vector2 knockback = Vector2.Lerp(attack.MinKnockback, attack.MaxKnockback, chargePercentage);
         float radius = Mathf.Lerp(attack.MinRadius, attack.MaxRadius, chargePercentage);
+
+        _playerAnimations.PlayAnimation(attack.AnimationName);
+        _castTimeLeft = attack.CastTime;
+        _explosionDamage.SetDamage(damage, knockback);
         _explosionDamage.SetRadius(radius);
     }
 

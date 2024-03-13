@@ -39,7 +39,7 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
 
     private void StartGlide()
     {
-        _playerJump.CancelJumpForGlide();
+        _playerJump.StopJumpMidAir();
         _playerGravity.SetCanFall(false);
         _bIsGliding = true;
         _playerAnimations.ChangeGlide(true);
