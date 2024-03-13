@@ -192,6 +192,11 @@ public class UnarmedMoveset : ChargeableMoveSet
         _explosionDamage.SetRadius(radius);
     }
 
+    public void PerformExplosionDamage()
+    {
+        _explosionDamage.Explode(); 
+    }
+
 
     private void ComboTimer()
     {
