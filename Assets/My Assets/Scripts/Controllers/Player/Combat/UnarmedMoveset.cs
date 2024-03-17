@@ -134,28 +134,26 @@ public class UnarmedMoveset : ChargeableMoveSet
 
     public override void OnReleaseHeavyAttack()
     {
-        if (_castTimeLeft > 0 || _currentCharge==0) return;
+        if (_castTimeLeft > 0 || _currentCharge==0) return; //dismiss press
+
+        if (CheckAndHandleEarlyRelease()) return; //released too early
 
         switch (_currentChargedAttack)
-        {
-            case 0:
-                PerformHeavyAttack(_heavyAttackMoving);
-                break;
-            case 1:
-                PerformHeavyAttack(_heavyAttackInPlace);
-                _playerAttackMovement.SetMovement(_heavyAttackInPlace.Movement);
-                break;
-            case 2:
-                PerformHeavyAttackExplosive(_heavyDownAttack);
-                _playerAttackMovement.SetCrashingDownSpeed(_heavyDownAttack.DownSpeed);
-                _playerAttackMovement.CrashDown();
-                _castTimeLeft = 100;
-                break;
-            default:
-                break;
-        }
+            {
+                case 0:
+                    PerformHeavyAttack(_heavyAttackMoving);
+                    break;
+                case 1:
+                    PerformHeavyAttack(_heavyAttackInPlace);
+                    break;
+                case 2:
+                    PerformHeavyAttackDownExplosive(_heavyDownAttack);
+                    break;
+                default:
+                    break;
+            }
 
-        base.OnReleaseHeavyAttack();
+        ResetCharge();
         BreakCombo();
     }
 
@@ -173,7 +171,8 @@ public class UnarmedMoveset : ChargeableMoveSet
     private void PerformCharging(HeavyAttack attack)
     {
         _releaseWhenFullyCharged = attack.ReleaseOnFull;
-        _maxCharge = attack.ChargeTime;
+        _maxCharge = attack.MaxChargeTime;
+        _minCharge = attack.MinChargeTime;
         _playerAnimations.PlayAnimation(attack.ChargeAnimationName);
     }
 
@@ -189,9 +188,14 @@ public class UnarmedMoveset : ChargeableMoveSet
         {
             trigger.SetDamage(damage, knockback);
         };
+        if (attack is HeavyAttackWithMovement)
+        {
+            HeavyAttackWithMovement attackM = (HeavyAttackWithMovement)attack;
+            _playerAttackMovement.SetMovement(Vector3.Lerp(attackM.MinMovement, attackM.MaxMovement, chargePercentage));
+        }
     }
 
-    private void PerformHeavyAttackExplosive(HeavyDownAttack attack)
+    private void PerformHeavyAttackDownExplosive(HeavyDownAttack attack)
     {
         float chargePercentage = GetChargePercentage();
         float damage = Mathf.Lerp(attack.MinDamage, attack.MaxDamage, chargePercentage);
@@ -202,6 +206,10 @@ public class UnarmedMoveset : ChargeableMoveSet
         _castTimeLeft = attack.CastTime;
         _explosionDamage.SetDamage(damage, knockback);
         _explosionDamage.SetRadius(radius);
+
+        _playerAttackMovement.SetCrashingDownSpeed(attack.DownSpeed);
+        _playerAttackMovement.CrashDown();
+        _castTimeLeft = 100;
     }
 
     public void PerformExplosionDamage()
@@ -243,6 +251,12 @@ public class UnarmedMoveset : ChargeableMoveSet
         _comboTimeLeft = 0;
     }
 
+    public override void ResetAttacks()
+    {
+        base.ResetAttacks();
+        _playerAnimations.PlayAnimation("Cancel");
+    }
+
     private void BreakComboIfAttackChanged(int currentAttack)
     {
         if (_lastAttackType != currentAttack)
@@ -260,7 +274,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         }
         else
         {
-            ResetCharge();
+            ResetAttacks();
             _playerMovement.SetCanMove(true);
         }
     }
@@ -290,7 +304,8 @@ public class UnarmedMoveset : ChargeableMoveSet
     class HeavyAttack
     {
         public string ChargeAnimationName;
-        public float ChargeTime;
+        public float MaxChargeTime;
+        public float MinChargeTime;
         public string AnimationName;
         public float MinDamage;
         public float MaxDamage;
@@ -303,7 +318,8 @@ public class UnarmedMoveset : ChargeableMoveSet
     [System.Serializable]
     class HeavyAttackWithMovement : HeavyAttack
     {
-        public Vector3 Movement;
+        public Vector3 MinMovement;
+        public Vector3 MaxMovement;
     }
 
     [System.Serializable]

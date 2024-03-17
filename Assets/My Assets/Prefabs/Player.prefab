@@ -517,9 +517,9 @@ MonoBehaviour:
   m_LookAt: {fileID: 1877480264227317488}
   m_Follow: {fileID: 1877480264227317488}
   m_Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 100
     OrthographicSize: 5
-    NearClipPlane: 0.3
+    NearClipPlane: 0.01
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -834,9 +834,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 100
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1524,7 +1524,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 5310138974357565822}
-  m_PlaneDistance: 1
+  m_PlaneDistance: 0.02
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -3034,7 +3034,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxCharge: 1
+  _minCharge: 0
   _currentCharge: 0
+  _isCharging: 0
+  _releasedEarly: 0
   _releaseWhenFullyCharged: 0
   _lightAttacksMoving:
   - AnimationName: Unarmed1
@@ -3078,7 +3081,8 @@ MonoBehaviour:
     Movement: {x: 0, y: 0, z: 100}
   _heavyAttackMoving:
     ChargeAnimationName: Uppercut1
-    ChargeTime: 1
+    MaxChargeTime: 2
+    MinChargeTime: 0.3
     AnimationName: Uppercut2
     MinDamage: 20
     MaxDamage: 30
@@ -3088,7 +3092,8 @@ MonoBehaviour:
     ReleaseOnFull: 0
   _heavyAttackInPlace:
     ChargeAnimationName: SuperKick1
-    ChargeTime: 1
+    MaxChargeTime: 2
+    MinChargeTime: 0.5
     AnimationName: SuperKick2
     MinDamage: 20
     MaxDamage: 30
@@ -3096,10 +3101,12 @@ MonoBehaviour:
     MaxKnockback: {x: 100, y: 20}
     CastTime: 1
     ReleaseOnFull: 0
-    Movement: {x: 0, y: 0, z: 100}
+    MinMovement: {x: 0, y: 0, z: 0}
+    MaxMovement: {x: 0, y: 0, z: 100}
   _heavyDownAttack:
     ChargeAnimationName: CrashDown1
-    ChargeTime: 1
+    MaxChargeTime: 1.5
+    MinChargeTime: 0.5
     AnimationName: CrashDown2
     MinDamage: 10
     MaxDamage: 30

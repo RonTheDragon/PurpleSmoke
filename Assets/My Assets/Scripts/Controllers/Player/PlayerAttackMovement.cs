@@ -86,11 +86,14 @@ public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
             if (_fallingCheckDelayTimer >= 0.5f)
             {
                 _fallingCheckDelayed = true;
+                _fallingCheckDelayTimer = 0f; // Reset the delay timer
             }
             return false;
         }
         else
         {
+            _fallingCheckDelayed = false;
+            _fallingCheckDelayTimer = 0f;
             // Check if the player is actually falling after the delay
             if (_playerGravity.IsActuallyFalling())
             {
@@ -102,6 +105,7 @@ public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
             }
         }
     }
+
 
 
     public void SetCrashingDownSpeed(float speed)

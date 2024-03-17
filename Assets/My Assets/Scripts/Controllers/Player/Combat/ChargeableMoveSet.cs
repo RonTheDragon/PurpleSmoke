@@ -3,8 +3,10 @@ using UnityEngine;
 public abstract class ChargeableMoveSet : CombatMoveSet
 {
     [SerializeField] protected float _maxCharge;
+    [SerializeField] protected float _minCharge;
     [ReadOnly][SerializeField] protected float _currentCharge;
-    protected bool _isCharging;
+    [ReadOnly][SerializeField] protected bool _isCharging;
+    [ReadOnly][SerializeField] protected bool _releasedEarly;
     [SerializeField] protected bool _releaseWhenFullyCharged;
 
     public override void OnHeavyAttack()
@@ -19,35 +21,68 @@ public abstract class ChargeableMoveSet : CombatMoveSet
 
     public override void MoveSetUpdate()
     {
+        if (_releasedEarly && _currentCharge >= _minCharge)
+        {
+            _currentCharge = _minCharge; //just to make sure its minimum damage
+            _releasedEarly = false;
+            OnReleaseHeavyAttack();
+        }
+
         if (_isCharging)
         {
-            _playerCombatSystem.SetChargePercentage(GetChargePercentage());
+            DisplayChargeBar();
+
             if (_currentCharge < _maxCharge)
             { 
                 _currentCharge += Time.deltaTime;
             }
-            else if (_releaseWhenFullyCharged)
+            else if (_currentCharge> _maxCharge)
             {
+                _currentCharge= _maxCharge;
+                if ( _releaseWhenFullyCharged ) 
                 OnReleaseHeavyAttack();
             }
         }
     }
 
+    private void DisplayChargeBar()
+    {
+        if (_releasedEarly)
+        {
+            _playerCombatSystem.SetChargePercentage(0);
+        }
+        else
+        {
+            _playerCombatSystem.SetChargePercentage(GetChargePercentage());
+        }
+    }
+
     protected void ResetCharge()
     {
+        _releasedEarly = false;
         _isCharging = false;
         _currentCharge = 0;
         _playerCombatSystem.SetChargePercentage(0);
     }
 
-    public void ResetAttacks()
+    protected bool CheckAndHandleEarlyRelease()
+    {
+        if (_currentCharge < _minCharge)
+        {
+            _releasedEarly = true;
+        }
+        return _releasedEarly;
+    }
+
+    public virtual void ResetAttacks()
     {
         ResetCharge();
     }
 
     public float GetChargePercentage()
     {
-        return _currentCharge / _maxCharge;
+        float n = (_currentCharge - _minCharge) / (_maxCharge - _minCharge);
+        return n<0 ? 0: n;
     }
 
 }
