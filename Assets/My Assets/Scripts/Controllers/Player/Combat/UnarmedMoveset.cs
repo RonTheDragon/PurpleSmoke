@@ -162,9 +162,10 @@ public class UnarmedMoveset : ChargeableMoveSet
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _comboTimeLeft = _comboBreakTime + attack.CastTime;
         _castTimeLeft = attack.CastTime;
+        float knockout = Random.Range(attack.Knockout.x, attack.Knockout.y);
         foreach (TriggerDamage trigger in _triggerDamage)
         {
-            trigger.SetDamage(attack.Damage, attack.Knockback);
+            trigger.SetDamage(attack.Damage, attack.Knockback, knockout);
         };
     }
 
@@ -182,11 +183,14 @@ public class UnarmedMoveset : ChargeableMoveSet
         float damage = Mathf.Lerp(attack.MinDamage, attack.MaxDamage, chargePercentage);
         Vector2 knockback = Vector2.Lerp(attack.MinKnockback, attack.MaxKnockback, chargePercentage);
 
+        Vector2 knockoutChance = Vector2.Lerp(attack.MinKnockout, attack.MaxKnockout, chargePercentage);
+        float knockout = Random.Range(knockoutChance.x, knockoutChance.y);
+
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _castTimeLeft = attack.CastTime;
         foreach (TriggerDamage trigger in _triggerDamage)
         {
-            trigger.SetDamage(damage, knockback);
+            trigger.SetDamage(damage, knockback, knockout);
         };
         if (attack is HeavyAttackWithMovement)
         {
@@ -202,9 +206,12 @@ public class UnarmedMoveset : ChargeableMoveSet
         Vector2 knockback = Vector2.Lerp(attack.MinKnockback, attack.MaxKnockback, chargePercentage);
         float radius = Mathf.Lerp(attack.MinRadius, attack.MaxRadius, chargePercentage);
 
+        Vector2 knockoutChance = Vector2.Lerp(attack.MinKnockout, attack.MaxKnockout, chargePercentage);
+        float knockout = Random.Range(knockoutChance.x, knockoutChance.y);
+
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _castTimeLeft = attack.CastTime;
-        _explosionDamage.SetDamage(damage, knockback);
+        _explosionDamage.SetDamage(damage, knockback, knockout);
         _explosionDamage.SetRadius(radius);
 
         _playerAttackMovement.SetCrashingDownSpeed(attack.DownSpeed);
@@ -272,7 +279,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         {
             _attackedInAir = false;
         }
-        else
+        else if (_playerCombatSystem.GetCanAttack())
         {
             ResetAttacks();
             _playerMovement.SetCanMove(true);
@@ -291,6 +298,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         public string AnimationName;
         public float Damage;
         public Vector2 Knockback;
+        public Vector2 Knockout;
         public float CastTime;
     }
 
@@ -311,6 +319,8 @@ public class UnarmedMoveset : ChargeableMoveSet
         public float MaxDamage;
         public Vector2 MinKnockback;
         public Vector2 MaxKnockback;
+        public Vector2 MinKnockout;
+        public Vector2 MaxKnockout;
         public float CastTime;
         public bool ReleaseOnFull;
     }

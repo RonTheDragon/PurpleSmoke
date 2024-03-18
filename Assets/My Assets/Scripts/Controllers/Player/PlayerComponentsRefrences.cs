@@ -17,6 +17,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
     [SerializeField] private PlayerAnimations _playerAnimations;
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private PlayerKnockback _playerKnockback;
+    [SerializeField] private PlayerKnockout _playerKnockout;
     [SerializeField] private PlayerAttackMovement _playerAttackMovement;
     [SerializeField] private PlayerCombatSystem _playerCombatSystem;
     [SerializeField] private PlayerUI _playerUI;
@@ -48,6 +49,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
         _playerKnockback.InitializePlayerComponent(this);
         _playerAttackMovement.InitializePlayerComponent(this);
         _playerCombatSystem.InitializePlayerComponent(this);
+        _playerKnockout.InitializePlayerComponent(this);
     }
 
     public PlayerWalk GetPlayerWalk() 
@@ -123,5 +125,10 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public PlayerAttackMovement GetPlayerAttackMovement()
     {
         return _playerAttackMovement;
+    }
+
+    public PlayerKnockout GetPlayerKnockout()
+    {
+        return _playerKnockout;
     }
 }

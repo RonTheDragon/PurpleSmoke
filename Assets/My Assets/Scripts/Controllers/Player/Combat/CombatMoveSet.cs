@@ -17,4 +17,6 @@ public abstract class CombatMoveSet : MonoBehaviour
     }
 
     public abstract void MoveSetUpdate();
+
+    public abstract void ResetAttacks();
 }

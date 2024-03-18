@@ -16,7 +16,7 @@ public class TriggerDamage : Damage
         if (damageableObject != null)
         {
             // Apply damage and knockback to the damageable object
-            damageableObject.TakeDamage(_currentDamage, _knockback, _owner.transform.position, _owner);
+            damageableObject.TakeDamage(_currentDamage, _knockback,_knockout, _owner.transform.position, _owner);
         }
     }
 }

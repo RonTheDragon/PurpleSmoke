@@ -74,7 +74,7 @@ public abstract class ChargeableMoveSet : CombatMoveSet
         return _releasedEarly;
     }
 
-    public virtual void ResetAttacks()
+    public override void ResetAttacks()
     {
         ResetCharge();
     }

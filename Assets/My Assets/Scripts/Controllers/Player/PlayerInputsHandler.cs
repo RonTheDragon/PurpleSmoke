@@ -10,6 +10,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private PlayerJump _playerJump;
     private PlayerGlide _playerGlide;
     private PlayerCombatSystem _playerCombatSystem;
+    private PlayerKnockout _playerKnockout;
 
     private Vector2 _movementInput = Vector2.zero;
     private Vector2 _lookInput=Vector2.zero;
@@ -22,6 +23,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerLook = playerComponents.GetPlayerLook();
         _playerGlide = playerComponents.GetPlayerGlide();
         _playerCombatSystem = playerComponents.GetPlayerCombatSystem();
+        _playerKnockout = playerComponents.GetPlayerKnockout();
         playerComponents.OnUpdate += PlayerUpdate;
 
         HideMouse();
@@ -51,6 +53,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
 
     public void Jump(InputAction.CallbackContext context)
     {
+        _playerKnockout?.TryToGetUp();
         _playerJump?.TryToInitiateJump(_movementInput);
         _playerGlide?.GlideInput();
 

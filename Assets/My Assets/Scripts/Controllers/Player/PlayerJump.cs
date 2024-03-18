@@ -25,6 +25,8 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
 
     [ReadOnly][SerializeField]private Vector2 _currentJumpMovement;
 
+    private bool _canJump = true;
+
     
 
     private void PlayerUpdate()
@@ -106,7 +108,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
 
     public void TryToInitiateJump(Vector2 movement)
     {
-        if (_currentJumpCooldown <= 0)
+        if (_currentJumpCooldown <= 0 && _canJump)
         {
             _jumpMovementInput = movement;
             if (_groundCheck.IsGrounded())
@@ -180,5 +182,10 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
             return true;
         }
         return false;
+    }
+
+    public void SetCanJump(bool canJump)
+    {
+        _canJump = canJump;
     }
 }

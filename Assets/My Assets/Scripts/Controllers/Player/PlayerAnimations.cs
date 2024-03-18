@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour, IPlayerComponent
@@ -50,5 +51,10 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
     public void PlayAnimation(string animationName)
     {
         _animator.SetTrigger(animationName);
+    }
+
+    public void SetLayerWeight(int layer,float amount)
+    {
+        _animator.SetLayerWeight(layer, amount);
     }
 }

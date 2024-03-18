@@ -12,6 +12,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     private PlayerWalk _movement;
     private PlayerAttackMovement _attackMovement;
     private PlayerGlide _glide;
+    private bool _canAttack = true;
 
     private float _currentChargePercentage;
 
@@ -80,26 +81,31 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public void OnLightAttack()
     {
-        if (!_glide.IsGliding())
+        if (CanPlayerAttack())
             _currentMoveSet?.OnLightAttack();
     }
 
     public void OnReleaseLightAttack()
     {
-        if (!_glide.IsGliding())
+        if (CanPlayerAttack())
             _currentMoveSet?.OnReleaseLightAttack();
     }
 
     public void OnHeavyAttack()
     {
-        if (!_glide.IsGliding())
+        if (CanPlayerAttack())
             _currentMoveSet?.OnHeavyAttack();
     }
 
     public void OnReleaseHeavyAttack()
     {
-        if (!_glide.IsGliding())
+        if (CanPlayerAttack())
             _currentMoveSet?.OnReleaseHeavyAttack();
+    }
+
+    private bool CanPlayerAttack()
+    {
+        return !_glide.IsGliding() && _canAttack;
     }
 
     public void SetChargePercentage(float charge)
@@ -112,4 +118,16 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     {
         return _currentChargePercentage;
     }
+
+    public void ClearAttacks()
+    {
+        _currentMoveSet.ResetAttacks();
+    }
+
+    public void SetCanAttack(bool canAttack)
+    {
+        _canAttack = canAttack;
+    }
+
+    public bool GetCanAttack() { return _canAttack; }
 }

@@ -5,19 +5,22 @@ public class PlayerHealth : Health , IPlayerComponent
 {
     public Action<float> OnPlayerHealthChange;
     private PlayerKnockback _playerKnockback;
+    private PlayerKnockout _playerKnockout;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerKnockback = playerComponents.GetPlayerKnockback();
+        _playerKnockout = playerComponents.GetPlayerKnockout();
         HealToMax();
         UpdateHealthUI();
     }
 
-    public override void TakeDamage(float damageAmount, Vector2 knockback, Vector3 attackLocation, GameObject Attacker)
+    public override void TakeDamage(float damageAmount, Vector2 knockback, float knockout , Vector3 attackLocation, GameObject Attacker)
     {
         _currentHealth -= damageAmount;
         if (CheckIfDied()) return;
 
         _playerKnockback.TakeKnockback(knockback, attackLocation);
+        _playerKnockout.RecieveKnockout(knockout);
         UpdateHealthUI();
     }
 

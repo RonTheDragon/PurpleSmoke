@@ -26,16 +26,15 @@ public class ExplosionDamage : Damage
 
             // Calculate damage and knockback based on distance from the explosion center
             float normalizedDistance = 1 - Mathf.Clamp01(distance / _radius); // Normalized distance from 0 to 1
-            float damageMultiplier = normalizedDistance; // Damage multiplier decreases as distance increases
-            float knockbackMultiplier = normalizedDistance; // Knockback multiplier decreases as distance increases
 
             // Apply damage and knockback to the damageable object
             IDamageable damageableObject = col.GetComponent<IDamageable>();
             if (damageableObject != null)
             {
-                float damage = _currentDamage * damageMultiplier;
-                Vector2 knockback = _knockback * knockbackMultiplier;
-                damageableObject.TakeDamage(damage, knockback, transform.position, _owner);
+                float damage = _currentDamage * normalizedDistance;
+                Vector2 knockback = _knockback * normalizedDistance;
+                float knockout = _knockout * normalizedDistance;
+                damageableObject.TakeDamage(damage, knockback, knockout, transform.position, _owner);
             }
         }
     }
