@@ -104,7 +104,7 @@ public class UnarmedMoveset : ChargeableMoveSet
 
     public override void OnHeavyAttack()
     {
-        if (_castTimeLeft > 0) return;
+        if (_castTimeLeft > 0 || _releasedEarly) return;
 
         if (_playerGroundCheck.IsGrounded())
         {
@@ -134,7 +134,7 @@ public class UnarmedMoveset : ChargeableMoveSet
 
     public override void OnReleaseHeavyAttack()
     {
-        if (_castTimeLeft > 0 || _currentCharge==0) return; //dismiss press
+        if (_castTimeLeft > 0 || _currentCharge==0 || _releasedEarly) return; //dismiss press
 
         if (CheckAndHandleEarlyRelease()) return; //released too early
 
@@ -261,6 +261,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     public override void ResetAttacks()
     {
         base.ResetAttacks();
+        _castTimeLeft = 0;
         _playerAnimations.PlayAnimation("Cancel");
     }
 

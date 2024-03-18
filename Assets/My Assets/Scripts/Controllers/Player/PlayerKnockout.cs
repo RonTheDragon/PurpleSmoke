@@ -15,6 +15,7 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
     private PlayerCombatSystem _playerCombatSystem;
     private PlayerWalk _playerWalk;
     private PlayerJump _playerJump;
+    private PlayerGravity _playerGravity;
 
     [ReadOnly][SerializeField] private float _currentStunDuration;
     [ReadOnly][SerializeField] private bool _stumbled;
@@ -28,6 +29,7 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
         _playerCombatSystem = playerComponents.GetPlayerCombatSystem();
         _playerWalk = playerComponents.GetPlayerWalk();
         _playerJump = playerComponents.GetPlayerJump();
+        _playerGravity = playerComponents.GetPlayerGravity();
         playerComponents.OnUpdate += PlayerUpdate;
 
         // Check if caps are set correctly
@@ -112,7 +114,6 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
 
         _playerAnimations.SetLayerWeight(2, 1);
         _playerAnimations.PlayAnimation("Stun");
-        _playerCombatSystem.ClearAttacks();
         FreezePlayerInputs();
         _currentStunDuration = Mathf.Lerp(0f, _maxStunDuration, (knockout - _staggerCap) / (_stunCap - _staggerCap));
     }
@@ -150,9 +151,11 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
 
     private void FreezePlayerInputs()
     {
+        _playerCombatSystem.ClearAttacks();
         _playerWalk.SetCanMove(false);
         _playerJump.SetCanJump(false);
         _playerCombatSystem.SetCanAttack(false);
+        _playerGravity.SetCanFall(true);
     }
 
     private void ReleasePlayerInputs()
