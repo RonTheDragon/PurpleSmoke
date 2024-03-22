@@ -8,11 +8,11 @@ public abstract class Health : MonoBehaviour , IDamageable
     public abstract void TakeDamage(float damageAmount, Vector2 knockback, float knockout , Vector3 attackLocation, GameObject Attacker);
 
     [ContextMenu("Heal To Max")]
-    protected void HealToMax()
+    public void HealToMax()
     {
         _currentHealth = _maxHealth;
+        _isDead=false;
     }
 
-    [ContextMenu("Die")]
-    protected abstract void Die();
+    public abstract void Die();
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerKnockout : MonoBehaviour, IPlayerComponent
@@ -21,6 +22,8 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
     [ReadOnly][SerializeField] private bool _stumbled;
     [ReadOnly][SerializeField] private bool _canGetUp;
     [ReadOnly][SerializeField] private bool _gettingUp;
+
+    public Action<bool> OnCanGetUp;
 
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
@@ -52,11 +55,11 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
             if (_stumbled)
             {
                 _canGetUp = true;
+                OnCanGetUp?.Invoke(true);
             }
             else
             {
-                _gettingUp = false;
-                ReleasePlayerInputs();
+                UnStunPlayer();
             }
         }
     }
@@ -114,7 +117,7 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
 
         _playerAnimations.SetLayerWeight(2, 1);
         _playerAnimations.PlayAnimation("Stun");
-        FreezePlayerInputs();
+        StunPlayer();
         _currentStunDuration = Mathf.Lerp(0f, _maxStunDuration, (knockout - _staggerCap) / (_stunCap - _staggerCap));
     }
 
@@ -129,7 +132,7 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
         _canGetUp = false;
         _currentStunDuration = Mathf.Lerp(0f, _maxStumbleDuration, (knockout - _stunCap) / (_stumbleCap - _stunCap));
         _playerAnimations.PlayAnimation("Stumble");
-        FreezePlayerInputs();
+        StunPlayer();
     }
 
     public void TryToGetUp()
@@ -147,10 +150,14 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
         _currentStunDuration = _gettingUpDuration;
         _gettingUp = true;
         _stumbled = false;
+        OnCanGetUp?.Invoke(false);
     }
 
-    private void FreezePlayerInputs()
+    public void StunPlayer()
     {
+        _gettingUp = false;
+        _canGetUp = false;
+
         _playerCombatSystem.ClearAttacks();
         _playerWalk.SetCanMove(false);
         _playerJump.SetCanJump(false);
@@ -158,8 +165,12 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
         _playerGravity.SetCanFall(true);
     }
 
-    private void ReleasePlayerInputs()
+    public void UnStunPlayer()
     {
+        _gettingUp = false;
+        _stumbled = false;
+        _canGetUp = false;
+
         _playerWalk.SetCanMove(true);
         _playerJump.SetCanJump(true);
         _playerCombatSystem.SetCanAttack(true);

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,16 +6,25 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 {
     [SerializeField] private Image _healthBar;
     [SerializeField] private Image _chargeBar;
+    [SerializeField] private GameObject _pressSpaceToGetUp;
+    [SerializeField] private TMP_Text _respawnCountDown;
 
     private PlayerHealth _playerHealth;
     private PlayerCombatSystem _playerCombatSystem;
+    private PlayerKnockout _playerKnockout;
+    private PlayerDeath _playerDeath;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerHealth = playerComponents.GetPlayerHealth();
         _playerCombatSystem = playerComponents.GetPlayerCombatSystem();
+        _playerKnockout = playerComponents.GetPlayerKnockout();
+        _playerDeath = playerComponents.GetPlayerDeath();
 
         _playerHealth.OnPlayerHealthChange += UpdateHealthUI;
         _playerCombatSystem.OnChargeChange += UpdateChargeUI;
+        _playerKnockout.OnCanGetUp += PressSpaceToGetUp;
+        _playerDeath.OnRespawnCountdown += UpdateRespawnTime;
     }
 
     private void UpdateHealthUI(float amount)
@@ -39,5 +49,28 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         {
             bar.color = Color.Lerp(empty, mid, amount * 2);
         }
+    }
+
+    private void PressSpaceToGetUp(bool show)
+    {
+        _pressSpaceToGetUp.SetActive(show);
+    }
+
+    private void UpdateRespawnTime(int time)
+    {
+        switch (time)
+        {
+            case 0:
+                _respawnCountDown.text = "Press [Jump] To Respawn";
+                break;
+            case -1:
+                _respawnCountDown.text = string.Empty;
+                break;
+            default:
+                _respawnCountDown.text = time.ToString();
+                break;
+        }
+
+        PressSpaceToGetUp(false);
     }
 }

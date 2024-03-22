@@ -92,8 +92,6 @@ public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
         }
         else
         {
-            _fallingCheckDelayed = false;
-            _fallingCheckDelayTimer = 0f;
             // Check if the player is actually falling after the delay
             if (_playerGravity.IsActuallyFalling())
             {
@@ -116,6 +114,8 @@ public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
     public void CrashDown()
     {
         _crashingDown = true;
+        _fallingCheckDelayed = false;
+        _fallingCheckDelayTimer = 0f;
     }
 
     public bool IsStillCrashingDown()
