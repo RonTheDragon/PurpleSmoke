@@ -17,6 +17,10 @@ public class TriggerDamage : Damage
         {
             // Apply damage and knockback to the damageable object
             damageableObject.TakeDamage(_currentDamage, _knockback,_knockout, _owner.transform.position, _owner);
+            if (_acid > 0)
+            {
+                damageableObject.TakeAcidDamage(_acid);
+            }
         }
     }
 }

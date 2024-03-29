@@ -6,12 +6,18 @@ public class Damage : MonoBehaviour
     protected Vector2 _knockback;
     protected float _knockout;
     protected GameObject _owner;
+    protected float _acid;
 
     public void SetDamage(float damage, Vector2 knockback,float knockout)
     {
         _currentDamage = damage;
         _knockback = knockback;
         _knockout = knockout;
+    }
+
+    public void SetAcidDamage(float acid)
+    {
+        _acid = acid;
     }
 
     public void SetOwner(GameObject owner)

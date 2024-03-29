@@ -267,6 +267,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 80455af0-9872-4685-a83b-969a7a3e800a
     m_ActionName: Player/Heavy Attack[/Mouse/rightButton,/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast,/XInputControllerWindows2/buttonEast,/XInputControllerWindows3/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5677476338889415264}
+        m_TargetAssemblyTypeName: PlayerInputsHandler, Assembly-CSharp
+        m_MethodName: Acidation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 63adfed8-bb57-424e-8f07-4e8d5f00e9c8
+    m_ActionName: Player/Acidation[/Keyboard/leftShift,/XInputControllerWindows/leftTrigger,/XInputControllerWindows1/leftTrigger,/XInputControllerWindows2/leftTrigger,/XInputControllerWindows3/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -301,6 +317,7 @@ MonoBehaviour:
   _playerKnockout: {fileID: 8543009807947699284}
   _playerAttackMovement: {fileID: 2875694453276084671}
   _playerCombatSystem: {fileID: 2045315901369443145}
+  _playerAcidation: {fileID: 6210985580518302643}
   _playerDeath: {fileID: 1674787408233449612}
   _playerTeleporter: {fileID: 300154325113233337}
   _playerUI: {fileID: 3011800139913282868}
@@ -330,8 +347,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentSpeed: 0
-  _walkingSpeed: 10
-  _airMovementSpeed: 3
+  _baseWalkingSpeed: 10
+  _airMovementSpeed: 0.3
   _currentTurnSpeed: 0.1
 --- !u!114 &6294502965475875628
 MonoBehaviour:
@@ -443,6 +460,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _currentHealth: 0
+  _maxAcidity: 100
+  _currentAcidity: 0
+  _acidExtraDamagePercentage: 50
+  _acidDOT: 5
+  _acidRemovalPerSec: 30
+  _removeAcidAfter: 1
 --- !u!114 &2377819672940888538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1837,6 +1860,103 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b02db47f3e62642a98af68c7d7598e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6958145312470619164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1119504896259321828}
+  - component: {fileID: 8306919752155745601}
+  - component: {fileID: 7573225495914411390}
+  - component: {fileID: 3770562428306545783}
+  m_Layer: 10
+  m_Name: AcidationBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1119504896259321828
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958145312470619164}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 963904063760905480}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 50}
+  m_SizeDelta: {x: 500, y: 25}
+  m_Pivot: {x: 0, y: 0}
+--- !u!222 &8306919752155745601
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958145312470619164}
+  m_CullTransparentMesh: 1
+--- !u!114 &7573225495914411390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958145312470619164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.8509804, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c81da010040ce914fb10a358f2eb2cc0, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!95 &3770562428306545783
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958145312470619164}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6d7a91708ac189d4f82d8e99cee01ca9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7299910196156480473
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,6 +2021,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2995674973738040763}
+  - {fileID: 1119504896259321828}
   - {fileID: 3282191916598421960}
   - {fileID: 1089180085774434371}
   - {fileID: 5442713738183637393}
@@ -1988,6 +2109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 8873370751118369365}
   _chargeBar: {fileID: 1126682117190426879}
+  _acidationBar: {fileID: 7573225495914411390}
   _pressSpaceToGetUp: {fileID: 1940488153067850154}
   _respawnCountDown: {fileID: 8795778029562085670}
 --- !u!1 &9080644734375132973
@@ -3042,6 +3164,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2875694453276084671}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 455bcdb030424464d89abe9982baf431,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6210985580518302643}
   m_SourcePrefab: {fileID: 100100000, guid: 455bcdb030424464d89abe9982baf431, type: 3}
 --- !u!4 &47700121155755833 stripped
 Transform:
@@ -3460,48 +3586,57 @@ MonoBehaviour:
     Knockback: {x: 5, y: 0}
     Knockout: {x: 1, y: 10}
     CastTime: 0.5
+    Acid: 10
   - AnimationName: Unarmed2
     Damage: 10
     Knockback: {x: 5, y: 0}
     Knockout: {x: 1, y: 10}
     CastTime: 0.5
+    Acid: 10
   - AnimationName: Unarmed1
     Damage: 10
     Knockback: {x: 5, y: 0}
     Knockout: {x: 1, y: 10}
     CastTime: 0.5
+    Acid: 10
   - AnimationName: Unarmed2
     Damage: 10
     Knockback: {x: 5, y: 0}
     Knockout: {x: 1, y: 10}
     CastTime: 0.5
+    Acid: 10
   - AnimationName: Unarmed3
     Damage: 20
     Knockback: {x: 10, y: 5}
     Knockout: {x: 10, y: 30}
     CastTime: 1
+    Acid: 20
   _lightAttacksInPlace:
   - AnimationName: Kick1
     Damage: 20
     Knockback: {x: 10, y: 20}
     Knockout: {x: 30, y: 100}
     CastTime: 0.5
+    Acid: 20
   - AnimationName: Kick2
     Damage: 20
     Knockback: {x: 10, y: 20}
     Knockout: {x: 30, y: 100}
     CastTime: 0.7
+    Acid: 20
   - AnimationName: Kick3
     Damage: 20
     Knockback: {x: 50, y: 20}
     Knockout: {x: 30, y: 100}
     CastTime: 0.7
+    Acid: 20
   _lightAttackInAir:
     AnimationName: FlyingKick
     Damage: 20
     Knockback: {x: 100, y: 20}
     Knockout: {x: 50, y: 200}
     CastTime: 1
+    Acid: 50
     Movement: {x: 0, y: 0, z: 100}
   _heavyAttackMoving:
     ChargeAnimationName: Uppercut1
@@ -3516,6 +3651,8 @@ MonoBehaviour:
     MaxKnockout: {x: 100, y: 300}
     CastTime: 0.4
     ReleaseOnFull: 0
+    MinAcid: 20
+    MaxAcid: 50
   _heavyAttackInPlace:
     ChargeAnimationName: SuperKick1
     MaxChargeTime: 2
@@ -3529,6 +3666,8 @@ MonoBehaviour:
     MaxKnockout: {x: 100, y: 300}
     CastTime: 1
     ReleaseOnFull: 0
+    MinAcid: 30
+    MaxAcid: 60
     MinMovement: {x: 0, y: 0, z: 0}
     MaxMovement: {x: 0, y: 0, z: 100}
   _heavyDownAttack:
@@ -3544,6 +3683,8 @@ MonoBehaviour:
     MaxKnockout: {x: 50, y: 150}
     CastTime: 0.5
     ReleaseOnFull: 1
+    MinAcid: 20
+    MaxAcid: 50
     DownSpeed: 50
     CrashAnimationName: CrashDown3
     MinRadius: 5
@@ -3568,6 +3709,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _incomingAttackMovement: {x: 0, y: 0, z: 0}
+--- !u!114 &6210985580518302643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6791818095545876735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d2de04d5844314a922868d670890e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxAcidation: 100
+  _currentAcidation: 0
+  _minAcidationForUse: 20
+  _acidationRegenPerSec: 40
+  _acidationReganCooldown: 2
+  _acidationDrainPerSec: 10
+  _speedModifier: 1.5
 --- !u!4 &6934504432276362856 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5567499957886489658, guid: 455bcdb030424464d89abe9982baf431,

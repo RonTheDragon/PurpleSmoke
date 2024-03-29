@@ -10,6 +10,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private PlayerJump _playerJump;
     private PlayerGlide _playerGlide;
     private PlayerCombatSystem _playerCombatSystem;
+    private PlayerAcidation _playerAcidation;
     private PlayerKnockout _playerKnockout;
     private PlayerDeath _playerDeath;
 
@@ -23,6 +24,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerJump = playerComponents.GetPlayerJump();
         _playerLook = playerComponents.GetPlayerLook();
         _playerGlide = playerComponents.GetPlayerGlide();
+        _playerAcidation = playerComponents.GetPlayerAcidation();
         _playerCombatSystem = playerComponents.GetPlayerCombatSystem();
         _playerKnockout = playerComponents.GetPlayerKnockout();
         _playerDeath = playerComponents.GetPlayerDeath();
@@ -90,6 +92,18 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         else if (context.phase == InputActionPhase.Canceled)
         {
             _playerCombatSystem?.OnReleaseHeavyAttack();
+        }
+    }
+
+    public void Acidation(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            _playerAcidation?.OnAcidationActivation();
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            _playerAcidation?.OnAcidationDischarge();
         }
     }
 }

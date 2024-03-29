@@ -35,6 +35,11 @@ public class ExplosionDamage : Damage
                 Vector2 knockback = _knockback * normalizedDistance;
                 float knockout = _knockout * normalizedDistance;
                 damageableObject.TakeDamage(damage, knockback, knockout, transform.position, _owner);
+
+                if (_acid > 0)
+                {
+                    damageableObject.TakeAcidDamage(_acid * normalizedDistance);
+                }
             }
         }
     }

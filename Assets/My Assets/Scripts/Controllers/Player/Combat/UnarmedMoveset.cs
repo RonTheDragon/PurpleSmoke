@@ -166,6 +166,14 @@ public class UnarmedMoveset : ChargeableMoveSet
         foreach (TriggerDamage trigger in _triggerDamage)
         {
             trigger.SetDamage(attack.Damage, attack.Knockback, knockout);
+            if (_playerCombatSystem.GetAcidation())
+            {
+                trigger.SetAcidDamage(attack.Acid);
+            }
+            else
+            {
+                trigger.SetAcidDamage(0);
+            }
         };
     }
 
@@ -191,6 +199,17 @@ public class UnarmedMoveset : ChargeableMoveSet
         foreach (TriggerDamage trigger in _triggerDamage)
         {
             trigger.SetDamage(damage, knockback, knockout);
+
+            if (_playerCombatSystem.GetAcidation())
+            {
+                float Acid = Mathf.Lerp(attack.MinAcid, attack.MaxAcid, chargePercentage);
+                trigger.SetAcidDamage(Acid);
+            }
+            else
+            {
+                trigger.SetAcidDamage(0);
+            }
+
         };
         if (attack is HeavyAttackWithMovement)
         {
@@ -213,6 +232,16 @@ public class UnarmedMoveset : ChargeableMoveSet
         _castTimeLeft = attack.CastTime;
         _explosionDamage.SetDamage(damage, knockback, knockout);
         _explosionDamage.SetRadius(radius);
+
+        if (_playerCombatSystem.GetAcidation())
+        {
+            float Acid = Mathf.Lerp(attack.MinAcid, attack.MaxAcid, chargePercentage);
+            _explosionDamage.SetAcidDamage(Acid);
+        }
+        else
+        {
+            _explosionDamage.SetAcidDamage(0);
+        }
 
         _playerAttackMovement.SetCrashingDownSpeed(attack.DownSpeed);
         _playerAttackMovement.CrashDown();
@@ -301,6 +330,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         public Vector2 Knockback;
         public Vector2 Knockout;
         public float CastTime;
+        public float Acid;
     }
 
     [System.Serializable]
@@ -324,6 +354,8 @@ public class UnarmedMoveset : ChargeableMoveSet
         public Vector2 MaxKnockout;
         public float CastTime;
         public bool ReleaseOnFull;
+        public float MinAcid;
+        public float MaxAcid;
     }
 
     [System.Serializable]

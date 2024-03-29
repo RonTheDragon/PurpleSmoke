@@ -12,7 +12,9 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     private PlayerWalk _movement;
     private PlayerAttackMovement _attackMovement;
     private PlayerGlide _glide;
+    private PlayerAcidation _playerAcidation;
     private bool _canAttack = true;
+    private bool _acidation = false;
 
     private float _currentChargePercentage;
 
@@ -28,9 +30,11 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         _attackMovement = playerComponents.GetPlayerAttackMovement();
         _glide = playerComponents.GetPlayerGlide();
         _gravity = playerComponents.GetPlayerGravity();
+        _playerAcidation = playerComponents.GetPlayerAcidation();
 
         TemporaryStart();
         playerComponents.OnUpdate += PlayerUpdate;
+        _playerAcidation.OnAcidationToggle += SetAcidation;
     }
 
     private void TemporaryStart()
@@ -130,4 +134,11 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     }
 
     public bool GetCanAttack() { return _canAttack; }
+
+    public bool GetAcidation() { return _acidation; }
+
+    public void SetAcidation(bool acidation)
+    {
+        _acidation = acidation;
+    }
 }

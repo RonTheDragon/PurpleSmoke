@@ -6,6 +6,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 {
     [SerializeField] private Image _healthBar;
     [SerializeField] private Image _chargeBar;
+    [SerializeField] private Image _acidationBar;
     [SerializeField] private GameObject _pressSpaceToGetUp;
     [SerializeField] private TMP_Text _respawnCountDown;
 
@@ -13,6 +14,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     private PlayerCombatSystem _playerCombatSystem;
     private PlayerKnockout _playerKnockout;
     private PlayerDeath _playerDeath;
+    private PlayerAcidation _playerAcidation;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -20,11 +22,13 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         _playerCombatSystem = playerComponents.GetPlayerCombatSystem();
         _playerKnockout = playerComponents.GetPlayerKnockout();
         _playerDeath = playerComponents.GetPlayerDeath();
+        _playerAcidation = playerComponents.GetPlayerAcidation();
 
         _playerHealth.OnPlayerHealthChange += UpdateHealthUI;
         _playerCombatSystem.OnChargeChange += UpdateChargeUI;
         _playerKnockout.OnCanGetUp += PressSpaceToGetUp;
         _playerDeath.OnRespawnCountdown += UpdateRespawnTime;
+        _playerAcidation.OnAcidationChange += UpdateAcidUI;
     }
 
     private void UpdateHealthUI(float amount)
@@ -37,6 +41,11 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     {
         _chargeBar.fillAmount = amount;
         ColorBar(_chargeBar, amount, Color.red, Color.yellow, Color.white);
+    }
+
+    private void UpdateAcidUI(float amount)
+    {
+        _acidationBar.fillAmount = amount;
     }
 
     private void ColorBar(Image bar, float amount, Color full, Color mid, Color empty)

@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWalk : MonoBehaviour,IPlayerComponent
 {
     [ReadOnly][SerializeField] private float _currentSpeed;
-    [SerializeField] private float _walkingSpeed;
+    [SerializeField] private float _baseWalkingSpeed;
     [SerializeField] private float _airMovementSpeed;
     [SerializeField] private float _currentTurnSpeed = 0.1f;
 
@@ -21,6 +22,8 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
     private bool _canMove = true;
     private Vector2 _movementInput;
 
+    private Dictionary<string, float> _speedModifiers = new Dictionary<string, float>();
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _characterController = playerComponents.GetCharacterController();
@@ -29,7 +32,7 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
         _playerAnimations = playerComponents.GetPlayerAnimations();
         _groundCheck = playerComponents.GetPlayerGroundCheck();
         _groundCheck.OnGroundCheckChange += ChangeSpeedToAir;
-        _currentSpeed = _walkingSpeed;
+        _currentSpeed = _baseWalkingSpeed;
     }
 
     public void Walk(Vector2 direction)
@@ -78,17 +81,49 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
     {
         if (ground)
         {
-            _currentSpeed = _walkingSpeed;
+            RemoveSpeedModifier("InAir");
         }
         else
         {
-            _currentSpeed = _airMovementSpeed;
+            AddSpeedModifier("InAir", _airMovementSpeed);
         }
     }
 
     public void SetCanMove(bool canMove)
     {
         _canMove = canMove;
+    }
+
+    public void AddSpeedModifier(string modifierName, float modifierValue)
+    {
+        if (_speedModifiers.ContainsKey(modifierName))
+        {
+            return; //already exist
+        }
+        else
+        {
+            _speedModifiers.Add(modifierName, modifierValue);
+        }
+
+        UpdateCurrentSpeed();
+    }
+
+    public void RemoveSpeedModifier(string modifierName)
+    {
+        if (_speedModifiers.ContainsKey(modifierName))
+        {
+            _speedModifiers.Remove(modifierName);
+            UpdateCurrentSpeed();
+        }
+    }
+
+    private void UpdateCurrentSpeed()
+    {
+        _currentSpeed = _baseWalkingSpeed;
+        foreach (float modifierValue in _speedModifiers.Values)
+        {
+            _currentSpeed *= modifierValue;
+        }
     }
 
 }
