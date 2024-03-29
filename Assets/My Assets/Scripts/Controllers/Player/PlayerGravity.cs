@@ -7,7 +7,7 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     private PlayerGroundCheck _groundCheck;
     private PlayerJump _playerJump;
     [ReadOnly][SerializeField] private float _currentFallingSpeed = 0f;
-    private bool _bCanFall = true;
+    [ReadOnly][SerializeField] private bool _bCanFall = true;
 
     private void PlayerUpdate()
     {

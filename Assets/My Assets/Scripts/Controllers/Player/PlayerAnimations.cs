@@ -7,6 +7,7 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
     private int _currentWalk;
     [SerializeField] private Animator _animator;
     [SerializeField] private string _walkInt;
+    [SerializeField] private string _walkSpeedFloat;
     [SerializeField] private string _jumpTrigger;
     [SerializeField] private string _flipTrigger;
     [SerializeField] private string _groundedBool;
@@ -30,6 +31,11 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
             _currentWalk = walkInt;
             _animator.SetInteger(_walkInt, walkInt);
         }
+    }
+
+    public void SetWalkSpeed(float speed)
+    {
+        _animator.SetFloat(_walkSpeedFloat, speed);
     }
 
     public void ChangeGlide(bool glide)

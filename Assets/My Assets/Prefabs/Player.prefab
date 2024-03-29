@@ -398,6 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gravityPower: 20
   _currentFallingSpeed: 0
+  _bCanFall: 1
 --- !u!114 &6556491150215850704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,6 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 1472661124433912502}
   _walkInt: Walk
+  _walkSpeedFloat: WalkSpeed
   _jumpTrigger: Jump
   _flipTrigger: Flip
   _groundedBool: Grounded

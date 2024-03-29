@@ -120,10 +120,13 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
     private void UpdateCurrentSpeed()
     {
         _currentSpeed = _baseWalkingSpeed;
+        float walkSpeedForAnimation = 1;
         foreach (float modifierValue in _speedModifiers.Values)
         {
             _currentSpeed *= modifierValue;
+            walkSpeedForAnimation *= modifierValue;
         }
+        _playerAnimations.SetWalkSpeed(walkSpeedForAnimation);
     }
 
 }

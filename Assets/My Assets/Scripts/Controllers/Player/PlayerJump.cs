@@ -129,6 +129,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     {
         StopCharacterController();
         _gravity.SetCanFall(false);
+        _gravity.ResetFall();
         _currentJumpForce = _jumpPower;
         HandleJumpMovement();
         _currentJumpCooldown = _jumpCooldown;

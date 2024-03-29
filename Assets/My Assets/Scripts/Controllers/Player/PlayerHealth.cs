@@ -71,6 +71,7 @@ public class PlayerHealth : Health , IPlayerComponent
     public override void HealToMax()
     {
         base.HealToMax();
+        UpdateHealthUI();
         _currentAcidity = 0;
         _playerAcidation.SetAcidationToMax();
         _playerAcidation.SetCanGenerateAcidation(true);

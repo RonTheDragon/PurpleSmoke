@@ -305,6 +305,8 @@ public class UnarmedMoveset : ChargeableMoveSet
 
     private void OnGroundedChanged(bool OnGround)
     {
+        if (_castTimeLeft > 0) return;
+
         if (OnGround)
         {
             _attackedInAir = false;
