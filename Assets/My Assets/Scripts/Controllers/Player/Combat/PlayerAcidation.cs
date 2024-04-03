@@ -36,19 +36,15 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
         HandleAcidationMeter();
     }
 
-    public void OnAcidationActivation()
+    public void OnAcidationInputDown()
     {
         if (!_isAcidationActivated && _currentAcidation >= _minAcidationForUse)
         {
             TurnAcidationOn();
         }
-    }
-
-    public void OnAcidationDischarge()
-    {
-        if (_isAcidationActivated)
+        else if (_isAcidationActivated)
         {
-            AcidationDischarge();
+            TurnAcidationOff();
         }
     }
 
@@ -85,7 +81,7 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
         }
         else if (_currentAcidation < 0)
         {
-            AcidationDischarge();
+            TurnAcidationOff();
         }
     }
 
@@ -107,13 +103,6 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
         }
     }
 
-    private void AcidationDischarge()
-    {
-        TurnAcidationOff();
-        SetAcidationToEmpty();
-        _acidationReganCooldownTimeLeft = _acidationReganCooldown;
-    }
-
     private void UpdateAcidation()
     {
         OnAcidationChange?.Invoke(_currentAcidation / _maxAcidation);
@@ -131,6 +120,7 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
         _isAcidationActivated = false;
         _playerWalk.RemoveSpeedModifier("Acidation");
         OnAcidationToggle?.Invoke(false);
+        _acidationReganCooldownTimeLeft = _acidationReganCooldown;
     }
 
     public void SetCanGenerateAcidation(bool canGenerateAcidation)

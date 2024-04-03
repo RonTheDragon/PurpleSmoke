@@ -99,11 +99,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     {
         if (context.phase == InputActionPhase.Started)
         {
-            _playerAcidation?.OnAcidationActivation();
-        }
-        else if (context.phase == InputActionPhase.Canceled)
-        {
-            _playerAcidation?.OnAcidationDischarge();
+            _playerAcidation?.OnAcidationInputDown();
         }
     }
 }
