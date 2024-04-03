@@ -10,6 +10,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private PlayerJump _playerJump;
     private PlayerGlide _playerGlide;
     private PlayerCombatSystem _playerCombatSystem;
+    private PlayerAimMode _playerAimMode;
     private PlayerAcidation _playerAcidation;
     private PlayerKnockout _playerKnockout;
     private PlayerDeath _playerDeath;
@@ -21,6 +22,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerWalk = playerComponents.GetPlayerWalk();
+        _playerAimMode = playerComponents.GetPlayerAimMode();
         _playerJump = playerComponents.GetPlayerJump();
         _playerLook = playerComponents.GetPlayerLook();
         _playerGlide = playerComponents.GetPlayerGlide();
@@ -92,6 +94,14 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         else if (context.phase == InputActionPhase.Canceled)
         {
             _playerCombatSystem?.OnReleaseHeavyAttack();
+        }
+    }
+
+    public void AimMode(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            _playerAimMode?.OnAimInputDown();
         }
     }
 

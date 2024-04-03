@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class CombatMoveSet : MonoBehaviour
 {
     protected PlayerCombatSystem _playerCombatSystem;
+    protected float _castTimeLeft;
     public abstract void OnLightAttack();
 
     public abstract void OnReleaseLightAttack();

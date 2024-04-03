@@ -21,6 +21,7 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
     private Vector3 _moveDirection;
     private bool _canMove = true;
     private Vector2 _movementInput;
+    private bool _lockOnForward;
 
     private Dictionary<string, float> _speedModifiers = new Dictionary<string, float>();
 
@@ -40,11 +41,20 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
         _movementInput = direction;
         if (!_canMove) { return; }
 
+
+        if (_lockOnForward)
+        {
+            RotatePlayerForward();
+        }
+
         if (IsGettingMovementInput())
         {
             _normalizedDirection = _movementInput.normalized;
             _targetAngle = CalculateTargetAngle();
-            RotatePlayer();
+            if (!_lockOnForward)
+            {
+                RotatePlayer();
+            }
             MovePlayer();
             _playerAnimations.ChangeWalk(1);
         }
@@ -67,9 +77,17 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
 
     private void RotatePlayer()
     {
-        _angle = Mathf.SmoothDampAngle(_playerBody.eulerAngles.y, _targetAngle, ref _currentTurnVelocity, _currentTurnSpeed);
+            _angle = Mathf.SmoothDampAngle(_playerBody.eulerAngles.y, _targetAngle, ref _currentTurnVelocity, _currentTurnSpeed);
+            _playerBody.rotation = Quaternion.Euler(0, _angle, 0);
+    }
+
+    private void RotatePlayerForward()
+    {
+        _angle = Mathf.SmoothDampAngle(_playerBody.eulerAngles.y, _camera.transform.eulerAngles.y, ref _currentTurnVelocity, _currentTurnSpeed);
         _playerBody.rotation = Quaternion.Euler(0, _angle, 0);
     }
+
+
 
     private void MovePlayer()
     {
@@ -127,6 +145,11 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
             walkSpeedForAnimation *= modifierValue;
         }
         _playerAnimations.SetWalkSpeed(walkSpeedForAnimation);
+    }
+
+    public void SetLockOnForward(bool lockOnForward)
+    {
+        _lockOnForward = lockOnForward;
     }
 
 }

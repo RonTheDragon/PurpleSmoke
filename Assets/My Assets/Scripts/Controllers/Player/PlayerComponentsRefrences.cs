@@ -6,9 +6,11 @@ public class PlayerComponentsRefrences : MonoBehaviour
     [SerializeField] private Transform _playerBody;
     [SerializeField] private Transform _cameraHolder;
     [SerializeField] private Camera _mainCamera;
+    [SerializeField] private Transform _shooter;
     [SerializeField] private PlayerInputsHandler _playerInputsHandler;
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private PlayerWalk _playerWalk;
+    [SerializeField] private PlayerAimMode _playerAimMode;
     [SerializeField] private PlayerLook _playerLook;
     [SerializeField] private PlayerJump _playerJump;
     [SerializeField] private PlayerGravity _playerGravity;
@@ -43,6 +45,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
         _playerUI.InitializePlayerComponent(this);
         _playerInputsHandler.InitializePlayerComponent(this);
         _playerWalk.InitializePlayerComponent(this);
+        _playerAimMode.InitializePlayerComponent(this);
         _playerJump.InitializePlayerComponent(this);
         _playerGravity.InitializePlayerComponent(this);
         _playerLook.InitializePlayerComponent(this);
@@ -91,6 +94,11 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public Camera GetCamera()
     {
         return _mainCamera;
+    }
+
+    public Transform GetShooter()
+    {
+        return _shooter;
     }
 
     public Transform GetCameraHolder()
@@ -151,5 +159,10 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public PlayerAcidation GetPlayerAcidation()
     {
         return _playerAcidation;
+    }
+
+    public PlayerAimMode GetPlayerAimMode()
+    {
+        return _playerAimMode;
     }
 }

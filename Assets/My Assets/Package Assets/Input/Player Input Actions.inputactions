@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "AimMode",
+                    "type": "Button",
+                    "id": "c6a37f1e-c32a-4e81-b2e2-92df87d7fe78",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Acidation",
                     "type": "Button",
                     "id": "63adfed8-bb57-424e-8f07-4e8d5f00e9c8",
@@ -366,6 +375,28 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Acidation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ed22296-29d9-4f95-8627-8e2edfdc3d54",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "AimMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "adebcb3f-aafb-4798-a462-046d4cfff7d1",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "AimMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

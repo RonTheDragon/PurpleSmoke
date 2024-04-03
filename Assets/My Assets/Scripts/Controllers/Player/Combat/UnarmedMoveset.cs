@@ -17,7 +17,6 @@ public class UnarmedMoveset : ChargeableMoveSet
     [ReadOnly][SerializeField] private int _currentCombo;
     [SerializeField] private float _comboBreakTime;
     private float _comboTimeLeft;
-    private float _castTimeLeft;
     [SerializeField] private TriggerDamage[] _triggerDamage;
     [SerializeField] private ExplosionDamage _explosionDamage;
     private int _lastAttackType;

@@ -73,6 +73,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""AimMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""c6a37f1e-c32a-4e81-b2e2-92df87d7fe78"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Acidation"",
                     ""type"": ""Button"",
                     ""id"": ""63adfed8-bb57-424e-8f07-4e8d5f00e9c8"",
@@ -390,6 +399,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Acidation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ed22296-29d9-4f95-8627-8e2edfdc3d54"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""AimMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""adebcb3f-aafb-4798-a462-046d4cfff7d1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""AimMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -431,6 +462,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_LightAttack = m_Player.FindAction("Light Attack", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("Heavy Attack", throwIfNotFound: true);
+        m_Player_AimMode = m_Player.FindAction("AimMode", throwIfNotFound: true);
         m_Player_Acidation = m_Player.FindAction("Acidation", throwIfNotFound: true);
     }
 
@@ -498,6 +530,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_LightAttack;
     private readonly InputAction m_Player_HeavyAttack;
+    private readonly InputAction m_Player_AimMode;
     private readonly InputAction m_Player_Acidation;
     public struct PlayerActions
     {
@@ -508,6 +541,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
+        public InputAction @AimMode => m_Wrapper.m_Player_AimMode;
         public InputAction @Acidation => m_Wrapper.m_Player_Acidation;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -533,6 +567,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @HeavyAttack.started += instance.OnHeavyAttack;
             @HeavyAttack.performed += instance.OnHeavyAttack;
             @HeavyAttack.canceled += instance.OnHeavyAttack;
+            @AimMode.started += instance.OnAimMode;
+            @AimMode.performed += instance.OnAimMode;
+            @AimMode.canceled += instance.OnAimMode;
             @Acidation.started += instance.OnAcidation;
             @Acidation.performed += instance.OnAcidation;
             @Acidation.canceled += instance.OnAcidation;
@@ -555,6 +592,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @HeavyAttack.started -= instance.OnHeavyAttack;
             @HeavyAttack.performed -= instance.OnHeavyAttack;
             @HeavyAttack.canceled -= instance.OnHeavyAttack;
+            @AimMode.started -= instance.OnAimMode;
+            @AimMode.performed -= instance.OnAimMode;
+            @AimMode.canceled -= instance.OnAimMode;
             @Acidation.started -= instance.OnAcidation;
             @Acidation.performed -= instance.OnAcidation;
             @Acidation.canceled -= instance.OnAcidation;
@@ -600,6 +640,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnAimMode(InputAction.CallbackContext context);
         void OnAcidation(InputAction.CallbackContext context);
     }
 }

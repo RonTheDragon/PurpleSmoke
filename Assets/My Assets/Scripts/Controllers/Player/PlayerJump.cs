@@ -19,15 +19,13 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
 
     [SerializeField] private float _fallWhenReachVelocity = 1f;
 
-    [ReadOnly][SerializeField] private bool _doubleJump;
+    [SerializeField] private bool _isDoubleJump;
 
     private Vector2 _jumpMovementInput;
 
-    [ReadOnly][SerializeField]private Vector2 _currentJumpMovement;
+    [SerializeField] private Vector2 _currentJumpMovement;
 
     private bool _canJump = true;
-
-    
 
     private void PlayerUpdate()
     {
@@ -74,17 +72,17 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
 
     private void MoveSideways()
     {
-        _characterController.Move(new Vector3(_currentJumpMovement.x,0, _currentJumpMovement.y)*Time.deltaTime);
+        _characterController.Move(new Vector3(_currentJumpMovement.x, 0, _currentJumpMovement.y) * Time.deltaTime);
     }
 
-    private void LoseUpwardsVelocity() 
+    private void LoseUpwardsVelocity()
     {
-        _currentJumpForce -= _currentJumpForce* _loseJumpPowerMult*Time.deltaTime;
+        _currentJumpForce -= _currentJumpForce * _loseJumpPowerMult * Time.deltaTime;
     }
 
     private void LoseSidewaysVelocity()
     {
-        _currentJumpMovement -= _currentJumpMovement* _loseJumpPowerMult * Time.deltaTime;
+        _currentJumpMovement -= _currentJumpMovement * _loseJumpPowerMult * Time.deltaTime;
     }
 
     private void EndJumpAndFall()
@@ -110,22 +108,22 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     {
         if (_currentJumpCooldown <= 0 && _canJump)
         {
-            _jumpMovementInput = movement;
+            _jumpMovementInput = movement.normalized;
             if (_groundCheck.IsGrounded())
             {
                 InitiateJump();
                 _playerAnimations.Jump();
             }
-            else if (_doubleJump)
+            else if (_isDoubleJump)
             {
                 InitiateJump();
-                _doubleJump = false;
+                _isDoubleJump = false;
                 _playerAnimations.Flip();
             }
         }
     }
 
-    private void InitiateJump() 
+    private void InitiateJump()
     {
         StopCharacterController();
         _gravity.SetCanFall(false);
@@ -145,44 +143,32 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     {
         if (_jumpMovementInput.magnitude > 0)
         {
-            Vector2 normalized = _jumpMovementInput.normalized;
-            Vector3 v3 = Quaternion.Euler(0, CalculateTargetAngle(normalized), 0)
-                * Vector3.forward * _jumpMovementPower;
-            _currentJumpMovement= new Vector2(v3.x, v3.z);
+            Vector3 v3 = Quaternion.Euler(0, CalculateTargetAngle(_jumpMovementInput), 0) * Vector3.forward * _jumpMovementPower;
+            _currentJumpMovement = new Vector2(v3.x, v3.z);
         }
     }
 
-    private float CalculateTargetAngle(Vector2 _normalizedDirection)
+    private float CalculateTargetAngle(Vector2 normalizedDirection)
     {
-        return Mathf.Atan2(_normalizedDirection.x, _normalizedDirection.y)
-            * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
+        return Mathf.Atan2(normalizedDirection.x, normalizedDirection.y) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
     }
-
 
     private bool IsJumping()
     {
-        if (_currentJumpForce> _fallWhenReachVelocity)
-        {
-            return true;
-        }
-        return false;
+        return _currentJumpForce > _fallWhenReachVelocity;
     }
 
     private void ResetDoubleJump(bool ground)
     {
         if (ground)
         {
-            _doubleJump = true;
+            _isDoubleJump = true;
         }
     }
 
     public bool CanGlide()
     {
-        if (_currentJumpCooldown <= 0 && !_doubleJump)
-        {
-            return true;
-        }
-        return false;
+        return _currentJumpCooldown <= 0 && !_isDoubleJump;
     }
 
     public void SetCanJump(bool canJump)
