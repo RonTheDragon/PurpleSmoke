@@ -431,7 +431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gravityPower: 20
   _currentFallingSpeed: 0
-  _bCanFall: 1
+  _notFallingReasons: []
 --- !u!114 &6556491150215850704
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -92,7 +92,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
             _currentJumpForce = 0;
             _currentJumpMovement = Vector2.zero;
             _gravity.ResetFall();
-            _gravity.SetCanFall(true);
+            _gravity.RemoveNotFallingReason("Jump");
         }
     }
 
@@ -100,6 +100,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     {
         _currentJumpForce = 0;
         _currentJumpMovement = Vector2.zero;
+        _gravity.RemoveNotFallingReason("Jump");
         _gravity.ResetFall();
         StopCharacterController();
     }
@@ -126,7 +127,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     private void InitiateJump()
     {
         StopCharacterController();
-        _gravity.SetCanFall(false);
+        _gravity.AddNotFallingReason("Jump");
         _gravity.ResetFall();
         _currentJumpForce = _jumpPower;
         HandleJumpMovement();

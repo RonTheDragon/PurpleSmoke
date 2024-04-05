@@ -14,6 +14,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     private PlayerWalk _playerMovement;
     private PlayerAttackMovement _playerAttackMovement;
     private PlayerGravity _playerGravity;
+    private PlayerJump _playerJump;
     [ReadOnly][SerializeField] private int _currentCombo;
     [SerializeField] private float _comboBreakTime;
     private float _comboTimeLeft;
@@ -31,6 +32,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         _playerMovement = _playerCombatSystem.GetMovement();
         _playerAttackMovement = _playerCombatSystem.GetAttackMovement();
         _playerGravity = _playerCombatSystem.GetGravity();
+        _playerJump = _playerCombatSystem.GetJump();
         _playerAttackMovement.OnCrashedDown += OnCrashedDown;
         foreach (TriggerDamage trigger in _triggerDamage) {
             trigger.SetOwner(transform.parent.gameObject); }
@@ -90,7 +92,8 @@ public class UnarmedMoveset : ChargeableMoveSet
     private void LightInAir()
     {
         _playerMovement.SetCanMove(false);
-        _playerGravity.StopInAir();
+        _playerJump.StopJumpMidAir();
+        _playerGravity.AddNotFallingReason("AirAttack");
         _attackedInAir = true;
         PerformLightAttack(_lightAttackInAir);
         _playerAttackMovement.SetMovement(_lightAttackInAir.Movement);
@@ -124,7 +127,8 @@ public class UnarmedMoveset : ChargeableMoveSet
             _currentChargedAttack = 2;
             PerformCharging(_heavyDownAttack);
             _playerMovement.SetCanMove(false);
-            _playerGravity.StopInAir();
+            _playerJump.StopJumpMidAir();
+            _playerGravity.AddNotFallingReason("AirAttack");
         }
 
         base.OnHeavyAttack();
@@ -275,7 +279,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         {
             _castTimeLeft = 0;
             _playerMovement.SetCanMove(true);
-            _playerGravity.SetCanFall(true);
+            _playerGravity.RemoveNotFallingReason("AirAttack");
             _playerGravity.ResetFall();
         }
     }

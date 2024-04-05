@@ -8,6 +8,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     private CharacterController _controller;
     private PlayerGroundCheck _groundCheck;
     private PlayerGravity _gravity;
+    private PlayerJump _playerJump;
     private PlayerAnimations _animations;
     private PlayerWalk _movement;
     private PlayerAttackMovement _attackMovement;
@@ -36,6 +37,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         _gravity = playerComponents.GetPlayerGravity();
         _playerAcidation = playerComponents.GetPlayerAcidation();
         _shooter = playerComponents.GetShooter();
+        _playerJump = playerComponents.GetPlayerJump();
 
         TemporaryStart();
         playerComponents.OnUpdate += PlayerUpdate;
@@ -79,6 +81,11 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     public PlayerGravity GetGravity()
     {
         return _gravity;
+    }
+
+    public PlayerJump GetJump()
+    {
+        return _playerJump;
     }
 
     private void PlayerUpdate()

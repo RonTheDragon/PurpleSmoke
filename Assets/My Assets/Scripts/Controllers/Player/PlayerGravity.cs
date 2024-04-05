@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGravity : MonoBehaviour, IPlayerComponent
@@ -5,9 +6,9 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     private CharacterController _characterController;
     [SerializeField] private float _gravityPower = 1.0f;
     private PlayerGroundCheck _groundCheck;
-    private PlayerJump _playerJump;
     [ReadOnly][SerializeField] private float _currentFallingSpeed = 0f;
-    [ReadOnly][SerializeField] private bool _bCanFall = true;
+    [ReadOnly][SerializeField] private List<string> _notFallingReasons = new List<string>();
+    private bool _canFall=true;
 
     private void PlayerUpdate()
     {
@@ -18,7 +19,6 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     {
         _characterController = playerComponents.GetCharacterController();
         _groundCheck = playerComponents.GetPlayerGroundCheck();
-        _playerJump = playerComponents.GetPlayerJump();
         _groundCheck.OnGroundCheckChange += (b) => { ResetFall(); };
         playerComponents.OnUpdate += PlayerUpdate;
     }
@@ -31,27 +31,18 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
             if (IsActuallyFalling())
             {
                 IncreaseFallingSpeed();
-            }  
+            }
         }
     }
 
     private bool IsFalling()
     {
-        if (_bCanFall && !_groundCheck.IsGrounded())
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public void SetCanFall(bool new_bCanFall)
-    {
-        _bCanFall = new_bCanFall;
+        return _canFall && !_groundCheck.IsGrounded();
     }
 
     private void FallDown()
     {
-        _characterController.Move(new Vector3(0, -_currentFallingSpeed* Time.deltaTime, 0));
+        _characterController.Move(new Vector3(0, -_currentFallingSpeed * Time.deltaTime, 0));
     }
 
     private void IncreaseFallingSpeed()
@@ -61,17 +52,7 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
 
     public bool IsActuallyFalling()
     {
-        if (_currentFallingSpeed < 1) return true;
-
-        if (_characterController.velocity.y < 0f)
-        {
-            return true;
-        }
-        else //we stuck.
-        {
-            _currentFallingSpeed=1;
-            return false;
-        }
+        return _currentFallingSpeed < 1 || _characterController.velocity.y < 0f;
     }
 
     public void ResetFall()
@@ -79,9 +60,30 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
         _currentFallingSpeed = 0;
     }
 
-    public void StopInAir()
+    public void AddNotFallingReason(string reason)
     {
-        _playerJump.StopJumpMidAir();
-        _bCanFall = false;
+        if (!_notFallingReasons.Contains(reason))
+        {
+            _notFallingReasons.Add(reason);
+            _canFall = false;
+        }
+    }
+
+    public void RemoveNotFallingReason(string reason)
+    {
+        if (_notFallingReasons.Contains(reason))
+        {
+            _notFallingReasons.Remove(reason);
+        }
+        if (_notFallingReasons.Count == 0)
+        {
+            _canFall = true;
+        }
+    }
+
+    public void ClearNotFallingReasons()
+    {
+        _notFallingReasons.Clear();
+        _canFall = true;
     }
 }

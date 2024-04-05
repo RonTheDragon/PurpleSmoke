@@ -32,7 +32,7 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
     {
         if (_bIsGliding)
         {
-            _playerGravity.SetCanFall(true);
+            _playerGravity.RemoveNotFallingReason("Glide");
             StopGlide();
         }
     }
@@ -40,7 +40,7 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
     private void StartGlide()
     {
         _playerJump.StopJumpMidAir();
-        _playerGravity.SetCanFall(false);
+        _playerGravity.AddNotFallingReason("Glide");
         _bIsGliding = true;
         _playerAnimations.ChangeGlide(true);
     }

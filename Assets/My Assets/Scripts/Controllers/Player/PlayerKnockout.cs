@@ -162,7 +162,7 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
         _playerWalk.SetCanMove(false);
         _playerJump.SetCanJump(false);
         _playerCombatSystem.SetCanAttack(false);
-        _playerGravity.SetCanFall(true);
+        _playerGravity.ClearNotFallingReasons();
     }
 
     public void UnStunPlayer()
