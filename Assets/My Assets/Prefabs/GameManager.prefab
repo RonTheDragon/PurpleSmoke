@@ -215,6 +215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1664380171589133797}
   - component: {fileID: 6289108918852795433}
+  - component: {fileID: 7535000481916580830}
   m_Layer: 0
   m_Name: ObjectPooler
   m_TagString: Untagged
@@ -251,7 +252,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pools:
   - Tag: AcidShoot
-    Prefab: {fileID: 3978379593884122682, guid: 1ab9d6b141bf57b4da9d5c517c5f6d93,
+    Prefab: {fileID: 6847307818092735801, guid: 1ab9d6b141bf57b4da9d5c517c5f6d93,
+      type: 3}
+    Amount: 5
+--- !u!114 &7535000481916580830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369693108373930574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8757846c1b56201429338fd1e4d67c1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pools:
+  - Tag: AcidSplash
+    Prefab: {fileID: 5561822216052773809, guid: be2a1fb2100af90429ce6094e28542d8,
       type: 3}
     Amount: 5
 --- !u!1 &6678245051165398795
@@ -386,3 +404,4 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1a3754e3c906e1248930907ca9be1616, type: 2}
   - {fileID: 2100000, guid: e06ebe67db8f0eb448af871fd87bc1ed, type: 2}
   ProjectilePooler: {fileID: 6289108918852795433}
+  VisualEffectsPooler: {fileID: 7535000481916580830}

@@ -44,19 +44,27 @@ public class AcidSpitMoveset : ChargeableMoveSet
         _castTimeLeft = _acidSpitAttack.CastTime;
         Projectile projectile =_projectilePooler.SpawnFromPool(_acidSpitAttack.ProjectileTag, _shooter.position, _shooter.rotation);
 
-        projectile.SetProjectile(_acidSpitAttack.ProjectileSpeed, _acidSpitAttack.ProjectileGravity);
+        projectile.SetProjectile(transform.parent.gameObject,_acidSpitAttack);
         // Apply other effects of the acid spit attack
         // You can modify this part based on your game logic
     }
 }
 
+public class ProjectileAttack
+{
+
+}
+
 [System.Serializable]
-class AcidSpitAttack
+public class AcidSpitAttack : ProjectileAttack
 {
     public string ProjectileTag;
     public string AnimationName;
     public float CastTime;
     public float ProjectileSpeed;
     public float ProjectileGravity;
+    public float ProjectileDamage;
+    public float ProjectileAcidDamage;
+    public float ProjectileExplosionRange;
     // Add other properties related to the acid spit attack if needed
 }

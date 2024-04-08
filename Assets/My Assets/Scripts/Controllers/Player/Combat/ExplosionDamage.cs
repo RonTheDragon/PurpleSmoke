@@ -3,7 +3,7 @@ using UnityEngine;
 public class ExplosionDamage : Damage
 {
     protected float _radius;
-    protected string _explosionTag;
+    [SerializeField]protected string _explosionTag;
 
     public void SetRadius(float radius)
     {
@@ -51,8 +51,8 @@ public class ExplosionDamage : Damage
     }
 
     protected virtual void ExplosionEffect() 
-    { 
-        
+    {
+        GameManager.Instance.VisualEffectsPooler.SpawnFromPool(_explosionTag, transform.position, transform.rotation).PlayEffect();
     }
 
 }

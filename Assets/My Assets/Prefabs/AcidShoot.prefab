@@ -258,9 +258,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9076755506014189050}
-  - component: {fileID: 3978379593884122682}
   - component: {fileID: 6301342496689165946}
   - component: {fileID: 4089149564560887147}
+  - component: {fileID: 6847307818092735801}
+  - component: {fileID: 524350674282121159}
+  - component: {fileID: 6596749998716795977}
   m_Layer: 0
   m_Name: AcidShoot
   m_TagString: Untagged
@@ -284,19 +286,6 @@ Transform:
   - {fileID: 1430301047739780779}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3978379593884122682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1694940552184526342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 802d77ce402ff4245838671c72d87315, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movement: {fileID: 4089149564560887147}
 --- !u!136 &6301342496689165946
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -334,6 +323,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 1430301047739780779}
   _visualEffect: {fileID: 4807923013463585864}
+--- !u!114 &6847307818092735801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694940552184526342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0aced45c8cb79247bec71ed6f1d35d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movement: {fileID: 4089149564560887147}
+  damager: {fileID: 524350674282121159}
+--- !u!114 &524350674282121159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694940552184526342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af8d89d38aeec454388b8a45b4368bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionTag: AcidSplash
+--- !u!54 &6596749998716795977
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694940552184526342}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4854992636959006933
 GameObject:
   m_ObjectHideFlags: 0

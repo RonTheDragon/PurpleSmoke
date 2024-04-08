@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public ProjectilePooler ProjectilePooler;
+    public VEPooler VisualEffectsPooler;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     private void CreateAllPools()
     {
         ProjectilePooler.CreateAllPools();
+        VisualEffectsPooler.CreateAllPools();
     }
 
     public void OnPlayerJoined()

@@ -1,16 +1,15 @@
 using System;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public abstract class Projectile : MonoBehaviour
 {
-    [SerializeField] private ProjectileMovement _movement;
+    [SerializeField] protected ProjectileMovement _movement;
     private bool _loopStarted;
     private Action _loop;
 
-    public void SetProjectile(float _speed, float _gravity)
+    public virtual void SetProjectile(GameObject owner,ProjectileAttack projectileAttack)
     {
         StartLoops();
-        _movement.SetVariablesAndLaunch(_speed, _gravity);
     }
 
     private void StartLoops()

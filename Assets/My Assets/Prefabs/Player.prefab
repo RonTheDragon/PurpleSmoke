@@ -1634,6 +1634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b02db47f3e62642a98af68c7d7598e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosionTag: 
 --- !u!1 &5469861411427056093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1765,6 +1766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b02db47f3e62642a98af68c7d7598e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosionTag: 
 --- !u!1 &6595917457975134440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,6 +1898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b02db47f3e62642a98af68c7d7598e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosionTag: 
 --- !u!1 &6843095152535354532
 GameObject:
   m_ObjectHideFlags: 0
@@ -3795,6 +3798,9 @@ MonoBehaviour:
     CastTime: 0.5
     ProjectileSpeed: 15
     ProjectileGravity: 45
+    ProjectileDamage: 5
+    ProjectileAcidDamage: 5
+    ProjectileExplosionRange: 5
 --- !u!114 &2875694453276084671
 MonoBehaviour:
   m_ObjectHideFlags: 0
