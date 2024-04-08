@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private ProjectileMovement _movement;
+    private bool _loopStarted;
+    private Action _loop;
+
+    public void SetProjectile(float _speed, float _gravity)
     {
-        
+        StartLoops();
+        _movement.SetVariablesAndLaunch(_speed, _gravity);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void StartLoops()
     {
-        
+        if (!_loopStarted)
+        {
+            _loopStarted = true;
+            _movement.ActivateLoop(ref _loop);
+        }
+    }
+
+    private void Update()
+    {
+        _loop?.Invoke();
     }
 }

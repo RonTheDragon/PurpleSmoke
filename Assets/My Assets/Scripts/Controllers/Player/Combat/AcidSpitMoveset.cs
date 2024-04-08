@@ -42,7 +42,9 @@ public class AcidSpitMoveset : ChargeableMoveSet
     {
        // _playerAnimations.PlayAnimation(_acidSpitAttack.AnimationName); //no animation yet
         _castTimeLeft = _acidSpitAttack.CastTime;
-        _projectilePooler.SpawnFromPool(_acidSpitAttack.ProjectileTag, _shooter.position, _shooter.rotation);
+        Projectile projectile =_projectilePooler.SpawnFromPool(_acidSpitAttack.ProjectileTag, _shooter.position, _shooter.rotation);
+
+        projectile.SetProjectile(_acidSpitAttack.ProjectileSpeed, _acidSpitAttack.ProjectileGravity);
         // Apply other effects of the acid spit attack
         // You can modify this part based on your game logic
     }
@@ -54,5 +56,7 @@ class AcidSpitAttack
     public string ProjectileTag;
     public string AnimationName;
     public float CastTime;
+    public float ProjectileSpeed;
+    public float ProjectileGravity;
     // Add other properties related to the acid spit attack if needed
 }

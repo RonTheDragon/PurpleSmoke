@@ -22,24 +22,31 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
 
     private void PlayerUpdate()
     {
-        AimShooterAtCameraCenter();
+        AimShooterAtCrosshair();
     }
 
-    private void AimShooterAtCameraCenter()
+    private void AimShooterAtCrosshair()
     {
         if (_shootFromObject == null || _camera == null)
             return;
 
-        // Get the direction from the shooter's position to the center of the camera
-        Vector3 directionToCameraCenter = _camera.transform.position - _shootFromObject.position;
+        Vector3 directionToHitPoint;
+        // Shoot a raycast from the camera's position in its forward direction
+        RaycastHit hit;
+        if (Physics.Raycast(_camera.transform.position, _camera.transform.forward, out hit))
+        {
+            // Get the direction from the shooter's position to the point where the ray hits
+            directionToHitPoint = hit.point - _shootFromObject.position;
+        }
+        else
+        {
+            directionToHitPoint = _camera.transform.forward * 20;
+        }
 
-        // Ignore vertical component to keep the shooter's orientation parallel to the ground
-        directionToCameraCenter.y = 0f;
-
-        // Rotate the shooter to face the camera center direction
-        Quaternion targetRotation = Quaternion.LookRotation(directionToCameraCenter, Vector3.up);
+        Quaternion targetRotation = Quaternion.LookRotation(directionToHitPoint, Vector3.up);
         _shootFromObject.rotation = targetRotation;
     }
+
 
 
     public void OnAimInputDown()
@@ -58,7 +65,7 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
     {
         _isAiming = true;
         _playerWalk.SetLockOnForward(true);
-        _playerWalk.AddSpeedModifier("Aiming", 0.8f);
+        _playerWalk.AddSpeedModifier("Aiming", _playerAimMovementSpeedMultiplier);
         _playerComponentsRefrences.OnUpdate += PlayerUpdate;
         _playerCombatSystem.SetUsingRanged(true);
     }

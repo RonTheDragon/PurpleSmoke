@@ -3,14 +3,17 @@ using UnityEngine;
 public class ExplosionDamage : Damage
 {
     protected float _radius;
+    protected string _explosionTag;
 
     public void SetRadius(float radius)
     {
         _radius = radius;
     }
 
-    public void Explode()
+    public virtual void Explode()
     {
+        ExplosionEffect();
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, _radius);
 
         foreach (Collider col in colliders)
@@ -21,10 +24,13 @@ public class ExplosionDamage : Damage
                 continue; // Prevent damaging the owner itself
             }
 
-            // Calculate distance from the explosion center
-            float distance = Vector3.Distance(transform.position, col.transform.position);
+            // Get the closest point on the collider's surface to the explosion center
+            Vector3 closestPoint = col.ClosestPoint(transform.position);
 
-            // Calculate damage and knockback based on distance from the explosion center
+            // Calculate distance from the explosion center using the closest point
+            float distance = Vector3.Distance(transform.position, closestPoint);
+
+            // Calculate damage and knockback based on distance from the closest point
             float normalizedDistance = 1 - Mathf.Clamp01(distance / _radius); // Normalized distance from 0 to 1
 
             // Apply damage and knockback to the damageable object
@@ -34,7 +40,7 @@ public class ExplosionDamage : Damage
                 float damage = _currentDamage * normalizedDistance;
                 Vector2 knockback = _knockback * normalizedDistance;
                 float knockout = _knockout * normalizedDistance;
-                damageableObject.TakeDamage(damage, knockback, knockout, transform.position, _owner);
+                damageableObject.TakeDamage(damage, knockback, knockout, closestPoint, _owner);
 
                 if (_acid > 0)
                 {
@@ -43,4 +49,10 @@ public class ExplosionDamage : Damage
             }
         }
     }
+
+    protected virtual void ExplosionEffect() 
+    { 
+        
+    }
+
 }

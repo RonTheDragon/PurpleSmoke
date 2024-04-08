@@ -71,10 +71,10 @@ public class ObjectPooler<T> : MonoBehaviour where T : Component
     }
 
     [System.Serializable]
-    public class Pool<T>
+    public class Pool<TT>
     {
         public string Tag;
-        public T Prefab;
+        public TT Prefab;
         public int Amount;
     }
 }
