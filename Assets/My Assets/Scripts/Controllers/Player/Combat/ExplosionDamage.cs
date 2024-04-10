@@ -40,7 +40,8 @@ public class ExplosionDamage : Damage
                 float damage = _currentDamage * normalizedDistance;
                 Vector2 knockback = _knockback * normalizedDistance;
                 float knockout = _knockout * normalizedDistance;
-                damageableObject.TakeDamage(damage, knockback, knockout, closestPoint, _owner);
+                damageableObject.TakeDamage(damage, _owner);
+                damageableObject.TakeKnock(knockback, knockout, closestPoint);
 
                 if (_acid > 0)
                 {

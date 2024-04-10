@@ -18,6 +18,14 @@ public class PlayerHealth : Health , IPlayerComponent
     [SerializeField] private float _removeAcidAfter = 1;
     private float _removeAcidAfterTimeLeft;
 
+    private Vector2 _storedKnockBack;
+    private float _storedKnockout;
+    private Vector3 _knockedFrom;
+    [SerializeField] private float _knockDelay = 0.1f;
+    private float _currentKnockDelay;
+
+    private float _highestKnockback;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerKnockback = playerComponents.GetPlayerKnockback();
@@ -31,20 +39,51 @@ public class PlayerHealth : Health , IPlayerComponent
 
     private void PlayerUpdate()
     {
+        HandleKnock();
         HandleAcid();
     }
 
-    public override void TakeDamage(float damageAmount, Vector2 knockback, float knockout , Vector3 attackLocation, GameObject Attacker)
+    public override void TakeDamage(float damageAmount, GameObject Attacker)
     {
         if (_isDead) return;
 
         _currentHealth -= CalculateDamage(damageAmount);
         if (CheckIfDied()) return;
 
-        _playerKnockback.TakeKnockback(knockback, attackLocation);
-        _playerKnockout.RecieveKnockout(knockout);
         UpdateHealthUI();
     }
+
+    public override void TakeKnock(Vector2 knockback, float knockout, Vector3 attackLocation)
+    {
+        if (_isDead) return;
+        if (_currentKnockDelay == 0)
+        {
+            _currentKnockDelay = _knockDelay;
+        }
+        _storedKnockBack += knockback;
+        _storedKnockout += knockout;
+        if (_highestKnockback< knockback.x)
+        {
+            _highestKnockback = knockback.x;
+            _knockedFrom = attackLocation;
+        }
+    }
+
+    private void HandleKnock()
+    {
+        if (_currentKnockDelay > 0) { _currentKnockDelay -= Time.deltaTime; }
+        else if (_currentKnockDelay < 0)
+        {
+            _currentKnockDelay = 0;
+            _playerKnockback.TakeKnockback(_storedKnockBack, _knockedFrom);
+            _playerKnockout.RecieveKnockout(_storedKnockout);
+
+            _storedKnockBack = Vector2.zero;
+            _storedKnockout = 0;
+            _highestKnockback = 0;
+        }
+    }
+
 
     private bool CheckIfDied()
     {
