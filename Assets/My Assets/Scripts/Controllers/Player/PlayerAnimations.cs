@@ -56,6 +56,8 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
 
     public void PlayAnimation(string animationName)
     {
+        if (animationName == string.Empty) return;
+
         _animator.SetTrigger(animationName);
     }
 

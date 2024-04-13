@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AcidShootProjectile : Projectile
+public class AcidShootProjectile : MovingProjectile
 {
     [SerializeField] private ProjectileDecalExplosionDamage damager;
     public override void SetProjectile(GameObject owner, ProjectileAttack projectileAttack)
@@ -11,7 +11,7 @@ public class AcidShootProjectile : Projectile
             AcidSpitAttack acidSpitAttack = (AcidSpitAttack)projectileAttack;
             _movement.SetVariablesAndLaunch(acidSpitAttack.ProjectileSpeed, acidSpitAttack.ProjectileGravity);
             damager.SetOwner(owner);
-            damager.SetDamage(acidSpitAttack.ProjectileDamage,Vector2.zero,0);
+            damager.SetDamage(acidSpitAttack.ProjectileDamage);
             damager.SetAcidDamage(acidSpitAttack.ProjectileAcidDamage);
             damager.SetRadius(acidSpitAttack.ProjectileExplosionRange);
         }

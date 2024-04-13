@@ -71,6 +71,15 @@ public class PlayerHealth : Health , IPlayerComponent
 
     private void HandleKnock()
     {
+        if (_isDead)
+        {
+            _currentKnockDelay = 0;
+            _storedKnockBack = Vector2.zero;
+            _storedKnockout = 0;
+            _highestKnockback = 0;
+            return;
+        }
+
         if (_currentKnockDelay > 0) { _currentKnockDelay -= Time.deltaTime; }
         else if (_currentKnockDelay < 0)
         {

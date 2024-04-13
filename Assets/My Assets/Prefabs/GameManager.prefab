@@ -255,6 +255,10 @@ MonoBehaviour:
     Prefab: {fileID: 6847307818092735801, guid: 1ab9d6b141bf57b4da9d5c517c5f6d93,
       type: 3}
     Amount: 5
+  - Tag: AcidShotgun
+    Prefab: {fileID: 4608489908768378010, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+      type: 3}
+    Amount: 20
 --- !u!114 &7535000481916580830
 MonoBehaviour:
   m_ObjectHideFlags: 0

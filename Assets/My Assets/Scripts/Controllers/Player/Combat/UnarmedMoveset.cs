@@ -9,7 +9,6 @@ public class UnarmedMoveset : ChargeableMoveSet
     [SerializeField] private HeavyAttackWithMovement _heavyAttackInPlace;
     [SerializeField] private HeavyDownAttack _heavyDownAttack;
 
-    private PlayerAnimations _playerAnimations;
     private PlayerGroundCheck _playerGroundCheck;
     private PlayerWalk _playerMovement;
     private PlayerAttackMovement _playerAttackMovement;
@@ -117,19 +116,19 @@ public class UnarmedMoveset : ChargeableMoveSet
             if (_playerMovement.IsGettingMovementInput())
             {
                 _currentChargedAttack = 0;
-                PerformCharging(_heavyAttackMoving);
+                PerformCharging(_heavyAttackMoving.ChargeableStats);
             }
             else
             {
                 _currentChargedAttack = 1;
-                PerformCharging(_heavyAttackInPlace);
+                PerformCharging(_heavyAttackInPlace.ChargeableStats);
                 _playerMovement.SetCanMove(false);
             }
         }
         else 
         {
             _currentChargedAttack = 2;
-            PerformCharging(_heavyDownAttack);
+            PerformCharging(_heavyDownAttack.ChargeableStats);
             _playerMovement.SetCanMove(false);
             _playerJump.StopJumpMidAir();
             _playerGravity.AddNotFallingReason("AirAttack");
@@ -172,7 +171,8 @@ public class UnarmedMoveset : ChargeableMoveSet
         float knockout = Random.Range(attack.Knockout.x, attack.Knockout.y);
         foreach (TriggerDamage trigger in _triggerDamage)
         {
-            trigger.SetDamage(attack.Damage, attack.Knockback, knockout);
+            trigger.SetDamage(attack.Damage);
+            trigger.SetKnock(attack.Knockback, knockout);
             if (_playerCombatSystem.GetAcidation())
             {
                 trigger.SetAcidDamage(attack.Acid);
@@ -184,13 +184,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         };
     }
 
-    private void PerformCharging(HeavyAttack attack)
-    {
-        _releaseWhenFullyCharged = attack.ReleaseOnFull;
-        _maxCharge = attack.MaxChargeTime;
-        _minCharge = attack.MinChargeTime;
-        _playerAnimations.PlayAnimation(attack.ChargeAnimationName);
-    }
+    
 
     private void PerformHeavyAttack(HeavyAttack attack)
     {
@@ -205,7 +199,8 @@ public class UnarmedMoveset : ChargeableMoveSet
         _castTimeLeft = attack.CastTime;
         foreach (TriggerDamage trigger in _triggerDamage)
         {
-            trigger.SetDamage(damage, knockback, knockout);
+            trigger.SetDamage(damage);
+            trigger.SetKnock(knockback, knockout);
 
             if (_playerCombatSystem.GetAcidation())
             {
@@ -237,7 +232,8 @@ public class UnarmedMoveset : ChargeableMoveSet
 
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _castTimeLeft = attack.CastTime;
-        _explosionDamage.SetDamage(damage, knockback, knockout);
+        _explosionDamage.SetDamage(damage);
+        _explosionDamage.SetKnock(knockback, knockout);
         _explosionDamage.SetRadius(radius);
 
         if (_playerCombatSystem.GetAcidation())
@@ -353,9 +349,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     [System.Serializable]
     class HeavyAttack
     {
-        public string ChargeAnimationName;
-        public float MaxChargeTime;
-        public float MinChargeTime;
+        public ChargeableStats ChargeableStats;
         public string AnimationName;
         public float MinDamage;
         public float MaxDamage;
@@ -364,7 +358,6 @@ public class UnarmedMoveset : ChargeableMoveSet
         public Vector2 MinKnockout;
         public Vector2 MaxKnockout;
         public float CastTime;
-        public bool ReleaseOnFull;
         public float MinAcid;
         public float MaxAcid;
     }

@@ -1635,11 +1635,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 667451998946173399, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
-        type: 3}
-      propertyPath: _jumpCooldown
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 5461088288509020780, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1704,6 +1699,74 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 77e4e83e7c238624fb474b9b2c7d3ef5, type: 3}
+--- !u!1001 &7748354970238088887
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.076876
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.38049737
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.1622566
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512743278501555236, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7453598853526071213, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      propertyPath: m_Name
+      value: AcidShotgun
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 80e1b8ecb07561a478edf3e1a621cf63, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1715,3 +1778,4 @@ SceneRoots:
   - {fileID: 6452562658411617333}
   - {fileID: 4194266259622549436}
   - {fileID: 7229084062836244500}
+  - {fileID: 7748354970238088887}

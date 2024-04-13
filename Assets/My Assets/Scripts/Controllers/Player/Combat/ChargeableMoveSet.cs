@@ -2,6 +2,8 @@ using UnityEngine;
 
 public abstract class ChargeableMoveSet : CombatMoveSet
 {
+    protected PlayerAnimations _playerAnimations;
+
     [SerializeField] protected float _maxCharge;
     [SerializeField] protected float _minCharge;
     [ReadOnly][SerializeField] protected float _currentCharge;
@@ -33,14 +35,14 @@ public abstract class ChargeableMoveSet : CombatMoveSet
             DisplayChargeBar();
 
             if (_currentCharge < _maxCharge)
-            { 
+            {
                 _currentCharge += Time.deltaTime;
             }
-            else if (_currentCharge> _maxCharge)
+            else if (_currentCharge > _maxCharge)
             {
-                _currentCharge= _maxCharge;
-                if ( _releaseWhenFullyCharged ) 
-                OnReleaseHeavyAttack();
+                _currentCharge = _maxCharge;
+                if (_releaseWhenFullyCharged)
+                    OnReleaseHeavyAttack();
             }
         }
     }
@@ -82,7 +84,23 @@ public abstract class ChargeableMoveSet : CombatMoveSet
     public float GetChargePercentage()
     {
         float n = (_currentCharge - _minCharge) / (_maxCharge - _minCharge);
-        return n<0 ? 0: n;
+        return n < 0 ? 0 : n;
+    }
+
+    protected void PerformCharging(ChargeableStats chargeable)
+    {
+        _releaseWhenFullyCharged = chargeable.ReleaseOnFull;
+        _maxCharge = chargeable.MaxChargeTime;
+        _minCharge = chargeable.MinChargeTime;
+        _playerAnimations.PlayAnimation(chargeable.ChargeAnimationName);
     }
 
 }
+    [System.Serializable]
+    public class ChargeableStats
+    {
+        public string ChargeAnimationName;
+        public float MaxChargeTime;
+        public float MinChargeTime;
+        public bool ReleaseOnFull;
+    }
