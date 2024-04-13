@@ -53,7 +53,10 @@ public class ExplosionDamage : Damage
 
     protected virtual void ExplosionEffect() 
     {
-        GameManager.Instance.VisualEffectsPooler.SpawnFromPool(_explosionTag, transform.position, transform.rotation).PlayEffect();
+        if (_explosionTag != string.Empty)
+        {
+            GameManager.Instance.VisualEffectsPooler.SpawnFromPool(_explosionTag, transform.position, transform.rotation).PlayEffect();
+        }
     }
 
 }

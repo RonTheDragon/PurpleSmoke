@@ -18,6 +18,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     private bool _acidation = false;
     private bool _usingRanged;
     private Transform _shooter;
+    private bool _busyAttacking;
 
     private float _currentChargePercentage;
 
@@ -40,6 +41,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         _playerJump = playerComponents.GetPlayerJump();
 
         TemporaryStart();
+        _glide.OnGlide += ClearAttacks;
         playerComponents.OnUpdate += PlayerUpdate;
         _playerAcidation.OnAcidationToggle += SetAcidation;
     }
@@ -182,6 +184,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     public void ClearAttacks()
     {
         _currentMeleeMoveSet.ResetAttacks();
+        _currentRangeMoveSet.ResetAttacks();
     }
 
     public void SetCanAttack(bool canAttack)
@@ -201,10 +204,21 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     public void SetUsingRanged(bool usingRanged)
     {
         _usingRanged = usingRanged;
+        ClearAttacks();
     }
 
     public Transform GetShooter()
     {
         return _shooter;
+    }
+
+    public void SetBusyAttacking(bool busyAttacking)
+    {
+        _busyAttacking = busyAttacking;
+    }
+
+    public bool GetIsBusyAttacking()
+    {
+        return _busyAttacking;
     }
 }

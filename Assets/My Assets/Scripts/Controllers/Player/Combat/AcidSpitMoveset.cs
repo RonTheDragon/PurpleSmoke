@@ -5,6 +5,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
     private ProjectilePooler _projectilePooler;
     private PlayerAnimations _playerAnimations;
     private Transform _shooter;
+    private bool _spittingAcid;
 
     [SerializeField] private AcidSpitAttack _acidSpitAttack;
 
@@ -18,23 +19,34 @@ public class AcidSpitMoveset : ChargeableMoveSet
 
     public override void OnLightAttack()
     {
-        if (!_isCharging && _castTimeLeft <= 0)
-        {
-            PerformAcidSpit();
-        }
+        _spittingAcid = true;
     }
 
     public override void OnReleaseLightAttack()
     {
-        // Left empty
+        _spittingAcid = false;
     }
 
     public override void MoveSetUpdate()
     {
         base.MoveSetUpdate();
+
+        if (_spittingAcid) 
+        {
+            TrySpitAcid(); 
+        }
+
         if (_castTimeLeft > 0)
         {
             _castTimeLeft -= Time.deltaTime;
+        }
+    }
+
+    private void TrySpitAcid()
+    {
+        if (!_isCharging && _castTimeLeft <= 0)
+        {
+            PerformAcidSpit();
         }
     }
 
@@ -47,6 +59,12 @@ public class AcidSpitMoveset : ChargeableMoveSet
         projectile.SetProjectile(transform.parent.gameObject,_acidSpitAttack);
         // Apply other effects of the acid spit attack
         // You can modify this part based on your game logic
+    }
+
+    public override void ResetAttacks()
+    {
+        base.ResetAttacks();
+        _spittingAcid = false;
     }
 }
 

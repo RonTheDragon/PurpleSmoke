@@ -50,6 +50,8 @@ public class UnarmedMoveset : ChargeableMoveSet
     {
         if (_isCharging || _castTimeLeft > 0) return;
 
+        _playerCombatSystem.SetBusyAttacking(true);
+
         if (_playerGroundCheck.IsGrounded())
         {
             if (_playerMovement.IsGettingMovementInput())
@@ -107,6 +109,8 @@ public class UnarmedMoveset : ChargeableMoveSet
     public override void OnHeavyAttack()
     {
         if (_castTimeLeft > 0 || _releasedEarly) return;
+
+        _playerCombatSystem.SetBusyAttacking(true);
 
         if (_playerGroundCheck.IsGrounded())
         {
@@ -281,6 +285,7 @@ public class UnarmedMoveset : ChargeableMoveSet
             _playerMovement.SetCanMove(true);
             _playerGravity.RemoveNotFallingReason("AirAttack");
             _playerGravity.ResetFall();
+            _playerCombatSystem.SetBusyAttacking(false);
         }
     }
 
@@ -295,6 +300,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         base.ResetAttacks();
         _castTimeLeft = 0;
         _playerAnimations.PlayAnimation("Cancel");
+        _playerGravity.RemoveNotFallingReason("AirAttack");
     }
 
     private void BreakComboIfAttackChanged(int currentAttack)

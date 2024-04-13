@@ -13,7 +13,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     [SerializeField] private float _jumpMovementPower = 5;
     [SerializeField] private float _jumpCooldown = 0.2f;
 
-    private float _currentJumpForce;
+    [SerializeField][ReadOnly] private float _currentJumpForce;
 
     private float _currentJumpCooldown;
 
@@ -127,9 +127,9 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     private void InitiateJump()
     {
         StopCharacterController();
+        _currentJumpForce = _jumpPower;
         _gravity.AddNotFallingReason("Jump");
         _gravity.ResetFall();
-        _currentJumpForce = _jumpPower;
         HandleJumpMovement();
         _currentJumpCooldown = _jumpCooldown;
     }

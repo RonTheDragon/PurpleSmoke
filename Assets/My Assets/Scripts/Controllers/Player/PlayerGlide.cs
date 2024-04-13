@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerGlide : MonoBehaviour , IPlayerComponent
@@ -9,6 +10,7 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
     private PlayerGroundCheck _playerGroundCheck;
     private PlayerAnimations _playerAnimations;
     private bool _bIsGliding;
+    public Action OnGlide;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _characterController = playerComponents.GetCharacterController();
@@ -43,6 +45,7 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
         _playerGravity.AddNotFallingReason("Glide");
         _bIsGliding = true;
         _playerAnimations.ChangeGlide(true);
+        OnGlide?.Invoke();
     }
 
     private void StopGlide()

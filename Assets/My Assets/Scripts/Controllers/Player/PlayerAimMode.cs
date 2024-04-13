@@ -51,6 +51,8 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
 
     public void OnAimInputDown()
     {
+        if (_playerCombatSystem.GetIsBusyAttacking()) return;
+
         if (_isAiming)
         {
             TurnAimOff();
