@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AcidSpitMoveset : ChargeableMoveSet
@@ -5,6 +6,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
     private ProjectilePooler _projectilePooler;
     private Transform _shooter;
     private bool _spittingAcid;
+    private PlayerAcidation _playerAcidation;
 
     [SerializeField] private AcidSpitAttack _acidSpitAttack;
     [SerializeField] private AcidShotgunAttack _acidShotgunAttack;
@@ -15,6 +17,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
         base.MoveSetStart(playerCombatSystem);
         _playerAnimations = playerCombatSystem.GetAnimations();
         _shooter = playerCombatSystem.GetShooter();
+        _playerAcidation = playerCombatSystem.GetPlayerAcidation();
     }
 
     public override void OnLightAttack()
@@ -30,8 +33,10 @@ public class AcidSpitMoveset : ChargeableMoveSet
     public override void OnHeavyAttack()
     {
         if (_castTimeLeft > 0 || _releasedEarly) return;
-        _playerCombatSystem.SetBusyAttacking(true);
 
+        if (!_playerAcidation.TrySpendAcid(_acidShotgunAttack.AcidCost)) return;
+
+        _playerCombatSystem.SetBusyAttacking(true);      
         PerformCharging(_acidShotgunAttack.chargeableStats);
         base.OnHeavyAttack();
     }
@@ -51,6 +56,18 @@ public class AcidSpitMoveset : ChargeableMoveSet
     {
         float chargePercentage = GetChargePercentage();
         _acidShotgunAttack.PelletAmount = (int)Mathf.Lerp(_acidShotgunAttack.MinPelletAmount, _acidShotgunAttack.MaxPelletAmount, chargePercentage);
+
+        if (_playerCombatSystem.GetAcidation()) 
+        {
+            _acidShotgunAttack.PelletAmount = (int)(_acidShotgunAttack.PelletAmount * _acidShotgunAttack.AcidationPelletMult);
+            _acidShotgunAttack.Spread = _acidShotgunAttack.AcidationSpread;
+            _acidShotgunAttack.TimeBeforeDissolve = _acidShotgunAttack.AcidationTimeBeforeDissolve;
+        }
+        else
+        {
+            _acidShotgunAttack.Spread = _acidShotgunAttack.NormalSpread;
+            _acidShotgunAttack.TimeBeforeDissolve = _acidShotgunAttack.NormalTimeBeforeDissolve;
+        }
 
         _castTimeLeft = _acidSpitAttack.CastTime;
         Projectile projectile = _projectilePooler.SpawnFromPool(_acidShotgunAttack.ProjectileTag, _shooter.position, _shooter.rotation);
@@ -82,6 +99,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
     {
         if (!_isCharging && _castTimeLeft <= 0)
         {
+            if (!_playerAcidation.TrySpendAcid(_acidSpitAttack.AcidCost)) return;
             PerformAcidSpit();
         }
     }
@@ -89,7 +107,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
     private void PerformAcidSpit()
     {
         // _playerAnimations.PlayAnimation(_acidSpitAttack.AnimationName); //no animation yet
-        _castTimeLeft = _acidSpitAttack.CastTime;
+        _castTimeLeft = _playerCombatSystem.GetAcidation() ? _acidSpitAttack.AcidationCastTime : _acidSpitAttack.CastTime;
         Projectile projectile = _projectilePooler.SpawnFromPool(_acidSpitAttack.ProjectileTag, _shooter.position, _shooter.rotation);
 
         projectile.SetProjectile(transform.parent.gameObject, _acidSpitAttack);
@@ -117,25 +135,32 @@ public class ProjectileAttack
 public class AcidProjectile : ProjectileAttack
 {
     public float ProjectileAcidDamage;
+    public float AcidCost;
 }
 
-[System.Serializable]
+[Serializable]
 public class AcidSpitAttack : AcidProjectile
 {
     public float ProjectileGravity;
     public float ProjectileExplosionRange;
+    public float AcidationCastTime;
     // Add other properties related to the acid spit attack if needed
 }
 
-[System.Serializable]
+[Serializable]
 public class AcidShotgunAttack : AcidProjectile
 {
     public ChargeableStats chargeableStats;
     public int MinPelletAmount;
     public int MaxPelletAmount;
+    public float AcidationPelletMult;
     [HideInInspector] public int PelletAmount;
-    public float TimeBeforeDissolve;
-    public float Spread;
+    [HideInInspector] public float TimeBeforeDissolve;
+    public float NormalTimeBeforeDissolve;
+    public float AcidationTimeBeforeDissolve;
+    [HideInInspector] public float Spread;
+    public float NormalSpread;
+    public float AcidationSpread;
     public Vector2 Knockback;
     public float Knockout;
     // Add other properties related to the acid spit attack if needed

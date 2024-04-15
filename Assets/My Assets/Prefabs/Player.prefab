@@ -3800,29 +3800,37 @@ MonoBehaviour:
   _acidSpitAttack:
     ProjectileTag: AcidShoot
     AnimationName: 
-    CastTime: 0.5
+    CastTime: 0.4
     ProjectileSpeed: 15
     ProjectileDamage: 5
     ProjectileAcidDamage: 5
+    AcidCost: 4
     ProjectileGravity: 45
     ProjectileExplosionRange: 5
+    AcidationCastTime: 0.2
   _acidShotgunAttack:
     ProjectileTag: AcidShotgun
     AnimationName: 
-    CastTime: 0.5
+    CastTime: 0.1
     ProjectileSpeed: 30
-    ProjectileDamage: 1
-    ProjectileAcidDamage: 1
+    ProjectileDamage: 1.5
+    ProjectileAcidDamage: 2
+    AcidCost: 20
     chargeableStats:
       ChargeAnimationName: 
       MaxChargeTime: 1
-      MinChargeTime: 0.2
+      MinChargeTime: 0.4
       ReleaseOnFull: 0
     MinPelletAmount: 10
     MaxPelletAmount: 50
+    AcidationPelletMult: 2.5
     PelletAmount: 0
     TimeBeforeDissolve: 0.3
+    NormalTimeBeforeDissolve: 0.3
+    AcidationTimeBeforeDissolve: 0.5
     Spread: 20
+    NormalSpread: 20
+    AcidationSpread: 25
     Knockback: {x: 1, y: 0}
     Knockout: 2
 --- !u!114 &2875694453276084671

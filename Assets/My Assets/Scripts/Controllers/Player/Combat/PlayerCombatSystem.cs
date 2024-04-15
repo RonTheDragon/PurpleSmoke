@@ -200,6 +200,8 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     {
         _acidation = acidation;
     }
+    public PlayerAcidation GetPlayerAcidation() { return _playerAcidation; }
+
 
     public void SetUsingRanged(bool usingRanged)
     {

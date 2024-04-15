@@ -22,6 +22,7 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
     public Action<bool> OnAcidationToggle;
 
     private PlayerWalk _playerWalk;
+    public Action OnNotEnoughAcid;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -126,5 +127,18 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
     public void SetCanGenerateAcidation(bool canGenerateAcidation)
     {
         _canGenerateAcidation = canGenerateAcidation;
+    }
+
+    public bool TrySpendAcid(float acidAmount)
+    {
+        if (acidAmount <= _currentAcidation)
+        {
+            _currentAcidation -= acidAmount;
+            _acidationReganCooldownTimeLeft = _acidationReganCooldown;
+            OnAcidationChange?.Invoke(_currentAcidation / _maxAcidation);
+            return true;
+        }
+        OnNotEnoughAcid?.Invoke();
+        return false;
     }
 }

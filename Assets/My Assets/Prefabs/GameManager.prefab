@@ -254,7 +254,7 @@ MonoBehaviour:
   - Tag: AcidShoot
     Prefab: {fileID: 6847307818092735801, guid: 1ab9d6b141bf57b4da9d5c517c5f6d93,
       type: 3}
-    Amount: 5
+    Amount: 30
   - Tag: AcidShotgun
     Prefab: {fileID: 4608489908768378010, guid: 80e1b8ecb07561a478edf3e1a621cf63,
       type: 3}
@@ -275,7 +275,7 @@ MonoBehaviour:
   - Tag: AcidSplash
     Prefab: {fileID: 5561822216052773809, guid: be2a1fb2100af90429ce6094e28542d8,
       type: 3}
-    Amount: 5
+    Amount: 30
 --- !u!1 &6678245051165398795
 GameObject:
   m_ObjectHideFlags: 0
