@@ -34,6 +34,7 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
         _groundCheck = playerComponents.GetPlayerGroundCheck();
         _groundCheck.OnGroundCheckChange += ChangeSpeedToAir;
         _currentSpeed = _baseWalkingSpeed;
+        SetAnimationDirectionForward();
     }
 
     public void Walk(Vector2 direction)
@@ -45,6 +46,7 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
         if (_lockOnForward)
         {
             RotatePlayerForward();
+            _playerAnimations.SetWalkDirection(direction);
         }
 
         if (IsGettingMovementInput())
@@ -150,6 +152,12 @@ public class PlayerWalk : MonoBehaviour,IPlayerComponent
     public void SetLockOnForward(bool lockOnForward)
     {
         _lockOnForward = lockOnForward;
+        if (!_lockOnForward ) { SetAnimationDirectionForward(); }
+    }
+
+    private void SetAnimationDirectionForward()
+    {
+        _playerAnimations.SetWalkDirection(new Vector2(0, 1));
     }
 
 }
