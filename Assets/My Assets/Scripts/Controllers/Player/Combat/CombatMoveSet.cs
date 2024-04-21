@@ -20,4 +20,7 @@ public abstract class CombatMoveSet : MonoBehaviour
     public abstract void MoveSetUpdate();
 
     public abstract void ResetAttacks();
+
+    public virtual void SubscribeToEvents() { }
+    public virtual void UnsubscribeToEvents() { }
 }

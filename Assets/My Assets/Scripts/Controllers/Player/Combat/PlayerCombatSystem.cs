@@ -52,6 +52,8 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         _currentMeleeMoveSet.MoveSetStart(this);
         _currentRangeMoveSet = _defaultRangeMoveSet;
         _currentRangeMoveSet.MoveSetStart(this);
+
+        HandleSubscribtion();
     }
 
     public CharacterController GetController()
@@ -92,14 +94,11 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     private void PlayerUpdate()
     {
-        _defaultMeleeMoveSet.MoveSetUpdate();
-        if (_currentMeleeMoveSet != _defaultMeleeMoveSet)
+        if (!_usingRanged)
         {
             _currentMeleeMoveSet?.MoveSetUpdate();
         }
-
-        _defaultRangeMoveSet.MoveSetUpdate();
-        if (_currentRangeMoveSet != _defaultRangeMoveSet)
+        else
         {
             _currentRangeMoveSet?.MoveSetUpdate();
         }
@@ -183,8 +182,14 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public void ClearAttacks()
     {
-        _currentMeleeMoveSet.ResetAttacks();
-        _currentRangeMoveSet.ResetAttacks();
+        if (!_usingRanged)
+        {
+            _currentMeleeMoveSet.ResetAttacks();
+        }
+        else
+        {
+            _currentRangeMoveSet.ResetAttacks();
+        }
     }
 
     public void SetCanAttack(bool canAttack)
@@ -196,6 +201,8 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public bool GetAcidation() { return _acidation; }
 
+    public PlayerGlide GetGlide() { return _glide; }
+
     public void SetAcidation(bool acidation)
     {
         _acidation = acidation;
@@ -205,8 +212,24 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public void SetUsingRanged(bool usingRanged)
     {
+        ClearAttacks();
         _usingRanged = usingRanged;
         ClearAttacks();
+        HandleSubscribtion();
+    }
+
+    private void HandleSubscribtion()
+    {
+        if (_usingRanged)
+        {
+            _currentRangeMoveSet.SubscribeToEvents();
+            _currentMeleeMoveSet.UnsubscribeToEvents();
+        }
+        else
+        {
+            _currentRangeMoveSet.UnsubscribeToEvents();
+            _currentMeleeMoveSet.SubscribeToEvents();
+        }
     }
 
     public Transform GetShooter()
@@ -223,4 +246,5 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     {
         return _busyAttacking;
     }
+
 }

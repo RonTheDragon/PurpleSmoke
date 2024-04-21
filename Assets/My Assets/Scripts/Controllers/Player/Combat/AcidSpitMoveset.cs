@@ -73,6 +73,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
         Projectile projectile = _projectilePooler.SpawnFromPool(_acidShotgunAttack.ProjectileTag, _shooter.position, _shooter.rotation);
 
         projectile.SetProjectile(transform.parent.gameObject, _acidShotgunAttack);
+        _playerAnimations.PlayAnimation(_acidShotgunAttack.AnimationName);
     }
 
     public override void MoveSetUpdate()
@@ -111,6 +112,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
         Projectile projectile = _projectilePooler.SpawnFromPool(_acidSpitAttack.ProjectileTag, _shooter.position, _shooter.rotation);
 
         projectile.SetProjectile(transform.parent.gameObject, _acidSpitAttack);
+        _playerAnimations.PlayAnimation(_acidSpitAttack.AnimationName);
         // Apply other effects of the acid spit attack
         // You can modify this part based on your game logic
     }
@@ -119,6 +121,8 @@ public class AcidSpitMoveset : ChargeableMoveSet
     {
         base.ResetAttacks();
         _spittingAcid = false;
+        ResetCharge();
+        _playerAnimations.PlayAnimation("Cancel");
     }
 
 }

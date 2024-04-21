@@ -27,15 +27,26 @@ public class UnarmedMoveset : ChargeableMoveSet
         base.MoveSetStart(playerCombatSystem);
         _playerAnimations = _playerCombatSystem.GetAnimations();
         _playerGroundCheck = _playerCombatSystem.GetGroundCheck();
-        _playerGroundCheck.OnGroundCheckChange += OnGroundedChanged;
         _playerMovement = _playerCombatSystem.GetMovement();
         _playerAttackMovement = _playerCombatSystem.GetAttackMovement();
         _playerGravity = _playerCombatSystem.GetGravity();
         _playerJump = _playerCombatSystem.GetJump();
-        _playerAttackMovement.OnCrashedDown += OnCrashedDown;
         foreach (TriggerDamage trigger in _triggerDamage) {
             trigger.SetOwner(transform.parent.gameObject); }
         _explosionDamage.SetOwner(transform.parent.gameObject);
+    }
+
+    public override void SubscribeToEvents()
+    {
+        UnsubscribeToEvents();
+        _playerGroundCheck.OnGroundCheckChange += OnGroundedChanged;
+        _playerAttackMovement.OnCrashedDown += OnCrashedDown;
+    }
+
+    public override void UnsubscribeToEvents()
+    {
+        _playerGroundCheck.OnGroundCheckChange -= OnGroundedChanged;
+        _playerAttackMovement.OnCrashedDown -= OnCrashedDown;
     }
 
     public override void MoveSetUpdate()
