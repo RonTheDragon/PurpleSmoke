@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4567395140347771604}
   m_Layer: 0
-  m_Name: Target
+  m_Name: HeadAimTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,11 +108,11 @@ Transform:
   m_GameObject: {fileID: 993932140050991772}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1101177622344121084}
+  m_Father: {fileID: 8094321619930251964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1914006205527094507
 GameObject:
@@ -510,11 +510,13 @@ MonoBehaviour:
   _walkSpeedFloat: WalkSpeed
   _walkXFloat: WalkX
   _walkYFloat: WalkY
-  _walkDirectionLerpSpeed: 10
+  _walkDirectionLerpSpeed: 5
   _jumpTrigger: Jump
   _flipTrigger: Flip
   _groundedBool: Grounded
   _glideBool: Glide
+  _headAim: {fileID: 5414400082740292316}
+  _headAimWeightLerpSpeed: 5
 --- !u!114 &7210688926855583114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1213,8 +1215,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4567395140347771604}
+  m_Children: []
   m_Father: {fileID: 8362537628226629540}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5414400082740292316
@@ -1378,7 +1379,8 @@ Transform:
   m_LocalPosition: {x: 0.5, y: 1.9999999, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4567395140347771604}
   m_Father: {fileID: 5506798683940635889}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &5310138974357565822

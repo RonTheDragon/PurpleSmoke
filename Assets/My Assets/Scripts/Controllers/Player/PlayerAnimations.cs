@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerAnimations : MonoBehaviour, IPlayerComponent
 {
@@ -15,6 +16,10 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
     [SerializeField] private string _flipTrigger;
     [SerializeField] private string _groundedBool;
     [SerializeField] private string _glideBool;
+    [SerializeField] private MultiAimConstraint _headAim;
+
+    private float _headAimWeight;
+    [SerializeField] private float _headAimWeightLerpSpeed=5;
 
     private Vector2 _currentWalkDirection;
     private Vector2 _WalkDirectionTarget;
@@ -29,6 +34,7 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
     private void PlayerUpdate()
     {
         ApplyWalkDirection();
+        ChangeRiggingOverTime();
     }
 
     private void ChangeGrounded(bool grounded)
@@ -64,6 +70,19 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
             _animator.SetFloat(_walkXFloat, _currentWalkDirection.x);
             _animator.SetFloat(_walkYFloat, _currentWalkDirection.y);
         }
+    }
+
+    private void ChangeRiggingOverTime()
+    {
+        if (_headAim.weight != _headAimWeight)
+        {
+            _headAim.weight = Mathf.Lerp(_headAim.weight, _headAimWeight, Time.deltaTime * _headAimWeightLerpSpeed);
+        }
+    }
+
+    public void SetHeadAimWeight(float weight)
+    {
+        _headAimWeight = weight;
     }
 
     public void ChangeGlide(bool glide)
