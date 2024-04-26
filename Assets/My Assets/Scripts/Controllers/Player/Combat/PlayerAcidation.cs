@@ -24,6 +24,8 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
     private PlayerWalk _playerWalk;
     public Action OnNotEnoughAcid;
 
+    [SerializeField] private GameObject[] _onlyActiveWhileAcidation;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerWalk = playerComponents.GetPlayerWalk();
@@ -114,6 +116,7 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
         _isAcidationActivated = true;
         _playerWalk.AddSpeedModifier("Acidation", _speedModifier);
         OnAcidationToggle?.Invoke(true);
+        SetAllAcidationObjects(true);
     }
 
     private void TurnAcidationOff()
@@ -122,6 +125,7 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
         _playerWalk.RemoveSpeedModifier("Acidation");
         OnAcidationToggle?.Invoke(false);
         _acidationReganCooldownTimeLeft = _acidationReganCooldown;
+        SetAllAcidationObjects(false);
     }
 
     public void SetCanGenerateAcidation(bool canGenerateAcidation)
@@ -140,5 +144,13 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
         }
         OnNotEnoughAcid?.Invoke();
         return false;
+    }
+
+    private void SetAllAcidationObjects(bool state)
+    {
+        foreach(GameObject g in _onlyActiveWhileAcidation)
+        {
+            g.SetActive(state);
+        }
     }
 }
