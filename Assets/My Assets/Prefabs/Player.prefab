@@ -4677,8 +4677,10 @@ MonoBehaviour:
     MaxAcid: 50
     DownSpeed: 50
     CrashAnimationName: CrashDown3
-    MinRadius: 5
-    MaxRadius: 10
+    MinRadius: 2
+    MaxRadius: 3
+    AcidationRadiusMultiplier: 3
+    AcidationVE: BigAcidSplash
   _currentCombo: 0
   _comboBreakTime: 1
   _triggerDamage:

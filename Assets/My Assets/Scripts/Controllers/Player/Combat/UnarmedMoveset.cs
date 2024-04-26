@@ -14,6 +14,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     private PlayerAttackMovement _playerAttackMovement;
     private PlayerGravity _playerGravity;
     private PlayerJump _playerJump;
+    private VEPooler _vePooler;
     [ReadOnly][SerializeField] private int _currentCombo;
     [SerializeField] private float _comboBreakTime;
     private float _comboTimeLeft;
@@ -25,6 +26,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     public override void MoveSetStart(PlayerCombatSystem playerCombatSystem)
     {
         base.MoveSetStart(playerCombatSystem);
+        _vePooler = GameManager.Instance.VisualEffectsPooler;
         _playerAnimations = _playerCombatSystem.GetAnimations();
         _playerGroundCheck = _playerCombatSystem.GetGroundCheck();
         _playerMovement = _playerCombatSystem.GetMovement();
@@ -251,6 +253,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         {
             float Acid = Mathf.Lerp(attack.MinAcid, attack.MaxAcid, chargePercentage);
             _explosionDamage.SetAcidDamage(Acid);
+            _explosionDamage.SetRadius(radius* attack.AcidationRadiusMultiplier);
         }
         else
         {
@@ -264,7 +267,11 @@ public class UnarmedMoveset : ChargeableMoveSet
 
     public void PerformExplosionDamage()
     {
-        _explosionDamage.Explode(); 
+        _explosionDamage.Explode();
+        if (_playerCombatSystem.GetAcidation())
+        {
+            _vePooler.SpawnFromPool(_heavyDownAttack.AcidationVE, transform.position, Quaternion.Euler(90,0,0)).PlayEffect();
+        }
     }
 
 
@@ -387,5 +394,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         public string CrashAnimationName;
         public float MinRadius;
         public float MaxRadius;
+        public float AcidationRadiusMultiplier;
+        public string AcidationVE;
     }
 }
