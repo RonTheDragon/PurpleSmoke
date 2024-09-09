@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
 {
@@ -130,6 +131,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
             _uiOpen = !_uiOpen;
             _movementInput = Vector2.zero;
             _lookInput = Vector2.zero;
+            _playerUI.OpenInventory();
         }
     }
 }

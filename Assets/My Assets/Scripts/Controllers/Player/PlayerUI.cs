@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour, IPlayerComponent
@@ -9,6 +10,10 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     [SerializeField] private Image _acidationBar;
     [SerializeField] private GameObject _pressSpaceToGetUp;
     [SerializeField] private TMP_Text _respawnCountDown;
+    [SerializeField] private GameObject _inventoryUI;
+    [SerializeField] private Button _inventoryFirstSelected;
+
+    [SerializeField] private MultiplayerEventSystem _multiplayerEventSystem;
 
     private PlayerHealth _playerHealth;
     private PlayerCombatSystem _playerCombatSystem;
@@ -81,5 +86,12 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         }
 
         PressSpaceToGetUp(false);
+    }
+
+    public void OpenInventory()
+    {
+        _inventoryUI.SetActive(!_inventoryUI.activeSelf);
+        _multiplayerEventSystem.SetSelectedGameObject(null);
+        _multiplayerEventSystem.SetSelectedGameObject(_inventoryFirstSelected.gameObject);
     }
 }
