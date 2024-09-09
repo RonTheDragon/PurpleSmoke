@@ -5,7 +5,7 @@ public class PlayerTeleporter : MonoBehaviour, IPlayerComponent
     CharacterController controller;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        controller = playerComponents.GetCharacterController();
+        controller = playerComponents.GetCharacterController;
     }
 
     public void Teleport(Vector3 pos)

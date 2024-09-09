@@ -18,11 +18,11 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _playerHealth = playerComponents.GetPlayerHealth();
-        _playerCombatSystem = playerComponents.GetPlayerCombatSystem();
-        _playerKnockout = playerComponents.GetPlayerKnockout();
-        _playerDeath = playerComponents.GetPlayerDeath();
-        _playerAcidation = playerComponents.GetPlayerAcidation();
+        _playerHealth = playerComponents.GetPlayerHealth;
+        _playerCombatSystem = playerComponents.GetPlayerCombatSystem;
+        _playerKnockout = playerComponents.GetPlayerKnockout;
+        _playerDeath = playerComponents.GetPlayerDeath;
+        _playerAcidation = playerComponents.GetPlayerAcidation;
 
         _playerHealth.OnPlayerHealthChange += UpdateHealthUI;
         _playerCombatSystem.OnChargeChange += UpdateChargeUI;

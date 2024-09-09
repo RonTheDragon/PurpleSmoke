@@ -8,8 +8,8 @@ public class PlayerKnockback : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _characterController = playerComponents.GetCharacterController();
-        _playerGravity = playerComponents.GetPlayerGravity();
+        _characterController = playerComponents.GetCharacterController;
+        _playerGravity = playerComponents.GetPlayerGravity;
         playerComponents.OnUpdate += PlayerUpdate;
     }
 

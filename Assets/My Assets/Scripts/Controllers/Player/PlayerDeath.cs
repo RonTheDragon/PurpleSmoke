@@ -20,10 +20,10 @@ public class PlayerDeath : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _health = playerComponents.GetPlayerHealth();
-        _playerKnockout = playerComponents.GetPlayerKnockout();
-        _playerAnimations = playerComponents.GetPlayerAnimations();
-        _playerTeleporter = playerComponents.GetPlayerTeleporter();
+        _health = playerComponents.GetPlayerHealth;
+        _playerKnockout = playerComponents.GetPlayerKnockout;
+        _playerAnimations = playerComponents.GetPlayerAnimations;
+        _playerTeleporter = playerComponents.GetPlayerTeleporter;
 
         _respawnLocation = transform.position;
 

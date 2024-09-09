@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerGravity : MonoBehaviour, IPlayerComponent
 {
@@ -17,8 +18,8 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _characterController = playerComponents.GetCharacterController();
-        _groundCheck = playerComponents.GetPlayerGroundCheck();
+        _characterController = playerComponents.GetCharacterController;
+        _groundCheck = playerComponents.GetPlayerGroundCheck;
         _groundCheck.OnGroundCheckChange += (b) => { ResetFall(); };
         playerComponents.OnUpdate += PlayerUpdate;
     }

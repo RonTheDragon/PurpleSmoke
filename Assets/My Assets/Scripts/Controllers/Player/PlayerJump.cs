@@ -36,11 +36,11 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _characterController = playerComponents.GetCharacterController();
-        _gravity = playerComponents.GetPlayerGravity();
-        _camera = playerComponents.GetCamera();
-        _playerAnimations = playerComponents.GetPlayerAnimations();
-        _groundCheck = playerComponents.GetPlayerGroundCheck();
+        _characterController = playerComponents.GetCharacterController;
+        _gravity = playerComponents.GetPlayerGravity;
+        _camera = playerComponents.GetCamera;
+        _playerAnimations = playerComponents.GetPlayerAnimations;
+        _groundCheck = playerComponents.GetPlayerGroundCheck;
         _groundCheck.OnGroundCheckChange += ResetDoubleJump;
         playerComponents.OnUpdate += PlayerUpdate;
     }

@@ -39,7 +39,6 @@ public class PlayerComponentsRefrences : MonoBehaviour
         OnUpdate?.Invoke();
     }
 
-
     private void InitializePlayerComponents()
     {
         _playerUI.InitializePlayerComponent(this);
@@ -61,108 +60,26 @@ public class PlayerComponentsRefrences : MonoBehaviour
         _playerAcidation.InitializePlayerComponent(this);
     }
 
-    public PlayerWalk GetPlayerWalk() 
-    {
-        return _playerWalk; 
-    }
-
-    public PlayerJump GetPlayerJump()
-    {
-        return _playerJump;
-    }
-
-    public PlayerLook GetPlayerLook()
-    {
-        return _playerLook;
-    }
-
-    public CharacterController GetCharacterController()
-    {
-        return _characterController;
-    }
-
-    public PlayerGravity GetPlayerGravity()
-    {
-        return _playerGravity;
-    }
-
-    public Transform GetPlayerBody()
-    {
-        return _playerBody;
-    }
-
-    public Camera GetCamera()
-    {
-        return _mainCamera;
-    }
-
-    public Transform GetShooter()
-    {
-        return _shooter;
-    }
-
-    public Transform GetCameraHolder()
-    {
-        return _cameraHolder;
-    }
-
-    public PlayerGroundCheck GetPlayerGroundCheck()
-    {
-        return _playerGroundCheck;
-    }
-
-    public PlayerGlide GetPlayerGlide()
-    {
-        return _playerGlide;
-    }
-
-    public PlayerAnimations GetPlayerAnimations()
-    {
-        return _playerAnimations;
-    }
-
-    public PlayerKnockback GetPlayerKnockback()
-    {
-        return _playerKnockback;
-    }
-
-    public PlayerCombatSystem GetPlayerCombatSystem()
-    {
-        return _playerCombatSystem;
-    }
-
-    public PlayerHealth GetPlayerHealth()
-    {
-        return _playerHealth;
-    }
-
-    public PlayerAttackMovement GetPlayerAttackMovement()
-    {
-        return _playerAttackMovement;
-    }
-
-    public PlayerKnockout GetPlayerKnockout()
-    {
-        return _playerKnockout;
-    }
-
-    public PlayerDeath GetPlayerDeath()
-    {
-        return _playerDeath;
-    }
-
-    public PlayerTeleporter GetPlayerTeleporter()
-    {
-        return _playerTeleporter;
-    }
-
-    public PlayerAcidation GetPlayerAcidation()
-    {
-        return _playerAcidation;
-    }
-
-    public PlayerAimMode GetPlayerAimMode()
-    {
-        return _playerAimMode;
-    }
+    public PlayerWalk GetPlayerWalk => _playerWalk;
+    public PlayerJump GetPlayerJump => _playerJump;
+    public PlayerLook GetPlayerLook => _playerLook;
+    public CharacterController GetCharacterController => _characterController;
+    public PlayerGravity GetPlayerGravity => _playerGravity;
+    public Transform GetPlayerBody => _playerBody;
+    public Camera GetCamera => _mainCamera;
+    public Transform GetShooter => _shooter;
+    public Transform GetCameraHolder => _cameraHolder;
+    public PlayerGroundCheck GetPlayerGroundCheck => _playerGroundCheck;
+    public PlayerGlide GetPlayerGlide => _playerGlide;
+    public PlayerAnimations GetPlayerAnimations => _playerAnimations;
+    public PlayerKnockback GetPlayerKnockback => _playerKnockback;
+    public PlayerCombatSystem GetPlayerCombatSystem => _playerCombatSystem;
+    public PlayerHealth GetPlayerHealth => _playerHealth;
+    public PlayerAttackMovement GetPlayerAttackMovement => _playerAttackMovement;
+    public PlayerKnockout GetPlayerKnockout => _playerKnockout;
+    public PlayerDeath GetPlayerDeath => _playerDeath;
+    public PlayerTeleporter GetPlayerTeleporter => _playerTeleporter;
+    public PlayerAcidation GetPlayerAcidation => _playerAcidation;
+    public PlayerAimMode GetPlayerAimMode => _playerAimMode;
+    public PlayerUI GetPlayerUI => _playerUI;
 }

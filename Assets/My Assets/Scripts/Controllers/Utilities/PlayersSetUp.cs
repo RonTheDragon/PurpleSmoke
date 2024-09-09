@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PlayersSetUp : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class PlayersSetUp : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private GameObject _cinemachine;
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
+    private UniversalAdditionalCameraData _cameraData;
 
     private void Start()
     {
@@ -13,6 +15,21 @@ public class PlayersSetUp : MonoBehaviour
         _cinemachine.layer = LayerMask.NameToLayer("Player"+ _gm.PlayerCount);
         _camera.cullingMask = _gm.GetLayerMaskForCinemachine();
         ChangeFinsMaterial();
+        FixCam();
+        _gm.OnPlayerAmountChange += FixCam;
+    }
+
+    [ContextMenu("FixCamera")]
+    public void FixCam()
+    {
+        if (_cameraData == null)
+        {
+            _cameraData = _camera.GetUniversalAdditionalCameraData();
+        }
+        foreach (Camera cam in _cameraData.cameraStack)
+        {
+            cam.rect = _camera.rect;
+        }
     }
 
     private void ChangeFinsMaterial()
@@ -20,5 +37,10 @@ public class PlayersSetUp : MonoBehaviour
         Material[] mats = _skinnedMeshRenderer.materials;
         mats[1] = _gm.GetColorForPlayer();
         _skinnedMeshRenderer.materials = mats;
+    }
+
+    private void OnDestroy()
+    {
+        _gm.OnPlayerAmountChange -= FixCam;
     }
 }

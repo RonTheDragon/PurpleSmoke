@@ -13,11 +13,11 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
     public Action OnGlide;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _characterController = playerComponents.GetCharacterController();
-        _playerJump = playerComponents.GetPlayerJump();
-        _playerGravity = playerComponents.GetPlayerGravity();
-        _playerAnimations = playerComponents.GetPlayerAnimations();
-        _playerGroundCheck = playerComponents.GetPlayerGroundCheck();
+        _characterController = playerComponents.GetCharacterController;
+        _playerJump = playerComponents.GetPlayerJump;
+        _playerGravity = playerComponents.GetPlayerGravity;
+        _playerAnimations = playerComponents.GetPlayerAnimations;
+        _playerGroundCheck = playerComponents.GetPlayerGroundCheck;
         _playerGroundCheck.OnGroundCheckChange += (b) => StopGlide();
         playerComponents.OnUpdate += PlayerUpdate;
     }

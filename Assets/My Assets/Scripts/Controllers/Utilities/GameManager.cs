@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public ProjectilePooler ProjectilePooler;
     public VEPooler VisualEffectsPooler;
+
+    public Action OnPlayerAmountChange;
 
     private void Awake()
     {
@@ -30,6 +33,13 @@ public class GameManager : MonoBehaviour
     public void OnPlayerJoined()
     {
         _playerCount++;
+        OnPlayerAmountChange?.Invoke();
+    }
+
+    public void OnPlayerLeave()
+    {
+        _playerCount--;
+        OnPlayerAmountChange?.Invoke();
     }
 
     public int PlayerCount => _playerCount;

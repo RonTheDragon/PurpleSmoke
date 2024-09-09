@@ -26,7 +26,7 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _playerGroundCheck = playerComponents.GetPlayerGroundCheck();
+        _playerGroundCheck = playerComponents.GetPlayerGroundCheck;
         _playerGroundCheck.OnGroundCheckChange += ChangeGrounded;
         playerComponents.OnUpdate += PlayerUpdate;
     }

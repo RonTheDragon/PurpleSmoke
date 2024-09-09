@@ -15,11 +15,11 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerComponentsRefrences = playerComponents;
-        _playerWalk = playerComponents.GetPlayerWalk();
-        _camera = playerComponents.GetCamera();
-        _shootFromObject = playerComponents.GetShooter();
-        _playerCombatSystem = playerComponents.GetPlayerCombatSystem();
-        _playerAnimations = playerComponents.GetPlayerAnimations();
+        _playerWalk = playerComponents.GetPlayerWalk;
+        _camera = playerComponents.GetCamera;
+        _shootFromObject = playerComponents.GetShooter;
+        _playerCombatSystem = playerComponents.GetPlayerCombatSystem;
+        _playerAnimations = playerComponents.GetPlayerAnimations;
     }
 
     private void PlayerUpdate()

@@ -28,10 +28,10 @@ public class PlayerHealth : Health , IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _playerKnockback = playerComponents.GetPlayerKnockback();
-        _playerKnockout = playerComponents.GetPlayerKnockout();
-        _playerDeath = playerComponents.GetPlayerDeath();
-        _playerAcidation = playerComponents.GetPlayerAcidation();
+        _playerKnockback = playerComponents.GetPlayerKnockback;
+        _playerKnockout = playerComponents.GetPlayerKnockout;
+        _playerDeath = playerComponents.GetPlayerDeath;
+        _playerAcidation = playerComponents.GetPlayerAcidation;
         HealToMax();
         UpdateHealthUI();
         playerComponents.OnUpdate += PlayerUpdate;

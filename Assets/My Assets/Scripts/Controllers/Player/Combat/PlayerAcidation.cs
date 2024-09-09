@@ -28,7 +28,7 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _playerWalk = playerComponents.GetPlayerWalk();
+        _playerWalk = playerComponents.GetPlayerWalk;
 
         SetAcidationToMax();
         playerComponents.OnUpdate += PlayerUpdate;

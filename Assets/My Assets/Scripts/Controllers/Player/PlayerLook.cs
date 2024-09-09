@@ -11,7 +11,7 @@ public class PlayerLook : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _cameraHolder = playerComponents.GetCameraHolder();
+        _cameraHolder = playerComponents.GetCameraHolder;
     }
 
     public void Look(Vector2 direction)

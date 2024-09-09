@@ -89,6 +89,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ef5bfb0-aa80-4e00-bce1-a7a459abd48c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -421,6 +430,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""AimMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""119cd8a4-feee-4f40-95f3-6bfc38bfbea1"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a5753a97-6f92-45d9-b967-e27102024d77"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -464,6 +495,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_HeavyAttack = m_Player.FindAction("Heavy Attack", throwIfNotFound: true);
         m_Player_AimMode = m_Player.FindAction("AimMode", throwIfNotFound: true);
         m_Player_Acidation = m_Player.FindAction("Acidation", throwIfNotFound: true);
+        m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -532,6 +564,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_AimMode;
     private readonly InputAction m_Player_Acidation;
+    private readonly InputAction m_Player_Inventory;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -543,6 +576,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @AimMode => m_Wrapper.m_Player_AimMode;
         public InputAction @Acidation => m_Wrapper.m_Player_Acidation;
+        public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -573,6 +607,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Acidation.started += instance.OnAcidation;
             @Acidation.performed += instance.OnAcidation;
             @Acidation.canceled += instance.OnAcidation;
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -598,6 +635,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Acidation.started -= instance.OnAcidation;
             @Acidation.performed -= instance.OnAcidation;
             @Acidation.canceled -= instance.OnAcidation;
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -642,5 +682,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnAimMode(InputAction.CallbackContext context);
         void OnAcidation(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
     }
 }

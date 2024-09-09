@@ -29,16 +29,16 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _controller = playerComponents.GetCharacterController();
-        _groundCheck = playerComponents.GetPlayerGroundCheck();
-        _animations = playerComponents.GetPlayerAnimations();
-        _movement = playerComponents.GetPlayerWalk();
-        _attackMovement = playerComponents.GetPlayerAttackMovement();
-        _glide = playerComponents.GetPlayerGlide();
-        _gravity = playerComponents.GetPlayerGravity();
-        _playerAcidation = playerComponents.GetPlayerAcidation();
-        _shooter = playerComponents.GetShooter();
-        _playerJump = playerComponents.GetPlayerJump();
+        _controller = playerComponents.GetCharacterController;
+        _groundCheck = playerComponents.GetPlayerGroundCheck;
+        _animations = playerComponents.GetPlayerAnimations;
+        _movement = playerComponents.GetPlayerWalk;
+        _attackMovement = playerComponents.GetPlayerAttackMovement;
+        _glide = playerComponents.GetPlayerGlide;
+        _gravity = playerComponents.GetPlayerGravity;
+        _playerAcidation = playerComponents.GetPlayerAcidation;
+        _shooter = playerComponents.GetShooter;
+        _playerJump = playerComponents.GetPlayerJump;
 
         TemporaryStart();
         _glide.OnGlide += ClearAttacks;

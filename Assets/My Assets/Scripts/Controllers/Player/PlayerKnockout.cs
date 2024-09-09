@@ -28,11 +28,11 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _playerAnimations = playerComponents.GetPlayerAnimations();
-        _playerCombatSystem = playerComponents.GetPlayerCombatSystem();
-        _playerWalk = playerComponents.GetPlayerWalk();
-        _playerJump = playerComponents.GetPlayerJump();
-        _playerGravity = playerComponents.GetPlayerGravity();
+        _playerAnimations = playerComponents.GetPlayerAnimations;
+        _playerCombatSystem = playerComponents.GetPlayerCombatSystem;
+        _playerWalk = playerComponents.GetPlayerWalk;
+        _playerJump = playerComponents.GetPlayerJump;
+        _playerGravity = playerComponents.GetPlayerGravity;
         playerComponents.OnUpdate += PlayerUpdate;
 
         // Check if caps are set correctly

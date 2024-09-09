@@ -17,10 +17,10 @@ public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _characterController = playerComponents.GetCharacterController();
-        _playerGravity = playerComponents.GetPlayerGravity();
-        _playerGroundCheck = playerComponents.GetPlayerGroundCheck();
-        _playerBody = playerComponents.GetPlayerBody();
+        _characterController = playerComponents.GetCharacterController;
+        _playerGravity = playerComponents.GetPlayerGravity;
+        _playerGroundCheck = playerComponents.GetPlayerGroundCheck;
+        _playerBody = playerComponents.GetPlayerBody;
     }
 
     public void SetAndApplyMovement(Vector3 movement)

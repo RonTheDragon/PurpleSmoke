@@ -331,6 +331,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c6a37f1e-c32a-4e81-b2e2-92df87d7fe78
     m_ActionName: Player/AimMode[/Keyboard/leftCtrl,/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast,/XInputControllerWindows2/buttonEast,/XInputControllerWindows3/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5677476338889415264}
+        m_TargetAssemblyTypeName: PlayerInputsHandler, Assembly-CSharp
+        m_MethodName: Inventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7ef5bfb0-aa80-4e00-bce1-a7a459abd48c
+    m_ActionName: Player/Inventory[/Keyboard/tab,/XInputControllerWindows/select,/XInputControllerWindows1/select,/XInputControllerWindows2/select,/XInputControllerWindows3/select]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
