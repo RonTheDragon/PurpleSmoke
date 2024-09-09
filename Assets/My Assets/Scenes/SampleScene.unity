@@ -1363,6 +1363,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 839092206634498332, guid: 8fad4a27655674841bbd830ecf52c9e1,
+        type: 3}
+      propertyPath: _playerCinemachineCameraLayers.Array.data[0].m_Bits
+      value: 1119
+      objectReference: {fileID: 0}
+    - target: {fileID: 839092206634498332, guid: 8fad4a27655674841bbd830ecf52c9e1,
+        type: 3}
+      propertyPath: _playerCinemachineCameraLayers.Array.data[1].m_Bits
+      value: 1183
+      objectReference: {fileID: 0}
+    - target: {fileID: 839092206634498332, guid: 8fad4a27655674841bbd830ecf52c9e1,
+        type: 3}
+      propertyPath: _playerCinemachineCameraLayers.Array.data[2].m_Bits
+      value: 1311
+      objectReference: {fileID: 0}
+    - target: {fileID: 839092206634498332, guid: 8fad4a27655674841bbd830ecf52c9e1,
+        type: 3}
+      propertyPath: _playerCinemachineCameraLayers.Array.data[3].m_Bits
+      value: 1567
+      objectReference: {fileID: 0}
     - target: {fileID: 6678245051165398795, guid: 8fad4a27655674841bbd830ecf52c9e1,
         type: 3}
       propertyPath: m_Name
