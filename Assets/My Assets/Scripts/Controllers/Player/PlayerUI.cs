@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.UI;
@@ -13,8 +14,10 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private Button _inventoryFirstSelected;
     [SerializeField] private ScrollRect _scrollRect;
+    [SerializeField] private Transform _inventoryContent;
 
     [SerializeField] private MultiplayerEventSystem _multiplayerEventSystem;
+    [SerializeField] private ItemUI _itemUItoSpawn;
 
     private PlayerHealth _playerHealth;
     private PlayerCombatSystem _playerCombatSystem;
@@ -23,6 +26,8 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     private PlayerAcidation _playerAcidation;
 
     private GameObject _selected;
+
+    [SerializeField] private List<InventoryItem> _inventoryItems;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -95,8 +100,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     {
         _inventoryUI.SetActive(!_inventoryUI.activeSelf);
         _multiplayerEventSystem.SetSelectedGameObject(null);
-        _multiplayerEventSystem.SetSelectedGameObject(_inventoryFirstSelected.gameObject);
-        _selected = _inventoryFirstSelected.gameObject;
+        SetUpInventoryContent();
     }
 
     public void SelectionFix()
@@ -128,5 +132,43 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
         // Set the scroll position
         _scrollRect.verticalNormalizedPosition = 1 - scrollPos;
+    }
+
+    private void SetUpInventoryContent()
+    {
+        ClearContent();
+
+        bool first = true;
+        foreach (InventoryItem item in _inventoryItems) 
+        {
+            ItemUI i = Instantiate(_itemUItoSpawn, _inventoryContent.position, _inventoryContent.rotation, _inventoryContent);
+            i.SetUpItemUI(item);
+
+            if (first)
+            {
+                first=false;
+                _multiplayerEventSystem.SetSelectedGameObject(i.gameObject);
+                _selected = i.gameObject;
+            }
+        }
+
+        FixNothingSelected();
+    }
+
+    private void FixNothingSelected()
+    {
+        if (_selected == null)
+        {
+            _multiplayerEventSystem.SetSelectedGameObject(_inventoryFirstSelected.gameObject);
+            _selected = _inventoryFirstSelected.gameObject;
+        }
+    }
+
+    private void ClearContent()
+    {
+        foreach (Transform child in _inventoryContent)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }
