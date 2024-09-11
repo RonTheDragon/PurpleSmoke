@@ -12,6 +12,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     [SerializeField] private TMP_Text _respawnCountDown;
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private Button _inventoryFirstSelected;
+    [SerializeField] private ScrollRect _scrollRect;
 
     [SerializeField] private MultiplayerEventSystem _multiplayerEventSystem;
 
@@ -20,6 +21,8 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     private PlayerKnockout _playerKnockout;
     private PlayerDeath _playerDeath;
     private PlayerAcidation _playerAcidation;
+
+    private GameObject _selected;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -93,5 +96,37 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         _inventoryUI.SetActive(!_inventoryUI.activeSelf);
         _multiplayerEventSystem.SetSelectedGameObject(null);
         _multiplayerEventSystem.SetSelectedGameObject(_inventoryFirstSelected.gameObject);
+        _selected = _inventoryFirstSelected.gameObject;
+    }
+
+    public void SelectionFix()
+    {
+        if (!_inventoryUI.activeSelf) return;
+
+        if (_multiplayerEventSystem.currentSelectedGameObject == null)
+        {
+            _multiplayerEventSystem.SetSelectedGameObject(_selected);
+        }
+        _selected = _multiplayerEventSystem.currentSelectedGameObject;
+
+        ScrollToSelected();
+    }
+
+    private void ScrollToSelected()
+    {
+        RectTransform _selectedRectTransform = (RectTransform)_selected.transform;
+
+        RectTransform viewport = _scrollRect.viewport;
+        RectTransform content = _scrollRect.content;
+
+        float contentHeight = content.rect.height;
+        float viewportHeight = viewport.rect.height;
+        float targetPosY = -_selectedRectTransform.anchoredPosition.y;
+
+        // Calculate scroll position
+        float scrollPos = Mathf.Clamp01((targetPosY - viewportHeight / 2) / (contentHeight - viewportHeight));
+
+        // Set the scroll position
+        _scrollRect.verticalNormalizedPosition = 1 - scrollPos;
     }
 }
