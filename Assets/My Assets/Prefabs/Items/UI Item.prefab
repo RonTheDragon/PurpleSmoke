@@ -211,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemImage: {fileID: 3421112719715763935}
   _backgroundImage: {fileID: 352465154908416728}
+  _button: {fileID: 8809459456635217793}
   _meleeColor: {r: 1, g: 0, b: 0, a: 1}
   _rangeColor: {r: 0.12418539, g: 0.46226418, b: 0.010902455, a: 1}
   _useableColor: {r: 0, g: 0.6883502, b: 1, a: 1}

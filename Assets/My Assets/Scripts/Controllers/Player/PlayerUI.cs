@@ -18,6 +18,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
     [SerializeField] private MultiplayerEventSystem _multiplayerEventSystem;
     [SerializeField] private ItemUI _itemUItoSpawn;
+    [SerializeField] private ItemSlot _meleeSlot, _rangeSlot, _dynamicSlot, _staticSlot;
 
     private PlayerHealth _playerHealth;
     private PlayerCombatSystem _playerCombatSystem;
@@ -42,6 +43,9 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         _playerKnockout.OnCanGetUp += PressSpaceToGetUp;
         _playerDeath.OnRespawnCountdown += UpdateRespawnTime;
         _playerAcidation.OnAcidationChange += UpdateAcidUI;
+
+        _meleeSlot.GetButton.onClick.AddListener(MeleeSlotClick);
+        _rangeSlot.GetButton.onClick.AddListener(RangeSlotClick);
     }
 
     private void UpdateHealthUI(float amount)
@@ -142,7 +146,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         foreach (InventoryItem item in _inventoryItems) 
         {
             ItemUI i = Instantiate(_itemUItoSpawn, _inventoryContent.position, _inventoryContent.rotation, _inventoryContent);
-            i.SetUpItemUI(item);
+            i.SetUpItemUI(item,this);
 
             if (first)
             {
@@ -170,5 +174,44 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void SetMeleeWeapon(MeleeItem melee)
+    {
+        if (melee.GetMoveSet.name != _playerCombatSystem.GetCurrentMeleeMoveSet.name)
+        {
+            _playerCombatSystem.SetMeleeMoveSet(melee.GetMoveSet);
+            _meleeSlot.SetImage(melee.GetSprite);
+        }
+        else
+        {
+            _playerCombatSystem.SetMeleeMoveSet(null);
+            _meleeSlot.SetImage(null);
+        }
+    }
+
+    public void SetRangeWeapon(RangeItem ramge)
+    {
+        if (ramge.GetMoveSet.name != _playerCombatSystem.GetCurrentRangeMoveSet.name)
+        {
+            _playerCombatSystem.SetRangeMoveSet(ramge.GetMoveSet);
+            _rangeSlot.SetImage(ramge.GetSprite);
+        }
+        else
+        {
+            _playerCombatSystem.SetRangeMoveSet(null);
+            _rangeSlot.SetImage(null);
+        }
+    }
+
+    private void MeleeSlotClick()
+    {
+        _playerCombatSystem.SetMeleeMoveSet(null);
+        _meleeSlot.SetImage(null);
+    }
+    private void RangeSlotClick()
+    {
+        _playerCombatSystem.SetRangeMoveSet(null);
+        _rangeSlot.SetImage(null);
     }
 }

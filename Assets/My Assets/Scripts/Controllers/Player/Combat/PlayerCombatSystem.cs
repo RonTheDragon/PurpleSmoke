@@ -56,41 +56,28 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         HandleSubscribtion();
     }
 
-    public CharacterController GetController()
-    {
-        return _controller;
-    }
-    public PlayerGroundCheck GetGroundCheck()
-    {
-        return _groundCheck;
-    }
-    public PlayerAnimations GetAnimations()
-    {
-        return _animations;
-    }
-    public PlayerWalk GetMovement()
-    {
-        return _movement;
-    }
-    public PlayerAttackMovement GetAttackMovement()
-    {
-        return _attackMovement;
-    }
+    public CharacterController GetController => _controller;
+    public PlayerGroundCheck GetGroundCheck => _groundCheck;
+    public PlayerAnimations GetAnimations => _animations;
+    public PlayerWalk GetMovement => _movement;
+    public PlayerAttackMovement GetAttackMovement => _attackMovement;
+    public CombatMoveSet GetDefaultMoveSet => _defaultMeleeMoveSet;
+    public CombatMoveSet GetCurrentMeleeMoveSet => _currentMeleeMoveSet;
+    public CombatMoveSet GetCurrentRangeMoveSet => _currentRangeMoveSet;
+    public PlayerGravity GetGravity => _gravity;
+    public PlayerJump GetJump => _playerJump;
+    public Transform GetShooter => _shooter;
+    public bool GetIsBusyAttacking => _busyAttacking;
+    public bool GetCanAttack => _canAttack;
+    public bool GetAcidation => _acidation;
+    public PlayerGlide GetGlide => _glide;
+    public PlayerAcidation GetPlayerAcidation => _playerAcidation;
+    private bool CanPlayerAttack => !_glide.IsGliding() && _canAttack;
+    public float GetChargePercentage => _currentChargePercentage;
 
-    public CombatMoveSet GetDefaultMoveSet()
-    {
-        return _defaultMeleeMoveSet;
-    }
 
-    public PlayerGravity GetGravity()
-    {
-        return _gravity;
-    }
 
-    public PlayerJump GetJump()
-    {
-        return _playerJump;
-    }
+
 
     private void PlayerUpdate()
     {
@@ -106,7 +93,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public void OnLightAttack()
     {
-        if (CanPlayerAttack())
+        if (CanPlayerAttack)
         {
             if (_usingRanged)
             {
@@ -121,7 +108,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public void OnReleaseLightAttack()
     {
-        if (CanPlayerAttack())
+        if (CanPlayerAttack)
         {
             if (_usingRanged)
             {
@@ -136,7 +123,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public void OnHeavyAttack()
     {
-        if (CanPlayerAttack())
+        if (CanPlayerAttack)
         {
             if (_usingRanged)
             {
@@ -151,7 +138,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     public void OnReleaseHeavyAttack()
     {
-        if (CanPlayerAttack())
+        if (CanPlayerAttack)
         {
             if (_usingRanged)
             {
@@ -164,21 +151,6 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         }
     }
 
-    private bool CanPlayerAttack()
-    {
-        return !_glide.IsGliding() && _canAttack;
-    }
-
-    public void SetChargePercentage(float charge)
-    {
-        _currentChargePercentage = charge;
-        OnChargeChange?.Invoke(charge);
-    }
-
-    public float GetChargePercentage()
-    {
-        return _currentChargePercentage;
-    }
 
     public void ClearAttacks()
     {
@@ -197,18 +169,19 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         _canAttack = canAttack;
     }
 
-    public bool GetCanAttack() { return _canAttack; }
-
-    public bool GetAcidation() { return _acidation; }
-
-    public PlayerGlide GetGlide() { return _glide; }
-
     public void SetAcidation(bool acidation)
     {
         _acidation = acidation;
     }
-    public PlayerAcidation GetPlayerAcidation() { return _playerAcidation; }
-
+    public void SetBusyAttacking(bool busyAttacking)
+    {
+        _busyAttacking = busyAttacking;
+    }
+    public void SetChargePercentage(float charge)
+    {
+        _currentChargePercentage = charge;
+        OnChargeChange?.Invoke(charge);
+    }
 
     public void SetUsingRanged(bool usingRanged)
     {
@@ -217,6 +190,40 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         ClearAttacks();
         HandleSubscribtion();
     }
+
+    private void SetMoveSet(ref CombatMoveSet currentMoveSet, CombatMoveSet newMoveSet, CombatMoveSet defaultMoveSet)
+    {
+        if (currentMoveSet != defaultMoveSet)
+        {
+            Destroy(currentMoveSet.gameObject);
+        }
+        if (newMoveSet == null)
+        {
+            newMoveSet = defaultMoveSet;
+        }
+        else
+        {
+            string n = newMoveSet.gameObject.name;
+            newMoveSet = Instantiate(newMoveSet, transform.position, Quaternion.identity, transform);
+            newMoveSet.gameObject.name = n;
+        }
+        ClearAttacks();
+        currentMoveSet = newMoveSet;
+        currentMoveSet.MoveSetStart(this);
+        ClearAttacks();
+        HandleSubscribtion();
+    }
+
+    public void SetMeleeMoveSet(CombatMoveSet meleeMoveSet)
+    {
+        SetMoveSet(ref _currentMeleeMoveSet, meleeMoveSet, _defaultMeleeMoveSet);
+    }
+
+    public void SetRangeMoveSet(CombatMoveSet rangeMoveSet)
+    {
+        SetMoveSet(ref _currentRangeMoveSet, rangeMoveSet, _defaultRangeMoveSet);
+    }
+
 
     private void HandleSubscribtion()
     {
@@ -232,19 +239,5 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         }
     }
 
-    public Transform GetShooter()
-    {
-        return _shooter;
-    }
-
-    public void SetBusyAttacking(bool busyAttacking)
-    {
-        _busyAttacking = busyAttacking;
-    }
-
-    public bool GetIsBusyAttacking()
-    {
-        return _busyAttacking;
-    }
 
 }

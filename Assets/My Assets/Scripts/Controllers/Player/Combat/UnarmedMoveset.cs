@@ -27,15 +27,15 @@ public class UnarmedMoveset : ChargeableMoveSet
     {
         base.MoveSetStart(playerCombatSystem);
         _vePooler = GameManager.Instance.VisualEffectsPooler;
-        _playerAnimations = _playerCombatSystem.GetAnimations();
-        _playerGroundCheck = _playerCombatSystem.GetGroundCheck();
-        _playerMovement = _playerCombatSystem.GetMovement();
-        _playerAttackMovement = _playerCombatSystem.GetAttackMovement();
-        _playerGravity = _playerCombatSystem.GetGravity();
-        _playerJump = _playerCombatSystem.GetJump();
+        _playerAnimations = _playerCombatSystem.GetAnimations;
+        _playerGroundCheck = _playerCombatSystem.GetGroundCheck;
+        _playerMovement = _playerCombatSystem.GetMovement;
+        _playerAttackMovement = _playerCombatSystem.GetAttackMovement;
+        _playerGravity = _playerCombatSystem.GetGravity;
+        _playerJump = _playerCombatSystem.GetJump;
         foreach (TriggerDamage trigger in _triggerDamage) {
-            trigger.SetOwner(transform.parent.gameObject); }
-        _explosionDamage.SetOwner(transform.parent.gameObject);
+            trigger?.SetOwner(transform.parent.gameObject); }
+        _explosionDamage?.SetOwner(transform.parent.gameObject);
     }
 
     public override void SubscribeToEvents()
@@ -186,7 +186,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         {
             trigger.SetDamage(attack.Damage);
             trigger.SetKnock(attack.Knockback, knockout);
-            if (_playerCombatSystem.GetAcidation())
+            if (_playerCombatSystem.GetAcidation)
             {
                 trigger.SetAcidDamage(attack.Acid);
             }
@@ -215,7 +215,7 @@ public class UnarmedMoveset : ChargeableMoveSet
             trigger.SetDamage(damage);
             trigger.SetKnock(knockback, knockout);
 
-            if (_playerCombatSystem.GetAcidation())
+            if (_playerCombatSystem.GetAcidation)
             {
                 float Acid = Mathf.Lerp(attack.MinAcid, attack.MaxAcid, chargePercentage);
                 trigger.SetAcidDamage(Acid);
@@ -249,7 +249,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         _explosionDamage.SetKnock(knockback, knockout);
         _explosionDamage.SetRadius(radius);
 
-        if (_playerCombatSystem.GetAcidation())
+        if (_playerCombatSystem.GetAcidation)
         {
             float Acid = Mathf.Lerp(attack.MinAcid, attack.MaxAcid, chargePercentage);
             _explosionDamage.SetAcidDamage(Acid);
@@ -268,7 +268,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     public void PerformExplosionDamage()
     {
         _explosionDamage.Explode();
-        if (_playerCombatSystem.GetAcidation())
+        if (_playerCombatSystem.GetAcidation)
         {
             _vePooler.SpawnFromPool(_heavyDownAttack.AcidationVE, transform.position, Quaternion.Euler(90,0,0)).PlayEffect();
         }
@@ -334,7 +334,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         {
             _attackedInAir = false;
         }
-        else if (_playerCombatSystem.GetCanAttack())
+        else if (_playerCombatSystem.GetCanAttack)
         {
             ResetAttacks();
             _playerMovement.SetCanMove(true);

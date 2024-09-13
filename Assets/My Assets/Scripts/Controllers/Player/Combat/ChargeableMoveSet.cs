@@ -64,7 +64,7 @@ public abstract class ChargeableMoveSet : CombatMoveSet
         _releasedEarly = false;
         _isCharging = false;
         _currentCharge = 0;
-        _playerCombatSystem.SetChargePercentage(0);
+        _playerCombatSystem?.SetChargePercentage(0);
     }
 
     protected bool CheckAndHandleEarlyRelease()

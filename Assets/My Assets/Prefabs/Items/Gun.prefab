@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &900503287135289794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6088972470968831689}
+  - component: {fileID: -7292344437027833636}
+  m_Layer: 0
+  m_Name: Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6088972470968831689
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900503287135289794}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.451478, y: 1.7892036, z: -2.8111095}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7292344437027833636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900503287135289794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb844f299af385143ba6138695645f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCharge: 0
+  _minCharge: 0
+  _currentCharge: 0
+  _isCharging: 0
+  _releasedEarly: 0
+  _releaseWhenFullyCharged: 0
+  _acidSpitAttack:
+    ProjectileTag: AcidShoot
+    AnimationName: SpitAcid
+    CastTime: 0.4
+    ProjectileSpeed: 15
+    ProjectileDamage: 500
+    ProjectileAcidDamage: 5
+    AcidCost: 4
+    ProjectileGravity: 45
+    ProjectileExplosionRange: 5
+    AcidationCastTime: 0.2
+  _acidShotgunAttack:
+    ProjectileTag: AcidShotgun
+    AnimationName: ShotgunAcid2
+    CastTime: 0.1
+    ProjectileSpeed: 30
+    ProjectileDamage: 1.5
+    ProjectileAcidDamage: 2
+    AcidCost: 20
+    chargeableStats:
+      ChargeAnimationName: ShotgunAcid1
+      MaxChargeTime: 1
+      MinChargeTime: 0.4
+      ReleaseOnFull: 0
+    MinPelletAmount: 10
+    MaxPelletAmount: 50
+    AcidationPelletMult: 2.5
+    PelletAmount: 0
+    TimeBeforeDissolve: 0.3
+    NormalTimeBeforeDissolve: 0.3
+    AcidationTimeBeforeDissolve: 0.5
+    Spread: 20
+    NormalSpread: 20
+    AcidationSpread: 25
+    Knockback: {x: 1, y: 0}
+    Knockout: 2

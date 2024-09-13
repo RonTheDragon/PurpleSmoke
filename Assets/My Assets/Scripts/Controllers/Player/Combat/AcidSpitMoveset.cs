@@ -15,9 +15,9 @@ public class AcidSpitMoveset : ChargeableMoveSet
     {
         _projectilePooler = GameManager.Instance.ProjectilePooler;
         base.MoveSetStart(playerCombatSystem);
-        _playerAnimations = playerCombatSystem.GetAnimations();
-        _shooter = playerCombatSystem.GetShooter();
-        _playerAcidation = playerCombatSystem.GetPlayerAcidation();
+        _playerAnimations = playerCombatSystem.GetAnimations;
+        _shooter = playerCombatSystem.GetShooter;
+        _playerAcidation = playerCombatSystem.GetPlayerAcidation;
     }
 
     public override void OnLightAttack()
@@ -57,7 +57,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
         float chargePercentage = GetChargePercentage();
         _acidShotgunAttack.PelletAmount = (int)Mathf.Lerp(_acidShotgunAttack.MinPelletAmount, _acidShotgunAttack.MaxPelletAmount, chargePercentage);
 
-        if (_playerCombatSystem.GetAcidation()) 
+        if (_playerCombatSystem.GetAcidation) 
         {
             _acidShotgunAttack.PelletAmount = (int)(_acidShotgunAttack.PelletAmount * _acidShotgunAttack.AcidationPelletMult);
             _acidShotgunAttack.Spread = _acidShotgunAttack.AcidationSpread;
@@ -108,7 +108,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
     private void PerformAcidSpit()
     {
         // _playerAnimations.PlayAnimation(_acidSpitAttack.AnimationName); //no animation yet
-        _castTimeLeft = _playerCombatSystem.GetAcidation() ? _acidSpitAttack.AcidationCastTime : _acidSpitAttack.CastTime;
+        _castTimeLeft = _playerCombatSystem.GetAcidation ? _acidSpitAttack.AcidationCastTime : _acidSpitAttack.CastTime;
         Projectile projectile = _projectilePooler.SpawnFromPool(_acidSpitAttack.ProjectileTag, _shooter.position, _shooter.rotation);
 
         projectile.SetProjectile(transform.parent.gameObject, _acidSpitAttack);
