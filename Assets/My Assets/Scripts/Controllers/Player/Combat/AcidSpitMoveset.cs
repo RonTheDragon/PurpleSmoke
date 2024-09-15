@@ -15,9 +15,10 @@ public class AcidSpitMoveset : ChargeableMoveSet
     {
         _projectilePooler = GameManager.Instance.ProjectilePooler;
         base.MoveSetStart(playerCombatSystem);
-        _playerAnimations = playerCombatSystem.GetAnimations;
-        _shooter = playerCombatSystem.GetShooter;
-        _playerAcidation = playerCombatSystem.GetPlayerAcidation;
+        PlayerComponentsRefrences refs = playerCombatSystem.GetPlayerRefs;
+        _playerAnimations = refs.GetPlayerAnimations;
+        _shooter = refs.GetShooter;
+        _playerAcidation = refs.GetPlayerAcidation;
     }
 
     public override void OnLightAttack()

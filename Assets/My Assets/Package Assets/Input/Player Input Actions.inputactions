@@ -51,6 +51,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Useable Static",
+                    "type": "Button",
+                    "id": "f1573dba-6908-4ee1-ad1e-5fed494f50fc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Useable Dynamic",
+                    "type": "Button",
+                    "id": "41158b42-7e6b-45a1-b375-f97dec30957a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "AimMode",
                     "type": "Button",
                     "id": "c6a37f1e-c32a-4e81-b2e2-92df87d7fe78",
@@ -936,6 +954,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5bc76e1c-1b2d-445a-92d8-e5bc48d91685",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Useable Dynamic",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17031b8b-5b68-4036-9220-7040b7f6a1bf",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Useable Dynamic",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b8e81d5-f644-4d01-9f79-d8def7a7e715",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Useable Static",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ee6491e-7b8a-48f6-b9bb-93a103b5cfb8",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Useable Static",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

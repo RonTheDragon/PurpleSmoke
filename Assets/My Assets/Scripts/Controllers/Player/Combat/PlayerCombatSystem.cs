@@ -1,23 +1,17 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 {
     public Action<float> OnChargeChange;
 
-    private CharacterController _controller;
-    private PlayerGroundCheck _groundCheck;
-    private PlayerGravity _gravity;
-    private PlayerJump _playerJump;
-    private PlayerAnimations _animations;
-    private PlayerWalk _movement;
-    private PlayerAttackMovement _attackMovement;
+    private PlayerComponentsRefrences _playerComponentsRefrences;
     private PlayerGlide _glide;
     private PlayerAcidation _playerAcidation;
     private bool _canAttack = true;
     private bool _acidation = false;
     private bool _usingRanged;
-    private Transform _shooter;
     private bool _busyAttacking;
 
     private float _currentChargePercentage;
@@ -26,19 +20,14 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     [ReadOnly][SerializeField] private CombatMoveSet _currentMeleeMoveSet;
     [SerializeField] private CombatMoveSet _defaultRangeMoveSet;
     [ReadOnly][SerializeField] private CombatMoveSet _currentRangeMoveSet;
+    [ReadOnly][SerializeField] private UseableAbility _dynamicUseable, _staticUseable;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _controller = playerComponents.GetCharacterController;
-        _groundCheck = playerComponents.GetPlayerGroundCheck;
-        _animations = playerComponents.GetPlayerAnimations;
-        _movement = playerComponents.GetPlayerWalk;
-        _attackMovement = playerComponents.GetPlayerAttackMovement;
-        _glide = playerComponents.GetPlayerGlide;
-        _gravity = playerComponents.GetPlayerGravity;
-        _playerAcidation = playerComponents.GetPlayerAcidation;
-        _shooter = playerComponents.GetShooter;
-        _playerJump = playerComponents.GetPlayerJump;
+        _playerComponentsRefrences = playerComponents;
+        _glide = _playerComponentsRefrences.GetPlayerGlide;
+        _playerAcidation = _playerComponentsRefrences.GetPlayerAcidation;
+
 
         TemporaryStart();
         _glide.OnGlide += ClearAttacks;
@@ -56,113 +45,82 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         HandleSubscribtion();
     }
 
-    public CharacterController GetController => _controller;
-    public PlayerGroundCheck GetGroundCheck => _groundCheck;
-    public PlayerAnimations GetAnimations => _animations;
-    public PlayerWalk GetMovement => _movement;
-    public PlayerAttackMovement GetAttackMovement => _attackMovement;
+    public PlayerComponentsRefrences GetPlayerRefs => _playerComponentsRefrences;
     public CombatMoveSet GetDefaultMoveSet => _defaultMeleeMoveSet;
     public CombatMoveSet GetCurrentMeleeMoveSet => _currentMeleeMoveSet;
     public CombatMoveSet GetCurrentRangeMoveSet => _currentRangeMoveSet;
-    public PlayerGravity GetGravity => _gravity;
-    public PlayerJump GetJump => _playerJump;
-    public Transform GetShooter => _shooter;
+    public UseableAbility GetCurrentStaticUseable => _staticUseable;
+    public UseableAbility GetCurrentDynamicUseable => _dynamicUseable;
     public bool GetIsBusyAttacking => _busyAttacking;
     public bool GetCanAttack => _canAttack;
     public bool GetAcidation => _acidation;
-    public PlayerGlide GetGlide => _glide;
-    public PlayerAcidation GetPlayerAcidation => _playerAcidation;
     private bool CanPlayerAttack => !_glide.IsGliding() && _canAttack;
     public float GetChargePercentage => _currentChargePercentage;
 
-
-
-
-
     private void PlayerUpdate()
     {
-        if (!_usingRanged)
-        {
-            _currentMeleeMoveSet?.MoveSetUpdate();
-        }
-        else
-        {
-            _currentRangeMoveSet?.MoveSetUpdate();
-        }
+        PerformMoveSetAction(moveset => moveset.MoveSetUpdate());
     }
 
     public void OnLightAttack()
     {
-        if (CanPlayerAttack)
-        {
-            if (_usingRanged)
-            {
-                _currentRangeMoveSet?.OnLightAttack();
-            }
-            else
-            {
-                _currentMeleeMoveSet?.OnLightAttack();
-            }
-        }
+        PerformMoveSetAction(moveset => moveset.OnLightAttack());
     }
 
     public void OnReleaseLightAttack()
     {
-        if (CanPlayerAttack)
-        {
-            if (_usingRanged)
-            {
-                _currentRangeMoveSet?.OnReleaseLightAttack();
-            }
-            else
-            {
-                _currentMeleeMoveSet?.OnReleaseLightAttack();
-            }
-        }
+        PerformMoveSetAction(moveset => moveset.OnReleaseLightAttack());
     }
 
     public void OnHeavyAttack()
     {
-        if (CanPlayerAttack)
-        {
-            if (_usingRanged)
-            {
-                _currentRangeMoveSet?.OnHeavyAttack();
-            }
-            else
-            {
-                _currentMeleeMoveSet?.OnHeavyAttack();
-            }
-        }
+        PerformMoveSetAction(moveset => moveset.OnHeavyAttack());
     }
 
     public void OnReleaseHeavyAttack()
     {
-        if (CanPlayerAttack)
-        {
-            if (_usingRanged)
-            {
-                _currentRangeMoveSet?.OnReleaseHeavyAttack();
-            }
-            else
-            {
-                _currentMeleeMoveSet?.OnReleaseHeavyAttack();
-            }
-        }
+        PerformMoveSetAction(moveset => moveset.OnReleaseHeavyAttack());
     }
-
 
     public void ClearAttacks()
     {
-        if (!_usingRanged)
+        PerformMoveSetAction(moveset => moveset.ResetAttacks());
+    }
+
+    private void PerformMoveSetAction(Action<CombatMoveSet> moveSetAction)
+    {
+        if (CanPlayerAttack)
         {
-            _currentMeleeMoveSet.ResetAttacks();
-        }
-        else
-        {
-            _currentRangeMoveSet.ResetAttacks();
+            CombatMoveSet currentMoveSet = _usingRanged ? _currentRangeMoveSet : _currentMeleeMoveSet;
+            moveSetAction?.Invoke(currentMoveSet);
         }
     }
+
+    public void OnStaticUseable()
+    {
+        PerformUseableAction(a => a.OnPress(),_staticUseable);
+    }
+    public void OnStaticUseableRelease()
+    {
+        PerformUseableAction(a => a.OnRelease(), _staticUseable);
+    }
+    public void OnDynamicUseable()
+    {
+        PerformUseableAction(a => a.OnPress(), _dynamicUseable);
+    }
+    public void OnDynamicUseableRelease()
+    {
+        PerformUseableAction(a => a.OnRelease(), _dynamicUseable);
+    }
+
+    private void PerformUseableAction(Action<UseableAbility> action, UseableAbility useable)
+    {
+        if (CanPlayerAttack && useable != null)
+        {
+            action?.Invoke(useable);
+        }
+    }
+
 
     public void SetCanAttack(bool canAttack)
     {
@@ -191,29 +149,6 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         HandleSubscribtion();
     }
 
-    private void SetMoveSet(ref CombatMoveSet currentMoveSet, CombatMoveSet newMoveSet, CombatMoveSet defaultMoveSet)
-    {
-        if (currentMoveSet != defaultMoveSet)
-        {
-            Destroy(currentMoveSet.gameObject);
-        }
-        if (newMoveSet == null)
-        {
-            newMoveSet = defaultMoveSet;
-        }
-        else
-        {
-            string n = newMoveSet.gameObject.name;
-            newMoveSet = Instantiate(newMoveSet, transform.position, Quaternion.identity, transform);
-            newMoveSet.gameObject.name = n;
-        }
-        ClearAttacks();
-        currentMoveSet = newMoveSet;
-        currentMoveSet.MoveSetStart(this);
-        ClearAttacks();
-        HandleSubscribtion();
-    }
-
     public void SetMeleeMoveSet(CombatMoveSet meleeMoveSet)
     {
         SetMoveSet(ref _currentMeleeMoveSet, meleeMoveSet, _defaultMeleeMoveSet);
@@ -222,6 +157,55 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     public void SetRangeMoveSet(CombatMoveSet rangeMoveSet)
     {
         SetMoveSet(ref _currentRangeMoveSet, rangeMoveSet, _defaultRangeMoveSet);
+    }
+
+    private void SetMoveSet(ref CombatMoveSet currentMoveSet, CombatMoveSet newMoveSet, CombatMoveSet defaultMoveSet)
+    {
+        ClearAttacks();
+        SetOrDestroy(ref currentMoveSet, newMoveSet, defaultMoveSet);
+        currentMoveSet.MoveSetStart(this);
+        ClearAttacks();
+        HandleSubscribtion();
+    }
+
+    public void SetStaticUseable(UseableAbility useable)
+    {
+        SetUseable(ref _staticUseable, useable);
+    }
+
+    public void SetDynamicUseable(UseableAbility useable)
+    {
+        SetUseable(ref _dynamicUseable, useable);
+    }
+
+    private void SetUseable(ref UseableAbility currentUseable, UseableAbility newUseable)
+    {
+        SetOrDestroy(ref currentUseable, newUseable);
+        if (currentUseable != null)
+        {
+            currentUseable.UseableStart(this);
+        }
+    }
+
+    private void SetOrDestroy<T>(ref T current, T newInstance, T defaultInstance = null) where T : Component
+    {
+        if (current != defaultInstance)
+        {
+            Destroy(current.gameObject);
+        }
+
+        if (newInstance == null)
+        {
+            newInstance = defaultInstance;
+        }
+        else
+        {
+            string name = newInstance.gameObject.name;
+            newInstance = Instantiate(newInstance, transform.position, Quaternion.identity, transform);
+            newInstance.gameObject.name = name;
+        }
+
+        current = newInstance;
     }
 
 
@@ -238,6 +222,4 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
             _currentMeleeMoveSet.SubscribeToEvents();
         }
     }
-
-
 }

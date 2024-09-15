@@ -125,6 +125,12 @@ public class PlayerHealth : Health , IPlayerComponent
         _playerAcidation.SetCanGenerateAcidation(true);
     }
 
+    public override void Heal(float healAmount)
+    {
+        base.Heal(healAmount);
+        UpdateHealthUI();
+    }
+
     private void UpdateHealthUI()
     {
         OnPlayerHealthChange?.Invoke(_currentHealth / _maxHealth);

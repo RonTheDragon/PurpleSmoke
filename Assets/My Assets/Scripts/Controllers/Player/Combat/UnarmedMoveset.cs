@@ -27,12 +27,13 @@ public class UnarmedMoveset : ChargeableMoveSet
     {
         base.MoveSetStart(playerCombatSystem);
         _vePooler = GameManager.Instance.VisualEffectsPooler;
-        _playerAnimations = _playerCombatSystem.GetAnimations;
-        _playerGroundCheck = _playerCombatSystem.GetGroundCheck;
-        _playerMovement = _playerCombatSystem.GetMovement;
-        _playerAttackMovement = _playerCombatSystem.GetAttackMovement;
-        _playerGravity = _playerCombatSystem.GetGravity;
-        _playerJump = _playerCombatSystem.GetJump;
+        PlayerComponentsRefrences refs = playerCombatSystem.GetPlayerRefs;
+        _playerAnimations = refs.GetPlayerAnimations;
+        _playerGroundCheck = refs.GetPlayerGroundCheck;
+        _playerMovement = refs.GetPlayerWalk;
+        _playerAttackMovement = refs.GetPlayerAttackMovement;
+        _playerGravity = refs.GetPlayerGravity;
+        _playerJump = refs.GetPlayerJump;
         foreach (TriggerDamage trigger in _triggerDamage) {
             trigger?.SetOwner(transform.parent.gameObject); }
         _explosionDamage?.SetOwner(transform.parent.gameObject);

@@ -26,6 +26,9 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
 
     [SerializeField] private GameObject[] _onlyActiveWhileAcidation;
 
+
+    public float Max => _maxAcidation;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerWalk = playerComponents.GetPlayerWalk;

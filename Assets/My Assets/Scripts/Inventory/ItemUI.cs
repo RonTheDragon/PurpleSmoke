@@ -63,7 +63,7 @@ public class ItemUI : MonoBehaviour
         }
         else if (_itemType == ItemType.Useable)
         {
-            
+            _playerUI.SetStaticUseable((UseableItem)_inventoryItem);
         }
         else if (_itemType == ItemType.Consumable)
         {

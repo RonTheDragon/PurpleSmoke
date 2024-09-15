@@ -134,4 +134,28 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
             _playerUI.OpenInventory();
         }
     }
+
+    public void UseableStatic(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && !_uiOpen)
+        {
+            _playerCombatSystem?.OnStaticUseable();
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            _playerCombatSystem?.OnStaticUseableRelease();
+        }
+    }
+
+    public void UseableDynamic(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && !_uiOpen)
+        {
+            _playerCombatSystem?.OnDynamicUseable();
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            _playerCombatSystem?.OnDynamicUseableRelease();
+        }
+    }
 }

@@ -53,11 +53,11 @@ MonoBehaviour:
   _acidSpitAttack:
     ProjectileTag: AcidShoot
     AnimationName: SpitAcid
-    CastTime: 0.4
+    CastTime: 0.05
     ProjectileSpeed: 15
-    ProjectileDamage: 500
+    ProjectileDamage: 1
     ProjectileAcidDamage: 5
-    AcidCost: 4
+    AcidCost: 1
     ProjectileGravity: 45
     ProjectileExplosionRange: 5
     AcidationCastTime: 0.2

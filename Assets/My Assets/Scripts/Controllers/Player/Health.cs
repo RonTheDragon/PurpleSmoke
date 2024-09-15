@@ -9,10 +9,18 @@ public abstract class Health : MonoBehaviour , IDamageable
     public abstract void TakeKnock(Vector2 knockback, float knockout, Vector3 attackLocation);
     public abstract void TakeAcidDamage(float acid);
 
+    public bool IsHealthFull => _currentHealth >= _maxHealth;
+    public float MaxHP => _maxHealth;
     public virtual void HealToMax()
     {
         _currentHealth = _maxHealth;
         _isDead=false;
+    }
+
+    public virtual void Heal(float healAmount)
+    {
+        _currentHealth += healAmount;
+        if (_currentHealth > _maxHealth) _currentHealth = _maxHealth;
     }
 
     public abstract void Die();

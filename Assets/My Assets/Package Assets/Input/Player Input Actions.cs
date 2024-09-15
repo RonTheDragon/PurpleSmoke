@@ -73,6 +73,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Useable Static"",
+                    ""type"": ""Button"",
+                    ""id"": ""f1573dba-6908-4ee1-ad1e-5fed494f50fc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Useable Dynamic"",
+                    ""type"": ""Button"",
+                    ""id"": ""41158b42-7e6b-45a1-b375-f97dec30957a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""AimMode"",
                     ""type"": ""Button"",
                     ""id"": ""c6a37f1e-c32a-4e81-b2e2-92df87d7fe78"",
@@ -960,6 +978,50 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bc76e1c-1b2d-445a-92d8-e5bc48d91685"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Useable Dynamic"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17031b8b-5b68-4036-9220-7040b7f6a1bf"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Useable Dynamic"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b8e81d5-f644-4d01-9f79-d8def7a7e715"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Useable Static"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ee6491e-7b8a-48f6-b9bb-93a103b5cfb8"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Useable Static"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1001,6 +1063,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_LightAttack = m_Player.FindAction("Light Attack", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("Heavy Attack", throwIfNotFound: true);
+        m_Player_UseableStatic = m_Player.FindAction("Useable Static", throwIfNotFound: true);
+        m_Player_UseableDynamic = m_Player.FindAction("Useable Dynamic", throwIfNotFound: true);
         m_Player_AimMode = m_Player.FindAction("AimMode", throwIfNotFound: true);
         m_Player_Acidation = m_Player.FindAction("Acidation", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
@@ -1080,6 +1144,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_LightAttack;
     private readonly InputAction m_Player_HeavyAttack;
+    private readonly InputAction m_Player_UseableStatic;
+    private readonly InputAction m_Player_UseableDynamic;
     private readonly InputAction m_Player_AimMode;
     private readonly InputAction m_Player_Acidation;
     private readonly InputAction m_Player_Inventory;
@@ -1102,6 +1168,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
+        public InputAction @UseableStatic => m_Wrapper.m_Player_UseableStatic;
+        public InputAction @UseableDynamic => m_Wrapper.m_Player_UseableDynamic;
         public InputAction @AimMode => m_Wrapper.m_Player_AimMode;
         public InputAction @Acidation => m_Wrapper.m_Player_Acidation;
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
@@ -1139,6 +1207,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @HeavyAttack.started += instance.OnHeavyAttack;
             @HeavyAttack.performed += instance.OnHeavyAttack;
             @HeavyAttack.canceled += instance.OnHeavyAttack;
+            @UseableStatic.started += instance.OnUseableStatic;
+            @UseableStatic.performed += instance.OnUseableStatic;
+            @UseableStatic.canceled += instance.OnUseableStatic;
+            @UseableDynamic.started += instance.OnUseableDynamic;
+            @UseableDynamic.performed += instance.OnUseableDynamic;
+            @UseableDynamic.canceled += instance.OnUseableDynamic;
             @AimMode.started += instance.OnAimMode;
             @AimMode.performed += instance.OnAimMode;
             @AimMode.canceled += instance.OnAimMode;
@@ -1197,6 +1271,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @HeavyAttack.started -= instance.OnHeavyAttack;
             @HeavyAttack.performed -= instance.OnHeavyAttack;
             @HeavyAttack.canceled -= instance.OnHeavyAttack;
+            @UseableStatic.started -= instance.OnUseableStatic;
+            @UseableStatic.performed -= instance.OnUseableStatic;
+            @UseableStatic.canceled -= instance.OnUseableStatic;
+            @UseableDynamic.started -= instance.OnUseableDynamic;
+            @UseableDynamic.performed -= instance.OnUseableDynamic;
+            @UseableDynamic.canceled -= instance.OnUseableDynamic;
             @AimMode.started -= instance.OnAimMode;
             @AimMode.performed -= instance.OnAimMode;
             @AimMode.canceled -= instance.OnAimMode;
@@ -1278,6 +1358,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnUseableStatic(InputAction.CallbackContext context);
+        void OnUseableDynamic(InputAction.CallbackContext context);
         void OnAimMode(InputAction.CallbackContext context);
         void OnAcidation(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -46,6 +47,8 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
         _meleeSlot.GetButton.onClick.AddListener(MeleeSlotClick);
         _rangeSlot.GetButton.onClick.AddListener(RangeSlotClick);
+        _staticSlot.GetButton.onClick.AddListener(StaticSlotClick);
+        _dynamicSlot.GetButton.onClick.AddListener(DynamicSlotClick);
     }
 
     private void UpdateHealthUI(float amount)
@@ -178,29 +181,40 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
     public void SetMeleeWeapon(MeleeItem melee)
     {
-        if (melee.GetMoveSet.name != _playerCombatSystem.GetCurrentMeleeMoveSet.name)
-        {
-            _playerCombatSystem.SetMeleeMoveSet(melee.GetMoveSet);
-            _meleeSlot.SetImage(melee.GetSprite);
-        }
-        else
-        {
-            _playerCombatSystem.SetMeleeMoveSet(null);
-            _meleeSlot.SetImage(null);
-        }
+        SetItem(melee.GetMoveSet, _playerCombatSystem.GetCurrentMeleeMoveSet,
+                _playerCombatSystem.SetMeleeMoveSet, _meleeSlot, melee.GetSprite);
     }
 
-    public void SetRangeWeapon(RangeItem ramge)
+    public void SetRangeWeapon(RangeItem range)
     {
-        if (ramge.GetMoveSet.name != _playerCombatSystem.GetCurrentRangeMoveSet.name)
+        SetItem(range.GetMoveSet, _playerCombatSystem.GetCurrentRangeMoveSet,
+                _playerCombatSystem.SetRangeMoveSet, _rangeSlot, range.GetSprite);
+    }
+
+    public void SetStaticUseable(UseableItem useable)
+    {
+        SetItem(useable.GetUseable, _playerCombatSystem.GetCurrentStaticUseable,
+                _playerCombatSystem.SetStaticUseable, _staticSlot, useable.GetSprite);
+    }
+
+    public void SetDynamicUseable(UseableItem useable)
+    {
+        SetItem(useable.GetUseable, _playerCombatSystem.GetCurrentDynamicUseable,
+                _playerCombatSystem.SetDynamicUseable, _dynamicSlot, useable.GetSprite);
+    }
+
+    private void SetItem<T>(T newItem, T currentItem,
+                            Action<T> setItemAction, ItemSlot slot, Sprite newSprite) where T : Component
+    {
+        if (newItem != null && newItem.name != currentItem?.name)
         {
-            _playerCombatSystem.SetRangeMoveSet(ramge.GetMoveSet);
-            _rangeSlot.SetImage(ramge.GetSprite);
+            setItemAction(newItem);
+            slot.SetImage(newSprite);
         }
         else
         {
-            _playerCombatSystem.SetRangeMoveSet(null);
-            _rangeSlot.SetImage(null);
+            setItemAction(default);
+            slot.SetImage(null);
         }
     }
 
@@ -213,5 +227,15 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     {
         _playerCombatSystem.SetRangeMoveSet(null);
         _rangeSlot.SetImage(null);
+    }
+    private void StaticSlotClick()
+    {
+        _playerCombatSystem.SetStaticUseable(null);
+        _staticSlot.SetImage(null);
+    }
+    private void DynamicSlotClick()
+    {
+        _playerCombatSystem.SetDynamicUseable(null);
+        _dynamicSlot.SetImage(null);
     }
 }

@@ -15,12 +15,11 @@ public class PlayersSetUp : MonoBehaviour
         _cinemachine.layer = LayerMask.NameToLayer("Player"+ _gm.PlayerCount);
         _camera.cullingMask = _gm.GetLayerMaskForCinemachine();
         ChangeFinsMaterial();
-        FixCam();
-        _gm.OnPlayerAmountChange += FixCam;
+        FixCanvas();
+        _gm.OnPlayerAmountChange += FixCanvas;
     }
 
-    [ContextMenu("FixCamera")]
-    public void FixCam()
+    public void FixCanvas()
     {
         if (_cameraData == null)
         {
@@ -41,6 +40,6 @@ public class PlayersSetUp : MonoBehaviour
 
     private void OnDestroy()
     {
-        _gm.OnPlayerAmountChange -= FixCam;
+        _gm.OnPlayerAmountChange -= FixCanvas;
     }
 }
