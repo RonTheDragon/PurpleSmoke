@@ -9,6 +9,7 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
     private PlayerGravity _playerGravity;
     private PlayerGroundCheck _playerGroundCheck;
     private PlayerAnimations _playerAnimations;
+    private PlayerCombatSystem _playerCombatSystem;
     private bool _bIsGliding;
     public Action OnGlide;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
@@ -18,13 +19,14 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
         _playerGravity = playerComponents.GetPlayerGravity;
         _playerAnimations = playerComponents.GetPlayerAnimations;
         _playerGroundCheck = playerComponents.GetPlayerGroundCheck;
+        _playerCombatSystem = playerComponents.GetPlayerCombatSystem;
         _playerGroundCheck.OnGroundCheckChange += (b) => StopGlide();
         playerComponents.OnUpdate += PlayerUpdate;
     }
 
     public void GlideInput()
     {
-        if (_playerJump.CanGlide() && !_bIsGliding)
+        if (_playerJump.CanGlide() && !_playerCombatSystem.GetIsBusyAttacking && !_bIsGliding)
         {
                 StartGlide();
         }
