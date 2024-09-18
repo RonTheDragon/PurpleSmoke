@@ -7,6 +7,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     private Camera _camera;
     private CharacterController _characterController;
     private PlayerAnimations _playerAnimations;
+    private PlayerCombatSystem _playerCombatSystem;
 
     [SerializeField] private float _jumpPower = 10.0f;
     [SerializeField] private float _loseJumpPowerMult = 1f;
@@ -41,6 +42,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
         _camera = playerComponents.GetCamera;
         _playerAnimations = playerComponents.GetPlayerAnimations;
         _groundCheck = playerComponents.GetPlayerGroundCheck;
+        _playerCombatSystem = playerComponents.GetPlayerCombatSystem;
         _groundCheck.OnGroundCheckChange += ResetDoubleJump;
         playerComponents.OnUpdate += PlayerUpdate;
     }
@@ -115,7 +117,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
                 InitiateJump();
                 _playerAnimations.Jump();
             }
-            else if (_isDoubleJump)
+            else if (_isDoubleJump && !_playerCombatSystem.GetIsBusyAttacking)
             {
                 InitiateJump();
                 _isDoubleJump = false;

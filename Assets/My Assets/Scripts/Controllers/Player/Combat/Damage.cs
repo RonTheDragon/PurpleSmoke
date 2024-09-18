@@ -26,6 +26,7 @@ public class Damage : MonoBehaviour
 
     public void SetOwner(GameObject owner)
     {
+        if (_owner == null)
         _owner = owner;
     }
 }

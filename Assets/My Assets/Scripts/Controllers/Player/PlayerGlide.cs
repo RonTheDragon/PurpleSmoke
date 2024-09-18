@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerGlide : MonoBehaviour , IPlayerComponent
+public class PlayerGlide : MonoBehaviour, IPlayerComponent
 {
     [SerializeField] private float _glideDownSpeed;
     private CharacterController _characterController;
@@ -10,8 +10,11 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
     private PlayerGroundCheck _playerGroundCheck;
     private PlayerAnimations _playerAnimations;
     private PlayerCombatSystem _playerCombatSystem;
-    private bool _bIsGliding;
+    private bool _bIsGliding, _glideInput;
     public Action OnGlide;
+    [SerializeField] private float _glideCooldown;
+    private float _glideCD;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _characterController = playerComponents.GetCharacterController;
@@ -26,23 +29,17 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
 
     public void GlideInput()
     {
-        if (_playerJump.CanGlide() && !_playerCombatSystem.GetIsBusyAttacking && !_bIsGliding)
-        {
-                StartGlide();
-        }
+        _glideInput = true;
     }
 
     public void StopGlideInput()
     {
-        if (_bIsGliding)
-        {
-            _playerGravity.RemoveNotFallingReason("Glide");
-            StopGlide();
-        }
+        _glideInput = false;
     }
 
     private void StartGlide()
     {
+        _glideCD = _glideCooldown; // Reset cooldown
         _playerJump.StopJumpMidAir();
         _playerGravity.AddNotFallingReason("Glide");
         _bIsGliding = true;
@@ -54,13 +51,34 @@ public class PlayerGlide : MonoBehaviour , IPlayerComponent
     {
         _bIsGliding = false;
         _playerAnimations.ChangeGlide(false);
+        _playerGravity.RemoveNotFallingReason("Glide");
     }
 
-    private void PlayerUpdate() 
+    private void PlayerUpdate()
     {
-        if ( _bIsGliding )
+        if (_bIsGliding)
         {
             _characterController.Move(new Vector3(0, -_glideDownSpeed, 0) * Time.deltaTime);
+        }
+
+        if (_glideInput)
+        {
+            if (!_bIsGliding && _playerJump.CanGlide() && !_playerCombatSystem.GetIsBusyAttacking && _glideCD <= 0)
+            {
+                StartGlide();
+            }
+        }
+        else
+        {
+            if (_bIsGliding && _glideCD <= 0)
+            {
+                StopGlide();
+            }
+        }
+
+        if (_glideCD > 0)
+        {
+            _glideCD -= Time.deltaTime;
         }
     }
 

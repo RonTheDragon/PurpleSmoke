@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UnarmedMoveset : ChargeableMoveSet
@@ -18,11 +19,13 @@ public class UnarmedMoveset : ChargeableMoveSet
     [ReadOnly][SerializeField] private int _currentCombo;
     [SerializeField] private float _comboBreakTime;
     private float _comboTimeLeft;
-    [SerializeField] private TriggerDamage[] _triggerDamage;
     [SerializeField] private ExplosionDamage _explosionDamage;
     private int _lastAttackType;
     private bool _attackedInAir;
     private int _currentChargedAttack;
+    private GameObject _owner;
+    private List<Damage> _currentDamagers = new List<Damage>();
+    private bool _lightAttacking;
     public override void MoveSetStart(PlayerCombatSystem playerCombatSystem)
     {
         base.MoveSetStart(playerCombatSystem);
@@ -34,9 +37,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         _playerAttackMovement = refs.GetPlayerAttackMovement;
         _playerGravity = refs.GetPlayerGravity;
         _playerJump = refs.GetPlayerJump;
-        foreach (TriggerDamage trigger in _triggerDamage) {
-            trigger?.SetOwner(transform.parent.gameObject); }
-        _explosionDamage?.SetOwner(transform.parent.gameObject);
+        _owner = transform.parent.gameObject;
     }
 
     public override void SubscribeToEvents()
@@ -57,9 +58,23 @@ public class UnarmedMoveset : ChargeableMoveSet
         base.MoveSetUpdate();
         ComboTimer();
         AttacksCooldown();
+        if (_lightAttacking)
+        {
+            OnTryLightAttack();
+        }
     }
 
     public override void OnLightAttack()
+    {
+        _lightAttacking = true;
+    }
+
+    public override void OnReleaseLightAttack()
+    {
+        _lightAttacking = false;
+    }
+
+    private void OnTryLightAttack()
     {
         if (_isCharging || _castTimeLeft > 0) return;
 
@@ -71,6 +86,7 @@ public class UnarmedMoveset : ChargeableMoveSet
             {
                 BreakComboIfAttackChanged(0);
                 LightMoving();
+                _playerMovement.SetCanMove(true);
             }
             else
             {
@@ -94,6 +110,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         }
     }
 
+
     private void LightInPlace()
     {
         _playerMovement.SetCanMove(false);
@@ -114,10 +131,6 @@ public class UnarmedMoveset : ChargeableMoveSet
         _playerAttackMovement.SetMovement(_lightAttackInAir.Movement);
     }
 
-    public override void OnReleaseLightAttack()
-    {
-        //left empty
-    }
 
     public override void OnHeavyAttack()
     {
@@ -183,8 +196,10 @@ public class UnarmedMoveset : ChargeableMoveSet
         _comboTimeLeft = _comboBreakTime + attack.CastTime;
         _castTimeLeft = attack.CastTime;
         float knockout = Random.Range(attack.Knockout.x, attack.Knockout.y);
-        foreach (TriggerDamage trigger in _triggerDamage)
+        foreach (TriggerDamage trigger in attack.Damagers)
         {
+            AddDamager(trigger);
+            trigger.SetOwner(_owner);
             trigger.SetDamage(attack.Damage);
             trigger.SetKnock(attack.Knockback, knockout);
             if (_playerCombatSystem.GetAcidation)
@@ -211,8 +226,10 @@ public class UnarmedMoveset : ChargeableMoveSet
 
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _castTimeLeft = attack.CastTime;
-        foreach (TriggerDamage trigger in _triggerDamage)
+        foreach (TriggerDamage trigger in attack.Damagers)
         {
+            AddDamager(trigger);
+            trigger.SetOwner(_owner);
             trigger.SetDamage(damage);
             trigger.SetKnock(knockback, knockout);
 
@@ -246,21 +263,27 @@ public class UnarmedMoveset : ChargeableMoveSet
 
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _castTimeLeft = attack.CastTime;
-        _explosionDamage.SetDamage(damage);
-        _explosionDamage.SetKnock(knockback, knockout);
-        _explosionDamage.SetRadius(radius);
 
-        if (_playerCombatSystem.GetAcidation)
+        if (_explosionDamage != null)
         {
-            float Acid = Mathf.Lerp(attack.MinAcid, attack.MaxAcid, chargePercentage);
-            _explosionDamage.SetAcidDamage(Acid);
-            _explosionDamage.SetRadius(radius* attack.AcidationRadiusMultiplier);
-        }
-        else
-        {
-            _explosionDamage.SetAcidDamage(0);
-        }
+            AddDamager(_explosionDamage);
+            _explosionDamage.SetOwner(_owner);
+            _explosionDamage.SetDamage(damage);
+            _explosionDamage.SetKnock(knockback, knockout);
+            _explosionDamage.SetRadius(radius);
 
+            if (_playerCombatSystem.GetAcidation)
+            {
+                float Acid = Mathf.Lerp(attack.MinAcid, attack.MaxAcid, chargePercentage);
+                _explosionDamage.SetAcidDamage(Acid);
+                _explosionDamage.SetRadius(radius * attack.AcidationRadiusMultiplier);
+            }
+            else
+            {
+                _explosionDamage.SetAcidDamage(0);
+            }
+        }
+        
         _playerAttackMovement.SetCrashingDownSpeed(attack.DownSpeed);
         _playerAttackMovement.CrashDown();
         _castTimeLeft = 100;
@@ -268,7 +291,7 @@ public class UnarmedMoveset : ChargeableMoveSet
 
     public void PerformExplosionDamage()
     {
-        _explosionDamage.Explode();
+        _explosionDamage?.Explode();
         if (_playerCombatSystem.GetAcidation)
         {
             _vePooler.SpawnFromPool(_heavyDownAttack.AcidationVE, transform.position, Quaternion.Euler(90,0,0)).PlayEffect();
@@ -296,13 +319,37 @@ public class UnarmedMoveset : ChargeableMoveSet
         }
         else if (_castTimeLeft < 0)
         {
-            _castTimeLeft = 0;
-            _playerMovement.SetCanMove(true);
-            _playerGravity.RemoveNotFallingReason("AirAttack");
-            _playerGravity.ResetFall();
-            _playerCombatSystem.SetBusyAttacking(false);
+            AttackEnds();
         }
     }
+
+    private void AttackEnds()
+    {
+        _castTimeLeft = 0;
+        _playerMovement.SetCanMove(true);
+        _playerGravity.RemoveNotFallingReason("AirAttack");
+        _playerGravity.ResetFall();
+        _playerCombatSystem.SetBusyAttacking(false);
+
+        RemoveAllDamagers();
+    }
+
+    private void AddDamager(Damage damage)
+    {
+        damage.gameObject.SetActive(true);
+        _currentDamagers.Add(damage);
+    }
+
+    private void RemoveAllDamagers()
+    {
+        foreach (Damage damage in _currentDamagers)
+        {
+            damage.gameObject.SetActive(false);
+        }
+        _currentDamagers.Clear();
+    }
+
+
 
     private void BreakCombo()
     {
@@ -346,12 +393,14 @@ public class UnarmedMoveset : ChargeableMoveSet
     {
         _playerAnimations.PlayAnimation(_heavyDownAttack.CrashAnimationName);
         _castTimeLeft = _heavyDownAttack.CastTime;
+        _attackedInAir = false;
     }
 
     class BaseAttack
     {
         public string AnimationName;
         public float CastTime;
+        public List<Damage> Damagers;
     }
 
     [System.Serializable]

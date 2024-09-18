@@ -5,7 +5,7 @@ public class TriggerDamage : Damage
     private void OnTriggerEnter(Collider other)
     {
         // Check if the other collider belongs to the owner object
-        if (other.gameObject == _owner)
+        if (other.gameObject == _owner || _owner == null)
         {
             return; // Prevent damaging the owner itself
         }
