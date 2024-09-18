@@ -11,7 +11,8 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
     private Transform _shootFromObject;
 
     private bool _isAiming;
-    
+    private bool _lockHeadAim;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerComponentsRefrences = playerComponents;
@@ -64,7 +65,6 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         else
         {
             TurnAimOn();
-            
         }
     }
 
@@ -86,6 +86,21 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         _playerComponentsRefrences.OnUpdate -= PlayerUpdate;
         _playerCombatSystem.SetUsingRanged(false);
         _playerAnimations.SetHeadAimWeight(0);
+    }
+
+    public void SetLockHeadAim(bool shouldLock)
+    {
+        _lockHeadAim = shouldLock;
+        if (!_isAiming) { return; }
+
+        if (_lockHeadAim)
+        {
+            _playerAnimations.SetHeadAimWeight(0); // Disable head aim when locked
+        }
+        else 
+        {
+            _playerAnimations.SetHeadAimWeight(1); // Re-enable head aim when unlocked
+        }
     }
 
     public bool GetIsAiming()
