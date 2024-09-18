@@ -100,7 +100,6 @@ public abstract class ChargeableMoveSet : CombatMoveSet
     public class ChargeableStats
     {
         public string ChargeAnimationName;
-        public float MaxChargeTime;
-        public float MinChargeTime;
+        public float MinChargeTime, MaxChargeTime;
         public bool ReleaseOnFull;
     }

@@ -348,15 +348,17 @@ public class UnarmedMoveset : ChargeableMoveSet
         _castTimeLeft = _heavyDownAttack.CastTime;
     }
 
-    [System.Serializable]
-    class LightAttack
+    class BaseAttack
     {
         public string AnimationName;
-        public float Damage;
-        public Vector2 Knockback;
-        public Vector2 Knockout;
         public float CastTime;
-        public float Acid;
+    }
+
+    [System.Serializable]
+    class LightAttack : BaseAttack
+    {
+        public float Damage, Acid;
+        public Vector2 Knockback, Knockout;
     }
 
     [System.Serializable]
@@ -366,36 +368,23 @@ public class UnarmedMoveset : ChargeableMoveSet
     }
 
     [System.Serializable]
-    class HeavyAttack
+    class HeavyAttack : BaseAttack
     {
         public ChargeableStats ChargeableStats;
-        public string AnimationName;
-        public float MinDamage;
-        public float MaxDamage;
-        public Vector2 MinKnockback;
-        public Vector2 MaxKnockback;
-        public Vector2 MinKnockout;
-        public Vector2 MaxKnockout;
-        public float CastTime;
-        public float MinAcid;
-        public float MaxAcid;
+        public float MinDamage, MaxDamage, MinAcid, MaxAcid;
+        public Vector2 MinKnockback, MaxKnockback, MinKnockout, MaxKnockout;
     }
 
     [System.Serializable]
     class HeavyAttackWithMovement : HeavyAttack
     {
-        public Vector3 MinMovement;
-        public Vector3 MaxMovement;
+        public Vector3 MinMovement, MaxMovement;
     }
 
     [System.Serializable]
     class HeavyDownAttack : HeavyAttack
     {
-        public float DownSpeed;
-        public string CrashAnimationName;
-        public float MinRadius;
-        public float MaxRadius;
-        public float AcidationRadiusMultiplier;
-        public string AcidationVE;
+        public float DownSpeed, MinRadius, MaxRadius, AcidationRadiusMultiplier;
+        public string CrashAnimationName, AcidationVE;
     }
 }
