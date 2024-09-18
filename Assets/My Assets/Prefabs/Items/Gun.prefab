@@ -60,23 +60,23 @@ MonoBehaviour:
     AcidCost: 1
     ProjectileGravity: 45
     ProjectileExplosionRange: 5
-    AcidationCastTime: 0.2
+    AcidationCastTime: 0.03
   _acidShotgunAttack:
     ProjectileTag: AcidShotgun
     AnimationName: ShotgunAcid2
     CastTime: 0.1
     ProjectileSpeed: 30
-    ProjectileDamage: 1.5
+    ProjectileDamage: 0.5
     ProjectileAcidDamage: 2
     AcidCost: 20
     chargeableStats:
       ChargeAnimationName: ShotgunAcid1
-      MaxChargeTime: 1
       MinChargeTime: 0.4
+      MaxChargeTime: 1
       ReleaseOnFull: 0
-    MinPelletAmount: 10
-    MaxPelletAmount: 50
-    AcidationPelletMult: 2.5
+    MinPelletAmount: 50
+    MaxPelletAmount: 200
+    AcidationPelletMult: 5
     PelletAmount: 0
     TimeBeforeDissolve: 0.3
     NormalTimeBeforeDissolve: 0.3

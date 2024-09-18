@@ -22,6 +22,7 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
     public Action<bool> OnAcidationToggle;
 
     private PlayerWalk _playerWalk;
+    private PlayerCombatSystem _playerCombatSystem;
     public Action OnNotEnoughAcid;
 
     [SerializeField] private GameObject[] _onlyActiveWhileAcidation;
@@ -32,6 +33,7 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerWalk = playerComponents.GetPlayerWalk;
+        _playerCombatSystem = playerComponents.GetPlayerCombatSystem;
 
         SetAcidationToMax();
         playerComponents.OnUpdate += PlayerUpdate;
@@ -44,7 +46,7 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
 
     public void OnAcidationInputDown()
     {
-        if (!_isAcidationActivated && _currentAcidation >= _minAcidationForUse)
+        if (!_isAcidationActivated && _currentAcidation >= _minAcidationForUse && !_playerCombatSystem.GetIsBusyAttacking)
         {
             TurnAcidationOn();
         }

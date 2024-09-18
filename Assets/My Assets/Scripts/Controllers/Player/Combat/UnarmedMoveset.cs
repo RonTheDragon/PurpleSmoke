@@ -149,7 +149,7 @@ public class UnarmedMoveset : ChargeableMoveSet
             {
                 _currentChargedAttack = 1;
                 PerformCharging(_heavyAttackInPlace.ChargeableStats);
-                _playerMovement.SetCanMove(false);
+                _playerMovement.AddSpeedModifier("AimingKick", 0);
             }
         }
         else 
@@ -178,6 +178,8 @@ public class UnarmedMoveset : ChargeableMoveSet
                     break;
                 case 1:
                     PerformHeavyAttack(_heavyAttackInPlace);
+                    _playerMovement.SetCanMove(false);
+                    _playerMovement.RemoveSpeedModifier("AimingKick");
                     break;
                 case 2:
                     PerformHeavyAttackDownExplosive(_heavyDownAttack);
@@ -328,6 +330,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         _castTimeLeft = 0;
         _playerMovement.SetCanMove(true);
         _playerGravity.RemoveNotFallingReason("AirAttack");
+        _playerMovement.RemoveSpeedModifier("AimingKick");
         _playerGravity.ResetFall();
         _playerCombatSystem.SetBusyAttacking(false);
 
@@ -363,6 +366,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         _castTimeLeft = 0;
         _playerAnimations.PlayAnimation("Cancel");
         _playerGravity.RemoveNotFallingReason("AirAttack");
+        _playerMovement.RemoveSpeedModifier("AimingKick");
     }
 
     private void BreakComboIfAttackChanged(int currentAttack)
