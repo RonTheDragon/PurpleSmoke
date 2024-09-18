@@ -16,6 +16,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     [SerializeField] private Button _inventoryFirstSelected;
     [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private Transform _inventoryContent;
+    [SerializeField] private GameObject _acidCrosshair;
 
     [SerializeField] private MultiplayerEventSystem _multiplayerEventSystem;
     [SerializeField] private ItemUI _itemUItoSpawn;
@@ -103,12 +104,37 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         PressSpaceToGetUp(false);
     }
 
-    public void OpenInventory()
+    public bool InventoryInput()
     {
-        _inventoryUI.SetActive(!_inventoryUI.activeSelf);
+        if (_playerHealth.GetIsDead)
+        {
+            return false;
+        }
+
+        if (_inventoryUI.activeSelf)
+        {
+            CloseInventory();
+        }
+        else
+        {
+            OpenInventory();
+        }
+
+        return _inventoryUI.activeSelf;
+    }
+
+    private void OpenInventory()
+    {
+        _inventoryUI.SetActive(true);
         _multiplayerEventSystem.SetSelectedGameObject(null);
         SetUpInventoryContent();
     }
+
+    public void CloseInventory()
+    {
+        _inventoryUI.SetActive(false);
+    }
+
 
     public void SelectionFix()
     {
@@ -202,6 +228,8 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         SetItem(useable.GetUseable, _playerCombatSystem.GetCurrentDynamicUseable,
                 _playerCombatSystem.SetDynamicUseable, _dynamicSlot, useable.GetSprite);
     }
+
+    public void SetAcidCrosshair(bool b) => _acidCrosshair.SetActive(b);
 
     private void SetItem<T>(T newItem, T currentItem,
                             Action<T> setItemAction, ItemSlot slot, Sprite newSprite) where T : Component

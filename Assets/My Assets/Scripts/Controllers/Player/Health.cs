@@ -24,4 +24,6 @@ public abstract class Health : MonoBehaviour , IDamageable
     }
 
     public abstract void Die();
+
+    public bool GetIsDead => _isDead;
 }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Gun
   m_EditorClassIdentifier: 
   _name: Gun
-  _sprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  _sprite: {fileID: 21300000, guid: fda942e71540cbf4ab96e5fc6d5d946f, type: 3}
   _moveSet: {fileID: -7292344437027833636, guid: d897b701a31b6b2408ccf74d262a0f0c,
     type: 3}

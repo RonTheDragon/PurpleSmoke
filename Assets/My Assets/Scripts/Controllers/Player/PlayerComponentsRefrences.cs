@@ -71,6 +71,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public Transform GetCameraHolder => _cameraHolder;
     public PlayerGroundCheck GetPlayerGroundCheck => _playerGroundCheck;
     public PlayerGlide GetPlayerGlide => _playerGlide;
+    public PlayerInputsHandler GetPlayerInputsHandler => _playerInputsHandler;
     public PlayerAnimations GetPlayerAnimations => _playerAnimations;
     public PlayerKnockback GetPlayerKnockback => _playerKnockback;
     public PlayerCombatSystem GetPlayerCombatSystem => _playerCombatSystem;

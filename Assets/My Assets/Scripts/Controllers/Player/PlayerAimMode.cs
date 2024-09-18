@@ -7,6 +7,9 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
     private PlayerCombatSystem _playerCombatSystem;
     private PlayerAnimations _playerAnimations;
     private Camera _camera;
+    private PlayerUI _playerUI;
+    private PlayerHealth _playerHealth;
+    private PlayerKnockout _playerKnockout;
     [SerializeField] private float _playerAimMovementSpeedMultiplier = 0.8f;
     private Transform _shootFromObject;
 
@@ -21,6 +24,9 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         _shootFromObject = playerComponents.GetShooter;
         _playerCombatSystem = playerComponents.GetPlayerCombatSystem;
         _playerAnimations = playerComponents.GetPlayerAnimations;
+        _playerUI = playerComponents.GetPlayerUI;
+        _playerHealth = playerComponents.GetPlayerHealth;
+        _playerKnockout = playerComponents.GetPlayerKnockout;
     }
 
     private void PlayerUpdate()
@@ -56,7 +62,7 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
 
     public void OnAimInputDown()
     {
-        if (_playerCombatSystem.GetIsBusyAttacking) return;
+        if (_playerCombatSystem.GetIsBusyAttacking || _playerKnockout.GetIsStumbled || _playerHealth.GetIsDead) return;
 
         if (_isAiming)
         {
@@ -76,6 +82,7 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         _playerComponentsRefrences.OnUpdate += PlayerUpdate;
         _playerCombatSystem.SetUsingRanged(true);
         _playerAnimations.SetHeadAimWeight(1);
+        _playerUI.SetAcidCrosshair(true);
     }
 
     private void TurnAimOff()
@@ -86,6 +93,7 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         _playerComponentsRefrences.OnUpdate -= PlayerUpdate;
         _playerCombatSystem.SetUsingRanged(false);
         _playerAnimations.SetHeadAimWeight(0);
+        _playerUI.SetAcidCrosshair(false);
     }
 
     public void SetLockHeadAim(bool shouldLock)

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.UI;
 
 public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
 {
@@ -128,11 +127,16 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     {
         if (context.phase == InputActionPhase.Started)
         {
-            _uiOpen = !_uiOpen;
             _movementInput = Vector2.zero;
             _lookInput = Vector2.zero;
-            _playerUI.OpenInventory();
+            _uiOpen = _playerUI.InventoryInput();
         }
+    }
+
+    public void CloseInventoryAbruptly()
+    {
+        _uiOpen = false;
+        _playerUI.CloseInventory();
     }
 
     public void UseableStatic(InputAction.CallbackContext context)

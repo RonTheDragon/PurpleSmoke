@@ -179,4 +179,6 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
         _playerCombatSystem.SetCanAttack(true);
         _playerAimMode.SetLockHeadAim(false);
     }
+
+    public bool GetIsStumbled => _stumbled;
 }

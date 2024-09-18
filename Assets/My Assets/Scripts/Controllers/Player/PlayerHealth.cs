@@ -9,6 +9,7 @@ public class PlayerHealth : Health , IPlayerComponent
     private PlayerDeath _playerDeath;
     private PlayerAcidation _playerAcidation;
     private PlayerAimMode _playerAimMode;
+    private PlayerInputsHandler _playerInputsHandler;
 
     [Header("Acid")]
     [SerializeField] private float _maxAcidity = 100;
@@ -34,6 +35,7 @@ public class PlayerHealth : Health , IPlayerComponent
         _playerDeath = playerComponents.GetPlayerDeath;
         _playerAcidation = playerComponents.GetPlayerAcidation;
         _playerAimMode = playerComponents.GetPlayerAimMode;
+        _playerInputsHandler = playerComponents.GetPlayerInputsHandler;
         HealToMax();
         UpdateHealthUI();
         playerComponents.OnUpdate += PlayerUpdate;
@@ -116,6 +118,7 @@ public class PlayerHealth : Health , IPlayerComponent
         _playerAcidation.SetCanGenerateAcidation(false);
         _playerDeath.Die();
         _playerAimMode.SetLockHeadAim(true);
+        _playerInputsHandler.CloseInventoryAbruptly();
     }
 
     [ContextMenu("Heal To Max")]
