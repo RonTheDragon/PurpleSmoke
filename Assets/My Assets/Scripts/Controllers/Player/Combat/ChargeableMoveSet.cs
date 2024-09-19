@@ -79,6 +79,7 @@ public abstract class ChargeableMoveSet : CombatMoveSet
     public override void ResetAttacks()
     {
         ResetCharge();
+        _playerCombatSystem.SetBusyAttacking(false);
     }
 
     public float GetChargePercentage()

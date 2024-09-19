@@ -3,6 +3,7 @@ using UnityEngine;
 public class ProjectileDecalExplosionDamage : ExplosionDamage
 {
     private Collider _colliderHit;
+    private Transform _parentOfDecal;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -12,7 +13,9 @@ public class ProjectileDecalExplosionDamage : ExplosionDamage
         }
         else
         {
-            _colliderHit = other;
+            _colliderHit = other;       
+            _parentOfDecal = null;
+            if (other.gameObject.tag == "Player") { _parentOfDecal = other.transform.GetChild(0); }
             Explode();
             gameObject.SetActive(false);
         }
@@ -41,6 +44,7 @@ public class ProjectileDecalExplosionDamage : ExplosionDamage
 
         // Spawn the visual effect
         VisualEffectHandler ve = GameManager.Instance.VisualEffectsPooler.SpawnFromPool(_explosionTag, transform.position, rotation);
+        ve.transform.SetParent(_parentOfDecal);
         ve.PlayEffect();
     }
 
