@@ -92,9 +92,23 @@ public class AcidSpitMoveset : ChargeableMoveSet
         }
         else if (_castTimeLeft < 0)
         {
-            _castTimeLeft = 0;
-            _playerCombatSystem.SetBusyAttacking(false);
+            AttackEnds();
         }
+    }
+
+    public override void ResetAttacks()
+    {
+        base.ResetAttacks();
+        _playerAnimations.PlayAnimation("Cancel");
+        AttackEnds();
+    }
+
+    private void AttackEnds()
+    {
+        _castTimeLeft = 0;
+        _playerCombatSystem.SetBusyAttacking(false);
+        _spittingAcid = false;
+        ResetCharge();
     }
 
     private void TrySpitAcid()
@@ -117,15 +131,6 @@ public class AcidSpitMoveset : ChargeableMoveSet
         // Apply other effects of the acid spit attack
         // You can modify this part based on your game logic
     }
-
-    public override void ResetAttacks()
-    {
-        base.ResetAttacks();
-        _spittingAcid = false;
-        ResetCharge();
-        _playerAnimations.PlayAnimation("Cancel");
-    }
-
 }
 
 public class ProjectileAttack

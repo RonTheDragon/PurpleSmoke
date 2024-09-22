@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UnarmedMoveset : ChargeableMoveSet
@@ -333,8 +334,14 @@ public class UnarmedMoveset : ChargeableMoveSet
         _playerMovement.RemoveSpeedModifier("AimingKick");
         _playerGravity.ResetFall();
         _playerCombatSystem.SetBusyAttacking(false);
-
         RemoveAllDamagers();
+    }
+
+    public override void ResetAttacks()
+    {
+        base.ResetAttacks();
+        _playerAnimations.PlayAnimation("Cancel");
+        AttackEnds();
     }
 
     private void AddDamager(Damage damage)
@@ -360,14 +367,6 @@ public class UnarmedMoveset : ChargeableMoveSet
         _comboTimeLeft = 0;
     }
 
-    public override void ResetAttacks()
-    {
-        base.ResetAttacks();
-        _castTimeLeft = 0;
-        _playerAnimations.PlayAnimation("Cancel");
-        _playerGravity.RemoveNotFallingReason("AirAttack");
-        _playerMovement.RemoveSpeedModifier("AimingKick");
-    }
 
     private void BreakComboIfAttackChanged(int currentAttack)
     {

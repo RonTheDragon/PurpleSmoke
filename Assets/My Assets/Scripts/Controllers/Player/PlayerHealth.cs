@@ -10,6 +10,7 @@ public class PlayerHealth : Health , IPlayerComponent
     private PlayerAcidation _playerAcidation;
     private PlayerAimMode _playerAimMode;
     private PlayerInputsHandler _playerInputsHandler;
+    private CharacterController _characterController;
 
     [Header("Acid")]
     [SerializeField] private float _maxAcidity = 100;
@@ -30,6 +31,7 @@ public class PlayerHealth : Health , IPlayerComponent
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
+        _characterController = playerComponents.GetCharacterController;
         _playerKnockback = playerComponents.GetPlayerKnockback;
         _playerKnockout = playerComponents.GetPlayerKnockout;
         _playerDeath = playerComponents.GetPlayerDeath;
