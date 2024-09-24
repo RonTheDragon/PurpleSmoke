@@ -1,5 +1,5 @@
 using System;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
@@ -13,6 +13,8 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     private bool _acidation = false;
     private bool _usingRanged;
     private bool _busyAttacking;
+    [SerializeField] private Transform _itemsLocation, _effectsList;
+
 
     private float _currentChargePercentage;
 
@@ -21,6 +23,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     [SerializeField] private CombatMoveSet _defaultRangeMoveSet;
     [ReadOnly][SerializeField] private CombatMoveSet _currentRangeMoveSet;
     [ReadOnly][SerializeField] private UseableAbility _dynamicUseable, _staticUseable;
+    [ReadOnly][SerializeField] private List<Consumable> _consumedConsumables;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -187,6 +190,28 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         }
     }
 
+    public bool ConsumeConsumable(Consumable consumable)
+    {
+        bool consumed = consumable.CheckIfCanConsume(this);
+        if (!consumed) 
+            return false;
+        
+        foreach (Consumable c in _consumedConsumables)
+        {
+            if (c.GetEffectName == consumable.GetEffectName)
+            {
+                c.FinishConsumable();
+                _consumedConsumables.Remove(c);
+                Destroy(c.gameObject); 
+                break;
+            }
+        }
+        consumable = Instantiate(consumable, transform.position, Quaternion.identity, _effectsList);
+        consumable.Consume(this);
+        _consumedConsumables.Add(consumable);
+        return true;
+    }
+
     private void SetOrDestroy<T>(ref T current, T newInstance, T defaultInstance = null) where T : Component
     {
         if (current != defaultInstance)
@@ -201,7 +226,7 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         else
         {
             string name = newInstance.gameObject.name;
-            newInstance = Instantiate(newInstance, transform.position, Quaternion.identity, transform);
+            newInstance = Instantiate(newInstance, transform.position, Quaternion.identity, _itemsLocation);
             newInstance.gameObject.name = name;
         }
 

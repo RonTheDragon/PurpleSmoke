@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
@@ -30,7 +31,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
     private GameObject _selected;
 
-    [SerializeField] private List<InventoryItem> _inventoryItems;
+    [SerializeField] private List<InventoryItemWithAmount> _inventoryItems;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -172,11 +173,10 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         ClearContent();
 
         bool first = true;
-        foreach (InventoryItem item in _inventoryItems) 
+        foreach (InventoryItemWithAmount item in _inventoryItems) 
         {
             ItemUI i = Instantiate(_itemUItoSpawn, _inventoryContent.position, _inventoryContent.rotation, _inventoryContent);
             i.SetUpItemUI(item,this);
-
             if (first)
             {
                 first=false;
@@ -229,6 +229,11 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
                 _playerCombatSystem.SetDynamicUseable, _dynamicSlot, useable.GetSprite);
     }
 
+    public bool SpendConsumable(ConsumableItem consumable) 
+    {
+        return _playerCombatSystem.ConsumeConsumable(consumable.GetConsumable);
+    }
+
     public void SetAcidCrosshair(bool b) => _acidCrosshair.SetActive(b);
 
     private void SetItem<T>(T newItem, T currentItem,
@@ -243,6 +248,24 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         {
             setItemAction(default);
             slot.SetImage(null);
+        }
+    }
+
+    public void RemoveItem(ItemUI itemUI)
+    {
+        // Find the corresponding InventoryItemWithAmount
+        InventoryItemWithAmount itemToRemove = _inventoryItems.Find(item =>
+            item.InventoryItem == itemUI.GetInventoryItem);
+
+        // Remove the item if it was found
+        if (itemToRemove != null)
+        {
+            itemToRemove.Amount--;
+            if (itemToRemove.Amount <= 0)
+            {
+                _inventoryItems.Remove(itemToRemove);
+                SetUpInventoryContent();
+            }
         }
     }
 
@@ -266,4 +289,12 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         _playerCombatSystem.SetDynamicUseable(null);
         _dynamicSlot.SetImage(null);
     }
+
+}
+
+[Serializable]
+public class InventoryItemWithAmount
+{
+     public InventoryItem InventoryItem;
+     public int Amount; 
 }

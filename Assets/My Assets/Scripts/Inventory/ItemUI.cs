@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,20 +8,24 @@ public class ItemUI : MonoBehaviour
     public enum ItemType { Melee, Range, Useable, Consumable}
     private ItemType _itemType;
     private PlayerUI _playerUI;
+    [SerializeField] private int _amount;
 
     [SerializeField] private Image _itemImage, _backgroundImage;
     [SerializeField] private Button _button;
+    [SerializeField] private TMP_Text _amountText;
     [SerializeField] private Color _meleeColor, _rangeColor, _useableColor, _consumableColor;
 
     public InventoryItem GetInventoryItem => _inventoryItem;
     public ItemType GetItemType => _itemType;
 
-    public void SetUpItemUI(InventoryItem item,PlayerUI playerUI)
+    public void SetUpItemUI(InventoryItemWithAmount item,PlayerUI playerUI)
     {
-        _inventoryItem = item;
+        _inventoryItem = item.InventoryItem;
+        _amount = item.Amount;
         _playerUI = playerUI;
         _itemImage.sprite = _inventoryItem.GetSprite;
         SetItemType();
+        SetAmount();
         _button.onClick.AddListener(QuickEquip);
     }
 
@@ -67,7 +72,24 @@ public class ItemUI : MonoBehaviour
         }
         else if (_itemType == ItemType.Consumable)
         {
-            
+            if (_playerUI.SpendConsumable((ConsumableItem)_inventoryItem))
+            {
+                _amount--;
+                SetAmount();
+                _playerUI.RemoveItem(this);
+            }
+        }
+    }
+
+    public void SetAmount()
+    {
+        if (_amount == 1)
+        {
+            _amountText.text = "";
+        }
+        else
+        {
+            _amountText.text = _amount.ToString();
         }
     }
 }

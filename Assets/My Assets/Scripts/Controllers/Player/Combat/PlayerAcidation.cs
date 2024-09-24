@@ -30,6 +30,8 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
 
     public float Max => _maxAcidation;
 
+    public bool IsAcidMax => _currentAcidation >= _maxAcidation;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerWalk = playerComponents.GetPlayerWalk;
