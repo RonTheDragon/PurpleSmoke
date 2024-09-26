@@ -904,14 +904,6 @@ MonoBehaviour:
     m_ActionId: 7ef5bfb0-aa80-4e00-bce1-a7a459abd48c
     m_ActionName: Player/Inventory[/Keyboard/tab,/XInputControllerWindows/select,/XInputControllerWindows1/select,/XInputControllerWindows2/select,/XInputControllerWindows3/select]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 21bf21ae-eb9e-4cfc-8e7f-1b22a4c666a1
-    m_ActionName: Player/TrackedDeviceOrientation
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a6a60c09-0522-4fa3-bc83-89abf6bf17a7
-    m_ActionName: Player/TrackedDevicePosition
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3011800139913282868}
         m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
@@ -964,18 +956,6 @@ MonoBehaviour:
     m_ActionId: 6b5aecc2-cc22-4bf0-8771-c2c810b121c0
     m_ActionName: Player/Click[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e44f01d0-2d9e-4a33-9934-5e34f4cb8b54
-    m_ActionName: Player/Point[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 8f33dc7e-a1ee-4b35-9c72-290dace0b271
-    m_ActionName: Player/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast,/XInputControllerWindows2/buttonEast,/XInputControllerWindows3/buttonEast]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a93046fb-480a-4f26-a6c2-b20e2cce745a
-    m_ActionName: Player/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth,/XInputControllerWindows2/buttonSouth,/XInputControllerWindows3/buttonSouth]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3011800139913282868}
         m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
@@ -1023,6 +1003,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 41158b42-7e6b-45a1-b375-f97dec30957a
     m_ActionName: Player/Useable Dynamic[/Keyboard/r,/XInputControllerWindows/leftTrigger,/XInputControllerWindows1/leftTrigger,/XInputControllerWindows2/leftTrigger,/XInputControllerWindows3/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5677476338889415264}
+        m_TargetAssemblyTypeName: PlayerInputsHandler, Assembly-CSharp
+        m_MethodName: CloseMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5af4e473-a21f-4777-a19a-a06a3e65b96d
+    m_ActionName: Player/Close Window[/Keyboard/escape,/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast,/XInputControllerWindows2/buttonEast,/XInputControllerWindows3/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 821c9280-9543-4391-b4ee-aaf396bc79b8
+    m_ActionName: Player/Use/Pickup/Drop[/Keyboard/e,/XInputControllerWindows/buttonNorth,/XInputControllerWindows1/buttonNorth,/XInputControllerWindows2/buttonNorth,/XInputControllerWindows3/buttonNorth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

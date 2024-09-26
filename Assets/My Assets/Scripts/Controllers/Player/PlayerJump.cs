@@ -28,6 +28,8 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
 
     private bool _canJump = true;
 
+    private bool _jumpButtonPressed;
+
     private void PlayerUpdate()
     {
         TryToMoveUpwards();
@@ -122,8 +124,14 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
                 InitiateJump();
                 _isDoubleJump = false;
                 _playerAnimations.Flip();
+                _jumpButtonPressed = true;
             }
         }
+    }
+
+    public void ReleaseJumpButton()
+    {
+        _jumpButtonPressed = false;
     }
 
     private void InitiateJump()
@@ -171,7 +179,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
 
     public bool CanGlide()
     {
-        return _currentJumpCooldown <= 0 && !_isDoubleJump;
+        return _currentJumpCooldown <= 0 && !_isDoubleJump && !_jumpButtonPressed; ;
     }
 
     public void SetCanJump(bool canJump)

@@ -56,7 +56,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     private void UpdateHealthUI(float amount)
     {
         _healthBar.fillAmount = amount;
-        ColorBar(_healthBar,amount,Color.green,Color.yellow,Color.red);
+        ColorBar(_healthBar,amount,Color.green*Color.gray,Color.yellow,Color.red);
     }
 
     private void UpdateChargeUI(float amount)

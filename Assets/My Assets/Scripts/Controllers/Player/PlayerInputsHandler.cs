@@ -77,6 +77,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
+            _playerJump?.ReleaseJumpButton();
             _playerGlide?.StopGlideInput();
             _playerKnockout?.TryToGetUp();
             _playerDeath?.TryToRespawn();
@@ -130,6 +131,14 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
             _movementInput = Vector2.zero;
             _lookInput = Vector2.zero;
             _uiOpen = _playerUI.InventoryInput();
+        }
+    }
+
+    public void CloseMenu(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && _uiOpen)
+        {
+            CloseInventoryAbruptly();
         }
     }
 
