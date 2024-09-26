@@ -257,7 +257,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     {
         // Find the corresponding InventoryItemWithAmount
         InventoryItemWithAmount itemToRemove = _inventoryItems.Find(item =>
-            item.InventoryItem == itemUI.GetInventoryItem);
+            item.Item == itemUI.GetInventoryItem);
 
         // Remove the item if it was found
         if (itemToRemove != null)
@@ -291,12 +291,28 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         _playerCombatSystem.SetDynamicUseable(null);
         _dynamicSlot.SetImage(null);
     }
-
+    
+    public void AddInventoryItem(InventoryItem item, int amount = 1)
+    {
+        foreach (InventoryItemWithAmount i in _inventoryItems)
+        {
+            if (i.Item == item)
+            {
+                i.Amount += amount;
+                return;
+            }
+        }
+        _inventoryItems.Add(new InventoryItemWithAmount() {Item = item, Amount=amount  });
+        if (_inventoryUI.activeSelf)
+        {
+            SetUpInventoryContent();
+        }
+    }
 }
 
 [Serializable]
 public class InventoryItemWithAmount
 {
-     public InventoryItem InventoryItem;
+     public InventoryItem Item;
      public int Amount; 
 }

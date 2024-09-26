@@ -18,9 +18,13 @@ public abstract class Pickup : MonoBehaviour , Iinteractable
             if (_playerIntercation != null)
             {
                 Interact(_playerIntercation);
-                transform.parent.gameObject.SetActive(false);
             }
         }
+    }
+
+    protected void DisableItem()
+    {
+        transform.parent.gameObject.SetActive(false);
     }
 
     public virtual void Spawn(float spawnProtection)

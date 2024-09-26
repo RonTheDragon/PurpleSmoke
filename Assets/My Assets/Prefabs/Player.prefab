@@ -697,6 +697,7 @@ GameObject:
   - component: {fileID: 2377819672940888538}
   - component: {fileID: 8543009807947699284}
   - component: {fileID: 2045315901369443145}
+  - component: {fileID: 7906811223420254801}
   - component: {fileID: 1674787408233449612}
   - component: {fileID: 300154325113233337}
   m_Layer: 10
@@ -1023,6 +1024,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 821c9280-9543-4391-b4ee-aaf396bc79b8
     m_ActionName: Player/Use/Pickup/Drop[/Keyboard/e,/XInputControllerWindows/buttonNorth,/XInputControllerWindows1/buttonNorth,/XInputControllerWindows2/buttonNorth,/XInputControllerWindows3/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 84c88ce6-2ef7-4318-a474-964cbe49be24
+    m_ActionName: Player/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth,/XInputControllerWindows2/buttonSouth,/XInputControllerWindows3/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1062,6 +1067,7 @@ MonoBehaviour:
   _playerAcidation: {fileID: 6210985580518302643}
   _playerDeath: {fileID: 1674787408233449612}
   _playerTeleporter: {fileID: 300154325113233337}
+  _playerInteraction: {fileID: 7906811223420254801}
   _playerUI: {fileID: 3011800139913282868}
 --- !u!114 &5677476338889415264
 MonoBehaviour:
@@ -1287,6 +1293,18 @@ MonoBehaviour:
   _dynamicUseable: {fileID: 0}
   _staticUseable: {fileID: 0}
   _consumedConsumables: []
+--- !u!114 &7906811223420254801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914006205527094507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62733da458a2907478e4ec759399e23a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1674787408233449612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4329,15 +4347,9 @@ MonoBehaviour:
   _dynamicSlot: {fileID: 1402232616220175004}
   _staticSlot: {fileID: 2518684974576955799}
   _inventoryItems:
-  - InventoryItem: {fileID: 11400000, guid: b1f21a1f163938c4e8f9df28cfce8f0d, type: 2}
+  - Item: {fileID: 11400000, guid: 7efdea3aac8b0c74d8bfb712c43c8814, type: 2}
     Amount: 1
-  - InventoryItem: {fileID: 11400000, guid: 7efdea3aac8b0c74d8bfb712c43c8814, type: 2}
-    Amount: 1
-  - InventoryItem: {fileID: 11400000, guid: 2869306e6cb9e39488a1bad49c61d3d0, type: 2}
-    Amount: 5
-  - InventoryItem: {fileID: 11400000, guid: 372d51d70771e1b468246aa5f65a0fab, type: 2}
-    Amount: 1
-  - InventoryItem: {fileID: 11400000, guid: 8169b700c348430469a82a72b8000bfb, type: 2}
+  - Item: {fileID: 11400000, guid: b1f21a1f163938c4e8f9df28cfce8f0d, type: 2}
     Amount: 1
 --- !u!1 &8523569958150485803
 GameObject:

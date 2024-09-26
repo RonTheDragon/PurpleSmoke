@@ -20,7 +20,7 @@ public class ItemUI : MonoBehaviour
 
     public void SetUpItemUI(InventoryItemWithAmount item,PlayerUI playerUI)
     {
-        _inventoryItem = item.InventoryItem;
+        _inventoryItem = item.Item;
         _amount = item.Amount;
         _playerUI = playerUI;
         _itemImage.sprite = _inventoryItem.GetSprite;
