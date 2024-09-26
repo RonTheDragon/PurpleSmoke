@@ -25,6 +25,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
     [SerializeField] private PlayerAcidation _playerAcidation;
     [SerializeField] private PlayerDeath _playerDeath;
     [SerializeField] private PlayerTeleporter _playerTeleporter;
+    [SerializeField] private PlayerInteraction _playerInteraction;
     [SerializeField] private PlayerUI _playerUI;
 
     public Action OnUpdate;
@@ -58,6 +59,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
         _playerDeath.InitializePlayerComponent(this);
         _playerTeleporter.InitializePlayerComponent(this);
         _playerAcidation.InitializePlayerComponent(this);
+        _playerInteraction.InitializePlayerComponent(this);
     }
 
     public PlayerWalk GetPlayerWalk => _playerWalk;
@@ -82,5 +84,6 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public PlayerTeleporter GetPlayerTeleporter => _playerTeleporter;
     public PlayerAcidation GetPlayerAcidation => _playerAcidation;
     public PlayerAimMode GetPlayerAimMode => _playerAimMode;
+    public PlayerInteraction GetPlayerInteraction => _playerInteraction;
     public PlayerUI GetPlayerUI => _playerUI;
 }
