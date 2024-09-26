@@ -74,7 +74,6 @@ public class ItemUI : MonoBehaviour
         {
             if (_playerUI.SpendConsumable((ConsumableItem)_inventoryItem))
             {
-                RemoveOneItem();
                 _playerUI.RemoveItem(this);
             }
         }

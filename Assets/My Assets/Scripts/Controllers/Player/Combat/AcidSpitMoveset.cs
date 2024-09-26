@@ -4,6 +4,7 @@ using UnityEngine;
 public class AcidSpitMoveset : ChargeableMoveSet
 {
     private ProjectilePooler _projectilePooler;
+    private GameObject _owner;
     private Transform _shooter;
     private bool _spittingAcid;
     private PlayerAcidation _playerAcidation;
@@ -14,6 +15,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
     public override void MoveSetStart(PlayerCombatSystem playerCombatSystem)
     {
         _projectilePooler = GameManager.Instance.GetProjectilePooler;
+        _owner = playerCombatSystem.GetPlayerRefs.gameObject;
         base.MoveSetStart(playerCombatSystem);
         PlayerComponentsRefrences refs = playerCombatSystem.GetPlayerRefs;
         _playerAnimations = refs.GetPlayerAnimations;
@@ -73,7 +75,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
         _castTimeLeft = _acidSpitAttack.CastTime;
         Projectile projectile = _projectilePooler.SpawnFromPool(_acidShotgunAttack.ProjectileTag, _shooter.position, _shooter.rotation);
 
-        projectile.SetProjectile(transform.parent.gameObject, _acidShotgunAttack);
+        projectile.SetProjectile(_owner, _acidShotgunAttack);
         _playerAnimations.PlayAnimation(_acidShotgunAttack.AnimationName);
     }
 
@@ -126,7 +128,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
         _castTimeLeft = _playerCombatSystem.GetAcidation ? _acidSpitAttack.AcidationCastTime : _acidSpitAttack.CastTime;
         Projectile projectile = _projectilePooler.SpawnFromPool(_acidSpitAttack.ProjectileTag, _shooter.position, _shooter.rotation);
 
-        projectile.SetProjectile(transform.parent.gameObject, _acidSpitAttack);
+        projectile.SetProjectile(_owner, _acidSpitAttack);
         _playerAnimations.PlayAnimation(_acidSpitAttack.AnimationName);
         // Apply other effects of the acid spit attack
         // You can modify this part based on your game logic
