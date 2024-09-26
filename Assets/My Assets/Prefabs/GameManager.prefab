@@ -182,15 +182,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6a1ccbc64762c4cbf370d57f8fa9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pools:
-  - Tag: AcidShoot
-    Prefab: {fileID: 6847307818092735801, guid: 1ab9d6b141bf57b4da9d5c517c5f6d93,
-      type: 3}
-    Amount: 30
-  - Tag: AcidShotgun
-    Prefab: {fileID: 4608489908768378010, guid: 80e1b8ecb07561a478edf3e1a621cf63,
-      type: 3}
-    Amount: 20
+  _poolGroups:
+  - Name: Shots
+    Group:
+    - Tag: AcidShoot
+      Object: {fileID: 6847307818092735801, guid: 1ab9d6b141bf57b4da9d5c517c5f6d93,
+        type: 3}
+      StartAmount: 100
+    - Tag: AcidShotgun
+      Object: {fileID: 4608489908768378010, guid: 80e1b8ecb07561a478edf3e1a621cf63,
+        type: 3}
+      StartAmount: 20
 --- !u!114 &7535000481916580830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,15 +205,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8757846c1b56201429338fd1e4d67c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pools:
-  - Tag: AcidSplash
-    Prefab: {fileID: 5561822216052773809, guid: be2a1fb2100af90429ce6094e28542d8,
-      type: 3}
-    Amount: 30
-  - Tag: BigAcidSplash
-    Prefab: {fileID: 4914365880222355101, guid: b77cb9fe66cc66042a780f4d71c8848d,
-      type: 3}
-    Amount: 30
+  _poolGroups:
+  - Name: Splash
+    Group:
+    - Tag: AcidSplash
+      Object: {fileID: 5561822216052773809, guid: be2a1fb2100af90429ce6094e28542d8,
+        type: 3}
+      StartAmount: 300
+    - Tag: BigAcidSplash
+      Object: {fileID: 4914365880222355101, guid: b77cb9fe66cc66042a780f4d71c8848d,
+        type: 3}
+      StartAmount: 30
 --- !u!1 &6678245051165398795
 GameObject:
   m_ObjectHideFlags: 0

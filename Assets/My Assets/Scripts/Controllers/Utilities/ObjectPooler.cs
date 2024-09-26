@@ -1,80 +1,112 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class ObjectPooler<T> : MonoBehaviour where T : Component
+public abstract class ObjectPooler<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [SerializeField] private List<Pool<T>> _pools;
-    // Dictionary to store pools for different types
-    private Dictionary<string, Queue<T>> _objectPools = new Dictionary<string, Queue<T>>();
+
+    [SerializeField] private List<PoolGroup<T>> _poolGroups;
+
+    private Dictionary<string, Queue<T>> _pools = new Dictionary<string, Queue<T>>();
 
 
-    public void CreateAllPools()
+    public void SpawnAllPools()
     {
-        foreach (Pool<T> pool in _pools)
+        foreach (PoolGroup<T> item in _poolGroups)
         {
-            CreatePool(pool.Tag,pool.Prefab,pool.Amount);
-        }
-    }
-
-    // Create a new pool for a specific type
-    public void CreatePool(string tag,T prefab, int size)
-    {
-        if (!_objectPools.ContainsKey(tag))
-        {
-            _objectPools[tag] = new Queue<T>();
-
-            for (int i = 0; i < size; i++)
+            foreach (Pool<T> i in item.Group)
             {
-                T obj = Instantiate(prefab,transform);
-                obj.gameObject.SetActive(false);
-                _objectPools[tag].Enqueue(obj);
+                _pools.Add(i.Tag, new Queue<T>());
+                for (int j = 0; j < i.StartAmount; j++)
+                {
+                    T newObj = Instantiate(i.Object, transform.position, transform.rotation, transform);
+                    _pools[i.Tag].Enqueue(newObj);
+                    newObj.gameObject.SetActive(false);
+                }
             }
         }
-        else
-        {
-            Debug.LogWarning("Pool for " + tag + " already exists!");
-        }
     }
 
-    // Get an object from the pool
-    public T GetObject(string tag)
+    private T GetObjectFromPools(string tag)
     {
-        if (_objectPools.ContainsKey(tag) && _objectPools[tag].Count > 0)
+        foreach (PoolGroup<T> item in _poolGroups)
         {
-            T obj = _objectPools[tag].Dequeue();
-            _objectPools[tag].Enqueue(obj );
-            obj.gameObject.SetActive(true);
-            return obj;
+            foreach (Pool<T> i in item.Group)
+            {
+                if (i.Tag == tag)
+                {
+                    return i.Object;
+                }
+            }
         }
-        else
-        {
-            Debug.LogWarning("Pool for " + tag + " is empty or does not exist!");
-            return null;
-        }
+        return null;
     }
 
-    // Spawn an object from the pool pretending like Instantiate
-    public T SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+    private T SpawnObject(T obj, string tag, Vector3 position, Quaternion rotation, Transform parent = null)
     {
-        if (_objectPools.ContainsKey(tag) && _objectPools[tag].Count > 0)
+        _pools[tag].Enqueue(obj);
+        obj.transform.position = position;
+        obj.transform.rotation = rotation;
+        obj.transform.SetParent(parent);
+        obj.gameObject.SetActive(true);
+        return obj;
+    }
+
+    public T SpawnFromPool(string tag, Vector3 position, Quaternion rotation, Transform parent = null)
+    {
+        if (_pools.ContainsKey(tag))
         {
-            T obj = GetObject(tag);
-            obj.transform.position = position;
-            obj.transform.rotation = rotation;
-            return obj;
+            T obj = _pools[tag].Dequeue();
+            return SpawnObject(obj, tag, position, rotation, parent);
+        }
+        print($"{tag} does not exist");
+        return null;
+    }
+
+    public T CreateOrSpawnFromPool(string tag, Vector3 position, Quaternion rotation, Transform parent = null)
+    {
+        if (_pools.ContainsKey(tag))
+        {
+            T obj = null;
+            for (int i = 0; i < _pools[tag].Count; i++)
+            {
+                obj = _pools[tag].Dequeue();
+                if (obj.gameObject.activeSelf)
+                {
+                    _pools[tag].Enqueue(obj);
+                    obj = null;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (obj == null)
+            {
+                T objToSpawn = GetObjectFromPools(tag);
+                obj = Instantiate(objToSpawn, transform.position, transform.rotation, transform);
+            }
+
+            return SpawnObject(obj, tag, position, rotation, parent);
         }
         else
         {
-            Debug.LogWarning("Pool for " + tag + " is empty or does not exist!");
+            print($"{tag} does not exist");
             return null;
         }
     }
 
     [System.Serializable]
-    public class Pool<TT>
+    protected class Pool<t>
     {
         public string Tag;
-        public TT Prefab;
-        public int Amount;
+        public t Object;
+        public int StartAmount;
+    }
+
+    [System.Serializable]
+    protected class PoolGroup<Ts>
+    {
+        public string Name;
+        public List<Pool<Ts>> Group;
     }
 }

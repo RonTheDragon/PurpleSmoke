@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
 
     private void CreateAllPools()
     {
-        ProjectilePooler.CreateAllPools();
-        VisualEffectsPooler.CreateAllPools();
+        ProjectilePooler.SpawnAllPools();
+        VisualEffectsPooler.SpawnAllPools();
     }
 
     public void OnPlayerJoined()
