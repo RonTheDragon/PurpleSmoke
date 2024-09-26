@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Potion
   _sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  _pickUpTag: AcidPotion
   _consumable: {fileID: 2006850320028981144, guid: 525347bf2582cbd4ba911164722c9dae,
     type: 3}

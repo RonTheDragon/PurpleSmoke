@@ -123,6 +123,152 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &223818245
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.222326
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.66035557
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5844369848716749045, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_Name
+      value: Acid Potion Pickup Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7158431058178813610, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: _amount
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 31996f48d2a06304ca03b684c00534b2, type: 3}
+--- !u!1001 &276080952
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.27986336
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.10307503
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.765539
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5844369848716749045, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_Name
+      value: Acid Potion Pickup Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7158431058178813610, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: _amount
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 31996f48d2a06304ca03b684c00534b2, type: 3}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1291,79 @@ Transform:
   - {fileID: 410087041}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1195567996
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.3960743
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.103074074
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.570757
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5844369848716749045, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_Name
+      value: Acid Potion Pickup Variant (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7158431058178813610, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: _amount
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 31996f48d2a06304ca03b684c00534b2, type: 3}
 --- !u!1 &1431248765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,6 +1469,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1151062131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1644471490
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.25922
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.103074074
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.946705
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213282407983685740, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5844369848716749045, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: m_Name
+      value: Acid Potion Pickup Variant (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7158431058178813610, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: _amount
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 31996f48d2a06304ca03b684c00534b2, type: 3}
 --- !u!1 &1969532116
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,17 +1663,17 @@ PrefabInstance:
     - target: {fileID: 7146385779185953512, guid: 8fad4a27655674841bbd830ecf52c9e1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.4181287
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7146385779185953512, guid: 8fad4a27655674841bbd830ecf52c9e1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1742873
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7146385779185953512, guid: 8fad4a27655674841bbd830ecf52c9e1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.76077
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7146385779185953512, guid: 8fad4a27655674841bbd830ecf52c9e1,
         type: 3}
@@ -1485,6 +1777,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Acid Potion Pickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 7158431058178813610, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      propertyPath: _amount
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1637,3 +1934,7 @@ SceneRoots:
   - {fileID: 587474021}
   - {fileID: 6452562658411617333}
   - {fileID: 3449931598526849129}
+  - {fileID: 223818245}
+  - {fileID: 276080952}
+  - {fileID: 1195567996}
+  - {fileID: 1644471490}

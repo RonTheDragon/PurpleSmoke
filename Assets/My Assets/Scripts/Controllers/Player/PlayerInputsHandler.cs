@@ -124,6 +124,18 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         }
     }
 
+    public void InteractOrDrop(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && _uiOpen)
+        {
+            _playerUI.PressDropItem();
+        }
+        else if(context.phase == InputActionPhase.Canceled && _uiOpen)
+        {
+            _playerUI.ReleaseDropItem();
+        }
+    }
+
     public void Inventory(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)

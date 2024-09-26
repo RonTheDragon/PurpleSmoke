@@ -55,7 +55,7 @@ public class ExplosionDamage : Damage
     {
         if (_explosionTag != string.Empty)
         {
-            GameManager.Instance.VisualEffectsPooler.SpawnFromPool(_explosionTag, transform.position, transform.rotation).PlayEffect();
+            GameManager.Instance.GetVEPooler.SpawnFromPool(_explosionTag, transform.position, transform.rotation).PlayEffect();
         }
     }
 

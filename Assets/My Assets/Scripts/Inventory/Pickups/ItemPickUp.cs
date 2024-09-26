@@ -13,4 +13,6 @@ public class ItemPickUp : Pickup
 
         return true;
     }
+
+    public void SetAmount(int amount) => _amount = amount;
 }

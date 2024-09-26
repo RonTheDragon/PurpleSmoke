@@ -1021,7 +1021,19 @@ MonoBehaviour:
     m_ActionId: 5af4e473-a21f-4777-a19a-a06a3e65b96d
     m_ActionName: Player/Close Window[/Keyboard/escape,/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast,/XInputControllerWindows2/buttonEast,/XInputControllerWindows3/buttonEast]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5677476338889415264}
+        m_TargetAssemblyTypeName: PlayerInputsHandler, Assembly-CSharp
+        m_MethodName: InteractOrDrop
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 821c9280-9543-4391-b4ee-aaf396bc79b8
     m_ActionName: Player/Use/Pickup/Drop[/Keyboard/e,/XInputControllerWindows/buttonNorth,/XInputControllerWindows1/buttonNorth,/XInputControllerWindows2/buttonNorth,/XInputControllerWindows3/buttonNorth]
   - m_PersistentCalls:
@@ -4346,6 +4358,10 @@ MonoBehaviour:
   _rangeSlot: {fileID: 8231519840589473388}
   _dynamicSlot: {fileID: 1402232616220175004}
   _staticSlot: {fileID: 2518684974576955799}
+  _itemDropVelocity: {x: 500, y: 10}
+  _itemDropProtectionTime: 0.3
+  _itemDropHeight: 2
+  _itemDropStackTime: 1
   _inventoryItems:
   - Item: {fileID: 11400000, guid: 7efdea3aac8b0c74d8bfb712c43c8814, type: 2}
     Amount: 1

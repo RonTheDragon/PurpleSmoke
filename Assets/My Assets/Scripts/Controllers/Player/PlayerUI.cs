@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
@@ -23,25 +23,43 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     [SerializeField] private ItemUI _itemUItoSpawn;
     [SerializeField] private ItemSlot _meleeSlot, _rangeSlot, _dynamicSlot, _staticSlot;
 
+    private PlayerComponentsRefrences _playerComponents;
+    private Transform _playerBody;
     private PlayerHealth _playerHealth;
     private PlayerCombatSystem _playerCombatSystem;
     private PlayerKnockout _playerKnockout;
     private PlayerDeath _playerDeath;
     private PlayerAcidation _playerAcidation;
 
+    private GameManager _gameManager;
+    private PickupPooler _pickupPooler;
+
     private GameObject _selected;
+
+    [SerializeField] private Vector2 _itemDropVelocity;
+    [SerializeField] private float _itemDropProtectionTime, _itemDropHeight, _itemDropStackTime;
+
 
     private Color _green = Color.green * Color.gray;
 
     [SerializeField] private List<InventoryItemWithAmount> _inventoryItems;
 
+    private bool _pressingDrop;
+    private float _itemDropStackTimeLeft;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _playerHealth = playerComponents.GetPlayerHealth;
-        _playerCombatSystem = playerComponents.GetPlayerCombatSystem;
-        _playerKnockout = playerComponents.GetPlayerKnockout;
-        _playerDeath = playerComponents.GetPlayerDeath;
-        _playerAcidation = playerComponents.GetPlayerAcidation;
+        _gameManager = GameManager.Instance;
+        _pickupPooler = _gameManager.GetPickupPooler;
+
+        _playerComponents = playerComponents;
+
+        _playerBody = _playerComponents.GetPlayerBody;
+        _playerHealth = _playerComponents.GetPlayerHealth;
+        _playerCombatSystem = _playerComponents.GetPlayerCombatSystem;
+        _playerKnockout = _playerComponents.GetPlayerKnockout;
+        _playerDeath = _playerComponents.GetPlayerDeath;
+        _playerAcidation = _playerComponents.GetPlayerAcidation;
 
         _playerHealth.OnPlayerHealthChange += UpdateHealthUI;
         _playerCombatSystem.OnChargeChange += UpdateChargeUI;
@@ -106,6 +124,94 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
         PressSpaceToGetUp(false);
     }
+
+    public void PressDropItem()
+    {
+        _pressingDrop = true;
+        if (!_playerComponents.OnUpdate.GetInvocationList().Contains((Action)ReleaseStackTimer))
+        {
+            _playerComponents.OnUpdate += ReleaseStackTimer;
+        }
+        _itemDropStackTimeLeft = _itemDropStackTime;
+    }
+
+    public void ReleaseDropItem()
+    {
+        if (_pressingDrop)
+        {
+            DropOne();
+        }
+        _pressingDrop = false;
+        _playerComponents.OnUpdate -= ReleaseStackTimer;
+    }
+
+    private void ReleaseStackTimer()
+    {
+        if (_itemDropStackTimeLeft > 0)
+        {
+            _itemDropStackTimeLeft -= Time.deltaTime;
+        }
+        else
+        {
+            DropStack();
+            _playerComponents.OnUpdate -= ReleaseStackTimer;
+        }   
+    }
+
+    private void DropOne()
+    {
+        if (_selected)
+        {
+            ItemUI selectedItem = _selected.GetComponent<ItemUI>();
+            DropItem(selectedItem, 1, false); // Drop a single item
+        }
+    }
+
+    private void DropStack()
+    {
+        if (_selected)
+        {
+            ItemUI selectedItem = _selected.GetComponent<ItemUI>();
+            DropItem(selectedItem, selectedItem.GetAmount, true); // Drop the entire stack
+        }
+    }
+
+    private void DropItem(ItemUI itemUI, int amount, bool isStack)
+    {
+        if (itemUI != null)
+        {
+            InventoryItem item = itemUI.GetInventoryItem;
+            if (item.CanBeDropped)
+            {
+                if (isStack)
+                {
+                    RemoveItemStack(itemUI); // Remove the entire stack
+                }
+                else
+                {
+                    RemoveItem(itemUI); // Remove one item
+                }
+
+                // Spawn the item pickup from the pool
+                ItemPickUp pickUp = (ItemPickUp)_pickupPooler.CreateOrSpawnFromPool(
+                    item.GetPickUpTag,
+                    _playerBody.position + Vector3.up * _itemDropHeight,
+                    Quaternion.identity
+                );
+
+                // Set the item amount (1 for single item drop, or stack amount)
+                pickUp.SetAmount(amount);
+
+                // Apply item drop protection and add force
+                pickUp.Spawn(_itemDropProtectionTime);
+                pickUp.GetRigidbody.AddForce(
+                    _playerBody.forward * _itemDropVelocity.x + Vector3.up * _itemDropVelocity.y
+                );
+            }
+        }
+    }
+
+
 
     public bool InventoryInput()
     {
@@ -255,11 +361,8 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
     public void RemoveItem(ItemUI itemUI)
     {
-        // Find the corresponding InventoryItemWithAmount
-        InventoryItemWithAmount itemToRemove = _inventoryItems.Find(item =>
-            item.Item == itemUI.GetInventoryItem);
+        InventoryItemWithAmount itemToRemove = FindInventoryItem(itemUI);
 
-        // Remove the item if it was found
         if (itemToRemove != null)
         {
             itemToRemove.Amount--;
@@ -268,8 +371,29 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
                 _inventoryItems.Remove(itemToRemove);
                 SetUpInventoryContent();
             }
+            else
+            {
+                itemUI.RemoveOneItem();
+            }
         }
     }
+
+    public void RemoveItemStack(ItemUI itemUI)
+    {
+        InventoryItemWithAmount itemToRemove = FindInventoryItem(itemUI);
+
+        if (itemToRemove != null)
+        {
+            _inventoryItems.Remove(itemToRemove);
+            SetUpInventoryContent();
+        }
+    }
+
+    private InventoryItemWithAmount FindInventoryItem(ItemUI itemUI)
+    {
+        return _inventoryItems.Find(item => item.Item == itemUI.GetInventoryItem);
+    }
+
 
     private void MeleeSlotClick()
     {
@@ -299,6 +423,10 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
             if (i.Item == item)
             {
                 i.Amount += amount;
+                if (_inventoryUI.activeSelf)
+                {
+                    SetUpInventoryContent();
+                }
                 return;
             }
         }

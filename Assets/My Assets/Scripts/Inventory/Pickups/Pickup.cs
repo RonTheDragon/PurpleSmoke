@@ -5,6 +5,7 @@ public abstract class Pickup : MonoBehaviour , Iinteractable
     private PlayerInteraction _playerIntercation;
     [SerializeField] private bool _isInteractable;
     [SerializeField] private Collider _trigger;
+    [SerializeField] private Rigidbody _rigidbody;
 
     public bool CanInteract { get => _isInteractable; set => _isInteractable = value; }
 
@@ -24,7 +25,7 @@ public abstract class Pickup : MonoBehaviour , Iinteractable
 
     protected void DisableItem()
     {
-        transform.parent.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public virtual void Spawn(float spawnProtection)
@@ -39,4 +40,6 @@ public abstract class Pickup : MonoBehaviour , Iinteractable
     }
 
     public abstract bool Interact(PlayerInteraction playerIntercation);
+
+    public Rigidbody GetRigidbody => _rigidbody;
 }

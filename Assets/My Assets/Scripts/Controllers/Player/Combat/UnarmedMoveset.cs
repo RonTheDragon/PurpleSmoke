@@ -30,7 +30,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     public override void MoveSetStart(PlayerCombatSystem playerCombatSystem)
     {
         base.MoveSetStart(playerCombatSystem);
-        _vePooler = GameManager.Instance.VisualEffectsPooler;
+        _vePooler = GameManager.Instance.GetVEPooler;
         PlayerComponentsRefrences refs = playerCombatSystem.GetPlayerRefs;
         _playerAnimations = refs.GetPlayerAnimations;
         _playerGroundCheck = refs.GetPlayerGroundCheck;

@@ -74,8 +74,7 @@ public class ItemUI : MonoBehaviour
         {
             if (_playerUI.SpendConsumable((ConsumableItem)_inventoryItem))
             {
-                _amount--;
-                SetAmount();
+                RemoveOneItem();
                 _playerUI.RemoveItem(this);
             }
         }
@@ -92,4 +91,12 @@ public class ItemUI : MonoBehaviour
             _amountText.text = _amount.ToString();
         }
     }
+
+    public void RemoveOneItem()
+    {
+        _amount--;
+        SetAmount();
+    }
+
+    public int GetAmount => _amount;
 }

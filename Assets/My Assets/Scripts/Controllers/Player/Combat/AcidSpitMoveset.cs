@@ -13,7 +13,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
 
     public override void MoveSetStart(PlayerCombatSystem playerCombatSystem)
     {
-        _projectilePooler = GameManager.Instance.ProjectilePooler;
+        _projectilePooler = GameManager.Instance.GetProjectilePooler;
         base.MoveSetStart(playerCombatSystem);
         PlayerComponentsRefrences refs = playerCombatSystem.GetPlayerRefs;
         _playerAnimations = refs.GetPlayerAnimations;

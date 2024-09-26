@@ -9,8 +9,9 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
-    public ProjectilePooler ProjectilePooler;
-    public VEPooler VisualEffectsPooler;
+    [SerializeField] private ProjectilePooler _projectilePooler;
+    [SerializeField] private VEPooler _visualEffectsPooler;
+    [SerializeField] private PickupPooler _pickupPooler;
 
     public Action OnPlayerAmountChange;
 
@@ -26,8 +27,9 @@ public class GameManager : MonoBehaviour
 
     private void CreateAllPools()
     {
-        ProjectilePooler.SpawnAllPools();
-        VisualEffectsPooler.SpawnAllPools();
+        _projectilePooler.SpawnAllPools();
+        _visualEffectsPooler.SpawnAllPools();
+        _pickupPooler.SpawnAllPools();
     }
 
     public void OnPlayerJoined()
@@ -43,6 +45,10 @@ public class GameManager : MonoBehaviour
     }
 
     public int PlayerCount => _playerCount;
+
+    public ProjectilePooler GetProjectilePooler => _projectilePooler;
+    public VEPooler GetVEPooler => _visualEffectsPooler;
+    public PickupPooler GetPickupPooler => _pickupPooler;
 
     public LayerMask GetLayerMaskForCinemachine()
     {

@@ -43,7 +43,7 @@ public class ProjectileDecalExplosionDamage : ExplosionDamage
         rotation *= Quaternion.Euler(0f, 0f, randomZRotation);
 
         // Spawn the visual effect
-        VisualEffectHandler ve = GameManager.Instance.VisualEffectsPooler.SpawnFromPool(_explosionTag, transform.position, rotation);
+        VisualEffectHandler ve = GameManager.Instance.GetVEPooler.SpawnFromPool(_explosionTag, transform.position, rotation);
         ve.transform.SetParent(_parentOfDecal);
         ve.PlayEffect();
     }
