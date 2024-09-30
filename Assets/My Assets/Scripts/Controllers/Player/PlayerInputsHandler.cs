@@ -14,7 +14,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private PlayerAcidation _playerAcidation;
     private PlayerKnockout _playerKnockout;
     private PlayerDeath _playerDeath;
-    private PlayerUI _playerUI;
+    private PlayerInventory _playerInventory;
 
     private Vector2 _movementInput = Vector2.zero;
     private Vector2 _lookInput=Vector2.zero;
@@ -32,7 +32,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerCombatSystem = playerComponents.GetPlayerCombatSystem;
         _playerKnockout = playerComponents.GetPlayerKnockout;
         _playerDeath = playerComponents.GetPlayerDeath;
-        _playerUI = playerComponents.GetPlayerUI;
+        _playerInventory = playerComponents.GetPlayerInventory;
 
 
         playerComponents.OnUpdate += PlayerUpdate;
@@ -128,11 +128,11 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     {
         if (context.phase == InputActionPhase.Started && _uiOpen)
         {
-            _playerUI.PressDropItem();
+            _playerInventory.PressDropItem();
         }
         else if(context.phase == InputActionPhase.Canceled && _uiOpen)
         {
-            _playerUI.ReleaseDropItem();
+            _playerInventory.ReleaseDropItem();
         }
     }
 
@@ -142,7 +142,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         {
             _movementInput = Vector2.zero;
             _lookInput = Vector2.zero;
-            _uiOpen = _playerUI.InventoryInput();
+            _uiOpen = _playerInventory.InventoryInput();
         }
     }
 
@@ -157,7 +157,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     public void CloseInventoryAbruptly()
     {
         _uiOpen = false;
-        _playerUI.CloseInventory();
+        _playerInventory.CloseInventory();
     }
 
     public void UseableStatic(InputAction.CallbackContext context)

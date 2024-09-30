@@ -906,8 +906,8 @@ MonoBehaviour:
     m_ActionName: Player/Inventory[/Keyboard/tab,/XInputControllerWindows/select,/XInputControllerWindows1/select,/XInputControllerWindows2/select,/XInputControllerWindows3/select]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3011800139913282868}
-        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
+      - m_Target: {fileID: 3504981180518315304}
+        m_TargetAssemblyTypeName: PlayerInventory, Assembly-CSharp
         m_MethodName: SelectionFix
         m_Mode: 1
         m_Arguments:
@@ -922,8 +922,8 @@ MonoBehaviour:
     m_ActionName: Player/RightClick[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3011800139913282868}
-        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
+      - m_Target: {fileID: 3504981180518315304}
+        m_TargetAssemblyTypeName: PlayerInventory, Assembly-CSharp
         m_MethodName: SelectionFix
         m_Mode: 1
         m_Arguments:
@@ -942,8 +942,8 @@ MonoBehaviour:
     m_ActionName: Player/ScrollWheel[/Mouse/scroll]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3011800139913282868}
-        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
+      - m_Target: {fileID: 3504981180518315304}
+        m_TargetAssemblyTypeName: PlayerInventory, Assembly-CSharp
         m_MethodName: SelectionFix
         m_Mode: 1
         m_Arguments:
@@ -958,8 +958,8 @@ MonoBehaviour:
     m_ActionName: Player/Click[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3011800139913282868}
-        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
+      - m_Target: {fileID: 3504981180518315304}
+        m_TargetAssemblyTypeName: PlayerInventory, Assembly-CSharp
         m_MethodName: SelectionFix
         m_Mode: 1
         m_Arguments:
@@ -4348,27 +4348,7 @@ MonoBehaviour:
   _acidationBar: {fileID: 7573225495914411390}
   _pressSpaceToGetUp: {fileID: 2373923200741800249}
   _respawnCountDown: {fileID: 3332527230728386562}
-  _inventoryUI: {fileID: 1926303320499112835}
-  _inventoryFirstSelected: {fileID: 7210116593008506230}
-  _scrollRect: {fileID: 7363951666240108005}
-  _inventoryContent: {fileID: 1480964231399961259}
   _acidCrosshair: {fileID: 7218333401416189918}
-  _multiplayerEventSystem: {fileID: 2015241115389390583}
-  _itemUItoSpawn: {fileID: 8818847908237083784, guid: 78070d4c315361f42b85735b1564777c,
-    type: 3}
-  _meleeSlot: {fileID: 142710386700224102}
-  _rangeSlot: {fileID: 8231519840589473388}
-  _dynamicSlot: {fileID: 1402232616220175004}
-  _staticSlot: {fileID: 2518684974576955799}
-  _itemDropVelocity: {x: 500, y: 10}
-  _itemDropProtectionTime: 0.3
-  _itemDropHeight: 2
-  _itemDropStackTime: 1
-  _inventoryItems:
-  - Item: {fileID: 11400000, guid: 7efdea3aac8b0c74d8bfb712c43c8814, type: 2}
-    Amount: 1
-  - Item: {fileID: 11400000, guid: b1f21a1f163938c4e8f9df28cfce8f0d, type: 2}
-    Amount: 1
 --- !u!114 &3504981180518315304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4381,6 +4361,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73328a53d49685c4e897bdf81376855e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inventoryUI: {fileID: 1926303320499112835}
+  _inventoryFirstSelected: {fileID: 6456805605232739973}
+  _scrollRect: {fileID: 7363951666240108005}
+  _inventoryContent: {fileID: 1480964231399961259}
+  _multiplayerEventSystem: {fileID: 2015241115389390583}
+  _itemUItoSpawn: {fileID: 8818847908237083784, guid: 78070d4c315361f42b85735b1564777c,
+    type: 3}
+  _meleeSlot: {fileID: 142710386700224102}
+  _rangeSlot: {fileID: 8231519840589473388}
+  _dynamicSlot: {fileID: 1402232616220175004}
+  _staticSlot: {fileID: 2518684974576955799}
+  _itemDropVelocity: {x: 500, y: 10}
+  _itemDropProtectionTime: 0.3
+  _itemDropHeight: 2
+  _itemDropStackTime: 0.5
+  _inventoryItems:
+  - Item: {fileID: 11400000, guid: b1f21a1f163938c4e8f9df28cfce8f0d, type: 2}
+    Amount: 1
+  - Item: {fileID: 11400000, guid: 7efdea3aac8b0c74d8bfb712c43c8814, type: 2}
+    Amount: 1
 --- !u!1 &8523569958150485803
 GameObject:
   m_ObjectHideFlags: 0

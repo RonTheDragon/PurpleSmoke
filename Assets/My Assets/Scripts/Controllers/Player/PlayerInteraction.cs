@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour, IPlayerComponent
 {
-    private PlayerUI _playerUI;
+    private PlayerInventory _playerInventory;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _playerUI = playerComponents.GetPlayerUI;
+        _playerInventory = playerComponents.GetPlayerInventory;
     }
 
     public void PickUpItem(InventoryItem inventoryItem, int amount = 1)
     {
-        _playerUI.AddInventoryItem(inventoryItem, amount);
+        _playerInventory.AddInventoryItem(inventoryItem, amount);
     }
 }
