@@ -1081,6 +1081,7 @@ MonoBehaviour:
   _playerTeleporter: {fileID: 300154325113233337}
   _playerInteraction: {fileID: 7906811223420254801}
   _playerUI: {fileID: 3011800139913282868}
+  _playerInventory: {fileID: 3504981180518315304}
 --- !u!114 &5677476338889415264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4231,6 +4232,7 @@ GameObject:
   - component: {fileID: 5360381639810229378}
   - component: {fileID: 3042793864322090033}
   - component: {fileID: 3011800139913282868}
+  - component: {fileID: 3504981180518315304}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4367,6 +4369,18 @@ MonoBehaviour:
     Amount: 1
   - Item: {fileID: 11400000, guid: b1f21a1f163938c4e8f9df28cfce8f0d, type: 2}
     Amount: 1
+--- !u!114 &3504981180518315304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8463747755547100452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73328a53d49685c4e897bdf81376855e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8523569958150485803
 GameObject:
   m_ObjectHideFlags: 0

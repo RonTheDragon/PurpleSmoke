@@ -27,6 +27,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
     [SerializeField] private PlayerTeleporter _playerTeleporter;
     [SerializeField] private PlayerInteraction _playerInteraction;
     [SerializeField] private PlayerUI _playerUI;
+    [SerializeField] private PlayerInventory _playerInventory;
 
     public Action OnUpdate;
 
@@ -60,6 +61,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
         _playerTeleporter.InitializePlayerComponent(this);
         _playerAcidation.InitializePlayerComponent(this);
         _playerInteraction.InitializePlayerComponent(this);
+        _playerInventory.InitializePlayerComponent(this);
     }
 
     public PlayerWalk GetPlayerWalk => _playerWalk;
@@ -86,4 +88,5 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public PlayerAimMode GetPlayerAimMode => _playerAimMode;
     public PlayerInteraction GetPlayerInteraction => _playerInteraction;
     public PlayerUI GetPlayerUI => _playerUI;
+    public PlayerInventory GetPlayerInventory => _playerInventory;
 }
