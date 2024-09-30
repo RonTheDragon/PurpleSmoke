@@ -15,6 +15,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private PlayerKnockout _playerKnockout;
     private PlayerDeath _playerDeath;
     private PlayerInventory _playerInventory;
+    private PlayerItemDropping _playerItemDropping;
 
     private Vector2 _movementInput = Vector2.zero;
     private Vector2 _lookInput=Vector2.zero;
@@ -33,6 +34,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerKnockout = playerComponents.GetPlayerKnockout;
         _playerDeath = playerComponents.GetPlayerDeath;
         _playerInventory = playerComponents.GetPlayerInventory;
+        _playerItemDropping = playerComponents.GetPlayerItemDropping;
 
 
         playerComponents.OnUpdate += PlayerUpdate;
@@ -128,11 +130,11 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     {
         if (context.phase == InputActionPhase.Started && _uiOpen)
         {
-            _playerInventory.PressDropItem();
+            _playerItemDropping.PressDropItem();
         }
         else if(context.phase == InputActionPhase.Canceled && _uiOpen)
         {
-            _playerInventory.ReleaseDropItem();
+            _playerItemDropping.ReleaseDropItem();
         }
     }
 

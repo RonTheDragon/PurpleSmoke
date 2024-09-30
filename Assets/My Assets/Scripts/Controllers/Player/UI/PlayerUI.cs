@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,8 +30,6 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         _playerKnockout = _playerComponents.GetPlayerKnockout;
         _playerDeath = _playerComponents.GetPlayerDeath;
         _playerAcidation = _playerComponents.GetPlayerAcidation;
-
-
 
         _playerHealth.OnPlayerHealthChange += UpdateHealthUI;
         _playerCombatSystem.OnChargeChange += UpdateChargeUI;

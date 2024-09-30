@@ -18,7 +18,7 @@ public class ItemUI : MonoBehaviour
     public InventoryItem GetInventoryItem => _inventoryItem;
     public ItemType GetItemType => _itemType;
 
-    public void SetUpItemUI(InventoryItemWithAmount item,PlayerInventory playerInventory)
+    public void SetUpItemUI(PlayerInventory.InventoryItemWithAmount item,PlayerInventory playerInventory)
     {
         _inventoryItem = item.Item;
         _amount = item.Amount;

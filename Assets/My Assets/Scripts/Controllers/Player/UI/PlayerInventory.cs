@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
@@ -20,27 +19,17 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     private GameManager _gameManager;
     private PickupPooler _pickupPooler;
     private PlayerComponentsRefrences _playerComponents;
-    private Transform _playerBody;
+    //private Transform _playerBody;
     private PlayerHealth _playerHealth;
     private PlayerCombatSystem _playerCombatSystem;
 
     private GameObject _selected;
 
-    [SerializeField] private Vector2 _itemDropVelocity;
-    [SerializeField] private float _itemDropProtectionTime, _itemDropHeight, _itemDropStackTime;
-
     [SerializeField] private List<InventoryItemWithAmount> _inventoryItems;
-
-    private bool _pressingDrop;
-    private float _itemDropStackTimeLeft;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        _gameManager = GameManager.Instance;
-        _pickupPooler = _gameManager.GetPickupPooler;
-
         _playerComponents = playerComponents;
-        _playerBody = _playerComponents.GetPlayerBody;
         _playerHealth = _playerComponents.GetPlayerHealth;
         _playerCombatSystem = _playerComponents.GetPlayerCombatSystem;
 
@@ -50,94 +39,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _dynamicSlot.GetButton.onClick.AddListener(DynamicSlotClick);
     }
 
-
-    public void PressDropItem()
-    {
-        _pressingDrop = true;
-        if (!_playerComponents.OnUpdate.GetInvocationList().Contains((Action)ReleaseStackTimer))
-        {
-            _playerComponents.OnUpdate += ReleaseStackTimer;
-        }
-        _itemDropStackTimeLeft = _itemDropStackTime;
-    }
-
-    public void ReleaseDropItem()
-    {
-        if (_pressingDrop)
-        {
-            DropOne();
-        }
-        _pressingDrop = false;
-        _playerComponents.OnUpdate -= ReleaseStackTimer;
-    }
-
-    private void ReleaseStackTimer()
-    {
-        if (_itemDropStackTimeLeft > 0)
-        {
-            _itemDropStackTimeLeft -= Time.deltaTime;
-        }
-        else
-        {
-            DropStack();
-            _playerComponents.OnUpdate -= ReleaseStackTimer;
-        }
-    }
-
-    private void DropOne()
-    {
-        if (_selected)
-        {
-            ItemUI selectedItem = _selected.GetComponent<ItemUI>();
-            DropItem(selectedItem, 1, false); // Drop a single item
-        }
-    }
-
-    private void DropStack()
-    {
-        if (_selected)
-        {
-            ItemUI selectedItem = _selected.GetComponent<ItemUI>();
-            DropItem(selectedItem, selectedItem.GetAmount, true); // Drop the entire stack
-        }
-    }
-
-    private void DropItem(ItemUI itemUI, int amount, bool isStack)
-    {
-        if (itemUI != null)
-        {
-            InventoryItem item = itemUI.GetInventoryItem;
-            if (item.CanBeDropped)
-            {
-                if (isStack)
-                {
-                    RemoveItemStack(itemUI); // Remove the entire stack
-                }
-                else
-                {
-                    RemoveItem(itemUI); // Remove one item
-                }
-
-                // Spawn the item pickup from the pool
-                ItemPickUp pickUp = (ItemPickUp)_pickupPooler.CreateOrSpawnFromPool(
-                    item.GetPickUpTag,
-                    _playerBody.position + Vector3.up * _itemDropHeight,
-                    Quaternion.identity
-                );
-
-                // Set the item amount (1 for single item drop, or stack amount)
-                pickUp.SetAmount(amount);
-
-                // Apply item drop protection and add force
-                pickUp.Spawn(_itemDropProtectionTime);
-                pickUp.GetRigidbody.AddForce(
-                    _playerBody.forward * _itemDropVelocity.x + Vector3.up * _itemDropVelocity.y
-                );
-            }
-        }
-    }
-
-
+    public GameObject GetSelected => _selected;
 
     public bool InventoryInput()
     {
@@ -360,11 +262,11 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
             SetUpInventoryContent();
         }
     }
-}
 
-[Serializable]
-public class InventoryItemWithAmount
-{
-    public InventoryItem Item;
-    public int Amount;
+    [Serializable]
+    public class InventoryItemWithAmount
+    {
+        public InventoryItem Item;
+        public int Amount = 1;
+    }
 }
