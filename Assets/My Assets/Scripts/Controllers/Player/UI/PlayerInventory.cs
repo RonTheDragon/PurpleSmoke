@@ -26,6 +26,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     private GameObject _selected;
 
     [SerializeField] private List<InventoryItemWithAmount> _inventoryItems;
+    private List<ItemUI> _uiOfItems;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -119,6 +120,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
                 _multiplayerEventSystem.SetSelectedGameObject(i.gameObject);
                 _selected = i.gameObject;
             }
+            _uiOfItems.Add(i);
         }
 
         FixNothingSelected();
@@ -139,6 +141,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         {
             Destroy(child.gameObject);
         }
+        _uiOfItems.Clear();
     }
 
     public bool SpendConsumable(ConsumableItem consumable)
@@ -149,25 +152,25 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     public void SetMeleeWeapon(MeleeItem melee)
     {
-        SetItem(melee.GetMoveSet, _playerCombatSystem.GetCurrentMeleeMoveSet,
+        SetItemInSlot(melee.GetMoveSet, _playerCombatSystem.GetCurrentMeleeMoveSet,
                 _playerCombatSystem.SetMeleeMoveSet, _meleeSlot, melee.GetSprite);
     }
 
     public void SetRangeWeapon(RangeItem range)
     {
-        SetItem(range.GetMoveSet, _playerCombatSystem.GetCurrentRangeMoveSet,
+        SetItemInSlot(range.GetMoveSet, _playerCombatSystem.GetCurrentRangeMoveSet,
                 _playerCombatSystem.SetRangeMoveSet, _rangeSlot, range.GetSprite);
     }
 
     public void SetStaticUseable(UseableItem useable)
     {
-        SetItem(useable.GetUseable, _playerCombatSystem.GetCurrentStaticUseable,
+        SetItemInSlot(useable.GetUseable, _playerCombatSystem.GetCurrentStaticUseable,
                 _playerCombatSystem.SetStaticUseable, _staticSlot, useable.GetSprite);
     }
 
     public void SetDynamicUseable(UseableItem useable)
     {
-        SetItem(useable.GetUseable, _playerCombatSystem.GetCurrentDynamicUseable,
+        SetItemInSlot(useable.GetUseable, _playerCombatSystem.GetCurrentDynamicUseable,
                 _playerCombatSystem.SetDynamicUseable, _dynamicSlot, useable.GetSprite);
     }
 
@@ -192,7 +195,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _dynamicSlot.SetImage(null);
     }
 
-    private void SetItem<T>(T newItem, T currentItem,
+    private void SetItemInSlot<T>(T newItem, T currentItem,
                                 Action<T> setItemAction, ItemSlot slot, Sprite newSprite) where T : Component
     {
         if (newItem != null && newItem.name != currentItem?.name)
@@ -207,7 +210,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         }
     }
 
-    public void RemoveItem(ItemUI itemUI)
+    public void RemoveOneItem(ItemUI itemUI)
     {
         InventoryItemWithAmount itemToRemove = FindInventoryItem(itemUI);
 

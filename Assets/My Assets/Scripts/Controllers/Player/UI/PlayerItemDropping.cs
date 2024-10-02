@@ -89,7 +89,7 @@ public class PlayerItemDropping : MonoBehaviour , IPlayerComponent
                 }
                 else
                 {
-                    _playerInventory.RemoveItem(itemUI); // Remove one item
+                    _playerInventory.RemoveOneItem(itemUI); // Remove one item
                 }
 
                 // Spawn the item pickup from the pool
