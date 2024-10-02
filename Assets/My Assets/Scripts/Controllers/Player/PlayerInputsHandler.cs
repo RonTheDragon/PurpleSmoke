@@ -140,7 +140,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
 
     public void Inventory(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started && _playerInventory != null)
         {
             _movementInput = Vector2.zero;
             _lookInput = Vector2.zero;

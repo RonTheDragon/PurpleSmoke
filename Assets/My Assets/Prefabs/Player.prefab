@@ -1566,14 +1566,12 @@ MonoBehaviour:
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
     type: 3}
-  m_PointAction: {fileID: 4791533117604866356, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
+  m_PointAction: {fileID: 0}
   m_MoveAction: {fileID: -6528041232455428321, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
     type: 3}
   m_SubmitAction: {fileID: 2506431386872123748, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
     type: 3}
-  m_CancelAction: {fileID: -7472775270453988336, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
+  m_CancelAction: {fileID: 0}
   m_LeftClickAction: {fileID: -2481825785604869644, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
     type: 3}
   m_MiddleClickAction: {fileID: -7369887778855799578, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
@@ -1582,10 +1580,8 @@ MonoBehaviour:
     type: 3}
   m_ScrollWheelAction: {fileID: -6414671030436757674, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
     type: 3}
-  m_TrackedDevicePositionAction: {fileID: -2434830884467347039, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: -599267351801384424, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -4377,8 +4373,11 @@ MonoBehaviour:
   _inventoryItems:
   - Item: {fileID: 11400000, guid: b1f21a1f163938c4e8f9df28cfce8f0d, type: 2}
     Amount: 1
+    UiOfItem: {fileID: 0}
   - Item: {fileID: 11400000, guid: 7efdea3aac8b0c74d8bfb712c43c8814, type: 2}
     Amount: 1
+    UiOfItem: {fileID: 0}
+  _uiOfItems: []
 --- !u!114 &8677558815528386567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4392,7 +4391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemDropVelocity: {x: 500, y: 10}
-  _itemDropProtectionTime: 0.3
+  _itemDropProtectionTime: 0.5
   _itemDropHeight: 2
   _itemDropStackTime: 0.5
 --- !u!1 &8523569958150485803

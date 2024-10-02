@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class PlayerInventory : MonoBehaviour , IPlayerComponent
 {
@@ -26,7 +27,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     private GameObject _selected;
 
     [SerializeField] private List<InventoryItemWithAmount> _inventoryItems;
-    private List<ItemUI> _uiOfItems;
+    [SerializeField][ReadOnly] private List<ItemUI> _uiOfItems = new List<ItemUI>();
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -38,6 +39,8 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _rangeSlot.GetButton.onClick.AddListener(RangeSlotClick);
         _staticSlot.GetButton.onClick.AddListener(StaticSlotClick);
         _dynamicSlot.GetButton.onClick.AddListener(DynamicSlotClick);
+
+        SetUpInventoryContent();
     }
 
     public GameObject GetSelected => _selected;
@@ -65,7 +68,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     {
         _inventoryUI.SetActive(true);
         _multiplayerEventSystem.SetSelectedGameObject(null);
-        SetUpInventoryContent();
+        _multiplayerEventSystem.SetSelectedGameObject(_selected);
     }
 
     public void CloseInventory()
@@ -107,23 +110,28 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     private void SetUpInventoryContent()
     {
-        ClearContent();
 
         bool first = true;
         foreach (InventoryItemWithAmount item in _inventoryItems)
         {
-            ItemUI i = Instantiate(_itemUItoSpawn, _inventoryContent.position, _inventoryContent.rotation, _inventoryContent);
-            i.SetUpItemUI(item, this);
+            CreateItemUI(item);
             if (first)
             {
                 first = false;
-                _multiplayerEventSystem.SetSelectedGameObject(i.gameObject);
-                _selected = i.gameObject;
+                _multiplayerEventSystem.SetSelectedGameObject(item.UiOfItem.gameObject);
+                _selected = item.UiOfItem.gameObject;
             }
-            _uiOfItems.Add(i);
         }
 
         FixNothingSelected();
+    }
+
+    private void CreateItemUI(InventoryItemWithAmount item)
+    {
+        ItemUI i = Instantiate(_itemUItoSpawn, _inventoryContent.position, _inventoryContent.rotation, _inventoryContent);
+        i.SetUpItemUI(item, this);
+        item.UiOfItem = i;
+        _uiOfItems.Add(i);
     }
 
     private void FixNothingSelected()
@@ -133,15 +141,6 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
             _multiplayerEventSystem.SetSelectedGameObject(_inventoryFirstSelected.gameObject);
             _selected = _inventoryFirstSelected.gameObject;
         }
-    }
-
-    private void ClearContent()
-    {
-        foreach (Transform child in _inventoryContent)
-        {
-            Destroy(child.gameObject);
-        }
-        _uiOfItems.Clear();
     }
 
     public bool SpendConsumable(ConsumableItem consumable)
@@ -219,12 +218,12 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
             itemToRemove.Amount--;
             if (itemToRemove.Amount <= 0)
             {
-                _inventoryItems.Remove(itemToRemove);
-                SetUpInventoryContent();
+                MoveSelectionBack();
+                RemoveWholeItem(itemToRemove);
             }
             else
             {
-                itemUI.RemoveOneItem();
+                itemUI.RemoveAmountFromItem();
             }
         }
     }
@@ -235,9 +234,18 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
         if (itemToRemove != null)
         {
-            _inventoryItems.Remove(itemToRemove);
-            SetUpInventoryContent();
+            MoveSelectionBack();
+            RemoveWholeItem(itemToRemove);
+
+            // SetUpInventoryContent();
         }
+    }
+
+    private void RemoveWholeItem(InventoryItemWithAmount itemToRemove)
+    {
+        _inventoryItems.Remove(itemToRemove);
+        _uiOfItems.Remove(itemToRemove.UiOfItem);
+        Destroy(itemToRemove.UiOfItem.gameObject);
     }
 
     private InventoryItemWithAmount FindInventoryItem(ItemUI itemUI)
@@ -251,25 +259,53 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         {
             if (i.Item == item)
             {
-                i.Amount += amount;
-                if (_inventoryUI.activeSelf)
-                {
-                    SetUpInventoryContent();
-                }
+                i.Amount += amount;       
+                i.UiOfItem.AddAmountToItem(amount);
+                
                 return;
             }
         }
-        _inventoryItems.Add(new InventoryItemWithAmount() { Item = item, Amount = amount });
-        if (_inventoryUI.activeSelf)
+        InventoryItemWithAmount ItemWithAmount = new InventoryItemWithAmount() { Item = item, Amount = amount };
+        _inventoryItems.Add(ItemWithAmount);
+        CreateItemUI(ItemWithAmount);
+        
+    }
+
+    private void MoveSelectionBack()
+    {
+        // Find the index of the currently selected item
+        int selectedIndex = _uiOfItems.FindIndex(u => u.gameObject == _selected.gameObject);
+
+        // If selectedIndex is not found, return early
+        if (selectedIndex == -1)
         {
-            SetUpInventoryContent();
+            Debug.LogError("Selected item not found in the list.");
+            return;
+        }
+
+        // Move back in the list
+        selectedIndex--;
+
+        // If index is out of bounds, loop back to the last item or set to the first selected object
+        if (selectedIndex < 0)
+        {
+            _multiplayerEventSystem.SetSelectedGameObject(_inventoryFirstSelected.gameObject);
+            _selected = _inventoryFirstSelected.gameObject;
+        }
+        else
+        {
+            _multiplayerEventSystem.SetSelectedGameObject(_uiOfItems[selectedIndex].gameObject);
+            _selected = _uiOfItems[selectedIndex].gameObject;
         }
     }
+
+
 
     [Serializable]
     public class InventoryItemWithAmount
     {
         public InventoryItem Item;
         public int Amount = 1;
+        [HideInInspector] public ItemUI UiOfItem;
     }
 }

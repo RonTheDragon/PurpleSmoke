@@ -25,7 +25,7 @@ public class ItemUI : MonoBehaviour
         _playerInventory = playerInventory;
         _itemImage.sprite = _inventoryItem.GetSprite;
         SetItemType();
-        SetAmount();
+        UpdateAmountText();
         _button.onClick.AddListener(QuickEquip);
     }
 
@@ -79,7 +79,7 @@ public class ItemUI : MonoBehaviour
         }
     }
 
-    public void SetAmount()
+    public void UpdateAmountText()
     {
         if (_amount == 1)
         {
@@ -91,10 +91,16 @@ public class ItemUI : MonoBehaviour
         }
     }
 
-    public void RemoveOneItem()
+    public void AddAmountToItem(int amount = 1)
     {
-        _amount--;
-        SetAmount();
+        _amount += amount;
+        UpdateAmountText();
+    }
+
+    public void RemoveAmountFromItem(int amount = 1)
+    {
+        _amount-= amount;
+        UpdateAmountText();
     }
 
     public int GetAmount => _amount;
