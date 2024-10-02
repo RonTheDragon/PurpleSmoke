@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class PlayerInventory : MonoBehaviour , IPlayerComponent
 {
@@ -27,7 +26,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     private GameObject _selected;
 
     [SerializeField] private List<InventoryItemWithAmount> _inventoryItems;
-    [SerializeField][ReadOnly] private List<ItemUI> _uiOfItems = new List<ItemUI>();
+    private List<ItemUI> _uiOfItems = new List<ItemUI>();
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -218,7 +217,6 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
             itemToRemove.Amount--;
             if (itemToRemove.Amount <= 0)
             {
-                MoveSelectionBack();
                 RemoveWholeItem(itemToRemove);
             }
             else
@@ -234,15 +232,16 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
         if (itemToRemove != null)
         {
-            MoveSelectionBack();
             RemoveWholeItem(itemToRemove);
-
-            // SetUpInventoryContent();
         }
     }
 
     private void RemoveWholeItem(InventoryItemWithAmount itemToRemove)
     {
+        if (IsSelectingThat(itemToRemove.UiOfItem.gameObject))
+        {
+            MoveSelectionAway();
+        }
         _inventoryItems.Remove(itemToRemove);
         _uiOfItems.Remove(itemToRemove.UiOfItem);
         Destroy(itemToRemove.UiOfItem.gameObject);
@@ -271,7 +270,19 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         
     }
 
-    private void MoveSelectionBack()
+    private bool IsSelectingThat(GameObject possiblySelected)
+    {
+        if (_selected == null || possiblySelected == null)
+        {
+            return false;
+        }
+
+        // Compare the currently selected GameObject with the possiblySelected one
+        return _selected == possiblySelected;
+    }
+
+
+    private void MoveSelectionAway()
     {
         // Find the index of the currently selected item
         int selectedIndex = _uiOfItems.FindIndex(u => u.gameObject == _selected.gameObject);
@@ -289,8 +300,17 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         // If index is out of bounds, loop back to the last item or set to the first selected object
         if (selectedIndex < 0)
         {
-            _multiplayerEventSystem.SetSelectedGameObject(_inventoryFirstSelected.gameObject);
-            _selected = _inventoryFirstSelected.gameObject;
+            if (_uiOfItems.Count <= 1)
+            {
+                _multiplayerEventSystem.SetSelectedGameObject(_inventoryFirstSelected.gameObject);
+                _selected = _inventoryFirstSelected.gameObject;
+            }
+            else
+            {
+                selectedIndex += 2;
+                _multiplayerEventSystem.SetSelectedGameObject(_uiOfItems[selectedIndex].gameObject);
+                _selected = _uiOfItems[selectedIndex].gameObject;
+            }
         }
         else
         {
