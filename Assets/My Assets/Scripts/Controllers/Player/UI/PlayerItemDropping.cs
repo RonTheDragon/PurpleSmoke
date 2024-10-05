@@ -60,18 +60,18 @@ public class PlayerItemDropping : MonoBehaviour , IPlayerComponent
 
     private void DropOne()
     {
-        if (_playerInventory.GetSelected)
+        ItemUI selectedItem =_playerInventory.GetSelectedItemUI();
+        if (selectedItem != null)
         {
-            ItemUI selectedItem = _playerInventory.GetSelected.GetComponent<ItemUI>();
             DropItem(selectedItem, 1, false); // Drop a single item
         }
     }
 
     private void DropStack()
     {
-        if (_playerInventory.GetSelected)
+        ItemUI selectedItem = _playerInventory.GetSelectedItemUI();
+        if (selectedItem != null)
         {
-            ItemUI selectedItem = _playerInventory.GetSelected.GetComponent<ItemUI>();
             DropItem(selectedItem, selectedItem.GetAmount, true); // Drop the entire stack
         }
     }

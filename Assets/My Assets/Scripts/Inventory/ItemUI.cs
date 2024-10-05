@@ -13,6 +13,7 @@ public class ItemUI : MonoBehaviour
     [SerializeField] private Image _itemImage, _backgroundImage;
     [SerializeField] private Button _button;
     [SerializeField] private TMP_Text _amountText;
+    [SerializeField] private GameObject _switchPlaceIcon;
     [SerializeField] private Color _meleeColor, _rangeColor, _useableColor, _consumableColor;
 
     public InventoryItem GetInventoryItem => _inventoryItem;
@@ -77,6 +78,11 @@ public class ItemUI : MonoBehaviour
                 _playerInventory.RemoveOneItem(this);
             }
         }
+    }
+
+    public void SetSwitchPlaceUI(bool Active)
+    {
+        _switchPlaceIcon.SetActive(Active);
     }
 
     public void UpdateAmountText()

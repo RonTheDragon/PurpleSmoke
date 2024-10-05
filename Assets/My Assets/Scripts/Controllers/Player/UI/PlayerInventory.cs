@@ -25,6 +25,8 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     private GameObject _selected;
 
+    private ItemUI _itemToSwitch;
+
     [SerializeField] private List<InventoryItemWithAmount> _inventoryItems;
     private List<ItemUI> _uiOfItems = new List<ItemUI>();
 
@@ -43,6 +45,17 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     }
 
     public GameObject GetSelected => _selected;
+
+    public ItemUI GetSelectedItemUI()
+    {
+        foreach (ItemUI item in _uiOfItems)
+        {
+            if (item.gameObject == _selected)
+                return item;
+        }
+        return null;
+    }
+
 
     public bool InventoryInput()
     {
@@ -63,6 +76,74 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         return _inventoryUI.activeSelf;
     }
 
+    public void InteractInput()
+    {
+        ItemUI selectedItem = GetSelectedItemUI();
+        if (selectedItem != null)
+        {
+            if (_itemToSwitch == null)
+            {
+                SetItemToSwitch(selectedItem);
+            }
+            else if (_itemToSwitch.gameObject == _selected)
+            {
+                SetItemToSwitch(null);
+            }
+            else
+            {
+                SwitchPlaces(_itemToSwitch, selectedItem);
+                SetItemToSwitch(null);
+            }
+        }
+    }
+
+    private void SetItemToSwitch(ItemUI newitem)
+    {
+        if (newitem == null && _itemToSwitch != null)
+        {
+            _itemToSwitch.SetSwitchPlaceUI(false);
+            _itemToSwitch = null;
+        }
+        else if (newitem != null)
+        {
+            _itemToSwitch = newitem;
+            _itemToSwitch.SetSwitchPlaceUI(true);
+        }
+    }
+
+    private void SwitchPlaces(ItemUI itemToSwitch, ItemUI newLocation)
+    {
+        // Find the inventory items associated with the UI items
+        InventoryItemWithAmount itemA = FindInventoryItem(itemToSwitch);
+        InventoryItemWithAmount itemB = FindInventoryItem(newLocation);
+
+        if (itemA != null && itemB != null)
+        {
+            // Swap the items in the inventory list
+            InventoryItemWithAmount temp = itemA;
+            int indexA = _inventoryItems.IndexOf(itemA);
+            int indexB = _inventoryItems.IndexOf(itemB);
+
+            _inventoryItems[indexA] = itemB;
+            _inventoryItems[indexB] = temp;
+
+            _uiOfItems[indexA] = itemB.UiOfItem;
+            _uiOfItems[indexB] = temp.UiOfItem;
+
+            newLocation.transform.SetSiblingIndex(indexA);
+            itemToSwitch.transform.SetSiblingIndex(indexB);
+
+            SetSelected(itemToSwitch.gameObject); // handle UI selection into the new location
+        }
+    }
+
+
+
+    public void SlotInput(int slotIndex)
+    {
+
+    }
+
     private void OpenInventory()
     {
         _inventoryUI.SetActive(true);
@@ -73,6 +154,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     public void CloseInventory()
     {
         _inventoryUI.SetActive(false);
+        SetItemToSwitch(null);
     }
 
 
@@ -88,6 +170,8 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
         ScrollToSelected();
     }
+
+
 
     private void ScrollToSelected()
     {
@@ -117,8 +201,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
             if (first)
             {
                 first = false;
-                _multiplayerEventSystem.SetSelectedGameObject(item.UiOfItem.gameObject);
-                _selected = item.UiOfItem.gameObject;
+                SetSelected(item.UiOfItem.gameObject);
             }
         }
 
@@ -137,8 +220,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     {
         if (_selected == null)
         {
-            _multiplayerEventSystem.SetSelectedGameObject(_inventoryFirstSelected.gameObject);
-            _selected = _inventoryFirstSelected.gameObject;
+            SetSelected(_inventoryFirstSelected.gameObject);
         }
     }
 
@@ -268,6 +350,12 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _inventoryItems.Add(ItemWithAmount);
         CreateItemUI(ItemWithAmount);
         
+    }
+
+    private void SetSelected(GameObject newSelected)
+    {
+        _selected = newSelected;
+        _multiplayerEventSystem.SetSelectedGameObject(newSelected);
     }
 
     private bool IsSelectingThat(GameObject possiblySelected)
