@@ -148,22 +148,26 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
 
     public void Slot1(InputAction.CallbackContext context)
     {
-        _playerInventory.SlotInput(0);
+        if (!_uiOpen)
+            _playerInventory.SlotInput(0);
     }
 
     public void Slot2(InputAction.CallbackContext context)
     {
-        _playerInventory.SlotInput(1);
+        if (!_uiOpen)
+            _playerInventory.SlotInput(1);
     }
 
     public void Slot3(InputAction.CallbackContext context)
     {
-        _playerInventory.SlotInput(2);
+        if (!_uiOpen)
+            _playerInventory.SlotInput(2);
     }
 
     public void Slot4(InputAction.CallbackContext context)
     {
-        _playerInventory.SlotInput(3);
+        if (!_uiOpen)
+            _playerInventory.SlotInput(3);
     }
 
 

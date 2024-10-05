@@ -46,6 +46,8 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     public GameObject GetSelected => _selected;
 
+    public bool IsInventoryOpen => _inventoryUI.activeSelf;
+
     public ItemUI GetSelectedItemUI()
     {
         foreach (ItemUI item in _uiOfItems)
@@ -137,11 +139,10 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         }
     }
 
-
-
     public void SlotInput(int slotIndex)
     {
-
+        if (slotIndex < _uiOfItems.Count)
+            _uiOfItems[slotIndex]?.QuickEquip();
     }
 
     private void OpenInventory()

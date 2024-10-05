@@ -57,7 +57,7 @@ public class ItemUI : MonoBehaviour
         }
     }
 
-    private void QuickEquip()
+    public void QuickEquip()
     {
         if (_itemType == ItemType.Melee)
         {
@@ -69,7 +69,10 @@ public class ItemUI : MonoBehaviour
         }
         else if (_itemType == ItemType.Useable)
         {
+            if (_playerInventory.IsInventoryOpen)
             _playerInventory.SetStaticUseable((UseableItem)_inventoryItem);
+            else 
+            _playerInventory.SetDynamicUseable((UseableItem)_inventoryItem);
         }
         else if (_itemType == ItemType.Consumable)
         {
