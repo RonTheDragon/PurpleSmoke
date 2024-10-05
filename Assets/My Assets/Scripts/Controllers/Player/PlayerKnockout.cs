@@ -16,6 +16,7 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
     private PlayerCombatSystem _playerCombatSystem;
     private PlayerWalk _playerWalk;
     private PlayerJump _playerJump;
+    private PlayerHealth _playerHealth;
     private PlayerGravity _playerGravity;
     private PlayerAimMode _playerAimMode;
 
@@ -35,6 +36,7 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
         _playerJump = playerComponents.GetPlayerJump;
         _playerGravity = playerComponents.GetPlayerGravity;
         _playerAimMode = playerComponents.GetPlayerAimMode;
+        _playerHealth = playerComponents.GetPlayerHealth;
         playerComponents.OnUpdate += PlayerUpdate;
 
         // Check if caps are set correctly
@@ -170,6 +172,8 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
 
     public void UnStunPlayer()
     {
+        if (_playerHealth.GetIsDead) return;
+
         _gettingUp = false;
         _stumbled = false;
         _canGetUp = false;
