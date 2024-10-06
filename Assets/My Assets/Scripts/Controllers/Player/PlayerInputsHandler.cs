@@ -20,7 +20,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private Vector2 _movementInput = Vector2.zero;
     private Vector2 _lookInput=Vector2.zero;
 
-    private bool _uiOpen;
+    private bool _uiOpen, _isUsingController;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -35,12 +35,14 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerDeath = playerComponents.GetPlayerDeath;
         _playerInventory = playerComponents.GetPlayerInventory;
         _playerItemDropping = playerComponents.GetPlayerItemDropping;
-
+        _isUsingController = _playerInput.currentControlScheme == "Controller";
 
         playerComponents.OnUpdate += PlayerUpdate;
 
         HideMouse();
     }
+
+    public bool UsingController => _isUsingController;
 
     private void PlayerUpdate()
     {

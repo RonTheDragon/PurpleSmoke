@@ -1030,6 +1030,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""8af14eef-6a99-4da4-bd5a-daa26075ee72"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""78d9ee09-96c5-4097-baee-19c6fc8e010a"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",

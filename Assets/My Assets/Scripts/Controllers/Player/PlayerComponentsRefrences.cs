@@ -29,6 +29,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
     [SerializeField] private PlayerUI _playerUI;
     [SerializeField] private PlayerInventory _playerInventory;
     [SerializeField] private PlayerItemDropping _playerItemDropping;
+    [SerializeField] private PlayerEquipUI _playerEquipUI;
 
     public Action OnUpdate;
 
@@ -64,6 +65,7 @@ public class PlayerComponentsRefrences : MonoBehaviour
         _playerInteraction.InitializePlayerComponent(this);
         _playerInventory.InitializePlayerComponent(this);
         _playerItemDropping.InitializePlayerComponent(this);
+        _playerEquipUI.InitializePlayerComponent(this);
     }
 
     public PlayerWalk GetPlayerWalk => _playerWalk;
@@ -92,4 +94,5 @@ public class PlayerComponentsRefrences : MonoBehaviour
     public PlayerUI GetPlayerUI => _playerUI;
     public PlayerInventory GetPlayerInventory => _playerInventory;
     public PlayerItemDropping GetPlayerItemDropping => _playerItemDropping;
+    public PlayerEquipUI GetPlayerEquipUI => _playerEquipUI;
 }

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ public class ItemUI : MonoBehaviour
     [SerializeField] private GameObject _switchPlaceIcon;
     [SerializeField] private Color _meleeColor, _rangeColor, _useableColor, _consumableColor;
 
+    public Action<int> OnAmountChange;
+
     public InventoryItem GetInventoryItem => _inventoryItem;
     public ItemType GetItemType => _itemType;
 
@@ -27,7 +30,7 @@ public class ItemUI : MonoBehaviour
         _itemImage.sprite = _inventoryItem.GetSprite;
         SetItemType();
         UpdateAmountText();
-        _button.onClick.AddListener(QuickEquip);
+        _button.onClick.AddListener(Equip);
     }
 
     private void SetItemType()
@@ -57,7 +60,7 @@ public class ItemUI : MonoBehaviour
         }
     }
 
-    public void QuickEquip()
+    public void Equip()
     {
         if (_itemType == ItemType.Melee)
         {
@@ -98,6 +101,7 @@ public class ItemUI : MonoBehaviour
         {
             _amountText.text = _amount.ToString();
         }
+        OnAmountChange?.Invoke(_amount);
     }
 
     public void AddAmountToItem(int amount = 1)

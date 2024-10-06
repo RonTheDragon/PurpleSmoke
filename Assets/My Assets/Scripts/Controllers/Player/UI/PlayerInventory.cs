@@ -14,7 +14,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     [SerializeField] private MultiplayerEventSystem _multiplayerEventSystem;
 
     [SerializeField] private ItemUI _itemUItoSpawn;
-    [SerializeField] private ItemSlot _meleeSlot, _rangeSlot, _dynamicSlot, _staticSlot;
+    [SerializeField] private InventoryItemSlot _meleeSlot, _rangeSlot, _dynamicSlot, _staticSlot;
 
     private GameManager _gameManager;
     private PickupPooler _pickupPooler;
@@ -142,7 +142,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     public void SlotInput(int slotIndex)
     {
         if (slotIndex < _uiOfItems.Count)
-            _uiOfItems[slotIndex]?.QuickEquip();
+            _uiOfItems[slotIndex]?.Equip();
     }
 
     private void OpenInventory()
