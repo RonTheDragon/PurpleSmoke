@@ -137,6 +137,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
             itemToSwitch.transform.SetSiblingIndex(indexB);
 
             SetSelected(itemToSwitch.gameObject); // handle UI selection into the new location
+            RefreshInventoryShortcutOrder();
         }
     }
 
@@ -208,6 +209,23 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         }
 
         FixNothingSelected();
+        RefreshInventoryShortcutOrder();
+    }
+
+    public void RefreshInventoryShortcutOrder()
+    {
+        if (_uiOfItems.Count == 0) return;
+        for (int i = 0; i < _uiOfItems.Count; i++)
+        {
+            if (i < 8)
+            {
+                _uiOfItems[i].SetShortcutKey(i + 1);
+            }
+            else
+            {
+                _uiOfItems[i].SetShortcutKey(0);
+            }
+        }
     }
 
     private void CreateItemUI(InventoryItemWithAmount item)
@@ -335,6 +353,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _inventoryItems.Remove(itemToRemove);
         _uiOfItems.Remove(itemToRemove.UiOfItem);
         Destroy(itemToRemove.UiOfItem.gameObject);
+        RefreshInventoryShortcutOrder();
     }
 
     private InventoryItemWithAmount FindInventoryItem(ItemUI itemUI)
@@ -357,7 +376,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         InventoryItemWithAmount ItemWithAmount = new InventoryItemWithAmount() { Item = item, Amount = amount };
         _inventoryItems.Add(ItemWithAmount);
         CreateItemUI(ItemWithAmount);
-        
+        RefreshInventoryShortcutOrder();
     }
 
     private void SetSelected(GameObject newSelected)

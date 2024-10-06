@@ -14,7 +14,8 @@ public class ItemUI : MonoBehaviour
     [SerializeField] private Image _itemImage, _backgroundImage;
     [SerializeField] private Button _button;
     [SerializeField] private TMP_Text _amountText;
-    [SerializeField] private GameObject _switchPlaceIcon;
+    [SerializeField] private GameObject _switchPlaceIcon, _shortcutKeyBackground;
+    [SerializeField] private TMP_Text _shortcutKeyText;
     [SerializeField] private Color _meleeColor, _rangeColor, _useableColor, _consumableColor;
 
     public Action<int> OnAmountChange;
@@ -31,6 +32,19 @@ public class ItemUI : MonoBehaviour
         SetItemType();
         UpdateAmountText();
         _button.onClick.AddListener(Equip);
+    }
+
+    public void SetShortcutKey(int key)
+    {
+        if (key == 0)
+        {
+            _shortcutKeyBackground.SetActive(false);
+        }
+        else
+        {
+            _shortcutKeyBackground.SetActive(true);
+            _shortcutKeyText.text = key.ToString();
+        }
     }
 
     private void SetItemType()
