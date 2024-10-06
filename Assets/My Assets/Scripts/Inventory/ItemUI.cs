@@ -64,18 +64,18 @@ public class ItemUI : MonoBehaviour
     {
         if (_itemType == ItemType.Melee)
         {
-            _playerInventory.SetMeleeWeapon((MeleeItem)_inventoryItem);
+            _playerInventory.SetMeleeWeapon((MeleeItem)_inventoryItem,this);
         }
         else if (_itemType == ItemType.Range)
         {
-            _playerInventory.SetRangeWeapon((RangeItem)_inventoryItem);
+            _playerInventory.SetRangeWeapon((RangeItem)_inventoryItem, this);
         }
         else if (_itemType == ItemType.Useable)
         {
             if (_playerInventory.IsInventoryOpen)
-            _playerInventory.SetStaticUseable((UseableItem)_inventoryItem);
+            _playerInventory.SetStaticUseable((UseableItem)_inventoryItem, this);
             else 
-            _playerInventory.SetDynamicUseable((UseableItem)_inventoryItem);
+            _playerInventory.SetDynamicUseable((UseableItem)_inventoryItem, this);
         }
         else if (_itemType == ItemType.Consumable)
         {

@@ -19,9 +19,9 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     private GameManager _gameManager;
     private PickupPooler _pickupPooler;
     private PlayerComponentsRefrences _playerComponents;
-    //private Transform _playerBody;
     private PlayerHealth _playerHealth;
     private PlayerCombatSystem _playerCombatSystem;
+    private PlayerEquipUI _playerEquipUI;
 
     private GameObject _selected;
 
@@ -35,6 +35,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _playerComponents = playerComponents;
         _playerHealth = _playerComponents.GetPlayerHealth;
         _playerCombatSystem = _playerComponents.GetPlayerCombatSystem;
+        _playerEquipUI = _playerComponents.GetPlayerEquipUI;
 
         _meleeSlot.GetButton.onClick.AddListener(MeleeSlotClick);
         _rangeSlot.GetButton.onClick.AddListener(RangeSlotClick);
@@ -231,64 +232,70 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     }
 
 
-    public void SetMeleeWeapon(MeleeItem melee)
+    public void SetMeleeWeapon(MeleeItem melee,ItemUI itemUi)
     {
         SetItemInSlot(melee.GetMoveSet, _playerCombatSystem.GetCurrentMeleeMoveSet,
-                _playerCombatSystem.SetMeleeMoveSet, _meleeSlot, melee.GetSprite);
+                _playerCombatSystem.SetMeleeMoveSet, _meleeSlot,_playerEquipUI.GetMeleeSlot, itemUi);
     }
 
-    public void SetRangeWeapon(RangeItem range)
+    public void SetRangeWeapon(RangeItem range, ItemUI itemUi)
     {
         SetItemInSlot(range.GetMoveSet, _playerCombatSystem.GetCurrentRangeMoveSet,
-                _playerCombatSystem.SetRangeMoveSet, _rangeSlot, range.GetSprite);
+                _playerCombatSystem.SetRangeMoveSet, _rangeSlot, _playerEquipUI.GetRangeSlot, itemUi);
     }
 
-    public void SetStaticUseable(UseableItem useable)
+    public void SetStaticUseable(UseableItem useable, ItemUI itemUi)
     {
         SetItemInSlot(useable.GetUseable, _playerCombatSystem.GetCurrentStaticUseable,
-                _playerCombatSystem.SetStaticUseable, _staticSlot, useable.GetSprite);
+                _playerCombatSystem.SetStaticUseable, _staticSlot, _playerEquipUI.GetStaticSlot, itemUi);
     }
 
-    public void SetDynamicUseable(UseableItem useable)
+    public void SetDynamicUseable(UseableItem useable, ItemUI itemUi)
     {
         SetItemInSlot(useable.GetUseable, _playerCombatSystem.GetCurrentDynamicUseable,
-                _playerCombatSystem.SetDynamicUseable, _dynamicSlot, useable.GetSprite);
+                _playerCombatSystem.SetDynamicUseable, _dynamicSlot, _playerEquipUI.GetDynamicSlot, itemUi);
+    }
+
+    private void SetItemInSlot<T>(T newItem, T currentItem,
+                                Action<T> setItemAction, InventoryItemSlot slot, EquipDisplayItemSlot eSlot, ItemUI itemUI) where T : Component
+    {
+        if (newItem != null && newItem.name != currentItem?.name)
+        {
+            setItemAction(newItem);
+            slot.SetSlot(itemUI.GetInventoryItem.GetSprite,itemUI.GetAmount);
+            eSlot.SetSlot(itemUI.GetInventoryItem.GetSprite, itemUI.GetAmount);
+        }
+        else 
+        {
+            setItemAction(default);
+            slot.ClearSlot();
+            eSlot.ClearSlot();
+        }
     }
 
     private void MeleeSlotClick()
     {
         _playerCombatSystem.SetMeleeMoveSet(null);
-        _meleeSlot.SetImage(null);
+        _meleeSlot.ClearSlot();
+        _playerEquipUI.GetMeleeSlot.ClearSlot();
     }
     private void RangeSlotClick()
     {
         _playerCombatSystem.SetRangeMoveSet(null);
-        _rangeSlot.SetImage(null);
+        _rangeSlot.ClearSlot();
+        _playerEquipUI.GetRangeSlot.ClearSlot();
     }
     private void StaticSlotClick()
     {
         _playerCombatSystem.SetStaticUseable(null);
-        _staticSlot.SetImage(null);
+        _staticSlot.ClearSlot();
+        _playerEquipUI.GetStaticSlot.ClearSlot();
     }
     private void DynamicSlotClick()
     {
         _playerCombatSystem.SetDynamicUseable(null);
-        _dynamicSlot.SetImage(null);
-    }
-
-    private void SetItemInSlot<T>(T newItem, T currentItem,
-                                Action<T> setItemAction, ItemSlot slot, Sprite newSprite) where T : Component
-    {
-        if (newItem != null && newItem.name != currentItem?.name)
-        {
-            setItemAction(newItem);
-            slot.SetImage(newSprite);
-        }
-        else
-        {
-            setItemAction(default);
-            slot.SetImage(null);
-        }
+        _dynamicSlot.ClearSlot();
+        _playerEquipUI.GetDynamicSlot.ClearSlot();
     }
 
     public void RemoveOneItem(ItemUI itemUI)

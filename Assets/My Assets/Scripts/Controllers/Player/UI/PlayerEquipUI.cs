@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class PlayerEquipUI : MonoBehaviour , IPlayerComponent
 {
-    [SerializeField] private ItemSlot _meleeSlot, _rangeSlot, _staticSlot, _dynamicSlot;
+    [SerializeField] private EquipDisplayItemSlot _meleeSlot, _rangeSlot, _staticSlot, _dynamicSlot;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         
     }
 
-    public ItemSlot GetMeleeSlot => _meleeSlot;
-    public ItemSlot GetRangeSlot => _rangeSlot;
-    public ItemSlot GetStaticSlot => _staticSlot;
-    public ItemSlot GetDynamicSlot => _dynamicSlot;
+    public EquipDisplayItemSlot GetMeleeSlot => _meleeSlot;
+    public EquipDisplayItemSlot GetRangeSlot => _rangeSlot;
+    public EquipDisplayItemSlot GetStaticSlot => _staticSlot;
+    public EquipDisplayItemSlot GetDynamicSlot => _dynamicSlot;
 }

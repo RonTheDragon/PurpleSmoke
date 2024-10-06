@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
@@ -218,7 +219,6 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         {
             Destroy(current.gameObject);
         }
-
         if (newInstance == null)
         {
             newInstance = defaultInstance;
