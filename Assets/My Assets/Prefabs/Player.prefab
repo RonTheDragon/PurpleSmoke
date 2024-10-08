@@ -4019,6 +4019,12 @@ MonoBehaviour:
   - Item: {fileID: 11400000, guid: 7efdea3aac8b0c74d8bfb712c43c8814, type: 2}
     Amount: 1
     UiOfItem: {fileID: 0}
+  - Item: {fileID: 11400000, guid: 372d51d70771e1b468246aa5f65a0fab, type: 2}
+    Amount: 1
+    UiOfItem: {fileID: 0}
+  - Item: {fileID: 11400000, guid: 8169b700c348430469a82a72b8000bfb, type: 2}
+    Amount: 1
+    UiOfItem: {fileID: 0}
 --- !u!114 &8677558815528386567
 MonoBehaviour:
   m_ObjectHideFlags: 0
