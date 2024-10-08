@@ -7,6 +7,7 @@ public abstract class ItemUI : MonoBehaviour
     [SerializeField] protected Image _itemImage;
     [SerializeField] protected Image _backgroundImage;
     [SerializeField] protected TMP_Text _amountText;
+    private InventoryItemUI _currentItem;
     public enum ItemType { Melee, Range, Useable, Consumable }
     public void SetImage(Sprite sprite)
     {
@@ -33,15 +34,28 @@ public abstract class ItemUI : MonoBehaviour
         }
     }
 
-    public void SetSlot(Sprite image,int amount)
+    public void SetSlot(InventoryItemUI item)
     {
-        SetImage(image);
-        SetAmount(amount);
+        CancelSubcribeToPrevious();
+        _currentItem = item;
+        _currentItem.OnAmountChange += SetAmount;
+        SetImage(_currentItem.GetInventoryItem.GetSprite);
+        SetAmount(_currentItem.GetAmount);
     }
 
     public void ClearSlot()
     {
+        CancelSubcribeToPrevious();
+        _currentItem = null;
         SetImage(null);
         SetAmount(1);
+    }
+
+    private void CancelSubcribeToPrevious()
+    {
+        if (_currentItem != null)
+        {
+            _currentItem.OnAmountChange -= SetAmount;
+        }
     }
 }

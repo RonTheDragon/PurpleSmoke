@@ -287,8 +287,8 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         if (newItem != null && newItem.name != currentItem?.name)
         {
             setItemAction(newItem);
-            slot.SetSlot(itemUI.GetInventoryItem.GetSprite,itemUI.GetAmount);
-            eSlot.SetSlot(itemUI.GetInventoryItem.GetSprite, itemUI.GetAmount);
+            slot.SetSlot(itemUI);
+            eSlot.SetSlot(itemUI);
         }
         else 
         {
@@ -359,6 +359,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         }
         _inventoryItems.Remove(itemToRemove);
         _uiOfItems.Remove(itemToRemove.UiOfItem);
+        itemToRemove.UiOfItem.OnAmountChange = null;
         Destroy(itemToRemove.UiOfItem.gameObject);
         RefreshInventoryShortcutOrder();
     }

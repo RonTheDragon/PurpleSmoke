@@ -32,12 +32,12 @@ public class PlayerEquipUI : MonoBehaviour
             _keyboardShortcutsSlots[i].SetShortcutKey(i+1);
             if (items.Count > i)
             {
-                _keyboardShortcutsSlots[i].SetSlot(items[i].GetInventoryItem.GetSprite, items[i].GetAmount);
+                _keyboardShortcutsSlots[i].SetSlot(items[i]);
                 _keyboardShortcutsSlots[i].SetColorUsingType(items[i].GetItemType);
             }
             else
             {
-                _keyboardShortcutsSlots[i].SetSlot(null,1);
+                _keyboardShortcutsSlots[i].ClearSlot();
                 _keyboardShortcutsSlots[i].ClearColor();
             }
         }
