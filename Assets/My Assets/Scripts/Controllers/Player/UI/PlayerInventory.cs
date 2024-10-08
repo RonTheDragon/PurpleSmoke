@@ -147,8 +147,10 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     public void SlotInput(int slotIndex)
     {
+        if (_playerEquipUI.IsSwitchedShortcuts) slotIndex += 4;
+
         if (slotIndex < _uiOfItems.Count)
-            _uiOfItems[slotIndex]?.Equip();
+            _uiOfItems[slotIndex]?.UseItem();
     }
 
     private void OpenInventory()
@@ -213,9 +215,8 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         }
 
         FixNothingSelected();
+        _playerEquipUI.Initialize(_playerComponents);
         RefreshInventoryShortcutOrder();
-        _playerEquipUI.SetUp();
-        _playerEquipUI.SetUpShortcutsDisplay(_uiOfItems);
     }
 
     public void RefreshInventoryShortcutOrder()

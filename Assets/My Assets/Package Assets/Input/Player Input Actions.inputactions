@@ -159,6 +159,51 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Slot 5",
+                    "type": "Button",
+                    "id": "769f859f-99ce-49d8-a444-8682433709fa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slot 6",
+                    "type": "Button",
+                    "id": "e2f295cb-9416-444b-b0a2-d7657b845e66",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slot 7",
+                    "type": "Button",
+                    "id": "fcc003de-40ab-487e-a88e-ab700775e0df",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slot 8",
+                    "type": "Button",
+                    "id": "a18adb83-3515-4d0e-95a2-07eb00043145",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Switch Shortcuts",
+                    "type": "Button",
+                    "id": "24651ef3-35b1-42e3-915b-50f3083b8561",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Submit",
                     "type": "Button",
                     "id": "84c88ce6-2ef7-4318-a474-964cbe49be24",
@@ -537,6 +582,17 @@
                     "name": "",
                     "id": "adebcb3f-aafb-4798-a462-046d4cfff7d1",
                     "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "AimMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76f71c5a-2d43-4e6d-a398-5341143f936c",
+                    "path": "<Gamepad>/rightStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
@@ -1124,6 +1180,61 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Slot 4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6cfaf69b-a8b0-4197-969a-b6e26e8149b7",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Slot 5",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f5185b5-693d-4e5e-8fae-618abf77cee8",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Slot 6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "473dc915-f58f-4e8f-ae9c-563acc6be51c",
+                    "path": "<Keyboard>/7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Slot 7",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be662b89-4805-4c47-8dab-b65b4d785370",
+                    "path": "<Keyboard>/8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Slot 8",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2c4c65b3-6c96-4e27-a716-75ad757a37db",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Switch Shortcuts",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

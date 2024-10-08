@@ -16,6 +16,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private PlayerDeath _playerDeath;
     private PlayerInventory _playerInventory;
     private PlayerItemDropping _playerItemDropping;
+    private PlayerEquipUI _playerEquipUI;
 
     private Vector2 _movementInput = Vector2.zero;
     private Vector2 _lookInput=Vector2.zero;
@@ -35,6 +36,7 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerDeath = playerComponents.GetPlayerDeath;
         _playerInventory = playerComponents.GetPlayerInventory;
         _playerItemDropping = playerComponents.GetPlayerItemDropping;
+        _playerEquipUI = playerComponents.GetPlayerEquipUI;
         _isUsingController = _playerInput.currentControlScheme == "Controller";
 
         playerComponents.OnUpdate += PlayerUpdate;
@@ -170,6 +172,36 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     {
         if (context.phase == InputActionPhase.Started && !_uiOpen)
             _playerInventory.SlotInput(3);
+    }
+
+    public void Slot5(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && !_uiOpen)
+            _playerInventory.SlotInput(4);
+    }
+
+    public void Slot6(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && !_uiOpen)
+            _playerInventory.SlotInput(5);
+    }
+
+    public void Slot7(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && !_uiOpen)
+            _playerInventory.SlotInput(6);
+    }
+
+    public void Slot8(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && !_uiOpen)
+            _playerInventory.SlotInput(7);
+    }
+
+    public void SwitchSlots(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+            _playerEquipUI.SwitchShortcuts();
     }
 
 

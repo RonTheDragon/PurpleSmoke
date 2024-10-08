@@ -28,7 +28,7 @@ public class InventoryItemUI : ShortcutItem
         _itemImage.sprite = _inventoryItem.GetSprite;
         SetItemType();
         UpdateAmountText();
-        _button.onClick.AddListener(Equip);
+        _button.onClick.AddListener(UseItem);
     }
 
 
@@ -59,7 +59,7 @@ public class InventoryItemUI : ShortcutItem
         }
     }
 
-    public void Equip()
+    public void UseItem()
     {
         if (_itemType == ItemType.Melee)
         {

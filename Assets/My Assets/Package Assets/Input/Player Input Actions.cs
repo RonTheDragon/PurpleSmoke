@@ -181,6 +181,51 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Slot 5"",
+                    ""type"": ""Button"",
+                    ""id"": ""769f859f-99ce-49d8-a444-8682433709fa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slot 6"",
+                    ""type"": ""Button"",
+                    ""id"": ""e2f295cb-9416-444b-b0a2-d7657b845e66"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slot 7"",
+                    ""type"": ""Button"",
+                    ""id"": ""fcc003de-40ab-487e-a88e-ab700775e0df"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slot 8"",
+                    ""type"": ""Button"",
+                    ""id"": ""a18adb83-3515-4d0e-95a2-07eb00043145"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Switch Shortcuts"",
+                    ""type"": ""Button"",
+                    ""id"": ""24651ef3-35b1-42e3-915b-50f3083b8561"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""84c88ce6-2ef7-4318-a474-964cbe49be24"",
@@ -559,6 +604,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""adebcb3f-aafb-4798-a462-046d4cfff7d1"",
                     ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""AimMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76f71c5a-2d43-4e6d-a398-5341143f936c"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
@@ -1148,6 +1204,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Slot 4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cfaf69b-a8b0-4197-969a-b6e26e8149b7"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slot 5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f5185b5-693d-4e5e-8fae-618abf77cee8"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slot 6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""473dc915-f58f-4e8f-ae9c-563acc6be51c"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slot 7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be662b89-4805-4c47-8dab-b65b4d785370"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Slot 8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c4c65b3-6c96-4e27-a716-75ad757a37db"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Switch Shortcuts"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1201,6 +1312,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Slot2 = m_Player.FindAction("Slot 2", throwIfNotFound: true);
         m_Player_Slot3 = m_Player.FindAction("Slot 3", throwIfNotFound: true);
         m_Player_Slot4 = m_Player.FindAction("Slot 4", throwIfNotFound: true);
+        m_Player_Slot5 = m_Player.FindAction("Slot 5", throwIfNotFound: true);
+        m_Player_Slot6 = m_Player.FindAction("Slot 6", throwIfNotFound: true);
+        m_Player_Slot7 = m_Player.FindAction("Slot 7", throwIfNotFound: true);
+        m_Player_Slot8 = m_Player.FindAction("Slot 8", throwIfNotFound: true);
+        m_Player_SwitchShortcuts = m_Player.FindAction("Switch Shortcuts", throwIfNotFound: true);
         m_Player_Submit = m_Player.FindAction("Submit", throwIfNotFound: true);
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
         m_Player_MiddleClick = m_Player.FindAction("MiddleClick", throwIfNotFound: true);
@@ -1285,6 +1401,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Slot2;
     private readonly InputAction m_Player_Slot3;
     private readonly InputAction m_Player_Slot4;
+    private readonly InputAction m_Player_Slot5;
+    private readonly InputAction m_Player_Slot6;
+    private readonly InputAction m_Player_Slot7;
+    private readonly InputAction m_Player_Slot8;
+    private readonly InputAction m_Player_SwitchShortcuts;
     private readonly InputAction m_Player_Submit;
     private readonly InputAction m_Player_RightClick;
     private readonly InputAction m_Player_MiddleClick;
@@ -1312,6 +1433,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Slot2 => m_Wrapper.m_Player_Slot2;
         public InputAction @Slot3 => m_Wrapper.m_Player_Slot3;
         public InputAction @Slot4 => m_Wrapper.m_Player_Slot4;
+        public InputAction @Slot5 => m_Wrapper.m_Player_Slot5;
+        public InputAction @Slot6 => m_Wrapper.m_Player_Slot6;
+        public InputAction @Slot7 => m_Wrapper.m_Player_Slot7;
+        public InputAction @Slot8 => m_Wrapper.m_Player_Slot8;
+        public InputAction @SwitchShortcuts => m_Wrapper.m_Player_SwitchShortcuts;
         public InputAction @Submit => m_Wrapper.m_Player_Submit;
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
         public InputAction @MiddleClick => m_Wrapper.m_Player_MiddleClick;
@@ -1378,6 +1504,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Slot4.started += instance.OnSlot4;
             @Slot4.performed += instance.OnSlot4;
             @Slot4.canceled += instance.OnSlot4;
+            @Slot5.started += instance.OnSlot5;
+            @Slot5.performed += instance.OnSlot5;
+            @Slot5.canceled += instance.OnSlot5;
+            @Slot6.started += instance.OnSlot6;
+            @Slot6.performed += instance.OnSlot6;
+            @Slot6.canceled += instance.OnSlot6;
+            @Slot7.started += instance.OnSlot7;
+            @Slot7.performed += instance.OnSlot7;
+            @Slot7.canceled += instance.OnSlot7;
+            @Slot8.started += instance.OnSlot8;
+            @Slot8.performed += instance.OnSlot8;
+            @Slot8.canceled += instance.OnSlot8;
+            @SwitchShortcuts.started += instance.OnSwitchShortcuts;
+            @SwitchShortcuts.performed += instance.OnSwitchShortcuts;
+            @SwitchShortcuts.canceled += instance.OnSwitchShortcuts;
             @Submit.started += instance.OnSubmit;
             @Submit.performed += instance.OnSubmit;
             @Submit.canceled += instance.OnSubmit;
@@ -1451,6 +1592,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Slot4.started -= instance.OnSlot4;
             @Slot4.performed -= instance.OnSlot4;
             @Slot4.canceled -= instance.OnSlot4;
+            @Slot5.started -= instance.OnSlot5;
+            @Slot5.performed -= instance.OnSlot5;
+            @Slot5.canceled -= instance.OnSlot5;
+            @Slot6.started -= instance.OnSlot6;
+            @Slot6.performed -= instance.OnSlot6;
+            @Slot6.canceled -= instance.OnSlot6;
+            @Slot7.started -= instance.OnSlot7;
+            @Slot7.performed -= instance.OnSlot7;
+            @Slot7.canceled -= instance.OnSlot7;
+            @Slot8.started -= instance.OnSlot8;
+            @Slot8.performed -= instance.OnSlot8;
+            @Slot8.canceled -= instance.OnSlot8;
+            @SwitchShortcuts.started -= instance.OnSwitchShortcuts;
+            @SwitchShortcuts.performed -= instance.OnSwitchShortcuts;
+            @SwitchShortcuts.canceled -= instance.OnSwitchShortcuts;
             @Submit.started -= instance.OnSubmit;
             @Submit.performed -= instance.OnSubmit;
             @Submit.canceled -= instance.OnSubmit;
@@ -1523,6 +1679,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSlot2(InputAction.CallbackContext context);
         void OnSlot3(InputAction.CallbackContext context);
         void OnSlot4(InputAction.CallbackContext context);
+        void OnSlot5(InputAction.CallbackContext context);
+        void OnSlot6(InputAction.CallbackContext context);
+        void OnSlot7(InputAction.CallbackContext context);
+        void OnSlot8(InputAction.CallbackContext context);
+        void OnSwitchShortcuts(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
         void OnRightClick(InputAction.CallbackContext context);
         void OnMiddleClick(InputAction.CallbackContext context);
