@@ -1,30 +1,27 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemUI : MonoBehaviour
+public class InventoryItemUI : ShortcutItem
 {
     private InventoryItem _inventoryItem;
-    public enum ItemType { Melee, Range, Useable, Consumable}
     private ItemType _itemType;
     private PlayerInventory _playerInventory;
-    [SerializeField] private int _amount;
+    private int _amount;
 
-    [SerializeField] private Image _itemImage, _backgroundImage;
     [SerializeField] private Button _button;
-    [SerializeField] private TMP_Text _amountText;
-    [SerializeField] private GameObject _switchPlaceIcon, _shortcutKeyBackground;
-    [SerializeField] private TMP_Text _shortcutKeyText;
-    [SerializeField] private Color _meleeColor, _rangeColor, _useableColor, _consumableColor;
+    [SerializeField] private GameObject _switchPlaceIcon;
 
     public Action<int> OnAmountChange;
 
     public InventoryItem GetInventoryItem => _inventoryItem;
     public ItemType GetItemType => _itemType;
 
+    private GameManager _gm;
+
     public void SetUpItemUI(PlayerInventory.InventoryItemWithAmount item,PlayerInventory playerInventory)
     {
+        _gm = GameManager.Instance;
         _inventoryItem = item.Item;
         _amount = item.Amount;
         _playerInventory = playerInventory;
@@ -34,18 +31,6 @@ public class ItemUI : MonoBehaviour
         _button.onClick.AddListener(Equip);
     }
 
-    public void SetShortcutKey(int key)
-    {
-        if (key == 0)
-        {
-            _shortcutKeyBackground.SetActive(false);
-        }
-        else
-        {
-            _shortcutKeyBackground.SetActive(true);
-            _shortcutKeyText.text = key.ToString();
-        }
-    }
 
     private void SetItemType()
     {
@@ -54,23 +39,23 @@ public class ItemUI : MonoBehaviour
             if (_inventoryItem is MeleeItem)
             {
                 _itemType = ItemType.Melee;
-                _backgroundImage.color = _meleeColor;
+                _backgroundImage.color = _gm.GetItemColor(GameManager.ItemColor.Melee);
             }
             else if (_inventoryItem is RangeItem)
             {
                 _itemType = ItemType.Range;
-                _backgroundImage.color = _rangeColor;
+                _backgroundImage.color = _gm.GetItemColor(GameManager.ItemColor.Range); 
             }
         }
         else if (_inventoryItem is UseableItem)
         {
             _itemType = ItemType.Useable;
-            _backgroundImage.color = _useableColor;
+            _backgroundImage.color = _gm.GetItemColor(GameManager.ItemColor.Static);
         }
         else if (_inventoryItem is ConsumableItem)
         {
             _itemType = ItemType.Consumable;
-            _backgroundImage.color = _consumableColor;
+            _backgroundImage.color = _gm.GetItemColor(GameManager.ItemColor.Consumable);
         }
     }
 

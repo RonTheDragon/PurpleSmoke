@@ -60,7 +60,7 @@ public class PlayerItemDropping : MonoBehaviour , IPlayerComponent
 
     private void DropOne()
     {
-        ItemUI selectedItem =_playerInventory.GetSelectedItemUI();
+        InventoryItemUI selectedItem =_playerInventory.GetSelectedItemUI();
         if (selectedItem != null)
         {
             DropItem(selectedItem, 1, false); // Drop a single item
@@ -69,14 +69,14 @@ public class PlayerItemDropping : MonoBehaviour , IPlayerComponent
 
     private void DropStack()
     {
-        ItemUI selectedItem = _playerInventory.GetSelectedItemUI();
+        InventoryItemUI selectedItem = _playerInventory.GetSelectedItemUI();
         if (selectedItem != null)
         {
             DropItem(selectedItem, selectedItem.GetAmount, true); // Drop the entire stack
         }
     }
 
-    private void DropItem(ItemUI itemUI, int amount, bool isStack)
+    private void DropItem(InventoryItemUI itemUI, int amount, bool isStack)
     {
         if (itemUI != null)
         {

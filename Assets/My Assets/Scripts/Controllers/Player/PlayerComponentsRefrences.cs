@@ -65,7 +65,6 @@ public class PlayerComponentsRefrences : MonoBehaviour
         _playerInteraction.InitializePlayerComponent(this);
         _playerInventory.InitializePlayerComponent(this);
         _playerItemDropping.InitializePlayerComponent(this);
-        _playerEquipUI.InitializePlayerComponent(this);
     }
 
     public PlayerWalk GetPlayerWalk => _playerWalk;

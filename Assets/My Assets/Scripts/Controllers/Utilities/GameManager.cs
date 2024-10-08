@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ProjectilePooler _projectilePooler;
     [SerializeField] private VEPooler _visualEffectsPooler;
     [SerializeField] private PickupPooler _pickupPooler;
+    [SerializeField] private Color _meleeColor, _rangeColor, _staticColor,_dynamicColor, _consumableColor;
+    public enum ItemColor { Melee, Range, Static , Dynamic, Consumable }
 
     public Action OnPlayerAmountChange;
 
@@ -49,6 +51,20 @@ public class GameManager : MonoBehaviour
     public ProjectilePooler GetProjectilePooler => _projectilePooler;
     public VEPooler GetVEPooler => _visualEffectsPooler;
     public PickupPooler GetPickupPooler => _pickupPooler;
+
+    public Color GetItemColor(ItemColor c)
+    {
+        switch (c)
+        {
+            case ItemColor.Melee:
+                return _meleeColor;
+                case ItemColor.Range: return _rangeColor;
+                case ItemColor.Static: return _staticColor;
+                case ItemColor.Dynamic: return _dynamicColor;
+                case ItemColor.Consumable: return _consumableColor;
+        }
+        return Color.black;
+    }
 
     public LayerMask GetLayerMaskForCinemachine()
     {

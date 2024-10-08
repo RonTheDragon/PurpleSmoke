@@ -381,3 +381,8 @@ MonoBehaviour:
   _projectilePooler: {fileID: 6289108918852795433}
   _visualEffectsPooler: {fileID: 7535000481916580830}
   _pickupPooler: {fileID: 1710479485087828392}
+  _meleeColor: {r: 0.6226415, g: 0.1262905, b: 0.1262905, a: 1}
+  _rangeColor: {r: 0.27657694, g: 0.4056604, b: 0, a: 1}
+  _staticColor: {r: 0, g: 0.18552971, b: 1, a: 1}
+  _dynamicColor: {r: 0, g: 0.7877617, b: 1, a: 1}
+  _consumableColor: {r: 0.38845253, g: 0, b: 1, a: 1}

@@ -344,6 +344,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a413f160b100043ac1cf7ca3d2a170, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _image: {fileID: 4188456282624772991}
+  _itemImage: {fileID: 4188456282624772991}
+  _backgroundImage: {fileID: 5850787255826312092}
   _amountText: {fileID: 6531529091217141596}
+  colorType: 0
   _button: {fileID: 631592249180754156}

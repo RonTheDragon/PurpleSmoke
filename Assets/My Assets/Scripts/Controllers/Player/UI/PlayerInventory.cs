@@ -13,7 +13,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     [SerializeField] private MultiplayerEventSystem _multiplayerEventSystem;
 
-    [SerializeField] private ItemUI _itemUItoSpawn;
+    [SerializeField] private InventoryItemUI _itemUItoSpawn;
     [SerializeField] private InventoryItemSlot _meleeSlot, _rangeSlot, _dynamicSlot, _staticSlot;
 
     private GameManager _gameManager;
@@ -25,10 +25,10 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     private GameObject _selected;
 
-    private ItemUI _itemToSwitch;
+    private InventoryItemUI _itemToSwitch;
 
     [SerializeField] private List<InventoryItemWithAmount> _inventoryItems;
-    private List<ItemUI> _uiOfItems = new List<ItemUI>();
+    private List<InventoryItemUI> _uiOfItems = new List<InventoryItemUI>();
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -41,6 +41,10 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _rangeSlot.GetButton.onClick.AddListener(RangeSlotClick);
         _staticSlot.GetButton.onClick.AddListener(StaticSlotClick);
         _dynamicSlot.GetButton.onClick.AddListener(DynamicSlotClick);
+        _meleeSlot.SetColor();
+        _rangeSlot.SetColor();
+        _staticSlot.SetColor();
+        _dynamicSlot.SetColor();
 
         SetUpInventoryContent();
     }
@@ -49,9 +53,9 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     public bool IsInventoryOpen => _inventoryUI.activeSelf;
 
-    public ItemUI GetSelectedItemUI()
+    public InventoryItemUI GetSelectedItemUI()
     {
-        foreach (ItemUI item in _uiOfItems)
+        foreach (InventoryItemUI item in _uiOfItems)
         {
             if (item.gameObject == _selected)
                 return item;
@@ -81,7 +85,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     public void InteractInput()
     {
-        ItemUI selectedItem = GetSelectedItemUI();
+        InventoryItemUI selectedItem = GetSelectedItemUI();
         if (selectedItem != null)
         {
             if (_itemToSwitch == null)
@@ -100,7 +104,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         }
     }
 
-    private void SetItemToSwitch(ItemUI newitem)
+    private void SetItemToSwitch(InventoryItemUI newitem)
     {
         if (newitem == null && _itemToSwitch != null)
         {
@@ -114,7 +118,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         }
     }
 
-    private void SwitchPlaces(ItemUI itemToSwitch, ItemUI newLocation)
+    private void SwitchPlaces(InventoryItemUI itemToSwitch, InventoryItemUI newLocation)
     {
         // Find the inventory items associated with the UI items
         InventoryItemWithAmount itemA = FindInventoryItem(itemToSwitch);
@@ -210,6 +214,8 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
         FixNothingSelected();
         RefreshInventoryShortcutOrder();
+        _playerEquipUI.SetUp();
+        _playerEquipUI.SetUpShortcutsDisplay(_uiOfItems);
     }
 
     public void RefreshInventoryShortcutOrder()
@@ -226,11 +232,12 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
                 _uiOfItems[i].SetShortcutKey(0);
             }
         }
+        _playerEquipUI.SetUpShortcutsDisplay(_uiOfItems);
     }
 
     private void CreateItemUI(InventoryItemWithAmount item)
     {
-        ItemUI i = Instantiate(_itemUItoSpawn, _inventoryContent.position, _inventoryContent.rotation, _inventoryContent);
+        InventoryItemUI i = Instantiate(_itemUItoSpawn, _inventoryContent.position, _inventoryContent.rotation, _inventoryContent);
         i.SetUpItemUI(item, this);
         item.UiOfItem = i;
         _uiOfItems.Add(i);
@@ -250,32 +257,32 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     }
 
 
-    public void SetMeleeWeapon(MeleeItem melee,ItemUI itemUi)
+    public void SetMeleeWeapon(MeleeItem melee,InventoryItemUI itemUi)
     {
         SetItemInSlot(melee.GetMoveSet, _playerCombatSystem.GetCurrentMeleeMoveSet,
                 _playerCombatSystem.SetMeleeMoveSet, _meleeSlot,_playerEquipUI.GetMeleeSlot, itemUi);
     }
 
-    public void SetRangeWeapon(RangeItem range, ItemUI itemUi)
+    public void SetRangeWeapon(RangeItem range, InventoryItemUI itemUi)
     {
         SetItemInSlot(range.GetMoveSet, _playerCombatSystem.GetCurrentRangeMoveSet,
                 _playerCombatSystem.SetRangeMoveSet, _rangeSlot, _playerEquipUI.GetRangeSlot, itemUi);
     }
 
-    public void SetStaticUseable(UseableItem useable, ItemUI itemUi)
+    public void SetStaticUseable(UseableItem useable, InventoryItemUI itemUi)
     {
         SetItemInSlot(useable.GetUseable, _playerCombatSystem.GetCurrentStaticUseable,
                 _playerCombatSystem.SetStaticUseable, _staticSlot, _playerEquipUI.GetStaticSlot, itemUi);
     }
 
-    public void SetDynamicUseable(UseableItem useable, ItemUI itemUi)
+    public void SetDynamicUseable(UseableItem useable, InventoryItemUI itemUi)
     {
         SetItemInSlot(useable.GetUseable, _playerCombatSystem.GetCurrentDynamicUseable,
                 _playerCombatSystem.SetDynamicUseable, _dynamicSlot, _playerEquipUI.GetDynamicSlot, itemUi);
     }
 
     private void SetItemInSlot<T>(T newItem, T currentItem,
-                                Action<T> setItemAction, InventoryItemSlot slot, EquipDisplayItemSlot eSlot, ItemUI itemUI) where T : Component
+                                Action<T> setItemAction, InventoryItemSlot slot, EquipDisplayItemSlot eSlot, InventoryItemUI itemUI) where T : Component
     {
         if (newItem != null && newItem.name != currentItem?.name)
         {
@@ -316,7 +323,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _playerEquipUI.GetDynamicSlot.ClearSlot();
     }
 
-    public void RemoveOneItem(ItemUI itemUI)
+    public void RemoveOneItem(InventoryItemUI itemUI)
     {
         InventoryItemWithAmount itemToRemove = FindInventoryItem(itemUI);
 
@@ -334,7 +341,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         }
     }
 
-    public void RemoveItemStack(ItemUI itemUI)
+    public void RemoveItemStack(InventoryItemUI itemUI)
     {
         InventoryItemWithAmount itemToRemove = FindInventoryItem(itemUI);
 
@@ -356,7 +363,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         RefreshInventoryShortcutOrder();
     }
 
-    private InventoryItemWithAmount FindInventoryItem(ItemUI itemUI)
+    private InventoryItemWithAmount FindInventoryItem(InventoryItemUI itemUI)
     {
         return _inventoryItems.Find(item => item.Item == itemUI.GetInventoryItem);
     }
@@ -441,6 +448,6 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     {
         public InventoryItem Item;
         public int Amount = 1;
-        [HideInInspector] public ItemUI UiOfItem;
+        [HideInInspector] public InventoryItemUI UiOfItem;
     }
 }

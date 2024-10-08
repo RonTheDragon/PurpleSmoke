@@ -2,20 +2,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ItemSlot : MonoBehaviour
+public abstract class ItemUI : MonoBehaviour
 {
-    [SerializeField] protected Image _image;
+    [SerializeField] protected Image _itemImage;
+    [SerializeField] protected Image _backgroundImage;
     [SerializeField] protected TMP_Text _amountText;
+    public enum ItemType { Melee, Range, Useable, Consumable }
     public void SetImage(Sprite sprite)
     {
         if (sprite == null)
         {
-            _image.gameObject.SetActive(false);
+            _itemImage.gameObject.SetActive(false);
         }
         else
         {
-            _image.gameObject.SetActive(true);
-            _image.sprite = sprite;
+            _itemImage.gameObject.SetActive(true);
+            _itemImage.sprite = sprite;
         }
     }
 
