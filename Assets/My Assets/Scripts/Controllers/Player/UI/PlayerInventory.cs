@@ -15,6 +15,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     [SerializeField] private InventoryItemUI _itemUItoSpawn;
     [SerializeField] private InventoryItemSlot _meleeSlot, _rangeSlot, _dynamicSlot, _staticSlot;
+    [SerializeField] private GameObject _canBeDroppedUI;
 
     private GameManager _gameManager;
     private PickupPooler _pickupPooler;
@@ -47,6 +48,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _dynamicSlot.SetColor();
 
         SetUpInventoryContent();
+        UpdateCanBeDroppedUI();
     }
 
     public GameObject GetSelected => _selected;
@@ -178,8 +180,13 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _selected = _multiplayerEventSystem.currentSelectedGameObject;
 
         ScrollToSelected();
+        UpdateCanBeDroppedUI();
     }
 
+    private void UpdateCanBeDroppedUI()
+    {
+        _canBeDroppedUI.SetActive(GetSelectedItemUI().GetInventoryItem.CanBeDropped);
+    }
 
 
     private void ScrollToSelected()
@@ -392,6 +399,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     {
         _selected = newSelected;
         _multiplayerEventSystem.SetSelectedGameObject(newSelected);
+        UpdateCanBeDroppedUI();
     }
 
     private bool IsSelectingThat(GameObject possiblySelected)
@@ -441,6 +449,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
             _multiplayerEventSystem.SetSelectedGameObject(_uiOfItems[selectedIndex].gameObject);
             _selected = _uiOfItems[selectedIndex].gameObject;
         }
+        UpdateCanBeDroppedUI();
     }
 
 
