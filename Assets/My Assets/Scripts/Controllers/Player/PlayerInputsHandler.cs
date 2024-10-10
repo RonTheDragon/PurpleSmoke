@@ -52,8 +52,25 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     {
         if (_actionMap == null) _actionMap = _playerInput.actions.FindActionMap("Player");
 
-        return _actionMap.FindAction(name).GetBindingDisplayString();
+
+        return TrimBindingDisplayString(_actionMap.FindAction(name).GetBindingDisplayString());
     }
+
+    private string TrimBindingDisplayString(string displayString)
+    {
+        // Remove "press " if it exists
+        displayString = displayString.Replace("Press ", "");
+
+        // Check if the displayString contains " |"
+        int index = displayString.IndexOf(" |");
+        if (index != -1)
+        {
+            return displayString.Substring(0, index);
+        }
+        return displayString;
+    }
+
+
 
     private void PlayerUpdate()
     {
