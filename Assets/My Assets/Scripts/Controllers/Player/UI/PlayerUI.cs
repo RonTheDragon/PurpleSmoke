@@ -7,7 +7,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     [SerializeField] private Image _healthBar;
     [SerializeField] private Image _chargeBar;
     [SerializeField] private Image _acidationBar;
-    [SerializeField] private GameObject _pressSpaceToGetUp;
+    [SerializeField] private TMP_Text _pressSpaceToGetUp;
     [SerializeField] private TMP_Text _respawnCountDown;
     [SerializeField] private GameObject _acidCrosshair;
 
@@ -17,8 +17,10 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     private PlayerKnockout _playerKnockout;
     private PlayerDeath _playerDeath;
     private PlayerAcidation _playerAcidation;
+    private PlayerInputsHandler _playerInputsHandler;
 
     private Color _green = Color.green * Color.gray;
+    private string _jumpKey;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -30,12 +32,16 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         _playerKnockout = _playerComponents.GetPlayerKnockout;
         _playerDeath = _playerComponents.GetPlayerDeath;
         _playerAcidation = _playerComponents.GetPlayerAcidation;
+        _playerInputsHandler = _playerComponents.GetPlayerInputsHandler;
 
         _playerHealth.OnPlayerHealthChange += UpdateHealthUI;
         _playerCombatSystem.OnChargeChange += UpdateChargeUI;
         _playerKnockout.OnCanGetUp += PressSpaceToGetUp;
         _playerDeath.OnRespawnCountdown += UpdateRespawnTime;
         _playerAcidation.OnAcidationChange += UpdateAcidUI;
+
+        _jumpKey = _playerInputsHandler.GetBinding("Jump");
+        _pressSpaceToGetUp.text = $"Press [{_jumpKey}] To Get Up!";
     }
 
     private void UpdateHealthUI(float amount)
@@ -69,7 +75,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
     private void PressSpaceToGetUp(bool show)
     {
-        _pressSpaceToGetUp.SetActive(show);
+        _pressSpaceToGetUp.gameObject.SetActive(show);
     }
 
     private void UpdateRespawnTime(int time)
@@ -77,7 +83,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
         switch (time)
         {
             case 0:
-                _respawnCountDown.text = "Press [Jump] To Respawn";
+                _respawnCountDown.text = $"Press [{_jumpKey}] To Respawn";
                 break;
             case -1:
                 _respawnCountDown.text = string.Empty;
@@ -86,8 +92,6 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
                 _respawnCountDown.text = time.ToString();
                 break;
         }
-
-        PressSpaceToGetUp(false);
     }
 
     public void SetAcidCrosshair(bool b) => _acidCrosshair.SetActive(b);

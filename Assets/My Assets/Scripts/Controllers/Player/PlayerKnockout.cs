@@ -48,7 +48,9 @@ public class PlayerKnockout : MonoBehaviour, IPlayerComponent
     }
 
     private void PlayerUpdate()
-    { 
+    {
+        if (_playerHealth.GetIsDead) return;
+
         if (_currentStunDuration > 0)
         {
             _currentStunDuration -= Time.deltaTime;

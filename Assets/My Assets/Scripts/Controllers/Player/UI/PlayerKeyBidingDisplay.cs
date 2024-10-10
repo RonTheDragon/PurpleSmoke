@@ -6,9 +6,15 @@ public class PlayerKeyBidingDisplay : MonoBehaviour, IPlayerComponent
     [SerializeField] private List<KeybindUI> _keybinds = new List<KeybindUI>();
     [SerializeField] private List<KeyBindSprite> _keyBindSprites = new List<KeyBindSprite>();
     private PlayerInputsHandler _playerInputsHandler;
+    private PlayerAimMode _playerAimMode;
+
+    [SerializeField] private GameObject _switchToMelee, _switchToRange;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerInputsHandler = playerComponents.GetPlayerInputsHandler;
+        _playerAimMode = playerComponents.GetPlayerAimMode;
+        _playerAimMode.OnToggleAim += SwitchWeaponKeyBind;
+        SwitchWeaponKeyBind(_playerAimMode.GetIsAiming);
         SetupKeyBinds();
     }
 
@@ -27,6 +33,12 @@ public class PlayerKeyBidingDisplay : MonoBehaviour, IPlayerComponent
                 keybind.SetImage(s);
             }
         }
+    }
+
+    private void SwitchWeaponKeyBind(bool usingRange)
+    {
+        _switchToMelee.gameObject.SetActive(usingRange);
+        _switchToRange.gameObject.SetActive(!usingRange);
     }
 
     public Sprite TryGetKeyBindSprite(string key)

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerAimMode : MonoBehaviour , IPlayerComponent
@@ -16,6 +17,8 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
     private bool _isAiming;
     private bool _lockHeadAim;
 
+    public Action<bool> OnToggleAim;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
         _playerComponentsRefrences = playerComponents;
@@ -27,6 +30,10 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         _playerUI = playerComponents.GetPlayerUI;
         _playerHealth = playerComponents.GetPlayerHealth;
         _playerKnockout = playerComponents.GetPlayerKnockout;
+
+        OnToggleAim += _playerWalk.SetLockOnForward;
+        OnToggleAim += _playerCombatSystem.SetUsingRanged;
+        OnToggleAim += _playerUI.SetAcidCrosshair;
     }
 
     private void PlayerUpdate()
@@ -76,24 +83,20 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
 
     private void TurnAimOn()
     {
+        OnToggleAim?.Invoke(true);
         _isAiming = true;
-        _playerWalk.SetLockOnForward(true);
         _playerWalk.AddSpeedModifier("Aiming", _playerAimMovementSpeedMultiplier);
         _playerComponentsRefrences.OnUpdate += PlayerUpdate;
-        _playerCombatSystem.SetUsingRanged(true);
         _playerAnimations.SetHeadAimWeight(1);
-        _playerUI.SetAcidCrosshair(true);
     }
 
     private void TurnAimOff()
     {
+        OnToggleAim?.Invoke(false);
         _isAiming = false;
-        _playerWalk.SetLockOnForward(false);
         _playerWalk.RemoveSpeedModifier("Aiming");
         _playerComponentsRefrences.OnUpdate -= PlayerUpdate;
-        _playerCombatSystem.SetUsingRanged(false);
         _playerAnimations.SetHeadAimWeight(0);
-        _playerUI.SetAcidCrosshair(false);
     }
 
     public void SetLockHeadAim(bool shouldLock)
@@ -111,9 +114,5 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         }
     }
 
-    public bool GetIsAiming()
-    {
-        return _isAiming;
-    }
-
+    public bool GetIsAiming => _isAiming;
 }
