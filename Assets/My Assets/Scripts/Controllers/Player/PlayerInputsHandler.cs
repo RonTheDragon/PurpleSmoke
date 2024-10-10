@@ -18,6 +18,8 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     private PlayerItemDropping _playerItemDropping;
     private PlayerEquipUI _playerEquipUI;
 
+    private InputActionMap _actionMap;
+
     private Vector2 _movementInput = Vector2.zero;
     private Vector2 _lookInput=Vector2.zero;
 
@@ -45,6 +47,13 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
     }
 
     public bool UsingController => _isUsingController;
+
+    public string GetBinding(string name)
+    {
+        if (_actionMap == null) _actionMap = _playerInput.actions.FindActionMap("Player");
+
+        return _actionMap.FindAction(name).GetBindingDisplayString();
+    }
 
     private void PlayerUpdate()
     {
