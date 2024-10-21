@@ -545,6 +545,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3564112667022057080}
+  - component: {fileID: 1022402556414765317}
+  - component: {fileID: 1859597085372250754}
   m_Layer: 0
   m_Name: Biters
   m_TagString: Untagged
@@ -570,6 +572,92 @@ Transform:
   - {fileID: 1966492943806440342}
   m_Father: {fileID: 967635240398293530}
   m_LocalEulerAnglesHint: {x: 0, y: -190.25, z: 0}
+--- !u!114 &1022402556414765317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926188738642422254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 883474502097160743}
+  - {fileID: 633189683745170789}
+  - {fileID: 7508742414430359711}
+  - {fileID: 5381435220143706160}
+  - {fileID: 5475744553322654071}
+  - {fileID: 7941826759281331708}
+  - {fileID: 2831970214061399263}
+  - {fileID: 9039839087084283284}
+  - {fileID: 5104265684288898771}
+  - {fileID: 330604176395138016}
+  - {fileID: 2312925375265774415}
+  - {fileID: 4365578436396428491}
+  - {fileID: 4839935422242418373}
+  - {fileID: 3324659483680875496}
+  - {fileID: 5431410025734550979}
+  - {fileID: 4730166237947564539}
+  - {fileID: 6653697934711688124}
+  - {fileID: 5543271251540223391}
+  - {fileID: 9131903091343607663}
+  - {fileID: 1902854648357980325}
+  - {fileID: 1651743620099989322}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 355261168384674785}
+  - {fileID: 8865994776800005061}
+  - {fileID: 4955293421589457506}
+  - {fileID: 173257643074456252}
+  - {fileID: 794374448363242092}
+  - {fileID: 1413943375588221951}
+  - {fileID: 625837866058386120}
+  - {fileID: 7942938946639989670}
+  - {fileID: 3668103036554858247}
+  - {fileID: 1291584716999872057}
+  - {fileID: 3853089298905601245}
+  - {fileID: 4941655169249295106}
+  - {fileID: 2911389404338888857}
+  - {fileID: 2164272738698264998}
+  - {fileID: 3529115677010159242}
+--- !u!95 &1859597085372250754
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926188738642422254}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 39e29f977d3e64643822041e666c6c0d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2232042785049690119
 GameObject:
   m_ObjectHideFlags: 0
