@@ -1,12 +1,14 @@
+using System;
 using UnityEngine;
 
-public class PlayerComponentsRefrences : ComponentsRefrences
+public class PlayerComponentsRefrences : MonoBehaviour
 {
     [SerializeField] private Transform _playerBody;
     [SerializeField] private Transform _cameraHolder;
     [SerializeField] private Camera _mainCamera;
     [SerializeField] private Transform _shooter;
     [SerializeField] private PlayerInputsHandler _playerInputsHandler;
+    [SerializeField] private CharacterController _characterController;
     [SerializeField] private PlayerWalk _playerWalk;
     [SerializeField] private PlayerAimMode _playerAimMode;
     [SerializeField] private PlayerLook _playerLook;
@@ -30,7 +32,19 @@ public class PlayerComponentsRefrences : ComponentsRefrences
     [SerializeField] private PlayerEquipUI _playerEquipUI;
     [SerializeField] private PlayerKeyBidingDisplay _playerKeyBidingDisplay;
 
-    protected override void InitializeComponents()
+    public Action OnUpdate;
+
+    private void Start()
+    {
+        InitializePlayerComponents();
+    }
+
+    private void Update()
+    {
+        OnUpdate?.Invoke();
+    }
+
+    private void InitializePlayerComponents()
     {
         _playerUI.InitializePlayerComponent(this);
         _playerInputsHandler.InitializePlayerComponent(this);
@@ -58,6 +72,7 @@ public class PlayerComponentsRefrences : ComponentsRefrences
     public PlayerWalk GetPlayerWalk => _playerWalk;
     public PlayerJump GetPlayerJump => _playerJump;
     public PlayerLook GetPlayerLook => _playerLook;
+    public CharacterController GetCharacterController => _characterController;
     public PlayerGravity GetPlayerGravity => _playerGravity;
     public Transform GetPlayerBody => _playerBody;
     public Camera GetCamera => _mainCamera;
