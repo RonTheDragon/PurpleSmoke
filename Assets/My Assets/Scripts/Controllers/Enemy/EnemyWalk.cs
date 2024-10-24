@@ -5,6 +5,7 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
 {
     private NavMeshAgent _navMeshAgent;
     private Vector3 _destination;
+
     public void InitializeEnemyComponent(EnemyComponentRefrences EnemyComponents)
     {
         _characterController = EnemyComponents.GetCharacterController;

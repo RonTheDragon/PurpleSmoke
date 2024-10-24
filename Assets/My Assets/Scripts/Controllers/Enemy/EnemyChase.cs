@@ -4,7 +4,7 @@ public class EnemyChase : MonoBehaviour, IEnemyComponent
 {
     private EnemyComponentRefrences _enemyComponents;
     private EnemyDetection _enemyDetection;
-    private EnemyWalk _enemyWalk; // Reference to the EnemyWalk script
+    private EnemyWalk _enemyWalk; 
     private Transform _target;
 
     [SerializeField] private float _loseTargetDuration = 2f; // Time to lose target
@@ -15,7 +15,7 @@ public class EnemyChase : MonoBehaviour, IEnemyComponent
     {
         _enemyComponents = EnemyComponents;
         _enemyDetection = _enemyComponents.GetEnemyDetection;
-        _enemyWalk = _enemyComponents.GetEnemyWalk; // Get the EnemyWalk component
+        _enemyWalk = _enemyComponents.GetEnemyWalk; 
 
         _enemyDetection.OnTargetDetected += EnemyFound;
     }

@@ -2150,7 +2150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165122cd9dfa9c14c86bc7bcecbc35b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _destination: {fileID: 0}
 --- !u!114 &315585748836772551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2163,6 +2162,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab93bc9f01e217b4aa4a72fa42f2e771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scanCooldown: 1
+  _scanRadius: 10
+  _sensingRadius: 3
+  _attackable:
+    serializedVersion: 2
+    m_Bits: 1024
+  _canSee:
+    serializedVersion: 2
+    m_Bits: 1032
+  _angleOfVision: 70
+  _eyeHeight: 1
 --- !u!114 &8329629874576492451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2175,6 +2185,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129ff20c6df8b7049b21f6575ba4b0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _roamCooldownMin: 1
+  _roamCooldownMax: 8
+  _roamRadius: 20
 --- !u!114 &1553106932098674594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2187,6 +2200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6738ad5772dd98143b95c299972381f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _loseTargetDuration: 2
+  _giveUpIfThatFarAway: 10
 --- !u!1 &8882104743651045495
 GameObject:
   m_ObjectHideFlags: 0
