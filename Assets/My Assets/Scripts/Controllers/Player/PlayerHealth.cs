@@ -12,15 +12,6 @@ public class PlayerHealth : Health , IPlayerComponent
     private PlayerInputsHandler _playerInputsHandler;
     private CharacterController _characterController;
 
-    [Header("Acid")]
-    [SerializeField] private float _maxAcidity = 100;
-    [SerializeField] private float _currentAcidity = 0;
-    [SerializeField] private float _acidExtraDamagePercentage = 50;
-    [SerializeField] private float _acidDOT = 5;
-    [SerializeField] private float _acidRemovalPerSec = 30;
-    [SerializeField] private float _removeAcidAfter = 1;
-    private float _removeAcidAfterTimeLeft;
-
     private Vector2 _storedKnockBack;
     private float _storedKnockout;
     private Vector3 _knockedFrom;
@@ -51,11 +42,7 @@ public class PlayerHealth : Health , IPlayerComponent
 
     public override void TakeDamage(float damageAmount, GameObject Attacker)
     {
-        if (_isDead) return;
-
-        _currentHealth -= CalculateDamage(damageAmount);
-        if (CheckIfDied()) return;
-
+        base.TakeDamage(damageAmount, Attacker);
         UpdateHealthUI();
     }
 
@@ -99,17 +86,6 @@ public class PlayerHealth : Health , IPlayerComponent
         }
     }
 
-
-    private bool CheckIfDied()
-    {
-        if (_currentHealth <= 0 )
-        {
-            Die();
-            return true;
-        }
-        return false;
-    }
-
     [ContextMenu("Die")]
     public override void Die()
     {
@@ -128,7 +104,6 @@ public class PlayerHealth : Health , IPlayerComponent
     {
         base.HealToMax();
         UpdateHealthUI();
-        _currentAcidity = 0;
         _playerAcidation.SetAcidationToMax();
         _playerAcidation.SetCanGenerateAcidation(true);
         _playerAimMode.SetLockHeadAim(false);
@@ -145,55 +120,9 @@ public class PlayerHealth : Health , IPlayerComponent
         OnPlayerHealthChange?.Invoke(_currentHealth / _maxHealth);
     }
 
-    private float CalculateDamage(float damage)
+    protected override void AcidPoison()
     {
-        if (_currentAcidity>0) 
-        {
-            damage += damage* Mathf.Lerp(0, _acidExtraDamagePercentage/100, _currentAcidity/_maxAcidity);
-        }
-        return damage;
-    }
-
-    public override void TakeAcidDamage(float acid)
-    {
-        if (acid > 0)
-        {
-            _currentAcidity += acid;
-            _removeAcidAfterTimeLeft = _removeAcidAfter;
-        }
-    }
-
-    private void HandleAcid()
-    {
-        if (_currentAcidity > 0 && !_isDead)
-        {
-            if (_currentAcidity > _maxAcidity)
-            {
-                _currentAcidity = _maxAcidity;
-            }
-
-            AcidPoison();
-
-            AcidRemoval();
-        }
-    }
-
-    private void AcidPoison()
-    {
-        _currentHealth -= Mathf.Lerp(0, _acidDOT, _currentAcidity / _maxAcidity) * Time.deltaTime;
-        if (CheckIfDied()) return;
+        base.AcidPoison();
         UpdateHealthUI();
-    }
-
-    private void AcidRemoval()
-    {
-        if (_removeAcidAfterTimeLeft > 0)
-        {
-            _removeAcidAfterTimeLeft -= Time.deltaTime;
-        }
-        else
-        {
-            _currentAcidity -= _acidRemovalPerSec * Time.deltaTime;
-        }
     }
 }

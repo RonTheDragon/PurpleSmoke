@@ -16,6 +16,7 @@ public class ProjectileDecalExplosionDamage : ExplosionDamage
             _colliderHit = other;       
             _parentOfDecal = null;
             if (other.gameObject.tag == "Player") { _parentOfDecal = other.transform.GetChild(0); }
+            if (other.gameObject.tag == "Enemy") { _parentOfDecal = other.transform; }
             Explode();
             gameObject.SetActive(false);
         }

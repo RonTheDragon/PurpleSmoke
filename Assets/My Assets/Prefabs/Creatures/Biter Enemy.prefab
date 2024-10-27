@@ -2049,9 +2049,11 @@ GameObject:
   - component: {fileID: 315585748836772551}
   - component: {fileID: 8329629874576492451}
   - component: {fileID: 1553106932098674594}
+  - component: {fileID: 3902768569550905331}
+  - component: {fileID: 8380316261064742884}
   m_Layer: 0
   m_Name: Biter Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2092,12 +2094,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 1.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.06, z: 0.78}
 --- !u!195 &8779193765128605155
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2138,6 +2140,8 @@ MonoBehaviour:
   _enemyRoam: {fileID: 8329629874576492451}
   _enemyChase: {fileID: 1553106932098674594}
   _navMeshAgent: {fileID: 8779193765128605155}
+  _enemyHealth: {fileID: 3902768569550905331}
+  _enemyDeath: {fileID: 8380316261064742884}
 --- !u!114 &2486383163142723190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2202,6 +2206,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _loseTargetDuration: 2
   _giveUpIfThatFarAway: 10
+--- !u!114 &3902768569550905331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8757105605112218369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b57d9faf940cf5541a38d9a110ed9722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 20
+  _currentHealth: 0
+  _maxAcidity: 100
+  _currentAcidity: 0
+  _acidExtraDamagePercentage: 50
+  _acidDOT: 5
+  _acidRemovalPerSec: 30
+  _removeAcidAfter: 1
+--- !u!114 &8380316261064742884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8757105605112218369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2958ba9e93a1bf4cb5bdf48a7859ce6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8882104743651045495
 GameObject:
   m_ObjectHideFlags: 0
