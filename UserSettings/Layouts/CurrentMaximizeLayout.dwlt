@@ -93,7 +93,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -239,9 +239,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d4faffff
-      m_LastClickedID: -1324
-      m_ExpandedIDs: d6f9ffffdcf9ffffd6faffff
+      m_SelectedIDs: c8faffff
+      m_LastClickedID: -1336
+      m_ExpandedIDs: d0f8ffffc8faffffcafaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -284,8 +284,8 @@ MonoBehaviour:
     y: 0
     width: 642
     height: 696
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 8}
   m_Panes:
   - {fileID: 8}
@@ -728,9 +728,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.5971258, y: 1.9175531, z: 4.6888075}
+    m_Target: {x: 8.80638, y: 2.4963229, z: -8.916766}
     speed: 2
-    m_Value: {x: 1.5971258, y: 1.9175531, z: 4.6888075}
+    m_Value: {x: 8.80638, y: 2.4963229, z: -8.916766}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -776,13 +776,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.102866754, y: 0.11964502, z: -0.012426519, w: -0.98729414}
+    m_Target: {x: -0.12180013, y: 0.7801695, z: -0.16040094, w: -0.59209627}
     speed: 2
-    m_Value: {x: -0.10287701, y: 0.11965695, z: -0.012427758, w: -0.9873926}
+    m_Value: {x: -0.12181194, y: 0.7802451, z: -0.16041648, w: -0.59215367}
   m_Size:
-    m_Target: 2.3702273
+    m_Target: 4.392579
     speed: 2
-    m_Value: 2.3702273
+    m_Value: 4.392579
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1741,7 +1741,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/My Assets/Scripts/Controllers/Abstract
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1749,16 +1749,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/My Assets/Scripts/Controllers/Abstract
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Unity\Unity Projects\PurpleSmoke
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: c2880000
-    m_LastClickedID: 35010
-    m_ExpandedIDs: 00000000c2880000c4880000c6880000c8880000ca880000cc880000ce8800002489000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 210}
+    m_SelectedIDs: 32890000
+    m_LastClickedID: 35122
+    m_ExpandedIDs: 00000000cc880000ce880000d0880000d2880000d4880000d6880000d888000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1786,7 +1786,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c2880000c4880000c6880000c8880000ca880000cc880000ce880000
+    m_ExpandedIDs: 00000000cc880000ce880000d0880000d2880000d4880000d6880000d8880000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1811,8 +1811,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: d4faffff
-    m_LastClickedInstanceID: -1324
+    m_SelectedInstanceIDs: c8faffff
+    m_LastClickedInstanceID: -1336
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000148400000000000064810000
     m_RenameOverlay:

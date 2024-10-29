@@ -15,7 +15,6 @@ public class PlayerWalk : CharacterWalk,IPlayerComponent
     private float _targetAngle;
     private float _angle;
     private Vector3 _moveDirection;
-    private bool _canMove = true;
     private Vector2 _movementInput;
     private bool _lockOnForward;
 
@@ -105,10 +104,7 @@ public class PlayerWalk : CharacterWalk,IPlayerComponent
         }
     }
 
-    public void SetCanMove(bool canMove)
-    {
-        _canMove = canMove;
-    }
+    
 
     public void AddSpeedModifier(string modifierName, float modifierValue)
     {

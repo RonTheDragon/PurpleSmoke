@@ -6,4 +6,10 @@ public class CharacterWalk : MonoBehaviour
     [SerializeField] protected float _baseWalkingSpeed;
     [SerializeField] protected float _currentTurnSpeed = 0.1f;
     protected CharacterController _characterController;
+    protected bool _canMove = true;
+
+    public void SetCanMove(bool canMove)
+    {
+        _canMove = canMove;
+    }
 }

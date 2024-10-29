@@ -2,9 +2,11 @@
 public class EnemyKnockout : CharacterKnockout, IEnemyComponent
 {
     private EnemyHealth _enemyHealth;
+    private EnemyWalk _enemyWalk;
     public void InitializeEnemyComponent(EnemyComponentRefrences enemyComponents)
     {
         _enemyHealth = enemyComponents.GetEnemyHealth;
+        _enemyWalk = enemyComponents.GetEnemyWalk;
         enemyComponents.OnUpdate += EnemyUpdate;
         OnCanGetUp += (b) => { if (b) TryToGetUp(); };
     }
@@ -28,5 +30,17 @@ public class EnemyKnockout : CharacterKnockout, IEnemyComponent
     protected override void SetAnimationWeight(float weight)
     {
         
+    }
+
+    public override void StunCharacter()
+    {
+        base.StunCharacter();
+        _enemyWalk.SetCanMove(false);
+    }
+
+    public override void UnStunCharacter()
+    {
+        base.UnStunCharacter();
+        _enemyWalk.SetCanMove(true);
     }
 }

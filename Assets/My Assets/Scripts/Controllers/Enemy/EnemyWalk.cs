@@ -11,7 +11,6 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
 
     // New gravity variables
     [SerializeField] private float _gravity = -9.81f; // Gravity force
-    private Vector3 _velocity; // Current velocity
 
     public void InitializeEnemyComponent(EnemyComponentRefrences EnemyComponents)
     {
@@ -35,6 +34,13 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
 
     private void EnemyUpdate()
     {
+        if (_navMeshAgent.enabled == false)
+        {
+            Gravity();
+        }
+
+        if (!_canMove) return;
+
         if (_navMeshAgent.enabled == true)
         {
             _navMeshAgent.SetDestination(_destination);
@@ -60,7 +66,6 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         if (direction.magnitude < 0.1f)
         {
             _characterController.Move(Vector3.zero);
-            _velocity.y = 0; // Reset vertical velocity if at destination
             return;
         }
 
@@ -70,10 +75,11 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
 
         // Move the character controller forward
         _characterController.Move(transform.forward * _currentSpeed * Time.deltaTime);
+    }
 
-        // Apply gravity
-        _velocity.y += _gravity * Time.deltaTime; // Update vertical velocity
-        _characterController.Move(_velocity * Time.deltaTime); // Apply gravity movement
+    private void Gravity()
+    {
+        _characterController.Move(Vector3.down * -_gravity * Time.deltaTime); // Apply gravity movement
     }
 
     private void TryToNavmesh()
