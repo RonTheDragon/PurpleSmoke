@@ -1,4 +1,4 @@
 public interface IEnemyComponent
 {
-    public void InitializeEnemyComponent(EnemyComponentRefrences EnemyComponents);
+    public void InitializeEnemyComponent(EnemyComponentRefrences enemyComponents);
 }

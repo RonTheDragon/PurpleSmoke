@@ -3,10 +3,7 @@ using UnityEngine;
 
 public class PlayerWalk : CharacterWalk,IPlayerComponent
 {
-    [ReadOnly][SerializeField] private float _currentSpeed;
-    [SerializeField] private float _baseWalkingSpeed;
     [SerializeField] private float _airMovementSpeed;
-    [SerializeField] private float _currentTurnSpeed = 0.1f;
 
     private Transform _playerBody;
     private Camera _camera;

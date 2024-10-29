@@ -9,6 +9,8 @@ public class EnemyComponentRefrences : ComponentsRefrences
     [SerializeField] private EnemyChase _enemyChase;
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField] private EnemyHealth _enemyHealth;
+    [SerializeField] private EnemyKnockback _enemyKnockback;
+    [SerializeField] private EnemyKnockout _enemyKnockout;
     [SerializeField] private EnemyDeath _enemyDeath;
 
     private void Start()
@@ -23,6 +25,8 @@ public class EnemyComponentRefrences : ComponentsRefrences
         _enemyRoam.InitializeEnemyComponent(this);
         _enemyChase.InitializeEnemyComponent(this);
         _enemyHealth.InitializeEnemyComponent(this);
+        _enemyKnockback.InitializeEnemyComponent(this);
+        _enemyKnockout.InitializeEnemyComponent(this);
         _enemyDeath.InitializeEnemyComponent(this);
     }
 
@@ -32,5 +36,7 @@ public class EnemyComponentRefrences : ComponentsRefrences
     public EnemyRoam GetEnemyRoam => _enemyRoam;
     public EnemyChase GetEnemyChase => _enemyChase;
     public EnemyHealth GetEnemyHealth => _enemyHealth;
+    public EnemyKnockback GetEnemyKnockback => _enemyKnockback;
+    public EnemyKnockout GetEnemyKnockout => _enemyKnockout;
     public EnemyDeath GetEnemyDeath => _enemyDeath;
 }

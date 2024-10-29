@@ -2050,6 +2050,8 @@ GameObject:
   - component: {fileID: 8329629874576492451}
   - component: {fileID: 1553106932098674594}
   - component: {fileID: 3902768569550905331}
+  - component: {fileID: 697072207211623194}
+  - component: {fileID: 7312452447485478411}
   - component: {fileID: 8380316261064742884}
   m_Layer: 0
   m_Name: Biter Enemy
@@ -2141,6 +2143,8 @@ MonoBehaviour:
   _enemyChase: {fileID: 1553106932098674594}
   _navMeshAgent: {fileID: 8779193765128605155}
   _enemyHealth: {fileID: 3902768569550905331}
+  _enemyKnockback: {fileID: 697072207211623194}
+  _enemyKnockout: {fileID: 7312452447485478411}
   _enemyDeath: {fileID: 8380316261064742884}
 --- !u!114 &2486383163142723190
 MonoBehaviour:
@@ -2154,6 +2158,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165122cd9dfa9c14c86bc7bcecbc35b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentSpeed: 0
+  _baseWalkingSpeed: 3.5
+  _currentTurnSpeed: 120
+  _notNavmeshReasons: []
+  _gravity: -9.81
 --- !u!114 &315585748836772551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2218,7 +2227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57d9faf940cf5541a38d9a110ed9722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 20
+  _maxHealth: 100
   _currentHealth: 0
   _maxAcidity: 100
   _currentAcidity: 0
@@ -2226,6 +2235,42 @@ MonoBehaviour:
   _acidDOT: 5
   _acidRemovalPerSec: 30
   _removeAcidAfter: 1
+--- !u!114 &697072207211623194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8757105605112218369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c59f29bd91a3ad46a4ea85f7c2e83e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _knockbackDecelerateSpeed: 5
+--- !u!114 &7312452447485478411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8757105605112218369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc3d77d627415e04bab439ed4bde7455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hurtCap: 10
+  _staggerCap: 30
+  _stunCap: 100
+  _stumbleCap: 200
+  _maxStunDuration: 2
+  _maxStumbleDuration: 5
+  _gettingUpDuration: 1
+  _currentStunDuration: 0
+  _stumbled: 0
+  _canGetUp: 0
+  _gettingUp: 0
 --- !u!114 &8380316261064742884
 MonoBehaviour:
   m_ObjectHideFlags: 0

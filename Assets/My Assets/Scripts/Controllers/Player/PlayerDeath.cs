@@ -32,7 +32,7 @@ public class PlayerDeath : MonoBehaviour, IPlayerComponent
 
     public void Die()
     {
-        _playerKnockout.StunPlayer();
+        _playerKnockout.StunCharacter();
         _playerAnimations.PlayAnimation("Death");
 
         _respawnTimeLeft = _respawnTime;
@@ -80,7 +80,7 @@ public class PlayerDeath : MonoBehaviour, IPlayerComponent
     public void Revive()
     {
         _health.HealToMax();
-        _playerKnockout.UnStunPlayer();
+        _playerKnockout.UnStunCharacter();
         _playerAnimations.PlayAnimation("Revive");
     }
 }
