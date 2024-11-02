@@ -5,21 +5,27 @@ using UnityEngine.AI;
 public class EnemyWalk : CharacterWalk, IEnemyComponent
 {
     private NavMeshAgent _navMeshAgent;
+    private EnemyAnimations _enemyAnimations;
     private Vector3 _destination;
     [ReadOnly][SerializeField] private List<string> _notNavmeshReasons = new List<string>();
     private bool _tryToNavmesh;
 
     // New gravity variables
     [SerializeField] private float _gravity = -9.81f; // Gravity force
+    private Vector3 _previousLocation;
+    [SerializeField] private float _movementCheckCooldown = 0.5f;
 
     public void InitializeEnemyComponent(EnemyComponentRefrences EnemyComponents)
     {
         _characterController = EnemyComponents.GetCharacterController;
         _navMeshAgent = EnemyComponents.GetNavMeshAgent;
+        _enemyAnimations = EnemyComponents.GetEnemyAnimations;
         _currentSpeed = _baseWalkingSpeed;
         _navMeshAgent.speed = _currentSpeed;
         _navMeshAgent.angularSpeed = _currentTurnSpeed;
         EnemyComponents.OnUpdate += EnemyUpdate;
+        InvokeRepeating(nameof(CheckIfMoving), 0, _movementCheckCooldown);
+        _previousLocation = transform.position;
     }
 
     public void SetDestination(Vector3 destination)
@@ -30,6 +36,17 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     public void StopMovement()
     {
         _destination = transform.position;
+    }
+
+    private void CheckIfMoving()
+    {
+        if (!_canMove) { _enemyAnimations.ChangeWalk(0); }
+        else
+        {
+            int i = Vector3.Distance(_previousLocation, transform.position) > 0.1f ? 1 : 0;
+            _enemyAnimations.ChangeWalk(i);
+            _previousLocation = transform.position;
+        }
     }
 
     private void EnemyUpdate()

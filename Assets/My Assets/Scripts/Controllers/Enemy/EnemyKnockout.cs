@@ -3,10 +3,12 @@ public class EnemyKnockout : CharacterKnockout, IEnemyComponent
 {
     private EnemyHealth _enemyHealth;
     private EnemyWalk _enemyWalk;
+    private EnemyAnimations _enemyAnimations;
     public void InitializeEnemyComponent(EnemyComponentRefrences enemyComponents)
     {
         _enemyHealth = enemyComponents.GetEnemyHealth;
         _enemyWalk = enemyComponents.GetEnemyWalk;
+        _enemyAnimations = enemyComponents.GetEnemyAnimations;
         enemyComponents.OnUpdate += EnemyUpdate;
         OnCanGetUp += (b) => { if (b) TryToGetUp(); };
     }
@@ -24,12 +26,12 @@ public class EnemyKnockout : CharacterKnockout, IEnemyComponent
 
     protected override void PlayAnimation(string animationName)
     {
-        
+        _enemyAnimations.PlayAnimation(animationName);
     }
 
     protected override void SetAnimationWeight(float weight)
     {
-        
+        _enemyAnimations.SetLayerWeight(1, weight);
     }
 
     public override void StunCharacter()

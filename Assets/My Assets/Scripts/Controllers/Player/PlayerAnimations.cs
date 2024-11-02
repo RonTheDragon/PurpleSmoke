@@ -1,13 +1,10 @@
-using System;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
-public class PlayerAnimations : MonoBehaviour, IPlayerComponent
+public class PlayerAnimations : CharacterAnimations, IPlayerComponent
 {
     private PlayerGroundCheck _playerGroundCheck;
-    private int _currentWalk;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private string _walkInt;
+    
     [SerializeField] private string _walkSpeedFloat;
     [SerializeField] private string _walkXFloat;
     [SerializeField] private string _walkYFloat;
@@ -40,15 +37,6 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
     private void ChangeGrounded(bool grounded)
     {
         _animator.SetBool(_groundedBool,grounded);
-    }
-
-    public void ChangeWalk(int walkInt)
-    {
-        if (_currentWalk != walkInt)
-        {
-            _currentWalk = walkInt;
-            _animator.SetInteger(_walkInt, walkInt);
-        }
     }
 
     public void SetWalkSpeed(float speed)
@@ -101,15 +89,5 @@ public class PlayerAnimations : MonoBehaviour, IPlayerComponent
         _animator.SetTrigger(_flipTrigger);
     }
 
-    public void PlayAnimation(string animationName)
-    {
-        if (animationName == string.Empty) return;
-
-        _animator.SetTrigger(animationName);
-    }
-
-    public void SetLayerWeight(int layer,float amount)
-    {
-        _animator.SetLayerWeight(layer, amount);
-    }
+    
 }

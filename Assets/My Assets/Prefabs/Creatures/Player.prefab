@@ -1278,12 +1278,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d97e4a1e528d644ab67e3d6cafbe73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterController: {fileID: 5965372218068205818}
   _playerBody: {fileID: 6127906223936592453}
   _cameraHolder: {fileID: 1877480264227317488}
   _mainCamera: {fileID: 5310138974357565822}
   _shooter: {fileID: 4012429489951670558}
   _playerInputsHandler: {fileID: 5677476338889415264}
-  _characterController: {fileID: 5965372218068205818}
   _playerWalk: {fileID: 5862413937232983314}
   _playerAimMode: {fileID: 5138646683795130352}
   _playerLook: {fileID: 6294502965475875628}
@@ -1333,8 +1333,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentSpeed: 0
   _baseWalkingSpeed: 10
-  _airMovementSpeed: 0.3
   _currentTurnSpeed: 0.1
+  _airMovementSpeed: 0.3
 --- !u!114 &5138646683795130352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1486,6 +1486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9c9dfd888992246834197c606566e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _knockbackDecelerateSpeed: 5
 --- !u!114 &8543009807947699284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10336,7 +10337,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 49.99997
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
