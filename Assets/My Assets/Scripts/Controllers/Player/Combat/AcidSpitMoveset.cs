@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static CombatMoveSet;
 
 public class AcidSpitMoveset : ChargeableMoveSet
 {
@@ -12,8 +13,9 @@ public class AcidSpitMoveset : ChargeableMoveSet
     [SerializeField] private AcidSpitAttack _acidSpitAttack;
     [SerializeField] private AcidShotgunAttack _acidShotgunAttack;
 
-    public override void MoveSetStart(PlayerCombatSystem playerCombatSystem)
+    public override void MoveSetStart(CombatSystem combatSystem)
     {
+        PlayerCombatSystem playerCombatSystem = (PlayerCombatSystem)combatSystem;
         _projectilePooler = GameManager.Instance.GetProjectilePooler;
         _owner = playerCombatSystem.GetPlayerRefs.gameObject;
         base.MoveSetStart(playerCombatSystem);
@@ -135,7 +137,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
     }
 }
 
-public class ProjectileAttack
+public class ProjectileAttack : AttackData
 {
     public string ProjectileTag;
     public string AnimationName;

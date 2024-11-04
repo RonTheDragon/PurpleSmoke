@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
+public class PlayerCombatSystem : CombatSystem, IPlayerComponent
 {
     public Action<float> OnChargeChange;
 
     private PlayerComponentsRefrences _playerComponentsRefrences;
     private PlayerGlide _glide;
     private PlayerAcidation _playerAcidation;
-    private bool _canAttack = true;
     private bool _acidation = false;
     private bool _usingRanged;
     private bool _busyAttacking;
@@ -18,10 +17,10 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
 
     private float _currentChargePercentage;
 
-    [SerializeField] private CombatMoveSet _defaultMeleeMoveSet;
-    [ReadOnly][SerializeField] private CombatMoveSet _currentMeleeMoveSet;
-    [SerializeField] private CombatMoveSet _defaultRangeMoveSet;
-    [ReadOnly][SerializeField] private CombatMoveSet _currentRangeMoveSet;
+    [SerializeField] private PlayerCombatMoveSet _defaultMeleeMoveSet;
+    [ReadOnly][SerializeField] private PlayerCombatMoveSet _currentMeleeMoveSet;
+    [SerializeField] private PlayerCombatMoveSet _defaultRangeMoveSet;
+    [ReadOnly][SerializeField] private PlayerCombatMoveSet _currentRangeMoveSet;
     [ReadOnly][SerializeField] private UseableAbility _dynamicUseable, _staticUseable;
     [ReadOnly][SerializeField] private List<Consumable> _consumedConsumables;
 
@@ -49,13 +48,12 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
     }
 
     public PlayerComponentsRefrences GetPlayerRefs => _playerComponentsRefrences;
-    public CombatMoveSet GetDefaultMoveSet => _defaultMeleeMoveSet;
-    public CombatMoveSet GetCurrentMeleeMoveSet => _currentMeleeMoveSet;
-    public CombatMoveSet GetCurrentRangeMoveSet => _currentRangeMoveSet;
+    public PlayerCombatMoveSet GetDefaultMoveSet => _defaultMeleeMoveSet;
+    public PlayerCombatMoveSet GetCurrentMeleeMoveSet => _currentMeleeMoveSet;
+    public PlayerCombatMoveSet GetCurrentRangeMoveSet => _currentRangeMoveSet;
     public UseableAbility GetCurrentStaticUseable => _staticUseable;
     public UseableAbility GetCurrentDynamicUseable => _dynamicUseable;
     public bool GetIsBusyAttacking => _busyAttacking;
-    public bool GetCanAttack => _canAttack;
     public bool GetAcidation => _acidation;
     private bool CanPlayerAttack => !_glide.IsGliding() && _canAttack;
     public float GetChargePercentage => _currentChargePercentage;
@@ -90,11 +88,11 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         PerformMoveSetAction(moveset => moveset.ResetAttacks());
     }
 
-    private void PerformMoveSetAction(Action<CombatMoveSet> moveSetAction)
+    protected void PerformMoveSetAction(Action<PlayerCombatMoveSet> moveSetAction)
     {
         if (CanPlayerAttack)
         {
-            CombatMoveSet currentMoveSet = _usingRanged ? _currentRangeMoveSet : _currentMeleeMoveSet;
+            PlayerCombatMoveSet currentMoveSet = _usingRanged ? _currentRangeMoveSet : _currentMeleeMoveSet;
             moveSetAction?.Invoke(currentMoveSet);
         }
     }
@@ -124,12 +122,6 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         }
     }
 
-
-    public void SetCanAttack(bool canAttack)
-    {
-        _canAttack = canAttack;
-    }
-
     public void SetAcidation(bool acidation)
     {
         _acidation = acidation;
@@ -152,17 +144,17 @@ public class PlayerCombatSystem : MonoBehaviour, IPlayerComponent
         HandleSubscribtion();
     }
 
-    public void SetMeleeMoveSet(CombatMoveSet meleeMoveSet)
+    public void SetMeleeMoveSet(PlayerCombatMoveSet meleeMoveSet)
     {
         SetMoveSet(ref _currentMeleeMoveSet, meleeMoveSet, _defaultMeleeMoveSet);
     }
 
-    public void SetRangeMoveSet(CombatMoveSet rangeMoveSet)
+    public void SetRangeMoveSet(PlayerCombatMoveSet rangeMoveSet)
     {
         SetMoveSet(ref _currentRangeMoveSet, rangeMoveSet, _defaultRangeMoveSet);
     }
 
-    private void SetMoveSet(ref CombatMoveSet currentMoveSet, CombatMoveSet newMoveSet, CombatMoveSet defaultMoveSet)
+    private void SetMoveSet(ref PlayerCombatMoveSet currentMoveSet, PlayerCombatMoveSet newMoveSet, PlayerCombatMoveSet defaultMoveSet)
     {
         ClearAttacks();
         SetOrDestroy(ref currentMoveSet, newMoveSet, defaultMoveSet);

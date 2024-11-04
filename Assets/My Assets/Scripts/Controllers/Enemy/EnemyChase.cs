@@ -6,6 +6,7 @@ public class EnemyChase : MonoBehaviour, IEnemyComponent
     private EnemyDetection _enemyDetection;
     private EnemyWalk _enemyWalk; 
     private Transform _target;
+    private EnemyCombatSystem _enemyCombatSystem;
 
     [SerializeField] private float _loseTargetDuration = 2f; // Time to lose target
     private float _timeSinceLastSeen;
@@ -15,7 +16,8 @@ public class EnemyChase : MonoBehaviour, IEnemyComponent
     {
         _enemyComponents = EnemyComponents;
         _enemyDetection = _enemyComponents.GetEnemyDetection;
-        _enemyWalk = _enemyComponents.GetEnemyWalk; 
+        _enemyWalk = _enemyComponents.GetEnemyWalk;
+        _enemyCombatSystem = _enemyComponents.GetEnemyCombatSystem;
 
         _enemyDetection.OnTargetDetected += EnemyFound;
     }
@@ -23,6 +25,7 @@ public class EnemyChase : MonoBehaviour, IEnemyComponent
     private void EnemyFound(Transform enemy)
     {
         _target = enemy;
+        _enemyCombatSystem.SetTarget(enemy);
         _timeSinceLastSeen = 0f; // Reset timer when target is detected
         _enemyComponents.OnUpdate += EnemyUpdate;
     }
@@ -70,6 +73,7 @@ public class EnemyChase : MonoBehaviour, IEnemyComponent
         _enemyComponents.OnUpdate -= EnemyUpdate;
         _enemyDetection.ResetDetection();
         _target = null; // Clear the target
+        _enemyCombatSystem.LoseTarget();
         _enemyWalk.StopMovement(); // Implement this method in EnemyWalk to stop moving
 
     }

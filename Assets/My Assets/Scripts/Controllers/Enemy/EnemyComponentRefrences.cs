@@ -13,6 +13,7 @@ public class EnemyComponentRefrences : ComponentsRefrences
     [SerializeField] private EnemyKnockout _enemyKnockout;
     [SerializeField] private EnemyDeath _enemyDeath;
     [SerializeField] private EnemyAnimations _enemyAnimations;
+    [SerializeField] private EnemyCombatSystem _enemyCombatSystem;
 
     private void Start()
     {
@@ -30,8 +31,7 @@ public class EnemyComponentRefrences : ComponentsRefrences
         _enemyKnockout.InitializeEnemyComponent(this);
         _enemyDeath.InitializeEnemyComponent(this);
         _enemyAnimations.InitializeEnemyComponent(this);
-
-
+        _enemyCombatSystem.InitializeEnemyComponent(this);
     }
 
     public NavMeshAgent GetNavMeshAgent => _navMeshAgent;
@@ -44,4 +44,5 @@ public class EnemyComponentRefrences : ComponentsRefrences
     public EnemyKnockout GetEnemyKnockout => _enemyKnockout;
     public EnemyDeath GetEnemyDeath => _enemyDeath;
     public EnemyAnimations GetEnemyAnimations => _enemyAnimations;
+    public EnemyCombatSystem GetEnemyCombatSystem => _enemyCombatSystem;
 }

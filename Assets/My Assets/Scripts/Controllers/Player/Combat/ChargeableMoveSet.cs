@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ChargeableMoveSet : CombatMoveSet
+public abstract class ChargeableMoveSet : PlayerCombatMoveSet
 {
     protected PlayerAnimations _playerAnimations;
 

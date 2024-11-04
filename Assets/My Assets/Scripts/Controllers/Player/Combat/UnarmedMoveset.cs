@@ -26,9 +26,10 @@ public class UnarmedMoveset : ChargeableMoveSet
     private GameObject _owner;
     private List<Damage> _currentDamagers = new List<Damage>();
     private bool _lightAttacking;
-    public override void MoveSetStart(PlayerCombatSystem playerCombatSystem)
+    public override void MoveSetStart(CombatSystem combatSystem)
     {
-        base.MoveSetStart(playerCombatSystem);
+        base.MoveSetStart(combatSystem);
+        PlayerCombatSystem playerCombatSystem = (PlayerCombatSystem)combatSystem;
         _vePooler = GameManager.Instance.GetVEPooler;
         PlayerComponentsRefrences refs = playerCombatSystem.GetPlayerRefs;
         _playerAnimations = refs.GetPlayerAnimations;
@@ -398,7 +399,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         _attackedInAir = false;
     }
 
-    class BaseAttack
+    class MeleeAttack : AttackData
     {
         public string AnimationName;
         public float CastTime;
@@ -406,7 +407,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     }
 
     [System.Serializable]
-    class LightAttack : BaseAttack
+    class LightAttack : MeleeAttack
     {
         public float Damage, Acid;
         public Vector2 Knockback, Knockout;
@@ -419,7 +420,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     }
 
     [System.Serializable]
-    class HeavyAttack : BaseAttack
+    class HeavyAttack : MeleeAttack
     {
         public ChargeableStats ChargeableStats;
         public float MinDamage, MaxDamage, MinAcid, MaxAcid;
