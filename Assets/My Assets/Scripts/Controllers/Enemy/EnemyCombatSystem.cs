@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyCombatSystem : CombatSystem, IEnemyComponent
 {
-    EnemyComponentRefrences _enemyComponents;
+    private EnemyComponentRefrences _enemyComponents;
     [SerializeField] private EnemyCombatMoveSet _moveSet;
     private Transform _target;
     public void InitializeEnemyComponent(EnemyComponentRefrences enemyComponents)
@@ -20,6 +20,8 @@ public class EnemyCombatSystem : CombatSystem, IEnemyComponent
     public Transform GetTarget => _target;
 
     public bool HasTarget => _target != null;
+
+    public EnemyComponentRefrences GetEnemyComponentRefrences => _enemyComponents;
 
     public float GetTargetDistance => Vector3.Distance(_target.position,transform.position);
 
