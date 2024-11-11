@@ -3,7 +3,7 @@ using UnityEngine;
 public class AcidShootProjectile : MovingProjectile
 {
     [SerializeField] private ProjectileDecalExplosionDamage damager;
-    public override void SetProjectile(GameObject owner, ProjectileAttack projectileAttack)
+    public override void SetProjectile(CombatRules owner, ProjectileAttack projectileAttack)
     {
         base.SetProjectile(owner, projectileAttack);
         if (projectileAttack is AcidSpitAttack)

@@ -5,7 +5,7 @@ public class AcidShotgunProjectile : Projectile
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private ParticleDamage _particleDamage;
 
-    public override void SetProjectile(GameObject owner, ProjectileAttack projectileAttack)
+    public override void SetProjectile(CombatRules owner, ProjectileAttack projectileAttack)
     {
         if (projectileAttack is AcidShotgunAttack)
         {

@@ -7,9 +7,9 @@ public class ParticleDamage : Damage
     private void OnParticleCollision(GameObject other)
     {
         // Check if the other collider belongs to the owner object
-        if (other.gameObject == _owner)
+        if (_owner == null || !_owner.CanDamage(other.gameObject))
         {
-            return; // Prevent damaging the owner itself
+            return;
         }
 
         // Create a list to store collision events dynamically

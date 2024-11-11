@@ -6,14 +6,16 @@ public class BiterMoveSet : EnemyCombatMoveSet
     [SerializeField] private AttackTest TestingAttack2;
     private EnemyAnimations _enemyAnimations;
     [SerializeField] private Damage _damager;
+    private EnemyComponentRefrences _enemyComponentRefrences;
 
     public override void MoveSetStart(CombatSystem combatSystem)
     {
         base.MoveSetStart(combatSystem);
         _enemyAttacks.Add(TestingAttack);
         _enemyAttacks.Add(TestingAttack2);
-        _enemyAnimations = _enemyCombatSystem.GetEnemyComponentRefrences.GetEnemyAnimations;
-        _damager.SetOwner(transform.parent.gameObject);
+        _enemyComponentRefrences = _enemyCombatSystem.GetEnemyComponentRefrences;
+        _enemyAnimations = _enemyComponentRefrences.GetEnemyAnimations;
+        _damager.SetOwner(_enemyComponentRefrences.GetCombatRules);
     }
 
     protected override void PerformAttack(EnemyAttackData attack)

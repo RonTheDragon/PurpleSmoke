@@ -18,10 +18,9 @@ public class ExplosionDamage : Damage
 
         foreach (Collider col in colliders)
         {
-            // Check if the collider belongs to the owner object
-            if (col.gameObject == _owner)
+            if (!_owner.CanDamage(col.gameObject))
             {
-                continue; // Prevent damaging the owner itself
+                continue; 
             }
 
             // Get the closest point on the collider's surface to the explosion center

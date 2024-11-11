@@ -5,7 +5,7 @@ public class Damage : MonoBehaviour
     protected float _currentDamage;
     protected Vector2 _knockback;
     protected float _knockout;
-    protected GameObject _owner;
+    protected CombatRules _owner;
     protected float _acid;
 
     public void SetDamage(float damage)
@@ -24,7 +24,7 @@ public class Damage : MonoBehaviour
         _acid = acid;
     }
 
-    public void SetOwner(GameObject owner)
+    public void SetOwner(CombatRules owner)
     {
         if (_owner != owner)
         _owner = owner;

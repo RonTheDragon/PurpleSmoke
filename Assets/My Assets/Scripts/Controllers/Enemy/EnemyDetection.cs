@@ -135,6 +135,12 @@ public class EnemyDetection : MonoBehaviour, IEnemyComponent
         OnTargetDetected?.Invoke(target);
     }
 
+    public void TargetAgro(Transform target)
+    {
+        if (_detectedTarget == null)
+            SetTarget(target);
+    }
+
     private void DetectionRay()
     {
         // Define the right and left "eyes" for the detection field

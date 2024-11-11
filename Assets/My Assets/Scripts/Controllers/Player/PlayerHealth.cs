@@ -40,7 +40,7 @@ public class PlayerHealth : Health , IPlayerComponent
         HandleAcid();
     }
 
-    public override void TakeDamage(float damageAmount, GameObject Attacker)
+    public override void TakeDamage(float damageAmount, CombatRules Attacker)
     {
         base.TakeDamage(damageAmount, Attacker);
         UpdateHealthUI();

@@ -23,7 +23,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     private int _lastAttackType;
     private bool _attackedInAir;
     private int _currentChargedAttack;
-    private GameObject _owner;
+    private CombatRules _owner;
     private List<Damage> _currentDamagers = new List<Damage>();
     private bool _lightAttacking;
     public override void MoveSetStart(CombatSystem combatSystem)
@@ -38,7 +38,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         _playerAttackMovement = refs.GetPlayerAttackMovement;
         _playerGravity = refs.GetPlayerGravity;
         _playerJump = refs.GetPlayerJump;
-        _owner = transform.parent.gameObject;
+        _owner = refs.GetCombatRules;
     }
 
     public override void SubscribeToEvents()

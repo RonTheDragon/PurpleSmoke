@@ -15,7 +15,7 @@ public abstract class Health : MonoBehaviour , IDamageable
     protected float _removeAcidAfterTimeLeft;
 
     protected bool _isDead = false;
-    public virtual void TakeDamage(float damageAmount, GameObject Attacker)
+    public virtual void TakeDamage(float damageAmount, CombatRules Attacker)
     {
         if (_isDead) return;
 

@@ -7,7 +7,7 @@ public class MovingProjectile : Projectile
     private bool _loopStarted;
     private Action _loop;
 
-    public override void SetProjectile(GameObject owner, ProjectileAttack projectileAttack)
+    public override void SetProjectile(CombatRules owner, ProjectileAttack projectileAttack)
     {
         StartLoops();
     }

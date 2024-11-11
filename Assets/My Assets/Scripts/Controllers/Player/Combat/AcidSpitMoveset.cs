@@ -5,7 +5,7 @@ using static CombatMoveSet;
 public class AcidSpitMoveset : ChargeableMoveSet
 {
     private ProjectilePooler _projectilePooler;
-    private GameObject _owner;
+    private CombatRules _owner;
     private Transform _shooter;
     private bool _spittingAcid;
     private PlayerAcidation _playerAcidation;
@@ -17,7 +17,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
     {
         PlayerCombatSystem playerCombatSystem = (PlayerCombatSystem)combatSystem;
         _projectilePooler = GameManager.Instance.GetProjectilePooler;
-        _owner = playerCombatSystem.GetPlayerRefs.gameObject;
+        _owner = playerCombatSystem.GetPlayerRefs.GetCombatRules;
         base.MoveSetStart(playerCombatSystem);
         PlayerComponentsRefrences refs = playerCombatSystem.GetPlayerRefs;
         _playerAnimations = refs.GetPlayerAnimations;

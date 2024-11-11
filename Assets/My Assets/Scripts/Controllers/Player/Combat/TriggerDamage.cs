@@ -4,10 +4,9 @@ public class TriggerDamage : Damage
 {
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the other collider belongs to the owner object
-        if (other.gameObject == _owner || _owner == null)
+        if (_owner == null || !_owner.CanDamage(other.gameObject))
         {
-            return; // Prevent damaging the owner itself
+            return; 
         }
 
         // Check if the other collider belongs to a damageable object

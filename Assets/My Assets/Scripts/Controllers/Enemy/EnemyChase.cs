@@ -60,6 +60,11 @@ public class EnemyChase : MonoBehaviour, IEnemyComponent
         }
     }
 
+    public void Agro()
+    {
+        _timeSinceLastSeen = 0f;
+    }
+
     private void SetWalkToTarget()
     {
         if (_target != null)
