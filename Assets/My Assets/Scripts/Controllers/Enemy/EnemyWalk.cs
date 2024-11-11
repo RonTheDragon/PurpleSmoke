@@ -14,6 +14,10 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     [SerializeField] private float _gravity = -9.81f; // Gravity force
     private Vector3 _previousLocation;
     [SerializeField] private float _movementCheckCooldown = 0.5f;
+    private float _originalStepOffset;
+
+    [SerializeField] private float _destinationUpdateInterval = 0.5f; // Time interval in seconds
+    private float _nextDestinationUpdateTime;
 
     public void InitializeEnemyComponent(EnemyComponentRefrences EnemyComponents)
     {
@@ -26,6 +30,7 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         EnemyComponents.OnUpdate += EnemyUpdate;
         InvokeRepeating(nameof(CheckIfMoving), 0, _movementCheckCooldown);
         _previousLocation = transform.position;
+        _originalStepOffset = _characterController.stepOffset;
     }
 
     public void SetDestination(Vector3 destination)
@@ -60,7 +65,15 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
 
         if (_navMeshAgent.enabled == true)
         {
-            _navMeshAgent.SetDestination(_destination);
+            if (Time.time >= _nextDestinationUpdateTime)
+            {
+                _navMeshAgent.SetDestination(_destination);
+                _nextDestinationUpdateTime = Time.time + _destinationUpdateInterval;
+            }
+            if (Vector3.Distance(transform.position, _destination) < _navMeshAgent.stoppingDistance)
+            {
+                RotateTowardDestination();
+            }
         }
         else if (_tryToNavmesh)
         {
@@ -75,23 +88,22 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
 
     private void MovementWithoutNavmesh()
     {
-        // Calculate the direction to the destination
-        Vector3 direction = new Vector3(_destination.x, transform.position.y, _destination.z) - transform.position;
-        direction.y = 0; // Keep the movement in the XZ plane
+        RotateTowardDestination();
 
-        // If the destination is reached, stop movement
-        if (direction.magnitude < 0.1f)
+        if (Vector3.Distance(transform.position, _destination) < 0.1f)
         {
-            _characterController.Move(Vector3.zero);
             return;
         }
-
-        // Calculate the new rotation
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _currentTurnSpeed * Time.deltaTime);
-
         // Move the character controller forward
         _characterController.Move(transform.forward * _currentSpeed * Time.deltaTime);
+    }
+
+    private void RotateTowardDestination()
+    {
+        Vector3 direction = new Vector3(_destination.x, transform.position.y, _destination.z) - transform.position;
+        direction.y = 0; // Keep the movement in the XZ plane
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _currentTurnSpeed * Time.deltaTime);
     }
 
     private void Gravity()
@@ -107,6 +119,7 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         if (NavMesh.SamplePosition(transform.position, out hit, maxDistance, NavMesh.AllAreas))
         {
             _navMeshAgent.enabled = true;
+            _characterController.stepOffset = 0;
         }
     }
 
@@ -116,7 +129,11 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         {
             _notNavmeshReasons.Add(reason);
             _tryToNavmesh = false;
-            _navMeshAgent.enabled = false;
+            if (_navMeshAgent.enabled == true)
+            {
+                _navMeshAgent.enabled = false;
+                _characterController.stepOffset = _originalStepOffset;
+            }
         }
     }
 
