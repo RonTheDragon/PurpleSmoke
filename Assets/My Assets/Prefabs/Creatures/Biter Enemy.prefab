@@ -304,9 +304,9 @@ MonoBehaviour:
   _attackable:
     serializedVersion: 2
     m_Bits: 9216
-  _canSee:
+  _blockingVision:
     serializedVersion: 2
-    m_Bits: 9225
+    m_Bits: 9
   _angleOfVision: 70
   _eyeHeight: 1
 --- !u!114 &8329629874576492451

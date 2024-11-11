@@ -135,7 +135,7 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     {
         Vector3 direction = new Vector3(_destination.x, transform.position.y, _destination.z) - transform.position;
         direction.y = 0; // Keep the movement in the XZ plane
-        if (direction.magnitude > 0)
+        if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _currentTurnSpeed * Time.deltaTime);

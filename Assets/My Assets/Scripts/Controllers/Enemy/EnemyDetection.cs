@@ -15,7 +15,7 @@ public class EnemyDetection : MonoBehaviour, IEnemyComponent
     [SerializeField] private float _scanRadius;         // Detection radius
     [SerializeField] private float _sensingRadius;      // Max range for detection
     [SerializeField] private LayerMask _attackable;     // Layer mask to specify attackable targets
-    [SerializeField] private LayerMask _canSee;         // Layer mask to check for visibility
+    [SerializeField] private LayerMask _blockingVision;         // Layer mask to check for visibility
     [SerializeField] private float _angleOfVision;      // Field of view for the detection
     [SerializeField] private float _eyeHeight;          // Height from which the enemy detects targets
 
@@ -81,17 +81,13 @@ public class EnemyDetection : MonoBehaviour, IEnemyComponent
             // Cast a ray towards the closest target to check visibility
             RaycastHit hit;
             Vector3 eyePosition = transform.position + Vector3.up * _eyeHeight; // Adjusted eye position
-            if (Physics.Raycast(eyePosition, closestCollider.transform.position - eyePosition, out hit, _scanRadius, _canSee))
+            if (!Physics.Raycast(eyePosition, closestCollider.transform.position - eyePosition, out hit, _scanRadius, _blockingVision))
             {
-                if (hit.collider == closestCollider)
+                if (_combatRules.CanDamage(closestCollider.gameObject))
                 {
-                    CombatRules targetCombatRules = closestCollider.GetComponent<CombatRules>();
-                    if (targetCombatRules != null && _combatRules.CanDamage(targetCombatRules, CombatRules.CombatMode.Team))
-                    {
                         SetTarget(closestCollider.transform); // Target detected and can be damaged
                         return;
-                    }
-                }
+                }             
             }
             colliders.Remove(closestCollider); // Remove the current collider and try the next one
         }
@@ -155,9 +151,9 @@ public class EnemyDetection : MonoBehaviour, IEnemyComponent
         // Cast a ray to check if the target is visible
         RaycastHit hit;
         Vector3 eyePosition = transform.position + Vector3.up * _eyeHeight; // Adjusted eye position
-        if (Physics.Raycast(eyePosition, target.position - eyePosition, out hit, maxDistance, _canSee))
+        if (Vector3.Distance(eyePosition, target.position) <= maxDistance)
         {
-            return hit.collider.transform == target; // Ensure the hit object is the target
+            return !Physics.Raycast(eyePosition, target.position - eyePosition, out hit, maxDistance, _blockingVision);
         }
         return false; // Target is not visible if ray does not hit
     }
