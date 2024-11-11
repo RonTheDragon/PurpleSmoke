@@ -761,6 +761,7 @@ GameObject:
   - component: {fileID: 7906811223420254801}
   - component: {fileID: 1674787408233449612}
   - component: {fileID: 300154325113233337}
+  - component: {fileID: 6336001288569791745}
   m_Layer: 10
   m_Name: PlayerBody
   m_TagString: Player
@@ -1306,6 +1307,7 @@ MonoBehaviour:
   _playerItemDropping: {fileID: 8677558815528386567}
   _playerEquipUI: {fileID: 5902604378573611948}
   _playerKeyBidingDisplay: {fileID: 3872539534907982641}
+  _combatRules: {fileID: 6336001288569791745}
 --- !u!114 &5677476338889415264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1568,6 +1570,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdb24015ba45684a97d092424b1a6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6336001288569791745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914006205527094507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20098bdfb516dcb4fb2309e8fd9184a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _team: 
 --- !u!1 &1926303320499112835
 GameObject:
   m_ObjectHideFlags: 0
@@ -3169,7 +3184,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2015
+    m_Bits: 10207
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -4897,7 +4912,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -705.30975, y: 350}
+  m_AnchoredPosition: {x: -705.3098, y: 350}
   m_SizeDelta: {x: -1414, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &8712061781879598088

@@ -7,6 +7,7 @@ public class EnemyDetection : MonoBehaviour, IEnemyComponent
 {
     private EnemyComponentRefrences _enemyComponents;
     private Transform _detectedTarget;
+    private CombatRules _combatRules;
 
     [SerializeField] private float _scanCooldown;       // Time between scans
     private float _scanTimeLeft;
@@ -24,6 +25,7 @@ public class EnemyDetection : MonoBehaviour, IEnemyComponent
     public void InitializeEnemyComponent(EnemyComponentRefrences enemyComponents)
     {
         _enemyComponents = enemyComponents;
+        _combatRules = _enemyComponents.GetCombatRules;
         ResetDetection();
     }
 
@@ -70,6 +72,7 @@ public class EnemyDetection : MonoBehaviour, IEnemyComponent
          !CheckIfInFront(c.transform.position) &&
          Vector3.Distance(transform.position, c.transform.position) > _sensingRadius
         );
+
         // Find the closest visible target
         while (colliders.Count > 0)
         {
@@ -82,8 +85,12 @@ public class EnemyDetection : MonoBehaviour, IEnemyComponent
             {
                 if (hit.collider == closestCollider)
                 {
-                    SetTarget(closestCollider.transform); // Target detected
-                    return;
+                    CombatRules targetCombatRules = closestCollider.GetComponent<CombatRules>();
+                    if (targetCombatRules != null && _combatRules.CanDamage(targetCombatRules, CombatRules.CombatMode.Team))
+                    {
+                        SetTarget(closestCollider.transform); // Target detected and can be damaged
+                        return;
+                    }
                 }
             }
             colliders.Remove(closestCollider); // Remove the current collider and try the next one

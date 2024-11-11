@@ -14,6 +14,7 @@ public class EnemyComponentRefrences : ComponentsRefrences
     [SerializeField] private EnemyDeath _enemyDeath;
     [SerializeField] private EnemyAnimations _enemyAnimations;
     [SerializeField] private EnemyCombatSystem _enemyCombatSystem;
+    [SerializeField] private CombatRules _combatRules;
 
     private void Start()
     {
@@ -45,4 +46,5 @@ public class EnemyComponentRefrences : ComponentsRefrences
     public EnemyDeath GetEnemyDeath => _enemyDeath;
     public EnemyAnimations GetEnemyAnimations => _enemyAnimations;
     public EnemyCombatSystem GetEnemyCombatSystem => _enemyCombatSystem;
+    public CombatRules GetCombatRules => _combatRules;
 }

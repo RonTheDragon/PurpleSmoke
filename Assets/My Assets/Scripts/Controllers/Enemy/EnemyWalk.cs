@@ -19,6 +19,9 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     [SerializeField] private float _destinationUpdateInterval = 0.5f; // Time interval in seconds
     private float _nextDestinationUpdateTime;
 
+    [SerializeField] private float separationDistance = 2.0f; // Minimum distance to keep from other enemies
+    [SerializeField] private float separationStrength = 1.0f; // Force applied to separate enemies
+
     public void InitializeEnemyComponent(EnemyComponentRefrences EnemyComponents)
     {
         _characterController = EnemyComponents.GetCharacterController;
@@ -63,13 +66,18 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
 
         if (!_canMove) return;
 
-        if (_navMeshAgent.enabled == true)
+        Vector3 separationVector = CalculateSeparation();
+
+        if (_navMeshAgent.enabled)
         {
+            Vector3 destinationWithSeparation = _destination + separationVector;
+
             if (Time.time >= _nextDestinationUpdateTime)
             {
-                _navMeshAgent.SetDestination(_destination);
+                _navMeshAgent.SetDestination(destinationWithSeparation);
                 _nextDestinationUpdateTime = Time.time + _destinationUpdateInterval;
             }
+
             if (Vector3.Distance(transform.position, _destination) < _navMeshAgent.stoppingDistance)
             {
                 RotateTowardDestination();
@@ -80,10 +88,35 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
             TryToNavmesh();
         }
 
-        if (_navMeshAgent.enabled == false)
+        if (!_navMeshAgent.enabled)
         {
             MovementWithoutNavmesh();
         }
+    }
+
+    private Vector3 CalculateSeparation()
+    {
+        Vector3 separationForce = Vector3.zero;
+
+        // Find all nearby enemies
+        Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position, separationDistance);
+
+        foreach (var collider in nearbyEnemies)
+        {
+            if (collider != null && collider.gameObject != gameObject && collider.CompareTag("Enemy"))
+            {
+                Vector3 directionAway = transform.position - collider.transform.position;
+                float distance = directionAway.magnitude;
+
+                if (distance < separationDistance)
+                {
+                    // Normalize the direction and scale it by the separation strength
+                    separationForce += directionAway.normalized * (separationDistance - distance) * separationStrength;
+                }
+            }
+        }
+
+        return separationForce;
     }
 
     private void MovementWithoutNavmesh()
@@ -102,8 +135,11 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     {
         Vector3 direction = new Vector3(_destination.x, transform.position.y, _destination.z) - transform.position;
         direction.y = 0; // Keep the movement in the XZ plane
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _currentTurnSpeed * Time.deltaTime);
+        if (direction.magnitude > 0)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _currentTurnSpeed * Time.deltaTime);
+        }
     }
 
     private void Gravity()

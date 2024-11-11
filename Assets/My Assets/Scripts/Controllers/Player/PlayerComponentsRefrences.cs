@@ -29,6 +29,7 @@ public class PlayerComponentsRefrences : ComponentsRefrences
     [SerializeField] private PlayerItemDropping _playerItemDropping;
     [SerializeField] private PlayerEquipUI _playerEquipUI;
     [SerializeField] private PlayerKeyBidingDisplay _playerKeyBidingDisplay;
+    [SerializeField] private CombatRules _combatRules;
 
     protected override void InitializeComponents()
     {
@@ -81,4 +82,5 @@ public class PlayerComponentsRefrences : ComponentsRefrences
     public PlayerInventory GetPlayerInventory => _playerInventory;
     public PlayerItemDropping GetPlayerItemDropping => _playerItemDropping;
     public PlayerEquipUI GetPlayerEquipUI => _playerEquipUI;
+    public CombatRules GetCombatRules => _combatRules;
 }
