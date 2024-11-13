@@ -8,6 +8,8 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     private EnemyAnimations _enemyAnimations;
     private Vector3 _destination;
     [ReadOnly][SerializeField] private List<string> _notNavmeshReasons = new List<string>();
+    [ReadOnly][SerializeField] private List<string> _notFallingReasons = new List<string>();
+    [ReadOnly][SerializeField] private List<string> _notMovingReasons = new List<string>();
     private bool _tryToNavmesh;
 
     // New gravity variables
@@ -15,12 +17,16 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     private Vector3 _previousLocation;
     [SerializeField] private float _movementCheckCooldown = 0.5f;
     private float _originalStepOffset;
+    private float _originalSlopeLimit;
 
     [SerializeField] private float _destinationUpdateInterval = 0.5f; // Time interval in seconds
     private float _nextDestinationUpdateTime;
 
     [SerializeField] private float separationDistance = 2.0f; // Minimum distance to keep from other enemies
     [SerializeField] private float separationStrength = 1.0f; // Force applied to separate enemies
+
+    private bool _canFall = true;
+
 
     public void InitializeEnemyComponent(EnemyComponentRefrences EnemyComponents)
     {
@@ -34,6 +40,7 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         InvokeRepeating(nameof(CheckIfMoving), 0, _movementCheckCooldown);
         _previousLocation = transform.position;
         _originalStepOffset = _characterController.stepOffset;
+        _originalSlopeLimit = _characterController.slopeLimit;
     }
 
     public void SetDestination(Vector3 destination)
@@ -144,18 +151,62 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
 
     private void Gravity()
     {
+        if (_canFall)
         _characterController.Move(Vector3.down * -_gravity * Time.deltaTime); // Apply gravity movement
+    }
+
+    public void AddNotFallingReason(string reason)
+    {
+        if (!_notFallingReasons.Contains(reason))
+        {
+            _notFallingReasons.Add(reason);
+            _canFall = false;
+        }
+    }
+
+    public void RemoveNotFallingReason(string reason)
+    {
+        if (_notFallingReasons.Contains(reason))
+        {
+            _notFallingReasons.Remove(reason);
+        }
+        if (_notFallingReasons.Count == 0)
+        {
+            _canFall = true;
+        }
+    }
+
+    public void AddNotMovingReason(string reason)
+    {
+        if (!_notMovingReasons.Contains(reason))
+        {
+            _notMovingReasons.Add(reason);
+            _canMove = false;
+        }
+    }
+
+    public void RemoveNotMovingReason(string reason)
+    {
+        if (_notMovingReasons.Contains(reason))
+        {
+            _notMovingReasons.Remove(reason);
+        }
+        if (_notMovingReasons.Count == 0)
+        {
+            _canMove = true;
+        }
     }
 
     private void TryToNavmesh()
     {
         // Check if the agent is close enough to the NavMesh
         NavMeshHit hit;
-        float maxDistance = 2f; // Set the maximum distance to check for the NavMesh
+        float maxDistance = 0.1f; // Set the maximum distance to check for the NavMesh
         if (NavMesh.SamplePosition(transform.position, out hit, maxDistance, NavMesh.AllAreas))
         {
             _navMeshAgent.enabled = true;
             _characterController.stepOffset = 0;
+            _characterController.slopeLimit = 0;
         }
     }
 
@@ -169,6 +220,7 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
             {
                 _navMeshAgent.enabled = false;
                 _characterController.stepOffset = _originalStepOffset;
+                _characterController.slopeLimit = _originalSlopeLimit;
             }
         }
     }

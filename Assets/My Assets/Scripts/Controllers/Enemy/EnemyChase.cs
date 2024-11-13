@@ -82,4 +82,6 @@ public class EnemyChase : MonoBehaviour, IEnemyComponent
         _enemyWalk.StopMovement(); // Implement this method in EnemyWalk to stop moving
 
     }
+
+    public Transform GetTarget => _target;
 }

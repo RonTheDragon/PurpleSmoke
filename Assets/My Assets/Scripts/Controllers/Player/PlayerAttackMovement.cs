@@ -1,16 +1,12 @@
 using System;
 using UnityEngine;
 
-public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
+public class PlayerAttackMovement : CharacterAttackMovement, IPlayerComponent
 {
-    private Transform _playerBody;
-    private CharacterController _characterController;
     private PlayerGravity _playerGravity;
     private PlayerGroundCheck _playerGroundCheck;
-    private Vector3 _currentAttackMovement;
-    [SerializeField] private Vector3 _incomingAttackMovement;
     private bool _crashingDown;
-    private float _downMovementSpeed;
+    [SerializeField] private float _downMovementSpeed;
     public Action OnCrashedDown;
     private bool _fallingCheckDelayed;
     private float _fallingCheckDelayTimer;
@@ -20,47 +16,17 @@ public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
         _characterController = playerComponents.GetCharacterController;
         _playerGravity = playerComponents.GetPlayerGravity;
         _playerGroundCheck = playerComponents.GetPlayerGroundCheck;
-        _playerBody = playerComponents.GetPlayerBody;
+        _characterBody = playerComponents.GetPlayerBody;
+
+        playerComponents.OnUpdate += PlayerUpdate;
     }
 
-    public void SetAndApplyMovement(Vector3 movement)
-    {
-        SetMovement(movement);
-        ApplyMovement();
-    }
-
-    public void SetMovement(Vector3 movement)
-    {
-        _incomingAttackMovement = movement;
-    }
-
-    public void ApplyMovement()
-    {
-        _currentAttackMovement = _incomingAttackMovement;
-    }
-
-    private void Update()
+    private void PlayerUpdate()
     {
         if (_characterController != null)
         {
             ApplyingMovement();
             ApplyingDownMovement();
-        }
-    }
-
-    private void ApplyingMovement()
-    {
-        if (_currentAttackMovement.magnitude > 0.1f)
-        {
-            _characterController.Move(((_playerBody.forward* _currentAttackMovement.z) 
-                + (Vector3.up * _currentAttackMovement.y) + (_playerBody.right * 
-                _currentAttackMovement.x)) * Time.deltaTime);
-            // Gradually reduce attack velocity over time
-            _currentAttackMovement -= _currentAttackMovement * 5 * Time.deltaTime;
-        }
-        else
-        {
-            _currentAttackMovement = Vector3.zero;
         }
     }
 
@@ -81,30 +47,19 @@ public class PlayerAttackMovement : MonoBehaviour, IPlayerComponent
     {
         if (!_fallingCheckDelayed)
         {
-            // Start the delay timer
             _fallingCheckDelayTimer += Time.deltaTime;
             if (_fallingCheckDelayTimer >= 0.5f)
             {
                 _fallingCheckDelayed = true;
-                _fallingCheckDelayTimer = 0f; // Reset the delay timer
+                _fallingCheckDelayTimer = 0f;
             }
             return false;
         }
         else
         {
-            // Check if the player is actually falling after the delay
-            if (_playerGravity.IsActuallyFalling())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return _playerGravity.IsActuallyFalling();
         }
     }
-
-
 
     public void SetCrashingDownSpeed(float speed)
     {

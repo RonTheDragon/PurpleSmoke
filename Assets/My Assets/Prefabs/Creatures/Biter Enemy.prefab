@@ -198,12 +198,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 1.2
+  m_Radius: 1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.06, z: 0.78}
+  m_Center: {x: 0, y: 0.8, z: 0.78}
 --- !u!195 &8779193765128605155
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -250,6 +250,7 @@ MonoBehaviour:
   _enemyDeath: {fileID: 8380316261064742884}
   _enemyAnimations: {fileID: 8896852712495613020}
   _enemyCombatSystem: {fileID: 2887629031889214291}
+  _enemyAttackMovement: {fileID: 3280026661330826162}
   _combatRules: {fileID: 8225421203621739730}
 --- !u!114 &8896852712495613020
 MonoBehaviour:
@@ -281,7 +282,9 @@ MonoBehaviour:
   _baseWalkingSpeed: 10
   _currentTurnSpeed: 360
   _notNavmeshReasons: []
-  _gravity: -9.81
+  _notFallingReasons: []
+  _notMovingReasons: []
+  _gravity: -10
   _movementCheckCooldown: 0.5
   _destinationUpdateInterval: 0.5
   separationDistance: 3
@@ -300,7 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scanCooldown: 1
   _scanRadius: 10
-  _sensingRadius: 3
+  _sensingRadius: 5
   _attackable:
     serializedVersion: 2
     m_Bits: 9216
@@ -710,6 +713,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 5082026770514528361, guid: 6c339a96a43dd12428b2f1920ed9b5c9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.639057e-16
+      objectReference: {fileID: 0}
     - target: {fileID: 5552369765593032674, guid: 6c339a96a43dd12428b2f1920ed9b5c9,
         type: 3}
       propertyPath: m_Layer
@@ -793,6 +801,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4273173410719268871}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6c339a96a43dd12428b2f1920ed9b5c9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3280026661330826162}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6c339a96a43dd12428b2f1920ed9b5c9,
         type: 3}
       insertIndex: -1
@@ -929,20 +941,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tryAttackCooldown: 1
-  TestingAttack:
-    Range: 6
+  Bite:
+    Range: 3
     TooClose: 0
     Duration: 1
-    text: Bite1
+    Animation: Bite1
     Damage: 10
     Knockback: {x: 10, y: 0}
-    Knockout: {x: 20, y: 40}
-  TestingAttack2:
+    Knockout: {x: 10, y: 50}
+  Jump:
     Range: 10
-    TooClose: 4
-    Duration: 1
-    text: Jump
+    TooClose: 6
+    Duration: 2
+    Animation: Leap
+    Damage: 10
+    Knockback: {x: 10, y: 0}
+    Knockout: {x: 20, y: 100}
+    Movement: {x: 0, y: 0, z: 60}
   _damager: {fileID: 3093523869802239004}
+--- !u!114 &3280026661330826162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2898322407066141194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2623ac918e78667469d8e72f3c374335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _incomingAttackMovement: {x: 0, y: 0, z: 0}
+  _targetToJumpToward: {fileID: 0}
 --- !u!114 &5664848852287734237
 MonoBehaviour:
   m_ObjectHideFlags: 0

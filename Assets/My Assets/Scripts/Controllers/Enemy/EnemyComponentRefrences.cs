@@ -14,6 +14,7 @@ public class EnemyComponentRefrences : ComponentsRefrences
     [SerializeField] private EnemyDeath _enemyDeath;
     [SerializeField] private EnemyAnimations _enemyAnimations;
     [SerializeField] private EnemyCombatSystem _enemyCombatSystem;
+    [SerializeField] private EnemyAttackMovement _enemyAttackMovement;
     [SerializeField] private CombatRules _combatRules;
 
     private void Start()
@@ -33,8 +34,10 @@ public class EnemyComponentRefrences : ComponentsRefrences
         _enemyDeath.InitializeEnemyComponent(this);
         _enemyAnimations.InitializeEnemyComponent(this);
         _enemyCombatSystem.InitializeEnemyComponent(this);
+        _enemyAttackMovement.InitializeEnemyComponent(this);
     }
 
+    public Transform GetEnemyBody => transform;
     public NavMeshAgent GetNavMeshAgent => _navMeshAgent;
     public EnemyWalk GetEnemyWalk => _enemyWalk;
     public EnemyDetection GetEnemyDetection => _enemyDetection;
@@ -47,4 +50,5 @@ public class EnemyComponentRefrences : ComponentsRefrences
     public EnemyAnimations GetEnemyAnimations => _enemyAnimations;
     public EnemyCombatSystem GetEnemyCombatSystem => _enemyCombatSystem;
     public CombatRules GetCombatRules => _combatRules;
+    public EnemyAttackMovement GetEnemyAttackMovement => _enemyAttackMovement;
 }

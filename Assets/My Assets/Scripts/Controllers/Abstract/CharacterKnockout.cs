@@ -148,6 +148,7 @@ public abstract class CharacterKnockout : MonoBehaviour
         ClearAttacks();
         _gettingUp = false;
         _canGetUp = false;
+        OnCanGetUp?.Invoke(false);
     }
 
     public virtual void UnStunCharacter()
