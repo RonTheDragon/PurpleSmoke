@@ -5,7 +5,6 @@ public class PlayerAnimations : CharacterAnimations, IPlayerComponent
 {
     private PlayerGroundCheck _playerGroundCheck;
     
-    [SerializeField] private string _walkSpeedFloat;
     [SerializeField] private string _walkXFloat;
     [SerializeField] private string _walkYFloat;
     [SerializeField] private float _walkDirectionLerpSpeed;
@@ -37,11 +36,6 @@ public class PlayerAnimations : CharacterAnimations, IPlayerComponent
     private void ChangeGrounded(bool grounded)
     {
         _animator.SetBool(_groundedBool,grounded);
-    }
-
-    public void SetWalkSpeed(float speed)
-    {
-        _animator.SetFloat(_walkSpeedFloat, speed);
     }
 
     public void SetWalkDirection(Vector2 direction)

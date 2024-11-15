@@ -33,14 +33,26 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         _characterController = EnemyComponents.GetCharacterController;
         _navMeshAgent = EnemyComponents.GetNavMeshAgent;
         _enemyAnimations = EnemyComponents.GetEnemyAnimations;
-        _currentSpeed = _baseWalkingSpeed;
-        _navMeshAgent.speed = _currentSpeed;
+        SetSpeed(_baseWalkingSpeed);
         _navMeshAgent.angularSpeed = _currentTurnSpeed;
         EnemyComponents.OnUpdate += EnemyUpdate;
         InvokeRepeating(nameof(CheckIfMoving), 0, _movementCheckCooldown);
         _previousLocation = transform.position;
         _originalStepOffset = _characterController.stepOffset;
         _originalSlopeLimit = _characterController.slopeLimit;
+    }
+
+    private void EnemyUpdate()
+    {
+        Gravity();
+
+        if (!_canMove) return;
+
+        NavmeshMovement();
+        SlowDownNearTarget();
+        TryToNavmesh();
+        MovementWithoutNavmesh();
+
     }
 
     public void SetDestination(Vector3 destination)
@@ -51,6 +63,59 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     public void StopMovement()
     {
         _destination = transform.position;
+    }
+
+    private void SetSpeed(float speed)
+    {
+        _currentSpeed = speed;
+        _enemyAnimations.SetWalkSpeed(speed/_baseWalkingSpeed);
+        _navMeshAgent.speed = speed;
+    }
+
+    private void NavmeshMovement()
+    {
+        if (!_navMeshAgent.enabled) return;
+
+        Vector3 destinationWithSeparation = _destination + CalculateSeparation();
+
+        if (Time.time >= _nextDestinationUpdateTime)
+        {
+            _navMeshAgent.SetDestination(destinationWithSeparation);
+            _nextDestinationUpdateTime = Time.time + _destinationUpdateInterval;
+        }
+
+        if (Vector3.Distance(transform.position, _destination) < _navMeshAgent.stoppingDistance)
+        {
+            RotateTowardDestination();
+        }
+    }
+
+    private void MovementWithoutNavmesh()
+    {
+        if (_navMeshAgent.enabled) return;
+
+        RotateTowardDestination();
+
+        if (Vector3.Distance(transform.position, _destination) < 0.1f)
+        {
+            return;
+        }
+        // Move the character controller forward
+        _characterController.Move(transform.forward * _currentSpeed * Time.deltaTime);
+    }
+
+    private void TryToNavmesh()
+    {
+        if (!_tryToNavmesh || _navMeshAgent.enabled) return;
+        // Check if the agent is close enough to the NavMesh
+        NavMeshHit hit;
+        float maxDistance = 0.2f; // Set the maximum distance to check for the NavMesh
+        if (NavMesh.SamplePosition(transform.position, out hit, maxDistance, NavMesh.AllAreas))
+        {
+            _navMeshAgent.enabled = true;
+            _characterController.stepOffset = 0;
+            _characterController.slopeLimit = 0;
+        }
     }
 
     private void CheckIfMoving()
@@ -64,42 +129,24 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         }
     }
 
-    private void EnemyUpdate()
+    private void SlowDownNearTarget()
     {
-        if (_navMeshAgent.enabled == false)
+        float distanceToDestination = Vector3.Distance(transform.position, _destination);
+
+        // Slow down when approaching the stopping distance
+        if (distanceToDestination <= _navMeshAgent.stoppingDistance * 2)
         {
-            Gravity();
+            // The speed should interpolate from full speed to 0 as the enemy approaches the stopping distance
+            float normalizedDistance = (distanceToDestination / _navMeshAgent.stoppingDistance) - 1;
+            SetSpeed(Mathf.Lerp(0, _baseWalkingSpeed, normalizedDistance));
         }
-
-        if (!_canMove) return;
-
-        Vector3 separationVector = CalculateSeparation();
-
-        if (_navMeshAgent.enabled)
+        else
         {
-            Vector3 destinationWithSeparation = _destination + separationVector;
-
-            if (Time.time >= _nextDestinationUpdateTime)
-            {
-                _navMeshAgent.SetDestination(destinationWithSeparation);
-                _nextDestinationUpdateTime = Time.time + _destinationUpdateInterval;
-            }
-
-            if (Vector3.Distance(transform.position, _destination) < _navMeshAgent.stoppingDistance)
-            {
-                RotateTowardDestination();
-            }
-        }
-        else if (_tryToNavmesh)
-        {
-            TryToNavmesh();
-        }
-
-        if (!_navMeshAgent.enabled)
-        {
-            MovementWithoutNavmesh();
+            SetSpeed(_baseWalkingSpeed);
         }
     }
+
+
 
     private Vector3 CalculateSeparation()
     {
@@ -126,18 +173,6 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         return separationForce;
     }
 
-    private void MovementWithoutNavmesh()
-    {
-        RotateTowardDestination();
-
-        if (Vector3.Distance(transform.position, _destination) < 0.1f)
-        {
-            return;
-        }
-        // Move the character controller forward
-        _characterController.Move(transform.forward * _currentSpeed * Time.deltaTime);
-    }
-
     private void RotateTowardDestination()
     {
         Vector3 direction = new Vector3(_destination.x, transform.position.y, _destination.z) - transform.position;
@@ -151,10 +186,11 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
 
     private void Gravity()
     {
-        if (_canFall)
+        if (!_canFall || _navMeshAgent.enabled) return;
         _characterController.Move(Vector3.down * -_gravity * Time.deltaTime); // Apply gravity movement
     }
 
+    #region Reasons Lists Methods
     public void AddNotFallingReason(string reason)
     {
         if (!_notFallingReasons.Contains(reason))
@@ -197,19 +233,6 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         }
     }
 
-    private void TryToNavmesh()
-    {
-        // Check if the agent is close enough to the NavMesh
-        NavMeshHit hit;
-        float maxDistance = 0.1f; // Set the maximum distance to check for the NavMesh
-        if (NavMesh.SamplePosition(transform.position, out hit, maxDistance, NavMesh.AllAreas))
-        {
-            _navMeshAgent.enabled = true;
-            _characterController.stepOffset = 0;
-            _characterController.slopeLimit = 0;
-        }
-    }
-
     public void AddNotNavmeshReason(string reason)
     {
         if (!_notNavmeshReasons.Contains(reason))
@@ -236,4 +259,5 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
             _tryToNavmesh = true;
         }
     }
+    #endregion
 }
