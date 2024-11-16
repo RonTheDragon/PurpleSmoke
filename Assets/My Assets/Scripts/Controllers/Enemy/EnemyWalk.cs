@@ -9,7 +9,6 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     private Vector3 _destination;
     [ReadOnly][SerializeField] private List<string> _notNavmeshReasons = new List<string>();
     [ReadOnly][SerializeField] private List<string> _notFallingReasons = new List<string>();
-    [ReadOnly][SerializeField] private List<string> _notMovingReasons = new List<string>();
     private bool _tryToNavmesh;
 
     // New gravity variables
@@ -76,10 +75,10 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
     {
         if (!_navMeshAgent.enabled) return;
 
-        Vector3 destinationWithSeparation = _destination + CalculateSeparation();
 
         if (Time.time >= _nextDestinationUpdateTime)
         {
+            Vector3 destinationWithSeparation = _destination + CalculateSeparation();
             _navMeshAgent.SetDestination(destinationWithSeparation);
             _nextDestinationUpdateTime = Time.time + _destinationUpdateInterval;
         }
@@ -109,7 +108,7 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         if (!_tryToNavmesh || _navMeshAgent.enabled) return;
         // Check if the agent is close enough to the NavMesh
         NavMeshHit hit;
-        float maxDistance = 0.2f; // Set the maximum distance to check for the NavMesh
+        float maxDistance = 0.3f; // Set the maximum distance to check for the NavMesh
         if (NavMesh.SamplePosition(transform.position, out hit, maxDistance, NavMesh.AllAreas))
         {
             _navMeshAgent.enabled = true;
@@ -209,27 +208,6 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         if (_notFallingReasons.Count == 0)
         {
             _canFall = true;
-        }
-    }
-
-    public void AddNotMovingReason(string reason)
-    {
-        if (!_notMovingReasons.Contains(reason))
-        {
-            _notMovingReasons.Add(reason);
-            _canMove = false;
-        }
-    }
-
-    public void RemoveNotMovingReason(string reason)
-    {
-        if (_notMovingReasons.Contains(reason))
-        {
-            _notMovingReasons.Remove(reason);
-        }
-        if (_notMovingReasons.Count == 0)
-        {
-            _canMove = true;
         }
     }
 

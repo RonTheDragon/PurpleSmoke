@@ -22,6 +22,7 @@ public abstract class EnemyCombatMoveSet : CombatMoveSet
     protected virtual void AttackLoop()
     {
         if (_tryAttackCD > 0) { _tryAttackCD -= Time.deltaTime; return; }
+        if (!_enemyCombatSystem.GetCanAttack) return;
         if (!_enemyCombatSystem.HasTarget) {_tryAttackCD = _tryAttackCooldown; return;}
 
         List<EnemyAttackData> GoodDistance = new List<EnemyAttackData>();

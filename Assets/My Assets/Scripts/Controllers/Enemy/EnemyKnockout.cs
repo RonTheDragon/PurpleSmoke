@@ -1,14 +1,20 @@
 
+using UnityEngine;
+
 public class EnemyKnockout : CharacterKnockout, IEnemyComponent
 {
     private EnemyHealth _enemyHealth;
     private EnemyWalk _enemyWalk;
     private EnemyAnimations _enemyAnimations;
+    private EnemyCombatSystem _enemyCombatSystem;
+    private EnemyAttackMovement _enemyAttackMovement;
     public void InitializeEnemyComponent(EnemyComponentRefrences enemyComponents)
     {
         _enemyHealth = enemyComponents.GetEnemyHealth;
         _enemyWalk = enemyComponents.GetEnemyWalk;
         _enemyAnimations = enemyComponents.GetEnemyAnimations;
+        _enemyCombatSystem = enemyComponents.GetEnemyCombatSystem;
+        _enemyAttackMovement = enemyComponents.GetEnemyAttackMovement;
         enemyComponents.OnUpdate += EnemyUpdate;
         OnCanGetUp += (b) => { if (b) TryToGetUp(); };
     }
@@ -26,6 +32,7 @@ public class EnemyKnockout : CharacterKnockout, IEnemyComponent
 
     protected override void PlayAnimation(string animationName)
     {
+        if (_enemyHealth.GetIsDead) return;
         _enemyAnimations.PlayAnimation(animationName);
     }
 
@@ -37,12 +44,15 @@ public class EnemyKnockout : CharacterKnockout, IEnemyComponent
     public override void StunCharacter()
     {
         base.StunCharacter();
-        _enemyWalk.SetCanMove(false);
+        _enemyWalk.AddNotMovingReason("Stun");
+        _enemyAttackMovement.StopMovement();
+        _enemyCombatSystem.SetCanAttack(false);
     }
 
     public override void UnStunCharacter()
     {
         base.UnStunCharacter();
-        _enemyWalk.SetCanMove(true);
+        _enemyWalk.RemoveNotMovingReason("Stun");
+        _enemyCombatSystem.SetCanAttack(true);
     }
 }

@@ -68,6 +68,8 @@ public class EnemyAttackMovement : CharacterAttackMovement, IEnemyComponent
         _enemyWalk.RemoveNotFallingReason("attack");
         _enemyWalk.RemoveNotNavmeshReason("attack");
         _enemyWalk.RemoveNotMovingReason("attack");
+        _characterBody.rotation = Quaternion.Euler(0f, _characterBody.rotation.eulerAngles.y, 0f);
+        RotateToward = false;
         ClearTarget();
     }
 

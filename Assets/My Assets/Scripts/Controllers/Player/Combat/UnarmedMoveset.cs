@@ -87,7 +87,7 @@ public class UnarmedMoveset : ChargeableMoveSet
             {
                 BreakComboIfAttackChanged(0);
                 LightMoving();
-                _playerMovement.SetCanMove(true);
+                _playerMovement.RemoveNotMovingReason("Attack");
             }
             else
             {
@@ -114,7 +114,7 @@ public class UnarmedMoveset : ChargeableMoveSet
 
     private void LightInPlace()
     {
-        _playerMovement.SetCanMove(false);
+        _playerMovement.AddNotMovingReason("Attack");
         PerformLightAttack(_lightAttacksInPlace[_currentCombo]);
         _currentCombo++;
         if (_currentCombo >= _lightAttacksInPlace.Length)
@@ -124,7 +124,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     }
     private void LightInAir()
     {
-        _playerMovement.SetCanMove(false);
+        _playerMovement.AddNotMovingReason("Attack");
         _playerJump.StopJumpMidAir();
         _playerGravity.AddNotFallingReason("AirAttack");
         _attackedInAir = true;
@@ -157,7 +157,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         {
             _currentChargedAttack = 2;
             PerformCharging(_heavyDownAttack.ChargeableStats);
-            _playerMovement.SetCanMove(false);
+            _playerMovement.AddNotMovingReason("Attack");
             _playerJump.StopJumpMidAir();
             _playerGravity.AddNotFallingReason("AirAttack");
         }
@@ -179,8 +179,8 @@ public class UnarmedMoveset : ChargeableMoveSet
                     break;
                 case 1:
                     PerformHeavyAttack(_heavyAttackInPlace);
-                    _playerMovement.SetCanMove(false);
-                    _playerMovement.RemoveSpeedModifier("AimingKick");
+                _playerMovement.AddNotMovingReason("Attack");
+                _playerMovement.RemoveSpeedModifier("AimingKick");
                     break;
                 case 2:
                     PerformHeavyAttackDownExplosive(_heavyDownAttack);
@@ -329,7 +329,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     private void AttackEnds()
     {
         _castTimeLeft = 0;
-        _playerMovement.SetCanMove(true);
+        _playerMovement.RemoveNotMovingReason("Attack");
         _playerGravity.RemoveNotFallingReason("AirAttack");
         _playerMovement.RemoveSpeedModifier("AimingKick");
         _playerGravity.ResetFall();
@@ -388,7 +388,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         else if (_playerCombatSystem.GetCanAttack)
         {
             ResetAttacks();
-            _playerMovement.SetCanMove(true);
+            _playerMovement.RemoveNotMovingReason("Attack");
         }
     }
 

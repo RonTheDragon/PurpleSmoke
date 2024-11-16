@@ -51,7 +51,7 @@ public class PlayerKnockout : CharacterKnockout, IPlayerComponent
     {
         base.StunCharacter();
 
-        _playerWalk.SetCanMove(false);
+        _playerWalk.AddNotMovingReason("Stun");
         _playerJump.SetCanJump(false);
         _playerCombatSystem.SetCanAttack(false);
         _playerGravity.ClearNotFallingReasons();
@@ -64,7 +64,7 @@ public class PlayerKnockout : CharacterKnockout, IPlayerComponent
 
         base.UnStunCharacter();
 
-        _playerWalk.SetCanMove(true);
+        _playerWalk.RemoveNotMovingReason("Stun");
         _playerJump.SetCanJump(true);
         _playerCombatSystem.SetCanAttack(true);
         _playerAimMode.SetLockHeadAim(false);

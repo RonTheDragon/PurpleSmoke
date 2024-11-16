@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 public abstract class Health : MonoBehaviour , IDamageable
 {
@@ -12,17 +13,39 @@ public abstract class Health : MonoBehaviour , IDamageable
     [SerializeField] protected float _acidDOT = 5;
     [SerializeField] protected float _acidRemovalPerSec = 30;
     [SerializeField] protected float _removeAcidAfter = 1;
+    [SerializeField] protected ParticleSystem _acidSmoke;
     protected float _removeAcidAfterTimeLeft;
+
+    protected CharacterKnockback _knockback;
+    protected CharacterKnockout _knockout;
+    private Vector2 _storedKnockBack;
+    private float _storedKnockout;
+    private Vector3 _knockedFrom;
+    private float _currentKnockDelay;
+    private float _highestKnockback;
+    [SerializeField] private float _knockDelay = 0.1f;
 
     protected bool _isDead = false;
     public virtual void TakeDamage(float damageAmount, CombatRules Attacker)
     {
-        if (_isDead) return;
-
         _currentHealth -= CalculateDamage(damageAmount);
-        if (CheckIfDied()) return;
+        CheckIfDied();
     }
-    public abstract void TakeKnock(Vector2 knockback, float knockout, Vector3 attackLocation);
+    public virtual void TakeKnock(Vector2 knockback, float knockout, Vector3 attackLocation)
+    {
+        if (_isDead) return;
+        if (_currentKnockDelay == 0)
+        {
+            _currentKnockDelay = _knockDelay;
+        }
+        _storedKnockBack += knockback;
+        _storedKnockout += knockout;
+        if (_highestKnockback < knockback.x)
+        {
+            _highestKnockback = knockback.x;
+            _knockedFrom = attackLocation;
+        }
+    }
     public virtual void TakeAcidDamage(float acid)
     {
         if (acid > 0)
@@ -54,6 +77,7 @@ public abstract class Health : MonoBehaviour , IDamageable
     {
         _currentHealth += healAmount;
         if (_currentHealth > _maxHealth) _currentHealth = _maxHealth;
+        HandleAcid();
     }
 
     protected bool CheckIfDied()
@@ -75,16 +99,43 @@ public abstract class Health : MonoBehaviour , IDamageable
                 _currentAcidity = _maxAcidity;
             }
 
+            ParticleSystem.EmissionModule emission = _acidSmoke.emission;
+            emission.rateOverTime = _currentAcidity/5;
+
             AcidPoison();
 
             AcidRemoval();
         }
     }
 
+    protected void HandleKnock()
+    {
+        if (_isDead)
+        {
+            _currentKnockDelay = 0;
+            _storedKnockBack = Vector2.zero;
+            _storedKnockout = 0;
+            _highestKnockback = 0;
+            return;
+        }
+
+        if (_currentKnockDelay > 0) { _currentKnockDelay -= Time.deltaTime; }
+        else if (_currentKnockDelay < 0)
+        {
+            _currentKnockDelay = 0;
+            _knockback.TakeKnockback(_storedKnockBack, _knockedFrom);
+            _knockout.RecieveKnockout(_storedKnockout);
+
+            _storedKnockBack = Vector2.zero;
+            _storedKnockout = 0;
+            _highestKnockback = 0;
+        }
+    }
+
     protected virtual void AcidPoison()
     {
         _currentHealth -= Mathf.Lerp(0, _acidDOT, _currentAcidity / _maxAcidity) * Time.deltaTime;
-        if (CheckIfDied()) return;  
+        CheckIfDied(); 
     }
 
     protected void AcidRemoval()
@@ -99,7 +150,11 @@ public abstract class Health : MonoBehaviour , IDamageable
         }
     }
 
-    public abstract void Die();
+    public virtual void Die()
+    {
+        _currentHealth = 0;
+        _isDead = true;
+    }
 
     public bool GetIsDead => _isDead;
 }
