@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ProjectilePooler _projectilePooler;
     [SerializeField] private VEPooler _visualEffectsPooler;
     [SerializeField] private PickupPooler _pickupPooler;
+    [SerializeField] private EnemyPooler _enemyPooler;
     [SerializeField] private Color _meleeColor, _rangeColor, _staticColor,_dynamicColor, _consumableColor;
     public enum ItemColor { Melee, Range, Static , Dynamic, Consumable }
 
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
         _projectilePooler.SpawnAllPools();
         _visualEffectsPooler.SpawnAllPools();
         _pickupPooler.SpawnAllPools();
+        _enemyPooler.SpawnAllPools();
     }
 
     public void OnPlayerJoined()
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
     public ProjectilePooler GetProjectilePooler => _projectilePooler;
     public VEPooler GetVEPooler => _visualEffectsPooler;
     public PickupPooler GetPickupPooler => _pickupPooler;
+    public EnemyPooler GetEnemyPooler => _enemyPooler;
 
     public Color GetItemColor(ItemColor c)
     {

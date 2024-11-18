@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -26,6 +27,8 @@ public abstract class Health : MonoBehaviour , IDamageable
     [SerializeField] private float _knockDelay = 0.1f;
 
     protected bool _isDead = false;
+
+    public Action OnDeath;
     public virtual void TakeDamage(float damageAmount, CombatRules Attacker)
     {
         _currentHealth -= CalculateDamage(damageAmount);
@@ -154,6 +157,8 @@ public abstract class Health : MonoBehaviour , IDamageable
     {
         _currentHealth = 0;
         _isDead = true;
+        OnDeath?.Invoke();
+        OnDeath = null;
     }
 
     public bool GetIsDead => _isDead;

@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 6289108918852795433}
   - component: {fileID: 7535000481916580830}
   - component: {fileID: 1710479485087828392}
+  - component: {fileID: 791959966271491080}
   m_Layer: 0
   m_Name: ObjectPooler
   m_TagString: Untagged
@@ -234,6 +235,25 @@ MonoBehaviour:
     Group:
     - Tag: AcidPotion
       Object: {fileID: 7158431058178813610, guid: 31996f48d2a06304ca03b684c00534b2,
+        type: 3}
+      StartAmount: 0
+--- !u!114 &791959966271491080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369693108373930574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03fed39f8d84e5419152582fee26390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolGroups:
+  - Name: Enemies
+    Group:
+    - Tag: Biter
+      Object: {fileID: 3902768569550905331, guid: 12922f73d8a2d7248b688c61a8f9b7c1,
         type: 3}
       StartAmount: 0
 --- !u!1 &6678245051165398795
@@ -381,6 +401,7 @@ MonoBehaviour:
   _projectilePooler: {fileID: 6289108918852795433}
   _visualEffectsPooler: {fileID: 7535000481916580830}
   _pickupPooler: {fileID: 1710479485087828392}
+  _enemyPooler: {fileID: 791959966271491080}
   _meleeColor: {r: 0.6226415, g: 0.1262905, b: 0.1262905, a: 1}
   _rangeColor: {r: 0.27657694, g: 0.4056604, b: 0, a: 1}
   _staticColor: {r: 0, g: 0.18552971, b: 1, a: 1}
