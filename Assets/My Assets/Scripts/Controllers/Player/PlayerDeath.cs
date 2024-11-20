@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerDeath : MonoBehaviour, IPlayerComponent
+public class PlayerDeath : CharacterDeath, IPlayerComponent
 {
     private PlayerHealth _health;
     private PlayerKnockout _playerKnockout;
@@ -30,7 +30,7 @@ public class PlayerDeath : MonoBehaviour, IPlayerComponent
         _playerComponents = playerComponents;
     }
 
-    public void Die()
+    public override void Die()
     {
         _playerKnockout.StunCharacter();
         _playerAnimations.PlayAnimation("Death");
@@ -77,7 +77,7 @@ public class PlayerDeath : MonoBehaviour, IPlayerComponent
         Revive();
     }
 
-    public void Revive()
+    public override void Revive()
     {
         _health.HealToMax();
         _playerKnockout.UnStunCharacter();

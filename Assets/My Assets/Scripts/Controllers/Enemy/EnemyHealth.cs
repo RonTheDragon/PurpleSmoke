@@ -34,5 +34,6 @@ public class EnemyHealth : Health , IEnemyComponent
     {
         base.Die();
         _enemyDeath.Die();
+       
     }
 }

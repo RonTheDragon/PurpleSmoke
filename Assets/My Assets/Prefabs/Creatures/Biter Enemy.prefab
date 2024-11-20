@@ -199,6 +199,7 @@ MonoBehaviour:
   _acidRemovalPerSec: 30
   _removeAcidAfter: 1
   _acidSmoke: {fileID: 4814944082014872587}
+  _knockDelay: 0.1
 --- !u!143 &2861096379714462124
 CharacterController:
   m_ObjectHideFlags: 0
@@ -411,6 +412,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2958ba9e93a1bf4cb5bdf48a7859ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _despawnTime: 10
+  _loot:
+  - LootTag: ToothWeapon
+    DropChances:
+    - Amount: 0
+      PrecentageChance: 70
+    - Amount: 5
+      PrecentageChance: 10
+    - Amount: 6
+      PrecentageChance: 10
+    - Amount: 7
+      PrecentageChance: 10
 --- !u!114 &2887629031889214291
 MonoBehaviour:
   m_ObjectHideFlags: 0

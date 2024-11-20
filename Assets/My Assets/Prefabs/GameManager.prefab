@@ -237,6 +237,9 @@ MonoBehaviour:
       Object: {fileID: 7158431058178813610, guid: 31996f48d2a06304ca03b684c00534b2,
         type: 3}
       StartAmount: 0
+    - Tag: ToothWeapon
+      Object: {fileID: 0}
+      StartAmount: 0
 --- !u!114 &791959966271491080
 MonoBehaviour:
   m_ObjectHideFlags: 0
