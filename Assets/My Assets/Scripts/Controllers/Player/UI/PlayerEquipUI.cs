@@ -10,7 +10,6 @@ public class PlayerEquipUI : MonoBehaviour
 
     [SerializeField] private CanvasGroup _shortcuts1, _shortcuts2;
     [SerializeField] private float _alphaOfTurnedOffShortcuts;
-    private PlayerInputsHandler _inputHandler;
 
     public EquipDisplayItemSlot GetMeleeSlot => _meleeSlot;
     public EquipDisplayItemSlot GetRangeSlot => _rangeSlot;
