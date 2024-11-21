@@ -56,10 +56,12 @@ public class EnemyDeath : CharacterDeath , IEnemyComponent
     public override void Revive()
     {
         CancelInvoke(nameof(DespawnBody));
+        _enemyKnockout.UnStunCharacter();
     }
 
     private void DespawnBody()
     {
+        _enemyAnimations.AnimationRebind();
         gameObject.SetActive(false);
     }
 

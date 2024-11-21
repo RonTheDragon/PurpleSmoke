@@ -70,6 +70,7 @@ public class Spawner : MonoBehaviour
         EnemyHealth enemy = _enemyPooler.CreateOrSpawnFromPool(spawn.TagToSpawn, spawnLocation.position, Quaternion.identity);
         if (enemy != null)
         {
+            enemy.Spawn();
             // Add the enemy to the list of currently spawned enemies
             spawn.SpawnedEnemies.Add(enemy);
 

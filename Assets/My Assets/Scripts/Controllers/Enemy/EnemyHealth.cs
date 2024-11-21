@@ -36,4 +36,13 @@ public class EnemyHealth : Health , IEnemyComponent
         _enemyDeath.Die();
        
     }
+
+    public void Spawn()
+    {
+        if (_isDead)
+        {
+            HealToMax();
+            _enemyDeath.Revive();
+        }
+    }
 }

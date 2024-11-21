@@ -45,6 +45,7 @@ public class EnemyKnockout : CharacterKnockout, IEnemyComponent
     {
         base.StunCharacter();
         _enemyWalk.AddNotMovingReason("Stun");
+        _enemyWalk.AddNotNavmeshReason("Stun");
         _enemyAttackMovement.StopMovement();
         _enemyCombatSystem.SetCanAttack(false);
     }
@@ -53,6 +54,7 @@ public class EnemyKnockout : CharacterKnockout, IEnemyComponent
     {
         base.UnStunCharacter();
         _enemyWalk.RemoveNotMovingReason("Stun");
+        _enemyWalk.RemoveNotNavmeshReason("Stun");
         _enemyCombatSystem.SetCanAttack(true);
     }
 }

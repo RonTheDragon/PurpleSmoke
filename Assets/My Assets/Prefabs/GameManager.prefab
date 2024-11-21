@@ -238,7 +238,8 @@ MonoBehaviour:
         type: 3}
       StartAmount: 0
     - Tag: ToothWeapon
-      Object: {fileID: 0}
+      Object: {fileID: 4790004191656236981, guid: b003a9544eb70864b9af406c56ca8b70,
+        type: 3}
       StartAmount: 0
 --- !u!114 &791959966271491080
 MonoBehaviour:

@@ -28,6 +28,12 @@ public abstract class CharacterAnimations : MonoBehaviour
         _animator.SetTrigger(animationName);
     }
 
+    public void AnimationRebind()
+    {
+        _animator.Rebind();
+        _animator.Update(0f);
+    }
+
     public void SetLayerWeight(int layer, float amount)
     {
         _animator.SetLayerWeight(layer, amount);
