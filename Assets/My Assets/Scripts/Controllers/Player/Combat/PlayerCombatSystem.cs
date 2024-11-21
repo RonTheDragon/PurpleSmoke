@@ -13,6 +13,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     private bool _usingRanged;
     private bool _busyAttacking;
     [SerializeField] private Transform _itemsLocation, _effectsList;
+    [SerializeField] private List<Damage> _damagers;
 
 
     private float _currentChargePercentage;
@@ -57,6 +58,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     public bool GetAcidation => _acidation;
     private bool CanPlayerAttack => !_glide.IsGliding() && _canAttack;
     public float GetChargePercentage => _currentChargePercentage;
+    public List<Damage> GetDamagers => _damagers;
 
     private void PlayerUpdate()
     {

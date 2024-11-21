@@ -1528,6 +1528,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemsLocation: {fileID: 6197665533933167972}
   _effectsList: {fileID: 1123801116359646368}
+  _damagers:
+  - {fileID: 2350241940676101330}
+  - {fileID: 8111906740010458596}
+  - {fileID: 9365510091203352}
   _defaultMeleeMoveSet: {fileID: 968644356252502339}
   _currentMeleeMoveSet: {fileID: 0}
   _defaultRangeMoveSet: {fileID: 3035693535289509820}
@@ -4368,7 +4372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -605.3097, y: 350}
+  m_AnchoredPosition: {x: -605.3096, y: 350}
   m_SizeDelta: {x: -1414, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &3388974796625533922
@@ -9981,41 +9985,35 @@ MonoBehaviour:
   _lightAttacksMoving:
   - AnimationName: Unarmed1
     CastTime: 0.5
-    Damagers:
-    - {fileID: 2350241940676101330}
+    Damagers: 00000000
     Damage: 10
     Acid: 10
     Knockback: {x: 5, y: 0}
     Knockout: {x: 1, y: 10}
   - AnimationName: Unarmed2
     CastTime: 0.5
-    Damagers:
-    - {fileID: 8111906740010458596}
+    Damagers: 01000000
     Damage: 10
     Acid: 10
     Knockback: {x: 5, y: 0}
     Knockout: {x: 1, y: 10}
   - AnimationName: Unarmed1
     CastTime: 0.5
-    Damagers:
-    - {fileID: 2350241940676101330}
+    Damagers: 00000000
     Damage: 10
     Acid: 10
     Knockback: {x: 5, y: 0}
     Knockout: {x: 1, y: 10}
   - AnimationName: Unarmed2
     CastTime: 0.5
-    Damagers:
-    - {fileID: 8111906740010458596}
+    Damagers: 01000000
     Damage: 10
     Acid: 10
     Knockback: {x: 5, y: 0}
     Knockout: {x: 1, y: 10}
   - AnimationName: Unarmed3
     CastTime: 1
-    Damagers:
-    - {fileID: 8111906740010458596}
-    - {fileID: 2350241940676101330}
+    Damagers: 0000000001000000
     Damage: 20
     Acid: 20
     Knockback: {x: 10, y: 5}
@@ -10023,24 +10021,21 @@ MonoBehaviour:
   _lightAttacksInPlace:
   - AnimationName: Kick1
     CastTime: 0.5
-    Damagers:
-    - {fileID: 9365510091203352}
+    Damagers: 02000000
     Damage: 20
     Acid: 20
     Knockback: {x: 10, y: 20}
     Knockout: {x: 30, y: 100}
   - AnimationName: Kick2
     CastTime: 0.7
-    Damagers:
-    - {fileID: 9365510091203352}
+    Damagers: 02000000
     Damage: 20
     Acid: 20
     Knockback: {x: 10, y: 20}
     Knockout: {x: 30, y: 100}
   - AnimationName: Kick3
     CastTime: 0.7
-    Damagers:
-    - {fileID: 9365510091203352}
+    Damagers: 02000000
     Damage: 20
     Acid: 20
     Knockback: {x: 50, y: 20}
@@ -10048,8 +10043,7 @@ MonoBehaviour:
   _lightAttackInAir:
     AnimationName: FlyingKick
     CastTime: 1
-    Damagers:
-    - {fileID: 9365510091203352}
+    Damagers: 02000000
     Damage: 20
     Acid: 50
     Knockback: {x: 100, y: 20}
@@ -10058,8 +10052,7 @@ MonoBehaviour:
   _heavyAttackMoving:
     AnimationName: Uppercut2
     CastTime: 0.4
-    Damagers:
-    - {fileID: 2350241940676101330}
+    Damagers: 00000000
     ChargeableStats:
       ChargeAnimationName: Uppercut1
       MinChargeTime: 0.2
@@ -10076,8 +10069,7 @@ MonoBehaviour:
   _heavyAttackInPlace:
     AnimationName: SuperKick2
     CastTime: 1
-    Damagers:
-    - {fileID: 9365510091203352}
+    Damagers: 02000000
     ChargeableStats:
       ChargeAnimationName: SuperKick1
       MinChargeTime: 0.2
@@ -10096,7 +10088,7 @@ MonoBehaviour:
   _heavyDownAttack:
     AnimationName: CrashDown2
     CastTime: 0.5
-    Damagers: []
+    Damagers: 
     ChargeableStats:
       ChargeAnimationName: CrashDown1
       MinChargeTime: 0.5

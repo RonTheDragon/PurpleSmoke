@@ -199,8 +199,9 @@ public class UnarmedMoveset : ChargeableMoveSet
         _comboTimeLeft = _comboBreakTime + attack.CastTime;
         _castTimeLeft = attack.CastTime;
         float knockout = Random.Range(attack.Knockout.x, attack.Knockout.y);
-        foreach (TriggerDamage trigger in attack.Damagers)
+        foreach (int i in attack.Damagers)
         {
+            TriggerDamage trigger = (TriggerDamage)_playerCombatSystem.GetDamagers[i];
             AddDamager(trigger);
             trigger.SetOwner(_owner);
             trigger.SetDamage(attack.Damage);
@@ -229,8 +230,9 @@ public class UnarmedMoveset : ChargeableMoveSet
 
         _playerAnimations.PlayAnimation(attack.AnimationName);
         _castTimeLeft = attack.CastTime;
-        foreach (TriggerDamage trigger in attack.Damagers)
+        foreach (int i in attack.Damagers)
         {
+            TriggerDamage trigger = (TriggerDamage)_playerCombatSystem.GetDamagers[i];
             AddDamager(trigger);
             trigger.SetOwner(_owner);
             trigger.SetDamage(damage);
@@ -403,7 +405,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     {
         public string AnimationName;
         public float CastTime;
-        public List<Damage> Damagers;
+        public List<int> Damagers;
     }
 
     [System.Serializable]
