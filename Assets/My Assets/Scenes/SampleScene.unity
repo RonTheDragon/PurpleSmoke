@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -331,6 +331,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Biter Enemy (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757105605112218369, guid: 12922f73d8a2d7248b688c61a8f9b7c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -797,6 +802,36 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 190053514487793016, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 249.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 388343430743982944, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 149.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 616122584936407292, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 149.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544331195497937582, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2872896706593617638, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 149.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 3391531522815752837, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 149.99994
+      objectReference: {fileID: 0}
     - target: {fileID: 5461088288509020780, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -846,6 +881,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707156913503520340, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 249.99994
       objectReference: {fileID: 0}
     - target: {fileID: 9080644734375132973, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
@@ -1024,6 +1064,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Biter Enemy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757105605112218369, guid: 12922f73d8a2d7248b688c61a8f9b7c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1423,6 +1468,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Biter Enemy (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757105605112218369, guid: 12922f73d8a2d7248b688c61a8f9b7c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2004,6 +2054,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Biter Enemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8757105605112218369, guid: 12922f73d8a2d7248b688c61a8f9b7c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2144,6 +2199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Biter Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757105605112218369, guid: 12922f73d8a2d7248b688c61a8f9b7c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2410,6 +2470,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Biter Enemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8757105605112218369, guid: 12922f73d8a2d7248b688c61a8f9b7c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2551,6 +2616,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Biter Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8757105605112218369, guid: 12922f73d8a2d7248b688c61a8f9b7c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2722,6 +2792,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 8748435472068503556, guid: ad78d227afe299740b0efb9b82436703,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
