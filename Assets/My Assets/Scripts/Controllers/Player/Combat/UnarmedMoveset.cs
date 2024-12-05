@@ -41,19 +41,6 @@ public class UnarmedMoveset : ChargeableMoveSet
         _owner = refs.GetCombatRules;
     }
 
-    public override void SubscribeToEvents()
-    {
-        UnsubscribeToEvents();
-        _playerGroundCheck.OnGroundCheckChange += OnGroundedChanged;
-        _playerAttackMovement.OnCrashedDown += OnCrashedDown;
-    }
-
-    public override void UnsubscribeToEvents()
-    {
-        _playerGroundCheck.OnGroundCheckChange -= OnGroundedChanged;
-        _playerAttackMovement.OnCrashedDown -= OnCrashedDown;
-    }
-
     public override void MoveSetUpdate()
     {
         base.MoveSetUpdate();
@@ -399,6 +386,18 @@ public class UnarmedMoveset : ChargeableMoveSet
         _playerAnimations.PlayAnimation(_heavyDownAttack.CrashAnimationName);
         _castTimeLeft = _heavyDownAttack.CastTime;
         _attackedInAir = false;
+    }
+
+    protected override void OnEquip()
+    {
+        _playerGroundCheck.OnGroundCheckChange += OnGroundedChanged;
+        _playerAttackMovement.OnCrashedDown += OnCrashedDown;
+    }
+
+    protected override void OnUnequip()
+    {
+        _playerGroundCheck.OnGroundCheckChange -= OnGroundedChanged;
+        _playerAttackMovement.OnCrashedDown -= OnCrashedDown;
     }
 
     class MeleeAttack : AttackData

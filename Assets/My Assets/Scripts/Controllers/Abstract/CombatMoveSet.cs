@@ -11,8 +11,5 @@ public abstract class CombatMoveSet : MonoBehaviour
 
     // Method for updating the move set logic
     public abstract void MoveSetUpdate();
-
-    public virtual void SubscribeToEvents() { }
-    public virtual void UnsubscribeToEvents() { }
     public abstract class AttackData { }
 }

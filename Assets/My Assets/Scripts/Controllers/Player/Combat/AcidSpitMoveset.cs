@@ -135,6 +135,16 @@ public class AcidSpitMoveset : ChargeableMoveSet
         // Apply other effects of the acid spit attack
         // You can modify this part based on your game logic
     }
+
+    protected override void OnEquip()
+    {
+        
+    }
+
+    protected override void OnUnequip()
+    {
+        
+    }
 }
 
 public class ProjectileAttack : AttackData

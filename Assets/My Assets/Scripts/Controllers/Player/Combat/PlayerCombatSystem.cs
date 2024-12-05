@@ -45,7 +45,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
         _currentRangeMoveSet = _defaultRangeMoveSet;
         _currentRangeMoveSet.MoveSetStart(this);
 
-        HandleSubscribtion();
+        HandleEquipment();
     }
 
     public PlayerComponentsRefrences GetPlayerRefs => _playerComponentsRefrences;
@@ -143,7 +143,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
         ClearAttacks();
         _usingRanged = usingRanged;
         ClearAttacks();
-        HandleSubscribtion();
+        HandleEquipment();
     }
 
     public void SetMeleeMoveSet(PlayerCombatMoveSet meleeMoveSet)
@@ -162,7 +162,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
         SetOrDestroy(ref currentMoveSet, newMoveSet, defaultMoveSet);
         currentMoveSet.MoveSetStart(this);
         ClearAttacks();
-        HandleSubscribtion();
+        HandleEquipment();
     }
 
     public void SetStaticUseable(UseableAbility useable)
@@ -227,17 +227,17 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     }
 
 
-    private void HandleSubscribtion()
+    private void HandleEquipment()
     {
         if (_usingRanged)
         {
-            _currentRangeMoveSet.SubscribeToEvents();
-            _currentMeleeMoveSet.UnsubscribeToEvents();
+            _currentRangeMoveSet.SetEquippedState(true);
+            _currentMeleeMoveSet.SetEquippedState(false);
         }
         else
         {
-            _currentRangeMoveSet.UnsubscribeToEvents();
-            _currentMeleeMoveSet.SubscribeToEvents();
+            _currentRangeMoveSet.SetEquippedState(false);
+            _currentMeleeMoveSet.SetEquippedState(true);
         }
     }
 }
