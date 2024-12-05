@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Fangs
   _sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  _moveSet: {fileID: 7955599789703454852, guid: 8c11d2843a2f7a84ba09a891184a2522,
+  _pickUpTag: 
+  _moveSet: {fileID: -545203866201010491, guid: 8c11d2843a2f7a84ba09a891184a2522,
     type: 3}

@@ -12,7 +12,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     private bool _acidation = false;
     private bool _usingRanged;
     private bool _busyAttacking;
-    [SerializeField] private Transform _itemsLocation, _effectsList;
+    [SerializeField] private Transform _itemsLocation, _effectsList, _rightHand, _leftHand;
     [SerializeField] private List<Damage> _damagers;
 
 
@@ -59,6 +59,8 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     private bool CanPlayerAttack => !_glide.IsGliding() && _canAttack;
     public float GetChargePercentage => _currentChargePercentage;
     public List<Damage> GetDamagers => _damagers;
+    public Transform GetRightHand => _rightHand;
+    public Transform GetLeftHand => _leftHand;
 
     private void PlayerUpdate()
     {
@@ -159,6 +161,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     private void SetMoveSet(ref PlayerCombatMoveSet currentMoveSet, PlayerCombatMoveSet newMoveSet, PlayerCombatMoveSet defaultMoveSet)
     {
         ClearAttacks();
+        currentMoveSet.SetEquippedState(false);
         SetOrDestroy(ref currentMoveSet, newMoveSet, defaultMoveSet);
         currentMoveSet.MoveSetStart(this);
         ClearAttacks();

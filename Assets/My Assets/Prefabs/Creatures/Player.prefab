@@ -1528,6 +1528,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemsLocation: {fileID: 6197665533933167972}
   _effectsList: {fileID: 1123801116359646368}
+  _rightHand: {fileID: 8356918084436750726}
+  _leftHand: {fileID: 1150462756129970199}
   _damagers:
   - {fileID: 2350241940676101330}
   - {fileID: 8111906740010458596}
@@ -7577,7 +7579,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 249.99997
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -8159,7 +8161,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 149.99997
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -8300,7 +8302,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 149.99997
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -9982,6 +9984,8 @@ MonoBehaviour:
   _isCharging: 0
   _releasedEarly: 0
   _releaseWhenFullyCharged: 0
+  _currentCombo: 0
+  _comboBreakTime: 1
   _lightAttacksMoving:
   - AnimationName: Unarmed1
     CastTime: 0.5
@@ -10108,8 +10112,6 @@ MonoBehaviour:
     AcidationRadiusMultiplier: 3
     CrashAnimationName: CrashDown3
     AcidationVE: BigAcidSplash
-  _currentCombo: 0
-  _comboBreakTime: 1
   _explosionDamage: {fileID: 731128795323580693}
 --- !u!114 &3035693535289509820
 MonoBehaviour:
@@ -10872,7 +10874,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 149.99997
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -11168,7 +11170,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 249.99997
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -11464,7 +11466,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 149.99997
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -11768,7 +11770,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 49.99994
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}

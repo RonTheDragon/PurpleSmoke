@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnarmedMoveset : ChargeableMoveSet
+public class UnarmedMoveset : MeleeMoveset
 {
     [SerializeField] private LightAttack[] _lightAttacksMoving = new LightAttack[5];
     [SerializeField] private LightAttack[] _lightAttacksInPlace = new LightAttack[3];
@@ -10,28 +10,17 @@ public class UnarmedMoveset : ChargeableMoveSet
     [SerializeField] private HeavyAttackWithMovement _heavyAttackInPlace;
     [SerializeField] private HeavyDownAttack _heavyDownAttack;
 
-    private PlayerGroundCheck _playerGroundCheck;
-    private PlayerWalk _playerMovement;
-    private PlayerAttackMovement _playerAttackMovement;
-    private PlayerGravity _playerGravity;
-    private PlayerJump _playerJump;
     private VEPooler _vePooler;
-    [ReadOnly][SerializeField] private int _currentCombo;
-    [SerializeField] private float _comboBreakTime;
-    private float _comboTimeLeft;
+    
     [SerializeField] private ExplosionDamage _explosionDamage;
-    private int _lastAttackType;
-    private bool _attackedInAir;
-    private int _currentChargedAttack;
-    private CombatRules _owner;
-    private List<Damage> _currentDamagers = new List<Damage>();
-    private bool _lightAttacking;
+    
+
     public override void MoveSetStart(CombatSystem combatSystem)
     {
         base.MoveSetStart(combatSystem);
-        PlayerCombatSystem playerCombatSystem = (PlayerCombatSystem)combatSystem;
+        _playerCombatSystem = (PlayerCombatSystem)combatSystem;
         _vePooler = GameManager.Instance.GetVEPooler;
-        PlayerComponentsRefrences refs = playerCombatSystem.GetPlayerRefs;
+        PlayerComponentsRefrences refs = _playerCombatSystem.GetPlayerRefs;
         _playerAnimations = refs.GetPlayerAnimations;
         _playerGroundCheck = refs.GetPlayerGroundCheck;
         _playerMovement = refs.GetPlayerWalk;
@@ -41,54 +30,7 @@ public class UnarmedMoveset : ChargeableMoveSet
         _owner = refs.GetCombatRules;
     }
 
-    public override void MoveSetUpdate()
-    {
-        base.MoveSetUpdate();
-        ComboTimer();
-        AttacksCooldown();
-        if (_lightAttacking)
-        {
-            OnTryLightAttack();
-        }
-    }
-
-    public override void OnLightAttack()
-    {
-        _lightAttacking = true;
-    }
-
-    public override void OnReleaseLightAttack()
-    {
-        _lightAttacking = false;
-    }
-
-    private void OnTryLightAttack()
-    {
-        if (_isCharging || _castTimeLeft > 0) return;
-
-        _playerCombatSystem.SetBusyAttacking(true);
-
-        if (_playerGroundCheck.IsGrounded())
-        {
-            if (_playerMovement.IsGettingMovementInput())
-            {
-                BreakComboIfAttackChanged(0);
-                LightMoving();
-                _playerMovement.RemoveNotMovingReason("Attack");
-            }
-            else
-            {
-                BreakComboIfAttackChanged(1);
-                LightInPlace();
-            }
-        }
-        else if (!_attackedInAir)
-        {
-            LightInAir();
-        }
-    }
-
-    private void LightMoving()
+    protected override void LightMoving()
     {
         PerformLightAttack(_lightAttacksMoving[_currentCombo]);
         _currentCombo++;
@@ -99,7 +41,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     }
 
 
-    private void LightInPlace()
+    protected override void LightInPlace()
     {
         _playerMovement.AddNotMovingReason("Attack");
         PerformLightAttack(_lightAttacksInPlace[_currentCombo]);
@@ -109,7 +51,7 @@ public class UnarmedMoveset : ChargeableMoveSet
             BreakCombo();
         }
     }
-    private void LightInAir()
+    protected override void LightInAir()
     {
         _playerMovement.AddNotMovingReason("Attack");
         _playerJump.StopJumpMidAir();
@@ -118,7 +60,6 @@ public class UnarmedMoveset : ChargeableMoveSet
         PerformLightAttack(_lightAttackInAir);
         _playerAttackMovement.SetMovement(_lightAttackInAir.Movement);
     }
-
 
     public override void OnHeavyAttack()
     {
@@ -140,7 +81,7 @@ public class UnarmedMoveset : ChargeableMoveSet
                 _playerMovement.AddSpeedModifier("AimingKick", 0);
             }
         }
-        else 
+        else
         {
             _currentChargedAttack = 2;
             PerformCharging(_heavyDownAttack.ChargeableStats);
@@ -155,92 +96,29 @@ public class UnarmedMoveset : ChargeableMoveSet
 
     public override void OnReleaseHeavyAttack()
     {
-        if (_castTimeLeft > 0 || _currentCharge==0 || _releasedEarly) return; //dismiss press
+        if (_castTimeLeft > 0 || _currentCharge == 0 || _releasedEarly) return; //dismiss press
 
         if (CheckAndHandleEarlyRelease()) return; //released too early
 
         switch (_currentChargedAttack)
-            {
-                case 0:
-                    PerformHeavyAttack(_heavyAttackMoving);
-                    break;
-                case 1:
-                    PerformHeavyAttack(_heavyAttackInPlace);
+        {
+            case 0:
+                PerformHeavyAttack(_heavyAttackMoving);
+                break;
+            case 1:
+                PerformHeavyAttack(_heavyAttackInPlace);
                 _playerMovement.AddNotMovingReason("Attack");
                 _playerMovement.RemoveSpeedModifier("AimingKick");
-                    break;
-                case 2:
-                    PerformHeavyAttackDownExplosive(_heavyDownAttack);
-                    break;
-                default:
-                    break;
-            }
+                break;
+            case 2:
+                PerformHeavyAttackDownExplosive(_heavyDownAttack);
+                break;
+            default:
+                break;
+        }
 
         ResetCharge();
         BreakCombo();
-    }
-
-    private void PerformLightAttack(LightAttack attack)
-    {
-        _playerAnimations.PlayAnimation(attack.AnimationName);
-        _comboTimeLeft = _comboBreakTime + attack.CastTime;
-        _castTimeLeft = attack.CastTime;
-        float knockout = Random.Range(attack.Knockout.x, attack.Knockout.y);
-        foreach (int i in attack.Damagers)
-        {
-            TriggerDamage trigger = (TriggerDamage)_playerCombatSystem.GetDamagers[i];
-            AddDamager(trigger);
-            trigger.SetOwner(_owner);
-            trigger.SetDamage(attack.Damage);
-            trigger.SetKnock(attack.Knockback, knockout);
-            if (_playerCombatSystem.GetAcidation)
-            {
-                trigger.SetAcidDamage(attack.Acid);
-            }
-            else
-            {
-                trigger.SetAcidDamage(0);
-            }
-        };
-    }
-
-    
-
-    private void PerformHeavyAttack(HeavyAttack attack)
-    {
-        float chargePercentage = GetChargePercentage();
-        float damage = Mathf.Lerp(attack.MinDamage, attack.MaxDamage, chargePercentage);
-        Vector2 knockback = Vector2.Lerp(attack.MinKnockback, attack.MaxKnockback, chargePercentage);
-
-        Vector2 knockoutChance = Vector2.Lerp(attack.MinKnockout, attack.MaxKnockout, chargePercentage);
-        float knockout = Random.Range(knockoutChance.x, knockoutChance.y);
-
-        _playerAnimations.PlayAnimation(attack.AnimationName);
-        _castTimeLeft = attack.CastTime;
-        foreach (int i in attack.Damagers)
-        {
-            TriggerDamage trigger = (TriggerDamage)_playerCombatSystem.GetDamagers[i];
-            AddDamager(trigger);
-            trigger.SetOwner(_owner);
-            trigger.SetDamage(damage);
-            trigger.SetKnock(knockback, knockout);
-
-            if (_playerCombatSystem.GetAcidation)
-            {
-                float Acid = Mathf.Lerp(attack.MinAcid, attack.MaxAcid, chargePercentage);
-                trigger.SetAcidDamage(Acid);
-            }
-            else
-            {
-                trigger.SetAcidDamage(0);
-            }
-
-        };
-        if (attack is HeavyAttackWithMovement)
-        {
-            HeavyAttackWithMovement attackM = (HeavyAttackWithMovement)attack;
-            _playerAttackMovement.SetMovement(Vector3.Lerp(attackM.MinMovement, attackM.MaxMovement, chargePercentage));
-        }
     }
 
     private void PerformHeavyAttackDownExplosive(HeavyDownAttack attack)
@@ -290,95 +168,10 @@ public class UnarmedMoveset : ChargeableMoveSet
         }
     }
 
-
-    private void ComboTimer()
+    protected override void AttackEnds()
     {
-        if (_comboTimeLeft > 0)
-        {
-            _comboTimeLeft -= Time.deltaTime;
-        }
-        else if (_comboTimeLeft < 0)
-        {
-            BreakCombo();
-        }
-    }
-
-    private void AttacksCooldown()
-    {
-        if (_castTimeLeft > 0)
-        {
-            _castTimeLeft -= Time.deltaTime;
-        }
-        else if (_castTimeLeft < 0)
-        {
-            AttackEnds();
-        }
-    }
-
-    private void AttackEnds()
-    {
-        _castTimeLeft = 0;
-        _playerMovement.RemoveNotMovingReason("Attack");
-        _playerGravity.RemoveNotFallingReason("AirAttack");
         _playerMovement.RemoveSpeedModifier("AimingKick");
-        _playerGravity.ResetFall();
-        _playerCombatSystem.SetBusyAttacking(false);
-        RemoveAllDamagers();
-    }
-
-    public override void ResetAttacks()
-    {
-        base.ResetAttacks();
-        _playerAnimations.PlayAnimation("Cancel");
-        AttackEnds();
-    }
-
-    private void AddDamager(Damage damage)
-    {
-        damage.gameObject.SetActive(true);
-        _currentDamagers.Add(damage);
-    }
-
-    private void RemoveAllDamagers()
-    {
-        foreach (Damage damage in _currentDamagers)
-        {
-            damage.gameObject.SetActive(false);
-        }
-        _currentDamagers.Clear();
-    }
-
-
-
-    private void BreakCombo()
-    {
-        _currentCombo = 0;
-        _comboTimeLeft = 0;
-    }
-
-
-    private void BreakComboIfAttackChanged(int currentAttack)
-    {
-        if (_lastAttackType != currentAttack)
-        {
-            _lastAttackType = currentAttack;
-            BreakCombo();
-        }
-    }
-
-    private void OnGroundedChanged(bool OnGround)
-    {
-        if (_castTimeLeft > 0) return;
-
-        if (OnGround)
-        {
-            _attackedInAir = false;
-        }
-        else if (_playerCombatSystem.GetCanAttack)
-        {
-            ResetAttacks();
-            _playerMovement.RemoveNotMovingReason("Attack");
-        }
+        base.AttackEnds();
     }
 
     private void OnCrashedDown()
@@ -398,40 +191,7 @@ public class UnarmedMoveset : ChargeableMoveSet
     {
         _playerGroundCheck.OnGroundCheckChange -= OnGroundedChanged;
         _playerAttackMovement.OnCrashedDown -= OnCrashedDown;
-    }
-
-    class MeleeAttack : AttackData
-    {
-        public string AnimationName;
-        public float CastTime;
-        public List<int> Damagers;
-    }
-
-    [System.Serializable]
-    class LightAttack : MeleeAttack
-    {
-        public float Damage, Acid;
-        public Vector2 Knockback, Knockout;
-    }
-
-    [System.Serializable]
-    class LightAttackWithMovement : LightAttack
-    {
-        public Vector3 Movement;
-    }
-
-    [System.Serializable]
-    class HeavyAttack : MeleeAttack
-    {
-        public ChargeableStats ChargeableStats;
-        public float MinDamage, MaxDamage, MinAcid, MaxAcid;
-        public Vector2 MinKnockback, MaxKnockback, MinKnockout, MaxKnockout;
-    }
-
-    [System.Serializable]
-    class HeavyAttackWithMovement : HeavyAttack
-    {
-        public Vector3 MinMovement, MaxMovement;
+        _lightAttacking = false;
     }
 
     [System.Serializable]

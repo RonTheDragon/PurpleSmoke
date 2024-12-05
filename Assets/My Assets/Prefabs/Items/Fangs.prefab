@@ -9,10 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6088972470968831689}
-  - component: {fileID: 7955599789703454852}
-  - component: {fileID: 8750279760870690426}
-  - component: {fileID: 8778400085838838603}
-  - component: {fileID: 1685271862049472110}
+  - component: {fileID: -545203866201010491}
   m_Layer: 0
   m_Name: Fangs
   m_TagString: Untagged
@@ -29,13 +26,15 @@ Transform:
   m_GameObject: {fileID: 900503287135289794}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.451478, y: 1.7892036, z: -2.8111095}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4670881512350886442}
+  - {fileID: 934318718245804693}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7955599789703454852
+--- !u!114 &-545203866201010491
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,179 +43,246 @@ MonoBehaviour:
   m_GameObject: {fileID: 900503287135289794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db401384835601f43b9bde2c2934384f, type: 3}
+  m_Script: {fileID: 11500000, guid: adc9ecef68731ba4fa1985b7ff0ff15d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxCharge: 1
+  _maxCharge: 0
   _minCharge: 0
   _currentCharge: 0
   _isCharging: 0
   _releasedEarly: 0
   _releaseWhenFullyCharged: 0
-  _lightAttacksMoving:
-  - AnimationName: Unarmed1
-    Damage: 10
-    Knockback: {x: 5, y: 0}
-    Knockout: {x: 1, y: 10}
-    CastTime: 0.5
-    Acid: 10
-  - AnimationName: Unarmed2
-    Damage: 10
-    Knockback: {x: 5, y: 0}
-    Knockout: {x: 1, y: 10}
-    CastTime: 0.5
-    Acid: 10
-  - AnimationName: Unarmed1
-    Damage: 10
-    Knockback: {x: 5, y: 0}
-    Knockout: {x: 1, y: 10}
-    CastTime: 0.5
-    Acid: 10
-  - AnimationName: Unarmed2
-    Damage: 10
-    Knockback: {x: 5, y: 0}
-    Knockout: {x: 1, y: 10}
-    CastTime: 0.5
-    Acid: 10
-  - AnimationName: Unarmed3
-    Damage: 20
-    Knockback: {x: 10, y: 5}
-    Knockout: {x: 10, y: 30}
-    CastTime: 1
-    Acid: 20
-  _lightAttacksInPlace:
-  - AnimationName: Kick1
-    Damage: 20
-    Knockback: {x: 10, y: 20}
-    Knockout: {x: 30, y: 100}
-    CastTime: 0.5
-    Acid: 20
-  - AnimationName: Kick2
-    Damage: 20
-    Knockback: {x: 10, y: 20}
-    Knockout: {x: 30, y: 100}
-    CastTime: 0.7
-    Acid: 20
-  - AnimationName: Kick3
-    Damage: 20
-    Knockback: {x: 50, y: 20}
-    Knockout: {x: 30, y: 100}
-    CastTime: 0.7
-    Acid: 20
-  _lightAttackInAir:
-    AnimationName: FlyingKick
-    Damage: 20
-    Knockback: {x: 100, y: 20}
-    Knockout: {x: 50, y: 200}
-    CastTime: 1
-    Acid: 50
-    Movement: {x: 0, y: 0, z: 100}
-  _heavyAttackMoving:
-    ChargeableStats:
-      ChargeAnimationName: Uppercut1
-      MaxChargeTime: 1
-      MinChargeTime: 0.2
-      ReleaseOnFull: 0
-    AnimationName: Uppercut2
-    MinDamage: 20
-    MaxDamage: 30
-    MinKnockback: {x: 2, y: 20}
-    MaxKnockback: {x: 4, y: 40}
-    MinKnockout: {x: 30, y: 100}
-    MaxKnockout: {x: 100, y: 300}
-    CastTime: 0.4
-    MinAcid: 20
-    MaxAcid: 50
-  _heavyAttackInPlace:
-    ChargeableStats:
-      ChargeAnimationName: SuperKick1
-      MaxChargeTime: 1
-      MinChargeTime: 0.2
-      ReleaseOnFull: 0
-    AnimationName: SuperKick2
-    MinDamage: 20
-    MaxDamage: 30
-    MinKnockback: {x: 50, y: 10}
-    MaxKnockback: {x: 100, y: 20}
-    MinKnockout: {x: 30, y: 100}
-    MaxKnockout: {x: 100, y: 300}
-    CastTime: 1
-    MinAcid: 30
-    MaxAcid: 60
-    MinMovement: {x: 0, y: 0, z: 0}
-    MaxMovement: {x: 0, y: 0, z: 100}
-  _heavyDownAttack:
-    ChargeableStats:
-      ChargeAnimationName: CrashDown1
-      MaxChargeTime: 1
-      MinChargeTime: 0.2
-      ReleaseOnFull: 1
-    AnimationName: CrashDown2
-    MinDamage: 10
-    MaxDamage: 30
-    MinKnockback: {x: 10, y: 10}
-    MaxKnockback: {x: 30, y: 30}
-    MinKnockout: {x: 10, y: 30}
-    MaxKnockout: {x: 50, y: 150}
-    CastTime: 0.5
-    MinAcid: 20
-    MaxAcid: 50
-    DownSpeed: 50
-    CrashAnimationName: CrashDown3
-    MinRadius: 2
-    MaxRadius: 3
-    AcidationRadiusMultiplier: 3
-    AcidationVE: BigAcidSplash
   _currentCombo: 0
-  _comboBreakTime: 1
-  _triggerDamage:
-  - {fileID: 8778400085838838603}
-  - {fileID: 8778400085838838603}
-  - {fileID: 8778400085838838603}
-  _explosionDamage: {fileID: 1685271862049472110}
---- !u!65 &8750279760870690426
-BoxCollider:
+  _comboBreakTime: 0
+  _rightFang: {fileID: 4670881512350886442}
+  _leftFang: {fileID: 934318718245804693}
+--- !u!1 &1659566773805717365
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900503287135289794}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8778400085838838603
-MonoBehaviour:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1903453318961024463}
+  - component: {fileID: 4873750142678384208}
+  - component: {fileID: 8330641621188248163}
+  m_Layer: 0
+  m_Name: Tooth Weapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1903453318961024463
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900503287135289794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8cf19639a7638d4e907922b46d9ff83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1685271862049472110
-MonoBehaviour:
+  m_GameObject: {fileID: 1659566773805717365}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.64136916, y: 0.3232837, z: 0.3076049, w: -0.6241093}
+  m_LocalPosition: {x: 0.047, y: 0.843, z: 0.039}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4670881512350886442}
+  m_LocalEulerAnglesHint: {x: -88.11, y: 195.754, z: 111.25}
+--- !u!33 &4873750142678384208
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 900503287135289794}
+  m_GameObject: {fileID: 1659566773805717365}
+  m_Mesh: {fileID: -5137121440642895717, guid: 6c339a96a43dd12428b2f1920ed9b5c9, type: 3}
+--- !u!23 &8330641621188248163
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659566773805717365}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4b02db47f3e62642a98af68c7d7598e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _explosionTag: 
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 900c7cf711ff77845a49b8a41fff3a6e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2714746171808166474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 934318718245804693}
+  m_Layer: 0
+  m_Name: Left Fang
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &934318718245804693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2714746171808166474}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6518030765832701825}
+  m_Father: {fileID: 6088972470968831689}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3246682589677251448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4670881512350886442}
+  m_Layer: 0
+  m_Name: Right Fang
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4670881512350886442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3246682589677251448}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1903453318961024463}
+  m_Father: {fileID: 6088972470968831689}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8802337493195222117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6518030765832701825}
+  - component: {fileID: 3165863887400131250}
+  - component: {fileID: 6962578311549433103}
+  m_Layer: 0
+  m_Name: Tooth Weapon (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6518030765832701825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8802337493195222117}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.64136916, y: 0.3232837, z: 0.3076049, w: -0.6241093}
+  m_LocalPosition: {x: 0.047, y: 0.843, z: 0.039}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 934318718245804693}
+  m_LocalEulerAnglesHint: {x: -88.11, y: 195.754, z: 111.25}
+--- !u!33 &3165863887400131250
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8802337493195222117}
+  m_Mesh: {fileID: -5137121440642895717, guid: 6c339a96a43dd12428b2f1920ed9b5c9, type: 3}
+--- !u!23 &6962578311549433103
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8802337493195222117}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 900c7cf711ff77845a49b8a41fff3a6e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
