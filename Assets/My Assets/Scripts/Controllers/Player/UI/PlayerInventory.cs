@@ -17,8 +17,6 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     [SerializeField] private InventoryItemSlot _meleeSlot, _rangeSlot, _dynamicSlot, _staticSlot;
     [SerializeField] private GameObject _canBeDroppedUI;
 
-    private GameManager _gameManager;
-    private PickupPooler _pickupPooler;
     private PlayerComponentsRefrences _playerComponents;
     private PlayerHealth _playerHealth;
     private PlayerCombatSystem _playerCombatSystem;
@@ -38,10 +36,10 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _playerCombatSystem = _playerComponents.GetPlayerCombatSystem;
         _playerEquipUI = _playerComponents.GetPlayerEquipUI;
 
-        _meleeSlot.GetButton.onClick.AddListener(MeleeSlotClick);
-        _rangeSlot.GetButton.onClick.AddListener(RangeSlotClick);
-        _staticSlot.GetButton.onClick.AddListener(StaticSlotClick);
-        _dynamicSlot.GetButton.onClick.AddListener(DynamicSlotClick);
+        _meleeSlot.GetButton.onClick.AddListener(MeleeSlotClear);
+        _rangeSlot.GetButton.onClick.AddListener(RangeSlotClear);
+        _staticSlot.GetButton.onClick.AddListener(StaticSlotClear);
+        _dynamicSlot.GetButton.onClick.AddListener(DynamicSlotClear);
         _meleeSlot.SetColor();
         _rangeSlot.SetColor();
         _staticSlot.SetColor();
@@ -185,6 +183,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
 
     private void UpdateCanBeDroppedUI()
     {
+        if (GetSelectedItemUI() == null) { _canBeDroppedUI.SetActive(false); return; }
         _canBeDroppedUI.SetActive(GetSelectedItemUI().GetInventoryItem.CanBeDropped);
     }
 
@@ -265,10 +264,10 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     }
 
 
-    public void SetMeleeWeapon(MeleeItem melee,InventoryItemUI itemUi)
+    public void SetMeleeWeapon(MeleeItem melee, InventoryItemUI itemUi)
     {
         SetItemInSlot(melee.GetMoveSet, _playerCombatSystem.GetCurrentMeleeMoveSet,
-                _playerCombatSystem.SetMeleeMoveSet, _meleeSlot,_playerEquipUI.GetMeleeSlot, itemUi);
+                _playerCombatSystem.SetMeleeMoveSet, _meleeSlot, _playerEquipUI.GetMeleeSlot, itemUi);
     }
 
     public void SetRangeWeapon(RangeItem range, InventoryItemUI itemUi)
@@ -290,54 +289,63 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     }
 
     private void SetItemInSlot<T>(T newItem, T currentItem,
-                                Action<T> setItemAction, InventoryItemSlot slot, EquipDisplayItemSlot eSlot, InventoryItemUI itemUI) where T : Component
+                            Action<T, InventoryItemUI> setItemAction, InventoryItemSlot slot, EquipDisplayItemSlot eSlot, InventoryItemUI itemUI) where T : Component
     {
-        if (newItem != null && newItem.name != currentItem?.name)
+        // Check if newItem is not null and compare it with currentItem
+        if (newItem != null && (currentItem == null || newItem.name != currentItem?.name))
         {
-            setItemAction(newItem);
+            // Set the new item in the system and the UI
+            setItemAction(newItem, itemUI);
             slot.SetSlot(itemUI);
             eSlot.SetSlot(itemUI);
         }
-        else 
+        else
         {
-            setItemAction(default);
-            slot.ClearSlot();
-            eSlot.ClearSlot();
+            // Handle case when newItem is null (remove item)
+            setItemAction(default, null);  // Reset item in the combat system and UI
+            slot.ClearSlot();  // Clear the visual slot
+            eSlot.ClearSlot();  // Clear the equipment slot visual
         }
     }
 
-    private void MeleeSlotClick()
+
+    public void MeleeSlotClear()
     {
-        _playerCombatSystem.SetMeleeMoveSet(null);
+        _playerCombatSystem.SetMeleeMoveSet(null,null);
         _meleeSlot.ClearSlot();
         _playerEquipUI.GetMeleeSlot.ClearSlot();
     }
-    private void RangeSlotClick()
+    public void RangeSlotClear()
     {
-        _playerCombatSystem.SetRangeMoveSet(null);
+        _playerCombatSystem.SetRangeMoveSet(null, null);
         _rangeSlot.ClearSlot();
         _playerEquipUI.GetRangeSlot.ClearSlot();
     }
-    private void StaticSlotClick()
+    public void StaticSlotClear()
     {
-        _playerCombatSystem.SetStaticUseable(null);
+        _playerCombatSystem.SetStaticUseable(null, null);
         _staticSlot.ClearSlot();
         _playerEquipUI.GetStaticSlot.ClearSlot();
     }
-    private void DynamicSlotClick()
+    public void DynamicSlotClear()
     {
-        _playerCombatSystem.SetDynamicUseable(null);
+        _playerCombatSystem.SetDynamicUseable(null, null);
         _dynamicSlot.ClearSlot();
         _playerEquipUI.GetDynamicSlot.ClearSlot();
     }
 
     public void RemoveOneItem(InventoryItemUI itemUI)
     {
+        RemoveAmountFromItem(itemUI);
+    }
+
+    public void RemoveAmountFromItem(InventoryItemUI itemUI, int amount=1)
+    {
         InventoryItemWithAmount itemToRemove = FindInventoryItem(itemUI);
 
         if (itemToRemove != null)
         {
-            itemToRemove.Amount--;
+            itemToRemove.Amount-= amount;
             if (itemToRemove.Amount <= 0)
             {
                 RemoveWholeItem(itemToRemove);

@@ -9,11 +9,14 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     private PlayerComponentsRefrences _playerComponentsRefrences;
     private PlayerGlide _glide;
     private PlayerAcidation _playerAcidation;
+    private PlayerInventory _playerInventory;
     private bool _acidation = false;
     private bool _usingRanged;
     private bool _busyAttacking;
     [SerializeField] private Transform _itemsLocation, _effectsList, _rightHand, _leftHand;
     [SerializeField] private List<Damage> _damagers;
+
+    InventoryItemUI _currentMeleeItemUI, _currentRangeItemUI, _currentDynamicItemUI, _currentStaticItemUI;
 
 
     private float _currentChargePercentage;
@@ -30,6 +33,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
         _playerComponentsRefrences = playerComponents;
         _glide = _playerComponentsRefrences.GetPlayerGlide;
         _playerAcidation = _playerComponentsRefrences.GetPlayerAcidation;
+        _playerInventory = _playerComponentsRefrences.GetPlayerInventory;
 
 
         TemporaryStart();
@@ -148,14 +152,16 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
         HandleEquipment();
     }
 
-    public void SetMeleeMoveSet(PlayerCombatMoveSet meleeMoveSet)
+    public void SetMeleeMoveSet(PlayerCombatMoveSet meleeMoveSet, InventoryItemUI item)
     {
         SetMoveSet(ref _currentMeleeMoveSet, meleeMoveSet, _defaultMeleeMoveSet);
+        _currentMeleeItemUI = item;
     }
 
-    public void SetRangeMoveSet(PlayerCombatMoveSet rangeMoveSet)
+    public void SetRangeMoveSet(PlayerCombatMoveSet rangeMoveSet, InventoryItemUI item)
     {
         SetMoveSet(ref _currentRangeMoveSet, rangeMoveSet, _defaultRangeMoveSet);
+        _currentRangeItemUI = item;
     }
 
     private void SetMoveSet(ref PlayerCombatMoveSet currentMoveSet, PlayerCombatMoveSet newMoveSet, PlayerCombatMoveSet defaultMoveSet)
@@ -168,14 +174,16 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
         HandleEquipment();
     }
 
-    public void SetStaticUseable(UseableAbility useable)
+    public void SetStaticUseable(UseableAbility useable, InventoryItemUI item)
     {
         SetUseable(ref _staticUseable, useable);
+        _currentStaticItemUI = item;
     }
 
-    public void SetDynamicUseable(UseableAbility useable)
+    public void SetDynamicUseable(UseableAbility useable, InventoryItemUI item)
     {
         SetUseable(ref _dynamicUseable, useable);
+        _currentDynamicItemUI = item;
     }
 
     private void SetUseable(ref UseableAbility currentUseable, UseableAbility newUseable)
@@ -207,6 +215,11 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
         consumable.Consume(this);
         _consumedConsumables.Add(consumable);
         return true;
+    }
+
+    public void ConsumeMelee()
+    {
+        
     }
 
     private void SetOrDestroy<T>(ref T current, T newInstance, T defaultInstance = null) where T : Component
@@ -242,5 +255,15 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
             _currentRangeMoveSet.SetEquippedState(false);
             _currentMeleeMoveSet.SetEquippedState(true);
         }
+    }
+
+    public void SpendMelee(int amount = 1)
+    {
+        _playerInventory.RemoveAmountFromItem(_currentMeleeItemUI,amount);
+        if (_currentMeleeItemUI==null)
+        {
+            SetMeleeMoveSet(null, null);
+            _playerInventory.MeleeSlotClear();
+        } 
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FangsMoveset : MeleeMoveset
 {
+    [SerializeField] private LightAttack[] _lightAttacksMoving = new LightAttack[6];
     [SerializeField] private Transform _rightFang, _leftFang;
     public override void MoveSetStart(CombatSystem combatSystem)
     {
@@ -26,12 +27,17 @@ public class FangsMoveset : MeleeMoveset
 
     protected override void LightInPlace()
     {
-        
     }
 
     protected override void LightMoving()
     {
-        
+        PerformLightAttack(_lightAttacksMoving[_currentCombo]);
+        _currentCombo++;
+        if (_currentCombo >= _lightAttacksMoving.Length)
+        {
+            BreakCombo();
+        }
+        _playerCombatSystem.SpendMelee();
     }
 
     protected override void OnEquip()
