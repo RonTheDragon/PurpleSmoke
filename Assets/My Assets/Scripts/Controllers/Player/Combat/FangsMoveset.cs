@@ -31,6 +31,7 @@ public class FangsMoveset : MeleeMoveset
 
     protected override void LightMoving()
     {
+        if (_playerCombatSystem.IsMeleeEmpty()) return;
         PerformLightAttack(_lightAttacksMoving[_currentCombo]);
         _currentCombo++;
         if (_currentCombo >= _lightAttacksMoving.Length)
@@ -38,6 +39,12 @@ public class FangsMoveset : MeleeMoveset
             BreakCombo();
         }
         _playerCombatSystem.SpendMelee();
+    }
+
+    protected override void AttackEnds()
+    {
+        base.AttackEnds();
+        _playerCombatSystem.DeleteIfEmptyMelee();
     }
 
     protected override void OnEquip()

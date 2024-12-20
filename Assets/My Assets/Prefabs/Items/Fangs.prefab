@@ -53,7 +53,50 @@ MonoBehaviour:
   _releasedEarly: 0
   _releaseWhenFullyCharged: 0
   _currentCombo: 0
-  _comboBreakTime: 0
+  _comboBreakTime: 1
+  _lightAttacksMoving:
+  - AnimationName: FangSlash1
+    CastTime: 0.3
+    Damagers: 00000000
+    Damage: 10
+    Acid: 0
+    Knockback: {x: 5, y: 5}
+    Knockout: {x: 5, y: 10}
+  - AnimationName: FangSlash2
+    CastTime: 0.3
+    Damagers: 01000000
+    Damage: 10
+    Acid: 0
+    Knockback: {x: 5, y: 5}
+    Knockout: {x: 5, y: 10}
+  - AnimationName: FangSlash1
+    CastTime: 0.3
+    Damagers: 00000000
+    Damage: 10
+    Acid: 0
+    Knockback: {x: 5, y: 5}
+    Knockout: {x: 5, y: 10}
+  - AnimationName: FangSlash2
+    CastTime: 0.3
+    Damagers: 01000000
+    Damage: 10
+    Acid: 0
+    Knockback: {x: 5, y: 5}
+    Knockout: {x: 5, y: 10}
+  - AnimationName: FangSlash1
+    CastTime: 0.3
+    Damagers: 00000000
+    Damage: 10
+    Acid: 0
+    Knockback: {x: 5, y: 5}
+    Knockout: {x: 5, y: 10}
+  - AnimationName: FangSlash2
+    CastTime: 0.3
+    Damagers: 01000000
+    Damage: 10
+    Acid: 0
+    Knockback: {x: 5, y: 5}
+    Knockout: {x: 5, y: 10}
   _rightFang: {fileID: 4670881512350886442}
   _leftFang: {fileID: 934318718245804693}
 --- !u!1 &1659566773805717365

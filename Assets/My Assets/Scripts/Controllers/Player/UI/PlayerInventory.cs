@@ -346,15 +346,26 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         if (itemToRemove != null)
         {
             itemToRemove.Amount-= amount;
-            if (itemToRemove.Amount <= 0)
-            {
-                RemoveWholeItem(itemToRemove);
-            }
-            else
+            if (itemToRemove.Amount > 0)
             {
                 itemUI.RemoveAmountFromItem();
             }
         }
+    }
+
+   
+
+    public bool IsItemEmpty(InventoryItemUI itemUI)
+    {
+        InventoryItemWithAmount itemToRemove = FindInventoryItem(itemUI);
+        if (itemToRemove != null)
+        {
+            if (itemToRemove.Amount <= 0)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void RemoveItemStack(InventoryItemUI itemUI)
@@ -367,7 +378,21 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         }
     }
 
-    private void RemoveWholeItem(InventoryItemWithAmount itemToRemove)
+    public void RemoveWholeItem(InventoryItemUI itemUI)
+    {
+        InventoryItemWithAmount itemToRemove = FindInventoryItem(itemUI);
+        if (IsSelectingThat(itemToRemove.UiOfItem.gameObject))
+        {
+            MoveSelectionAway();
+        }
+        _inventoryItems.Remove(itemToRemove);
+        _uiOfItems.Remove(itemToRemove.UiOfItem);
+        itemToRemove.UiOfItem.OnAmountChange = null;
+        Destroy(itemToRemove.UiOfItem.gameObject);
+        RefreshInventoryShortcutOrder();
+    }
+
+    public void RemoveWholeItem(InventoryItemWithAmount itemToRemove)
     {
         if (IsSelectingThat(itemToRemove.UiOfItem.gameObject))
         {

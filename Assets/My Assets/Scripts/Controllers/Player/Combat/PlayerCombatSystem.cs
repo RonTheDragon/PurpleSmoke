@@ -260,10 +260,22 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     public void SpendMelee(int amount = 1)
     {
         _playerInventory.RemoveAmountFromItem(_currentMeleeItemUI,amount);
-        if (_currentMeleeItemUI==null)
+    }
+
+    public bool IsMeleeEmpty()
+    {
+       return _playerInventory.IsItemEmpty(_currentMeleeItemUI);
+    }
+
+    public void DeleteIfEmptyMelee()
+    {
+        if (_currentMeleeItemUI==null) return;
+        if(IsMeleeEmpty())
         {
+            _playerInventory.RemoveWholeItem(_currentMeleeItemUI);
             SetMeleeMoveSet(null, null);
             _playerInventory.MeleeSlotClear();
-        } 
+            
+        }
     }
 }
