@@ -59,44 +59,33 @@ MonoBehaviour:
     CastTime: 0.3
     Damagers: 00000000
     Damage: 10
-    Acid: 0
+    Acid: 5
     Knockback: {x: 5, y: 5}
     Knockout: {x: 5, y: 10}
   - AnimationName: FangSlash2
     CastTime: 0.3
     Damagers: 01000000
     Damage: 10
-    Acid: 0
+    Acid: 5
     Knockback: {x: 5, y: 5}
     Knockout: {x: 5, y: 10}
-  - AnimationName: FangSlash1
-    CastTime: 0.3
-    Damagers: 00000000
-    Damage: 10
-    Acid: 0
-    Knockback: {x: 5, y: 5}
-    Knockout: {x: 5, y: 10}
-  - AnimationName: FangSlash2
-    CastTime: 0.3
+  _lightAttacksInPlace:
+  - AnimationName: FangUpSlash1
+    CastTime: 0.5
     Damagers: 01000000
-    Damage: 10
-    Acid: 0
-    Knockback: {x: 5, y: 5}
-    Knockout: {x: 5, y: 10}
-  - AnimationName: FangSlash1
-    CastTime: 0.3
-    Damagers: 00000000
-    Damage: 10
-    Acid: 0
-    Knockback: {x: 5, y: 5}
-    Knockout: {x: 5, y: 10}
-  - AnimationName: FangSlash2
-    CastTime: 0.3
+    Damage: 20
+    Acid: 20
+    Knockback: {x: 0, y: 20}
+    Knockout: {x: 10, y: 30}
+    Movement: {x: 0, y: 0, z: 0}
+  - AnimationName: FangUpSlash2
+    CastTime: 1
     Damagers: 01000000
-    Damage: 10
-    Acid: 0
-    Knockback: {x: 5, y: 5}
-    Knockout: {x: 5, y: 10}
+    Damage: 30
+    Acid: 30
+    Knockback: {x: 0, y: 30}
+    Knockout: {x: 10, y: 30}
+    Movement: {x: 0, y: 30, z: 0}
   _rightFang: {fileID: 4670881512350886442}
   _leftFang: {fileID: 934318718245804693}
 --- !u!1 &1659566773805717365
