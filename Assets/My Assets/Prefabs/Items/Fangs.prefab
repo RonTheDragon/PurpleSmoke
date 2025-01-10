@@ -79,13 +79,21 @@ MonoBehaviour:
     Knockout: {x: 10, y: 30}
     Movement: {x: 0, y: 0, z: 0}
   - AnimationName: FangUpSlash2
-    CastTime: 1
+    CastTime: 0.7
     Damagers: 01000000
     Damage: 30
     Acid: 30
     Knockback: {x: 0, y: 30}
     Knockout: {x: 10, y: 30}
     Movement: {x: 0, y: 30, z: 0}
+  _lightAttackInAir:
+    AnimationName: FangAirSpin
+    CastTime: 0.5
+    Damagers: 01000000
+    Damage: 20
+    Acid: 0
+    Knockback: {x: 30, y: 50}
+    Knockout: {x: 10, y: 10}
   _rightFang: {fileID: 4670881512350886442}
   _leftFang: {fileID: 934318718245804693}
 --- !u!1 &1659566773805717365

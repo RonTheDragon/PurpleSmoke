@@ -6,6 +6,7 @@ public class FangsMoveset : MeleeMoveset
 {
     [SerializeField] private LightAttack[] _lightAttacksMoving = new LightAttack[2];
     [SerializeField] private LightAttackWithMovement[] _lightAttacksInPlace = new LightAttackWithMovement[2];
+    [SerializeField] private LightAttack _lightAttackInAir;
     [SerializeField] private Transform _rightFang, _leftFang;
     public override void MoveSetStart(CombatSystem combatSystem)
     {
@@ -23,7 +24,12 @@ public class FangsMoveset : MeleeMoveset
 
     protected override void LightInAir()
     {
-        
+        _playerMovement.AddNotMovingReason("Attack");
+        _playerJump.StopJumpMidAir();
+        _playerGravity.AddNotFallingReason("AirAttack");
+        _attackedInAir = true;
+        PerformLightAttack(_lightAttackInAir);
+        _playerCombatSystem.SpendMelee();
     }
 
     protected override void LightInPlace()
@@ -59,6 +65,7 @@ public class FangsMoveset : MeleeMoveset
 
     protected override void OnEquip()
     {
+        _playerGroundCheck.OnGroundCheckChange += OnGroundedChanged;
         _rightFang.parent = _playerCombatSystem.GetRightHand;
         _leftFang.parent = _playerCombatSystem.GetLeftHand;
         _rightFang.localPosition = Vector3.zero;
@@ -73,6 +80,7 @@ public class FangsMoveset : MeleeMoveset
 
     protected override void OnUnequip()
     {
+        _playerGroundCheck.OnGroundCheckChange -= OnGroundedChanged;
         _rightFang.gameObject.SetActive(false);
         _leftFang.gameObject.SetActive(false);
     }
