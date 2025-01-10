@@ -350,13 +350,13 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
             {
                 itemUI.RemoveAmountFromItem();
             }
-            else
-            {
-                RemoveWholeItem(itemToRemove);
-            }
         }
     }
 
+    public void RemoveItemIfEmpty(InventoryItemUI itemUI)
+    {
+        if (IsItemEmpty(itemUI)) RemoveItemStack(itemUI);
+    }
    
 
     public bool IsItemEmpty(InventoryItemUI itemUI)

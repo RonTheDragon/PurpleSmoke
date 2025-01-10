@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventoryItemUI : ShortcutItem
 {
@@ -81,6 +82,7 @@ public class InventoryItemUI : ShortcutItem
             if (_playerInventory.SpendConsumable((ConsumableItem)_inventoryItem))
             {
                 _playerInventory.RemoveOneItem(this);
+                _playerInventory.RemoveItemIfEmpty(this);
             }
         }
     }
