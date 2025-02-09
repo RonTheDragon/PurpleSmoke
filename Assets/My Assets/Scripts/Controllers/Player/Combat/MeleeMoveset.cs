@@ -8,7 +8,7 @@ public abstract class MeleeMoveset : ChargeableMoveSet
     protected PlayerAttackMovement _playerAttackMovement;
     protected PlayerGravity _playerGravity;
     protected PlayerJump _playerJump;
-    protected bool _lightAttacking;
+    protected bool _lightAttacking, _heavyAttacking;
     protected CombatRules _owner;
 
     [ReadOnly][SerializeField] protected int _currentCombo;
@@ -29,6 +29,10 @@ public abstract class MeleeMoveset : ChargeableMoveSet
         {
             OnTryLightAttack();
         }
+        if (_heavyAttacking)
+        {
+            OnTryHeavyAttack();
+        }    
     }
 
     protected void OnTryLightAttack()
@@ -57,11 +61,50 @@ public abstract class MeleeMoveset : ChargeableMoveSet
         }
     }
 
+    protected void OnTryHeavyAttack()
+    {
+        if (_castTimeLeft > 0 || _releasedEarly || _playerCombatSystem.GetIsBusyAttacking) return;
+
+        _playerCombatSystem.SetBusyAttacking(true);
+
+        if (_playerGroundCheck.IsGrounded())
+        {
+            if (_playerMovement.IsGettingMovementInput())
+            {
+                _currentChargedAttack = 0;
+                HeavyMoving();
+            }
+            else
+            {
+                _currentChargedAttack = 1;
+                HeavyInPlace();
+                _playerMovement.AddSpeedModifier("AimingKick", 0);
+            }
+        }
+        else
+        {
+            _currentChargedAttack = 2;
+            HeavyInAir();
+            _playerMovement.AddNotMovingReason("Attack");
+            _playerJump.StopJumpMidAir();
+            _playerGravity.AddNotFallingReason("AirAttack");
+        }
+
+        base.OnHeavyAttack();
+        BreakCombo();
+    }
+
     protected abstract void LightMoving();
 
     protected abstract void LightInPlace();
 
     protected abstract void LightInAir();
+
+    protected abstract void HeavyMoving();
+
+    protected abstract void HeavyInPlace();
+
+    protected abstract void HeavyInAir();
 
     public override void OnLightAttack()
     {
@@ -71,6 +114,16 @@ public abstract class MeleeMoveset : ChargeableMoveSet
     public override void OnReleaseLightAttack()
     {
         _lightAttacking = false;
+    }
+
+    public override void OnHeavyAttack()
+    {
+        _heavyAttacking = true;
+    }
+
+    public override void OnReleaseHeavyAttack()
+    {
+        _heavyAttacking = false;
     }
 
 
@@ -189,7 +242,7 @@ public abstract class MeleeMoveset : ChargeableMoveSet
         _castTimeLeft = 0;
         _playerMovement.RemoveNotMovingReason("Attack");
         _playerGravity.RemoveNotFallingReason("AirAttack");
-        _lightAttacking = false;
+        //_lightAttacking = false;
         _playerGravity.ResetFall();
         _playerCombatSystem.SetBusyAttacking(false);
         RemoveAllDamagers();
@@ -220,7 +273,14 @@ public abstract class MeleeMoveset : ChargeableMoveSet
 
     protected void OnGroundedChanged(bool OnGround)
     {
-        if (_castTimeLeft > 0) return;
+        if (_castTimeLeft > 0)
+        {
+            if (!OnGround)
+            {
+                _castTimeLeft = 0.3f;
+            }
+            return;
+        }
 
         if (OnGround)
         {
@@ -229,6 +289,7 @@ public abstract class MeleeMoveset : ChargeableMoveSet
         else if (_playerCombatSystem.GetCanAttack)
         {
             ResetAttacks();
+            _castTimeLeft = 0.3f;
             _playerMovement.RemoveNotMovingReason("Attack");
         }
     }

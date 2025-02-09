@@ -60,41 +60,24 @@ public class UnarmedMoveset : MeleeMoveset
         _playerAttackMovement.SetMovement(_lightAttackInAir.Movement);
     }
 
-    public override void OnHeavyAttack()
+    protected override void HeavyMoving()
     {
-        if (_castTimeLeft > 0 || _releasedEarly) return;
+        PerformCharging(_heavyAttackMoving.ChargeableStats);
+    }
 
-        _playerCombatSystem.SetBusyAttacking(true);
+    protected override void HeavyInPlace()
+    {
+        PerformCharging(_heavyAttackInPlace.ChargeableStats);
+    }
 
-        if (_playerGroundCheck.IsGrounded())
-        {
-            if (_playerMovement.IsGettingMovementInput())
-            {
-                _currentChargedAttack = 0;
-                PerformCharging(_heavyAttackMoving.ChargeableStats);
-            }
-            else
-            {
-                _currentChargedAttack = 1;
-                PerformCharging(_heavyAttackInPlace.ChargeableStats);
-                _playerMovement.AddSpeedModifier("AimingKick", 0);
-            }
-        }
-        else
-        {
-            _currentChargedAttack = 2;
-            PerformCharging(_heavyDownAttack.ChargeableStats);
-            _playerMovement.AddNotMovingReason("Attack");
-            _playerJump.StopJumpMidAir();
-            _playerGravity.AddNotFallingReason("AirAttack");
-        }
-
-        base.OnHeavyAttack();
-        BreakCombo();
+    protected override void HeavyInAir()
+    {
+        PerformCharging(_heavyDownAttack.ChargeableStats);
     }
 
     public override void OnReleaseHeavyAttack()
     {
+        base.OnReleaseHeavyAttack();
         if (_castTimeLeft > 0 || _currentCharge == 0 || _releasedEarly) return; //dismiss press
 
         if (CheckAndHandleEarlyRelease()) return; //released too early
@@ -192,6 +175,7 @@ public class UnarmedMoveset : MeleeMoveset
         _playerAttackMovement.OnCrashedDown -= OnCrashedDown;
         _lightAttacking = false;
     }
+
 
     [System.Serializable]
     class HeavyDownAttack : HeavyAttack

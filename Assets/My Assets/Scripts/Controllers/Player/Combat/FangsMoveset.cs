@@ -90,4 +90,26 @@ public class FangsMoveset : MeleeMoveset
         Destroy(_rightFang.gameObject);
         Destroy(_leftFang.gameObject);
     }
+
+    //Unfinished Section
+    protected override void HeavyMoving()
+    {
+       
+    }
+
+    protected override void HeavyInPlace()
+    {
+        
+    }
+
+    protected override void HeavyInAir()
+    {
+        
+    }
+
+    public override void OnReleaseHeavyAttack()
+    {
+        base.OnReleaseHeavyAttack();
+        ResetAttacks();
+    }
 }
