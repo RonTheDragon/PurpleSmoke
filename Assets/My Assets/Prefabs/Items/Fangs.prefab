@@ -94,6 +94,58 @@ MonoBehaviour:
     Acid: 0
     Knockback: {x: 30, y: 50}
     Knockout: {x: 10, y: 10}
+  _heavyAttackMoving:
+    AnimationName: FangSpins2
+    CastTime: 0.2
+    Damagers: 01000000
+    Damage: 5
+    Acid: 5
+    Knockback: {x: 5, y: 0}
+    Knockout: {x: 5, y: 10}
+    ChargeableStats:
+      ChargeAnimationName: FangSpins1
+      MinChargeTime: 0.3
+      MaxChargeTime: 2
+      ReleaseOnFull: 0
+    MaxRepeat: 10
+  _heavyAttackInPlace:
+    AnimationName: 
+    CastTime: 0
+    Damagers: 
+    ChargeableStats:
+      ChargeAnimationName: 
+      MinChargeTime: 0
+      MaxChargeTime: 0
+      ReleaseOnFull: 0
+    MinDamage: 0
+    MaxDamage: 0
+    MinAcid: 0
+    MaxAcid: 0
+    MinKnockback: {x: 0, y: 0}
+    MaxKnockback: {x: 0, y: 0}
+    MinKnockout: {x: 0, y: 0}
+    MaxKnockout: {x: 0, y: 0}
+    MinMovement: {x: 0, y: 0, z: 0}
+    MaxMovement: {x: 0, y: 0, z: 0}
+  _heavyAirAttack:
+    AnimationName: 
+    CastTime: 0
+    Damagers: 
+    ChargeableStats:
+      ChargeAnimationName: 
+      MinChargeTime: 0
+      MaxChargeTime: 0
+      ReleaseOnFull: 0
+    MinDamage: 0
+    MaxDamage: 0
+    MinAcid: 0
+    MaxAcid: 0
+    MinKnockback: {x: 0, y: 0}
+    MaxKnockback: {x: 0, y: 0}
+    MinKnockout: {x: 0, y: 0}
+    MaxKnockout: {x: 0, y: 0}
+    MinMovement: {x: 0, y: 0, z: 0}
+    MaxMovement: {x: 0, y: 0, z: 0}
   _rightFang: {fileID: 4670881512350886442}
   _leftFang: {fileID: 934318718245804693}
 --- !u!1 &1659566773805717365

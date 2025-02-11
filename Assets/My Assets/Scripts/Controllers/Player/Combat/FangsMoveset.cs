@@ -1,5 +1,6 @@
 
 
+using System.Collections;
 using UnityEngine;
 
 public class FangsMoveset : MeleeMoveset
@@ -7,6 +8,9 @@ public class FangsMoveset : MeleeMoveset
     [SerializeField] private LightAttack[] _lightAttacksMoving = new LightAttack[2];
     [SerializeField] private LightAttackWithMovement[] _lightAttacksInPlace = new LightAttackWithMovement[2];
     [SerializeField] private LightAttack _lightAttackInAir;
+    [SerializeField] private HeavyRepeatingAttack _heavyAttackMoving;
+    [SerializeField] private HeavyAttackWithMovement _heavyAttackInPlace;
+    [SerializeField] private HeavyAttackWithMovement _heavyAirAttack;
     [SerializeField] private Transform _rightFang, _leftFang;
     public override void MoveSetStart(CombatSystem combatSystem)
     {
@@ -61,6 +65,7 @@ public class FangsMoveset : MeleeMoveset
     {
         base.AttackEnds();
         _playerCombatSystem.DeleteIfEmptyMelee();
+        StopAllCoroutines();
     }
 
     protected override void OnEquip()
@@ -94,22 +99,96 @@ public class FangsMoveset : MeleeMoveset
     //Unfinished Section
     protected override void HeavyMoving()
     {
-       
+        PerformCharging(_heavyAttackMoving.ChargeableStats);
     }
 
     protected override void HeavyInPlace()
     {
-        
+        PerformCharging(_heavyAttackInPlace.ChargeableStats);
     }
 
     protected override void HeavyInAir()
     {
-        
+        PerformCharging(_heavyAirAttack.ChargeableStats);
     }
 
     public override void OnReleaseHeavyAttack()
     {
         base.OnReleaseHeavyAttack();
-        ResetAttacks();
+        if (_castTimeLeft > 0 || _currentCharge == 0 || _releasedEarly) return; //dismiss press
+
+        if (CheckAndHandleEarlyRelease()) return; //released too early
+
+        switch (_currentChargedAttack)
+        {
+            case 0:
+                PerformHeavyAttackRepeating(_heavyAttackMoving);
+                break;
+            case 1:
+                PerformHeavyAttack(_heavyAttackInPlace);
+                _playerMovement.AddNotMovingReason("Attack");
+                _playerMovement.RemoveSpeedModifier("AimingKick");
+                break;
+            case 2:
+                PerformHeavyAttack(_heavyAirAttack);
+                break;
+            default:
+                break;
+        }
+
+        _playerCombatSystem.SpendMelee();
+        ResetCharge();
+        BreakCombo();
+    }
+
+    private void PerformHeavyAttackRepeating(HeavyRepeatingAttack attack)
+    {
+        float chargePercentage = GetChargePercentage();
+        int repeats = Mathf.Max(1, (int)(attack.MaxRepeat * chargePercentage)); // Ensure at least one repeat
+        float knockout = Random.Range(attack.Knockout.x, attack.Knockout.y);
+
+        StartCoroutine(RepeatAttackAnimation(attack.AnimationName, repeats, attack.CastTime)); // Add delay per repeat
+
+        _castTimeLeft = attack.CastTime*repeats;
+
+        foreach (int i in attack.Damagers)
+        {
+            TriggerDamage trigger = (TriggerDamage)_playerCombatSystem.GetDamagers[i];
+            AddDamager(trigger);
+            trigger.SetOwner(_owner);
+            trigger.SetDamage(attack.Damage);
+            trigger.SetKnock(attack.Knockback, knockout);
+
+            if (_playerCombatSystem.GetAcidation)
+            {
+                trigger.SetAcidDamage(attack.Acid);
+            }
+            else
+            {
+                trigger.SetAcidDamage(0);
+            }
+        }
+    }
+
+    private IEnumerator RepeatAttackAnimation(string animationName, int repeats, float delay)
+    {
+        for (int i = 0; i < repeats; i++)
+        {
+            _playerAnimations.PlayAnimation(animationName);
+            yield return new WaitForSeconds(delay); // Wait before playing next repeat
+        }
+    }
+
+    public override void ResetAttacks()
+    {
+        base.ResetAttacks();
+        StopAllCoroutines();
+    }
+
+    [System.Serializable]
+    protected class HeavyRepeatingAttack : LightAttack
+    {
+        public ChargeableStats ChargeableStats;
+        public int MaxRepeat;
     }
 }
