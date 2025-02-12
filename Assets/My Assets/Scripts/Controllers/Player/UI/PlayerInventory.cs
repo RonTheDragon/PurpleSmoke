@@ -348,7 +348,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
             itemToRemove.Amount-= amount;
             if (itemToRemove.Amount > 0)
             {
-                itemUI.RemoveAmountFromItem();
+                itemUI.RemoveAmountFromItem(amount);
             }
         }
     }

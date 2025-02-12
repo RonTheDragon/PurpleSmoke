@@ -109,24 +109,24 @@ MonoBehaviour:
       ReleaseOnFull: 0
     MaxRepeat: 10
   _heavyAttackInPlace:
-    AnimationName: 
-    CastTime: 0
-    Damagers: 
+    AnimationName: FangHug2
+    CastTime: 0.5
+    Damagers: 0000000001000000
     ChargeableStats:
-      ChargeAnimationName: 
-      MinChargeTime: 0
-      MaxChargeTime: 0
+      ChargeAnimationName: FangHug1
+      MinChargeTime: 0.3
+      MaxChargeTime: 2
       ReleaseOnFull: 0
-    MinDamage: 0
-    MaxDamage: 0
+    MinDamage: 10
+    MaxDamage: 30
     MinAcid: 0
     MaxAcid: 0
     MinKnockback: {x: 0, y: 0}
-    MaxKnockback: {x: 0, y: 0}
-    MinKnockout: {x: 0, y: 0}
-    MaxKnockout: {x: 0, y: 0}
-    MinMovement: {x: 0, y: 0, z: 0}
-    MaxMovement: {x: 0, y: 0, z: 0}
+    MaxKnockback: {x: 10, y: 1}
+    MinKnockout: {x: 0, y: 10}
+    MaxKnockout: {x: 50, y: 100}
+    MinMovement: {x: 0, y: 0, z: 5}
+    MaxMovement: {x: 0, y: 0, z: 175}
   _heavyAirAttack:
     AnimationName: 
     CastTime: 0

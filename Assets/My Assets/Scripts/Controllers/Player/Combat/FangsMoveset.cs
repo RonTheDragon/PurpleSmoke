@@ -128,6 +128,7 @@ public class FangsMoveset : MeleeMoveset
                 PerformHeavyAttack(_heavyAttackInPlace);
                 _playerMovement.AddNotMovingReason("Attack");
                 _playerMovement.RemoveSpeedModifier("AimingKick");
+                _playerCombatSystem.SpendMelee(2);
                 break;
             case 2:
                 PerformHeavyAttack(_heavyAirAttack);
@@ -135,8 +136,6 @@ public class FangsMoveset : MeleeMoveset
             default:
                 break;
         }
-
-        _playerCombatSystem.SpendMelee();
         ResetCharge();
         BreakCombo();
     }
@@ -175,6 +174,7 @@ public class FangsMoveset : MeleeMoveset
         for (int i = 0; i < repeats; i++)
         {
             _playerAnimations.PlayAnimation(animationName);
+            _playerCombatSystem.SpendMelee();
             yield return new WaitForSeconds(delay); // Wait before playing next repeat
         }
     }
