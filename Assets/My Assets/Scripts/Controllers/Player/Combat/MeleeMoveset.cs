@@ -271,7 +271,7 @@ public abstract class MeleeMoveset : ChargeableMoveSet
         
     }
 
-    protected void OnGroundedChanged(bool OnGround)
+    protected virtual void OnGroundedChanged(bool OnGround)
     {
         if (_castTimeLeft > 0)
         {

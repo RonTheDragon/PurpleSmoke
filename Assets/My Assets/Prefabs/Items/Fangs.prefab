@@ -128,14 +128,14 @@ MonoBehaviour:
     MinMovement: {x: 0, y: 0, z: 5}
     MaxMovement: {x: 0, y: 0, z: 175}
   _heavyAirAttack:
-    AnimationName: 
-    CastTime: 0
-    Damagers: 
+    AnimationName: FangChopper2
+    CastTime: 1
+    Damagers: 01000000
     ChargeableStats:
-      ChargeAnimationName: 
-      MinChargeTime: 0
-      MaxChargeTime: 0
-      ReleaseOnFull: 0
+      ChargeAnimationName: FangChopper1
+      MinChargeTime: 0.3
+      MaxChargeTime: 1
+      ReleaseOnFull: 1
     MinDamage: 0
     MaxDamage: 0
     MinAcid: 0
@@ -144,8 +144,8 @@ MonoBehaviour:
     MaxKnockback: {x: 0, y: 0}
     MinKnockout: {x: 0, y: 0}
     MaxKnockout: {x: 0, y: 0}
-    MinMovement: {x: 0, y: 0, z: 0}
-    MaxMovement: {x: 0, y: 0, z: 0}
+    MinMovement: {x: 0, y: 0, z: 100}
+    MaxMovement: {x: 0, y: 0, z: 100}
   _rightFang: {fileID: 4670881512350886442}
   _leftFang: {fileID: 934318718245804693}
 --- !u!1 &1659566773805717365

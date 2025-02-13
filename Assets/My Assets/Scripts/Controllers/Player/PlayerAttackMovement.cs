@@ -10,6 +10,8 @@ public class PlayerAttackMovement : CharacterAttackMovement, IPlayerComponent
     public Action OnCrashedDown;
     private bool _fallingCheckDelayed;
     private float _fallingCheckDelayTimer;
+    private bool _aimingBody;
+    private Transform _camera;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -17,6 +19,7 @@ public class PlayerAttackMovement : CharacterAttackMovement, IPlayerComponent
         _playerGravity = playerComponents.GetPlayerGravity;
         _playerGroundCheck = playerComponents.GetPlayerGroundCheck;
         _characterBody = playerComponents.GetPlayerBody;
+        _camera = playerComponents.GetCamera.transform;
 
         playerComponents.OnUpdate += PlayerUpdate;
     }
@@ -27,6 +30,7 @@ public class PlayerAttackMovement : CharacterAttackMovement, IPlayerComponent
         {
             ApplyingMovement();
             ApplyingDownMovement();
+            AimingBody();
         }
     }
 
@@ -59,6 +63,18 @@ public class PlayerAttackMovement : CharacterAttackMovement, IPlayerComponent
         {
             return _playerGravity.IsActuallyFalling();
         }
+    }
+
+    private void AimingBody()
+    {
+        if (!_aimingBody) return;
+
+        _characterBody.LookAt(_camera.transform.forward*100);
+    }
+
+    public void SetAimingBody(bool b)
+    {
+        _aimingBody = b;
     }
 
     public void SetCrashingDownSpeed(float speed)

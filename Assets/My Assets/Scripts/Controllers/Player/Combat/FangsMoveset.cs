@@ -1,6 +1,7 @@
 
 
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FangsMoveset : MeleeMoveset
@@ -110,6 +111,7 @@ public class FangsMoveset : MeleeMoveset
     protected override void HeavyInAir()
     {
         PerformCharging(_heavyAirAttack.ChargeableStats);
+        _playerAttackMovement.SetAimingBody(true);
     }
 
     public override void OnReleaseHeavyAttack()
@@ -131,7 +133,7 @@ public class FangsMoveset : MeleeMoveset
                 _playerCombatSystem.SpendMelee(2);
                 break;
             case 2:
-                PerformHeavyAttack(_heavyAirAttack);
+                PerformChopperAttack(_heavyAirAttack);
                 break;
             default:
                 break;
@@ -177,6 +179,19 @@ public class FangsMoveset : MeleeMoveset
             _playerCombatSystem.SpendMelee();
             yield return new WaitForSeconds(delay); // Wait before playing next repeat
         }
+    }
+
+    private void PerformChopperAttack(HeavyAttackWithMovement attack)
+    {
+        PerformHeavyAttack(attack);
+        _playerAttackMovement.ApplyMovement();
+        Invoke(nameof(EndChopperAttack), attack.CastTime);
+    }
+
+    private void EndChopperAttack()
+    {
+        _playerAttackMovement.SetAimingBody(false);
+        _playerAnimations.PlayAnimation("Cancel");
     }
 
     public override void ResetAttacks()
