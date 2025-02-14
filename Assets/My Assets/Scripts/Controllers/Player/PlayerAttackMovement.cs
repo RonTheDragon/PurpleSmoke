@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using UnityEngine;
 
 public class PlayerAttackMovement : CharacterAttackMovement, IPlayerComponent
@@ -69,13 +70,40 @@ public class PlayerAttackMovement : CharacterAttackMovement, IPlayerComponent
     {
         if (!_aimingBody) return;
 
-        _characterBody.LookAt(_camera.transform.forward*100);
+        // Get the camera's forward direction and extend it
+        Vector3 lookTarget = _camera.transform.position + _camera.transform.forward * 100;
+
+        // Make the character look at that point
+        _characterBody.LookAt(lookTarget);
+
+        // Get the rotation in Euler angles
+        Vector3 eulerRotation = _characterBody.localRotation.eulerAngles;
+
+        // If aiming upwards (X rotation is greater than 180), lock it to 0
+        if (eulerRotation.x > 180)
+            eulerRotation.x = 0;
+
+        // Apply corrected rotation
+        _characterBody.localRotation = Quaternion.Euler(eulerRotation);
     }
+
+
+
+
+
+
+
 
     public void SetAimingBody(bool b)
     {
         _aimingBody = b;
+        if (!_aimingBody)
+        {
+            Vector3 eulerRotation = _characterBody.localRotation.eulerAngles;
+            _characterBody.localRotation = Quaternion.Euler(0, eulerRotation.y, 0);
+        }
     }
+
 
     public void SetCrashingDownSpeed(float speed)
     {

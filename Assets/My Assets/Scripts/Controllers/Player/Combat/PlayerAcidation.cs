@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAcidation : MonoBehaviour, IPlayerComponent
@@ -25,7 +26,8 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
     private PlayerCombatSystem _playerCombatSystem;
     public Action OnNotEnoughAcid;
 
-    [SerializeField] private GameObject[] _onlyActiveWhileAcidation;
+    [SerializeField] private List<GameObject> _onlyActiveWhileAcidation = new List<GameObject>();
+
 
 
     public float Max => _maxAcidation;
@@ -158,6 +160,22 @@ public class PlayerAcidation : MonoBehaviour, IPlayerComponent
         foreach(GameObject g in _onlyActiveWhileAcidation)
         {
             g.SetActive(state);
+        }
+    }
+
+    public void AddToActiveWhileAcidation(GameObject obj)
+    {
+        if (!_onlyActiveWhileAcidation.Contains(obj))
+        {
+            _onlyActiveWhileAcidation.Add(obj);
+        }
+    }
+
+    public void RemoveFromActiveWhileAcidation(GameObject obj)
+    {
+        if (_onlyActiveWhileAcidation.Contains(obj))
+        {
+            _onlyActiveWhileAcidation.Remove(obj);
         }
     }
 }

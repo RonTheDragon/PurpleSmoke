@@ -1,7 +1,7 @@
 
 
 using System.Collections;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FangsMoveset : MeleeMoveset
@@ -13,6 +13,8 @@ public class FangsMoveset : MeleeMoveset
     [SerializeField] private HeavyAttackWithMovement _heavyAttackInPlace;
     [SerializeField] private HeavyAttackWithMovement _heavyAirAttack;
     [SerializeField] private Transform _rightFang, _leftFang;
+    [SerializeField] private TrailRenderer _rightTrail, _leftTrail;
+    private PlayerAcidation _playerAcidation;
     public override void MoveSetStart(CombatSystem combatSystem)
     {
         base.MoveSetStart(combatSystem);
@@ -25,6 +27,8 @@ public class FangsMoveset : MeleeMoveset
         _playerGravity = refs.GetPlayerGravity;
         _playerJump = refs.GetPlayerJump;
         _owner = refs.GetCombatRules;
+        _playerAcidation = refs.GetPlayerAcidation;
+        
     }
 
     protected override void LightInAir()
@@ -82,6 +86,9 @@ public class FangsMoveset : MeleeMoveset
         _leftFang.localScale = Vector3.one;
         _rightFang.gameObject.SetActive(true);
         _leftFang.gameObject.SetActive(true);
+        _playerAcidation.AddToActiveWhileAcidation(_rightTrail.gameObject);
+        _playerAcidation.AddToActiveWhileAcidation(_leftTrail.gameObject);
+        _playerAnimations.SetTrails(new List<TrailRenderer> { _rightTrail, _leftTrail });
     }
 
     protected override void OnUnequip()
@@ -89,10 +96,16 @@ public class FangsMoveset : MeleeMoveset
         _playerGroundCheck.OnGroundCheckChange -= OnGroundedChanged;
         _rightFang.gameObject.SetActive(false);
         _leftFang.gameObject.SetActive(false);
+        _playerAcidation.RemoveFromActiveWhileAcidation(_rightTrail.gameObject);
+        _playerAcidation.RemoveFromActiveWhileAcidation(_leftTrail.gameObject);
+        _playerAnimations.ClearTrails();
     }
 
     private void OnDestroy()
     {
+       // _playerAcidation.RemoveFromActiveWhileAcidation(_rightTrail.gameObject);
+       // _playerAcidation.RemoveFromActiveWhileAcidation(_leftTrail.gameObject);
+      //  _playerAnimations.ClearTrails();
         Destroy(_rightFang.gameObject);
         Destroy(_leftFang.gameObject);
     }
@@ -134,6 +147,7 @@ public class FangsMoveset : MeleeMoveset
                 break;
             case 2:
                 PerformChopperAttack(_heavyAirAttack);
+                _playerCombatSystem.SpendMelee(2);
                 break;
             default:
                 break;
@@ -192,6 +206,8 @@ public class FangsMoveset : MeleeMoveset
     {
         _playerAttackMovement.SetAimingBody(false);
         _playerAnimations.PlayAnimation("Cancel");
+        _playerMovement.RemoveNotMovingReason("Attack");
+        _playerGravity.RemoveNotFallingReason("AirAttack");
     }
 
     public override void ResetAttacks()

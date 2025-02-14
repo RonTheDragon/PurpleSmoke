@@ -16,7 +16,7 @@ public abstract class MeleeMoveset : ChargeableMoveSet
     protected float _comboTimeLeft;
 
     protected int _lastAttackType;
-    protected bool _attackedInAir;
+    protected bool _attackedInAir, _attackedInAirHeavy;
     protected int _currentChargedAttack;
     protected List<Damage> _currentDamagers = new List<Damage>();
 
@@ -65,8 +65,6 @@ public abstract class MeleeMoveset : ChargeableMoveSet
     {
         if (_castTimeLeft > 0 || _releasedEarly || _playerCombatSystem.GetIsBusyAttacking) return;
 
-        _playerCombatSystem.SetBusyAttacking(true);
-
         if (_playerGroundCheck.IsGrounded())
         {
             if (_playerMovement.IsGettingMovementInput())
@@ -81,15 +79,18 @@ public abstract class MeleeMoveset : ChargeableMoveSet
                 _playerMovement.AddSpeedModifier("AimingKick", 0);
             }
         }
-        else
+        else if (!_attackedInAirHeavy)
         {
             _currentChargedAttack = 2;
             HeavyInAir();
             _playerMovement.AddNotMovingReason("Attack");
             _playerJump.StopJumpMidAir();
             _playerGravity.AddNotFallingReason("AirAttack");
+            _attackedInAirHeavy = true;
         }
+        else {  return; }
 
+        _playerCombatSystem.SetBusyAttacking(true);
         base.OnHeavyAttack();
         BreakCombo();
     }
@@ -273,6 +274,12 @@ public abstract class MeleeMoveset : ChargeableMoveSet
 
     protected virtual void OnGroundedChanged(bool OnGround)
     {
+        if (OnGround)
+        {
+            _attackedInAir = false;
+            _attackedInAirHeavy = false;
+        }
+
         if (_castTimeLeft > 0)
         {
             if (!OnGround)
@@ -282,11 +289,8 @@ public abstract class MeleeMoveset : ChargeableMoveSet
             return;
         }
 
-        if (OnGround)
-        {
-            _attackedInAir = false;
-        }
-        else if (_playerCombatSystem.GetCanAttack)
+
+        if (_playerCombatSystem.GetCanAttack && !OnGround)
         {
             ResetAttacks();
             _castTimeLeft = 0.3f;
