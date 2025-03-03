@@ -69,6 +69,7 @@ public class EnemyWalk : CharacterWalk, IEnemyComponent
         _currentSpeed = speed;
         _enemyAnimations.SetWalkSpeed(speed/_baseWalkingSpeed);
         _navMeshAgent.speed = speed;
+        
     }
 
     private void NavmeshMovement()

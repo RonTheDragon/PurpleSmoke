@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 2209331707535556415}
   m_Layer: 0
   m_Name: Clown Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,10 +78,10 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 13312
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -108,7 +108,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -796,6 +796,76 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8175850522125097826, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8914915
+      objectReference: {fileID: 0}
+    - target: {fileID: -8175850522125097826, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.41109145
+      objectReference: {fileID: 0}
+    - target: {fileID: -8175850522125097826, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.10251878
+      objectReference: {fileID: 0}
+    - target: {fileID: -8175850522125097826, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.16042665
+      objectReference: {fileID: 0}
+    - target: {fileID: -8175850522125097826, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 44.433
+      objectReference: {fileID: 0}
+    - target: {fileID: -8175850522125097826, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -26.148
+      objectReference: {fileID: 0}
+    - target: {fileID: -8175850522125097826, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -31.239
+      objectReference: {fileID: 0}
+    - target: {fileID: -4918104449854848761, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.90471053
+      objectReference: {fileID: 0}
+    - target: {fileID: -4918104449854848761, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.39543614
+      objectReference: {fileID: 0}
+    - target: {fileID: -4918104449854848761, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.14437677
+      objectReference: {fileID: 0}
+    - target: {fileID: -4918104449854848761, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0654558
+      objectReference: {fileID: 0}
+    - target: {fileID: -4918104449854848761, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 44.156
+      objectReference: {fileID: 0}
+    - target: {fileID: -4918104449854848761, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 25.866
+      objectReference: {fileID: 0}
+    - target: {fileID: -4918104449854848761, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 18.919
       objectReference: {fileID: 0}
     - target: {fileID: -4396642182433536433, guid: b20bba4d19fbf9c4398eb8bda99fab9e,
         type: 3}
