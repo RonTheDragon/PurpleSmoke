@@ -160,6 +160,8 @@ public class AcidProjectile : ProjectileAttack
 {
     public float ProjectileAcidDamage;
     public float AcidCost;
+    public Vector2 Knockback;
+    public Vector2 Knockout;
 }
 
 [Serializable]
@@ -185,7 +187,5 @@ public class AcidShotgunAttack : AcidProjectile
     [HideInInspector] public float Spread;
     public float NormalSpread;
     public float AcidationSpread;
-    public Vector2 Knockback;
-    public float Knockout;
     // Add other properties related to the acid spit attack if needed
 }

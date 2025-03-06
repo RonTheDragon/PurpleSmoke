@@ -25,7 +25,10 @@ public class ProjectileMovement : MonoBehaviour
     {
         float randomRotation = UnityEngine.Random.Range(0f, 360f);
         _modelTransform.Rotate(randomRotation, 0f, 0f);
-        _visualEffect.Reinit();
+        if (_visualEffect != null)
+        {
+            _visualEffect.Reinit();
+        }
         transform.Rotate(Vector3.left, 10);
     }
 

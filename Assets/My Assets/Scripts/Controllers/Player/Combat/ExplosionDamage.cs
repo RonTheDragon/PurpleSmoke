@@ -46,6 +46,10 @@ public class ExplosionDamage : Damage
                 {
                     damageableObject.TakeAcidDamage(_acid * normalizedDistance);
                 }
+                if (_fire > 0)
+                {
+                    damageableObject.TakeFireDamage(_fire * normalizedDistance);
+                }
             }
         }
     }

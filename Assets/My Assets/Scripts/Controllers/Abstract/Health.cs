@@ -161,5 +161,10 @@ public abstract class Health : MonoBehaviour , IDamageable
         OnDeath = null;
     }
 
+    public void TakeFireDamage(float fire)
+    {
+       // throw new NotImplementedException();
+    }
+
     public bool GetIsDead => _isDead;
 }

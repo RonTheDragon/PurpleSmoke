@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static CombatMoveSet;
 
 public class MovingProjectile : Projectile
 {
@@ -7,7 +8,7 @@ public class MovingProjectile : Projectile
     private bool _loopStarted;
     private Action _loop;
 
-    public override void SetProjectile(CombatRules owner, ProjectileAttack projectileAttack)
+    public override void SetProjectile(CombatRules owner, AttackData projectileAttack)
     {
         StartLoops();
     }

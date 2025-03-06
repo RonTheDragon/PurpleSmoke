@@ -7,6 +7,7 @@ public class Damage : MonoBehaviour
     protected float _knockout;
     protected CombatRules _owner;
     protected float _acid;
+    protected float _fire;
 
     public void SetDamage(float damage)
     {
@@ -22,6 +23,10 @@ public class Damage : MonoBehaviour
     public void SetAcidDamage(float acid)
     {
         _acid = acid;
+    }
+    public void SetFireDamage(float fire)
+    {
+        _fire = fire;
     }
 
     public void SetOwner(CombatRules owner)
