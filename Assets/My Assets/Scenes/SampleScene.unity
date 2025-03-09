@@ -951,27 +951,27 @@ PrefabInstance:
     - target: {fileID: 190053514487793016, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 249.99997
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 388343430743982944, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 149.99997
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 616122584936407292, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 149.99997
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 2872896706593617638, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 149.99997
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 3391531522815752837, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 149.99997
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 5461088288509020780, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
@@ -1031,7 +1031,7 @@ PrefabInstance:
     - target: {fileID: 6707156913503520340, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 249.99997
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 9080644734375132973, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
         type: 3}
@@ -2629,27 +2629,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6289108918852795433, guid: 8fad4a27655674841bbd830ecf52c9e1,
-        type: 3}
-      propertyPath: _poolGroups.Array.data[0].Group.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6289108918852795433, guid: 8fad4a27655674841bbd830ecf52c9e1,
-        type: 3}
-      propertyPath: _poolGroups.Array.data[0].Group.Array.data[2].Tag
-      value: ClownBall
-      objectReference: {fileID: 0}
-    - target: {fileID: 6289108918852795433, guid: 8fad4a27655674841bbd830ecf52c9e1,
-        type: 3}
-      propertyPath: _poolGroups.Array.data[0].Group.Array.data[2].Object
-      value: 
-      objectReference: {fileID: 5870545744876279426, guid: 6fb82de47f5dca148bfcad8aaa88bbce,
-        type: 3}
-    - target: {fileID: 6289108918852795433, guid: 8fad4a27655674841bbd830ecf52c9e1,
-        type: 3}
-      propertyPath: _poolGroups.Array.data[0].Group.Array.data[2].StartAmount
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 6678245051165398795, guid: 8fad4a27655674841bbd830ecf52c9e1,
         type: 3}
       propertyPath: m_Name
@@ -2704,27 +2683,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7535000481916580830, guid: 8fad4a27655674841bbd830ecf52c9e1,
-        type: 3}
-      propertyPath: _poolGroups.Array.data[0].Group.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7535000481916580830, guid: 8fad4a27655674841bbd830ecf52c9e1,
-        type: 3}
-      propertyPath: _poolGroups.Array.data[0].Group.Array.data[2].Tag
-      value: FireExplosion
-      objectReference: {fileID: 0}
-    - target: {fileID: 7535000481916580830, guid: 8fad4a27655674841bbd830ecf52c9e1,
-        type: 3}
-      propertyPath: _poolGroups.Array.data[0].Group.Array.data[2].Object
-      value: 
-      objectReference: {fileID: 6820099217097740896, guid: 40d17cedb1c6734418f4fb2f17c0bb35,
-        type: 3}
-    - target: {fileID: 7535000481916580830, guid: 8fad4a27655674841bbd830ecf52c9e1,
-        type: 3}
-      propertyPath: _poolGroups.Array.data[0].Group.Array.data[2].StartAmount
-      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

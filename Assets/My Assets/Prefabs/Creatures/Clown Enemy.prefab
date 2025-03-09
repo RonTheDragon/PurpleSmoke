@@ -282,12 +282,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _despawnTime: 10
   _loot:
-  - LootTag: ToothWeapon
+  - LootTag: Clownball
     DropChances:
     - Amount: 0
-      PrecentageChance: 70
-    - Amount: 5
       PrecentageChance: 10
+    - Amount: 5
+      PrecentageChance: 70
     - Amount: 6
       PrecentageChance: 10
     - Amount: 7

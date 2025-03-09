@@ -195,6 +195,10 @@ MonoBehaviour:
       Object: {fileID: 4608489908768378010, guid: 80e1b8ecb07561a478edf3e1a621cf63,
         type: 3}
       StartAmount: 20
+    - Tag: ClownBall
+      Object: {fileID: 5870545744876279426, guid: 6fb82de47f5dca148bfcad8aaa88bbce,
+        type: 3}
+      StartAmount: 20
 --- !u!114 &7535000481916580830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +222,10 @@ MonoBehaviour:
       Object: {fileID: 4914365880222355101, guid: b77cb9fe66cc66042a780f4d71c8848d,
         type: 3}
       StartAmount: 30
+    - Tag: FireExplosion
+      Object: {fileID: 6820099217097740896, guid: 40d17cedb1c6734418f4fb2f17c0bb35,
+        type: 3}
+      StartAmount: 30
 --- !u!114 &1710479485087828392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +247,10 @@ MonoBehaviour:
       StartAmount: 0
     - Tag: ToothWeapon
       Object: {fileID: 4790004191656236981, guid: b003a9544eb70864b9af406c56ca8b70,
+        type: 3}
+      StartAmount: 0
+    - Tag: Clownball
+      Object: {fileID: 4718158662352540405, guid: 9bbe6f6c758fb0b4d8abb0bc1f2cccc3,
         type: 3}
       StartAmount: 0
 --- !u!114 &791959966271491080

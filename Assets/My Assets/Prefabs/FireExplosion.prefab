@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2974968362286024558
+--- !u!1 &6690595710096645979
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8231006259328341824}
-  - component: {fileID: 2832268125606048170}
-  - component: {fileID: 1060415270813761235}
+  - component: {fileID: 8542547554587028346}
+  - component: {fileID: 462542204126980862}
+  - component: {fileID: 379138827619582568}
   m_Layer: 0
-  m_Name: Liquid Splash VE
+  m_Name: Fire Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8231006259328341824
+--- !u!4 &8542547554587028346
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2974968362286024558}
+  m_GameObject: {fileID: 6690595710096645979}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3437973015548382791}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!2083052967 &2832268125606048170
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &462542204126980862
 VisualEffect:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2974968362286024558}
+  m_GameObject: {fileID: 6690595710096645979}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 4f66092f376c2ec46a2429e4318e1567, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 784977d669877d1498148d813e2f3106, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -51,7 +51,10 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 1
+      - m_Value: 100
+        m_Name: Rate
+        m_Overridden: 1
+      - m_Value: 0.4
         m_Name: Lifetime
         m_Overridden: 1
     m_Vector2f:
@@ -59,13 +62,13 @@ VisualEffect:
     m_Vector3f:
       m_Array:
       - m_Value: {x: 10, y: 10, z: 10}
-        m_Name: Liquid Velocity
+        m_Name: Liquid Velocity Min
         m_Overridden: 1
-      - m_Value: {x: 5, y: 10, z: 5}
+      - m_Value: {x: -10, y: -10, z: -10}
         m_Name: Liquid Velocity Max
         m_Overridden: 1
-      - m_Value: {x: -5, y: 0, z: -5}
-        m_Name: Liquid Velocity Min
+      - m_Value: {x: 0.5, y: 0.5, z: 0.5}
+        m_Name: Scale
         m_Overridden: 1
     m_Vector4f:
       m_Array: []
@@ -83,16 +86,16 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
---- !u!73398921 &1060415270813761235
+--- !u!73398921 &379138827619582568
 VFXRenderer:
   serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2974968362286024558}
+  m_GameObject: {fileID: 6690595710096645979}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -153,7 +156,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8231006259328341824}
+  - {fileID: 8542547554587028346}
   - {fileID: 7019380323410993199}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -169,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1327acab56e66d64e9ac9de80718d2b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explosionEffect: {fileID: 2832268125606048170}
+  _explosionEffect: {fileID: 462542204126980862}
   tickArea: {fileID: 4707513377529415459}
 --- !u!1001 &2203244088176917529
 PrefabInstance:
