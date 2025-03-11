@@ -15,5 +15,5 @@ MonoBehaviour:
   _name: Acid Healing
   _sprite: {fileID: 21300000, guid: 0070bf48f91ad434191c88a680ea13d4, type: 3}
   _pickUpTag: ClownBall
-  _useable: {fileID: 5624902990665898538, guid: 43f67e1a47c22e946966295aea6629ed,
+  _useable: {fileID: 2937664047995388611, guid: 66a60179a2eb81744b1109d89e4848cc,
     type: 3}

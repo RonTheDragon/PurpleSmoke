@@ -65,6 +65,18 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         _shootFromObject.rotation = targetRotation;
     }
 
+    public Quaternion GetCrosshairAimAtRotation()
+    {
+        if (_camera == null)
+            return Quaternion.identity;
+
+        Vector3 directionToHitPoint;
+
+        directionToHitPoint = _camera.transform.forward * 20;
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionToHitPoint, Vector3.up);
+        return targetRotation;
+    }
 
 
     public void OnAimInputDown()

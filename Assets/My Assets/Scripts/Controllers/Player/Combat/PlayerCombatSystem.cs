@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCombatSystem : CombatSystem, IPlayerComponent
 {
-    //public Action<float> OnChargeChange;
+    public Action CustomAction;
 
     private PlayerComponentsRefrences _playerComponentsRefrences;
     private PlayerGlide _glide;
@@ -94,6 +94,16 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     public void ClearAttacks()
     {
         PerformMoveSetAction(moveset => moveset.ResetAttacks());
+    }
+
+    public void SetCustomAction(Action action)
+    {
+        CustomAction = action;
+    }
+
+    public void CallCustomAction()
+    {
+        CustomAction?.Invoke();
     }
 
     protected void PerformMoveSetAction(Action<PlayerCombatMoveSet> moveSetAction)
