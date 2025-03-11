@@ -1319,6 +1319,7 @@ MonoBehaviour:
   _playerKnockout: {fileID: 8543009807947699284}
   _playerAttackMovement: {fileID: 2875694453276084671}
   _playerCombatSystem: {fileID: 2045315901369443145}
+  _playerCharging: {fileID: 5748984685905374408}
   _playerAcidation: {fileID: 6210985580518302643}
   _playerDeath: {fileID: 1674787408233449612}
   _playerTeleporter: {fileID: 300154325113233337}
@@ -4405,7 +4406,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -605.3095, y: 350}
+  m_AnchoredPosition: {x: -605.30945, y: 350}
   m_SizeDelta: {x: -1414, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &3388974796625533922
@@ -4951,7 +4952,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -705.30975, y: 350}
+  m_AnchoredPosition: {x: -705.3098, y: 350}
   m_SizeDelta: {x: -1414, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &8712061781879598088
@@ -7610,7 +7611,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 250
+      value: 249.99997
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -8192,7 +8193,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 150
+      value: 149.99997
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -8333,7 +8334,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 150
+      value: 149.99997
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -9651,6 +9652,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6347347318124176319}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 455bcdb030424464d89abe9982baf431,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5748984685905374408}
   m_SourcePrefab: {fileID: 100100000, guid: 455bcdb030424464d89abe9982baf431, type: 3}
 --- !u!4 &47700121155755833 stripped
 Transform:
@@ -10063,12 +10068,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db401384835601f43b9bde2c2934384f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxCharge: 1
-  _minCharge: 0
-  _currentCharge: 0
-  _isCharging: 0
-  _releasedEarly: 0
-  _releaseWhenFullyCharged: 0
   _currentCombo: 0
   _comboBreakTime: 1
   _lightAttacksMoving:
@@ -10210,12 +10209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb844f299af385143ba6138695645f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxCharge: 0
-  _minCharge: 0
-  _currentCharge: 0
-  _isCharging: 0
-  _releasedEarly: 0
-  _releaseWhenFullyCharged: 0
   _acidSpitAttack:
     ProjectileTag: AcidShoot
     AnimationName: SpitAcid
@@ -10224,6 +10217,8 @@ MonoBehaviour:
     ProjectileDamage: 7
     ProjectileAcidDamage: 5
     AcidCost: 4
+    Knockback: {x: 0, y: 0}
+    Knockout: {x: 0, y: 0}
     ProjectileGravity: 45
     ProjectileExplosionRange: 5
     AcidationCastTime: 0.2
@@ -10235,6 +10230,8 @@ MonoBehaviour:
     ProjectileDamage: 1.5
     ProjectileAcidDamage: 2
     AcidCost: 20
+    Knockback: {x: 1, y: 0}
+    Knockout: {x: 0, y: 0}
     chargeableStats:
       ChargeAnimationName: ShotgunAcid1
       MinChargeTime: 0.4
@@ -10250,8 +10247,6 @@ MonoBehaviour:
     Spread: 20
     NormalSpread: 20
     AcidationSpread: 25
-    Knockback: {x: 1, y: 0}
-    Knockout: 2
 --- !u!114 &2875694453276084671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10332,6 +10327,24 @@ MonoBehaviour:
   _glideBool: Glide
   _headAim: {fileID: 5414400082740292316}
   _headAimWeightLerpSpeed: 5
+--- !u!114 &5748984685905374408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6791818095545876735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e43daa236a29f1849bb1a51f193e7541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCharge: 0
+  _minCharge: 0
+  _currentCharge: 0
+  _isCharging: 0
+  _releasedEarly: 0
+  _releaseWhenFullyCharged: 0
 --- !u!4 &6934504432276362856 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5567499957886489658, guid: 455bcdb030424464d89abe9982baf431,
@@ -10983,7 +10996,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 150
+      value: 149.99997
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -11279,7 +11292,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 250
+      value: 249.99997
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
@@ -11575,7 +11588,7 @@ PrefabInstance:
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 150
+      value: 149.99997
       objectReference: {fileID: 0}
     - target: {fileID: 7243248058634938167, guid: fd16356534bd0944f98479ebb500a4f4,
         type: 3}

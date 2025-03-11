@@ -1,5 +1,3 @@
-
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +26,7 @@ public class FangsMoveset : MeleeMoveset
         _playerJump = refs.GetPlayerJump;
         _owner = refs.GetCombatRules;
         _playerAcidation = refs.GetPlayerAcidation;
-        
+        _playerCharging = refs.GetPlayerCharging;
     }
 
     protected override void LightInAir()
@@ -113,26 +111,26 @@ public class FangsMoveset : MeleeMoveset
     //Unfinished Section
     protected override void HeavyMoving()
     {
-        PerformCharging(_heavyAttackMoving.ChargeableStats);
+        _playerCharging.PerformCharging(_heavyAttackMoving.ChargeableStats, OnReleaseHeavyAttack);
     }
 
     protected override void HeavyInPlace()
     {
-        PerformCharging(_heavyAttackInPlace.ChargeableStats);
+        _playerCharging.PerformCharging(_heavyAttackInPlace.ChargeableStats, OnReleaseHeavyAttack);
     }
 
     protected override void HeavyInAir()
     {
-        PerformCharging(_heavyAirAttack.ChargeableStats);
+        _playerCharging.PerformCharging(_heavyAirAttack.ChargeableStats, OnReleaseHeavyAttack);
         _playerAttackMovement.SetAimingBody(true);
     }
 
     public override void OnReleaseHeavyAttack()
     {
         base.OnReleaseHeavyAttack();
-        if (_castTimeLeft > 0 || _currentCharge == 0 || _releasedEarly) return; //dismiss press
+        if (_castTimeLeft > 0 || _playerCharging.GetChargePercentage() == 0 || _playerCharging.GetReleasedEarly) return; //dismiss press
 
-        if (CheckAndHandleEarlyRelease()) return; //released too early
+        if (_playerCharging.CheckAndHandleEarlyRelease()) return; //released too early
 
         switch (_currentChargedAttack)
         {
@@ -152,13 +150,13 @@ public class FangsMoveset : MeleeMoveset
             default:
                 break;
         }
-        ResetCharge();
+        _playerCharging.ResetCharge();
         BreakCombo();
     }
 
     private void PerformHeavyAttackRepeating(HeavyRepeatingAttack attack)
     {
-        float chargePercentage = GetChargePercentage();
+        float chargePercentage = _playerCharging.GetChargePercentage();
         int repeats = Mathf.Max(1, (int)(attack.MaxRepeat * chargePercentage)); // Ensure at least one repeat
         float knockout = Random.Range(attack.Knockout.x, attack.Knockout.y);
 

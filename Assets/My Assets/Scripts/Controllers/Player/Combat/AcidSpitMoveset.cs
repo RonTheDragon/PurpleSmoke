@@ -23,6 +23,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
         _playerAnimations = refs.GetPlayerAnimations;
         _shooter = refs.GetShooter;
         _playerAcidation = refs.GetPlayerAcidation;
+        _playerCharging = refs.GetPlayerCharging;
     }
 
     public override void OnLightAttack()
@@ -37,29 +38,29 @@ public class AcidSpitMoveset : ChargeableMoveSet
 
     public override void OnHeavyAttack()
     {
-        if (_castTimeLeft > 0 || _releasedEarly) return;
+        if (_castTimeLeft > 0 || _playerCharging.GetReleasedEarly) return;
 
         if (!_playerAcidation.TrySpendAcid(_acidShotgunAttack.AcidCost)) return;
 
-        _playerCombatSystem.SetBusyAttacking(true);      
-        PerformCharging(_acidShotgunAttack.chargeableStats);
+        _playerCombatSystem.SetBusyAttacking(true);
+        _playerCharging.PerformCharging(_acidShotgunAttack.chargeableStats, OnReleaseHeavyAttack);
         base.OnHeavyAttack();
     }
 
     public override void OnReleaseHeavyAttack()
     {
-        if (_castTimeLeft > 0 || _currentCharge == 0 || _releasedEarly) return; //dismiss press
+        if (_castTimeLeft > 0 || _playerCharging.GetChargePercentage() == 0 || _playerCharging.GetReleasedEarly) return; //dismiss press
 
-        if (CheckAndHandleEarlyRelease()) return; //released too early
+        if (_playerCharging.CheckAndHandleEarlyRelease()) return; //released too early
 
         PerformAcidShotgun();
 
-        ResetCharge();
+        _playerCharging.ResetCharge();
     }
 
     private void PerformAcidShotgun()
     {
-        float chargePercentage = GetChargePercentage();
+        float chargePercentage = _playerCharging.GetChargePercentage();
         _acidShotgunAttack.PelletAmount = (int)Mathf.Lerp(_acidShotgunAttack.MinPelletAmount, _acidShotgunAttack.MaxPelletAmount, chargePercentage);
 
         if (_playerCombatSystem.GetAcidation) 
@@ -83,7 +84,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
 
     public override void MoveSetUpdate()
     {
-        base.MoveSetUpdate();
+        //base.MoveSetUpdate();
 
         if (_spittingAcid)
         {
@@ -112,12 +113,12 @@ public class AcidSpitMoveset : ChargeableMoveSet
         _castTimeLeft = 0;
         _playerCombatSystem.SetBusyAttacking(false);
         _spittingAcid = false;
-        ResetCharge();
+        _playerCharging.ResetCharge();
     }
 
     private void TrySpitAcid()
     {
-        if (!_isCharging && _castTimeLeft <= 0)
+        if (!_playerCharging.GetIsCharging && _castTimeLeft <= 0)
         {
             if (!_playerAcidation.TrySpendAcid(_acidSpitAttack.AcidCost)) return;
             PerformAcidSpit();

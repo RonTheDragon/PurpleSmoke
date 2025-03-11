@@ -26,6 +26,7 @@ public class UnarmedMoveset : MeleeMoveset
         _playerAttackMovement = refs.GetPlayerAttackMovement;
         _playerGravity = refs.GetPlayerGravity;
         _playerJump = refs.GetPlayerJump;
+        _playerCharging = refs.GetPlayerCharging;
         _owner = refs.GetCombatRules;
     }
 
@@ -62,25 +63,25 @@ public class UnarmedMoveset : MeleeMoveset
 
     protected override void HeavyMoving()
     {
-        PerformCharging(_heavyAttackMoving.ChargeableStats);
+        _playerCharging.PerformCharging(_heavyAttackMoving.ChargeableStats, OnReleaseHeavyAttack);
     }
 
     protected override void HeavyInPlace()
     {
-        PerformCharging(_heavyAttackInPlace.ChargeableStats);
+        _playerCharging.PerformCharging(_heavyAttackInPlace.ChargeableStats, OnReleaseHeavyAttack);
     }
 
     protected override void HeavyInAir()
     {
-        PerformCharging(_heavyDownAttack.ChargeableStats);
+        _playerCharging.PerformCharging(_heavyDownAttack.ChargeableStats, OnReleaseHeavyAttack);
     }
 
     public override void OnReleaseHeavyAttack()
     {
         base.OnReleaseHeavyAttack();
-        if (_castTimeLeft > 0 || _currentCharge == 0 || _releasedEarly) return; //dismiss press
+        if (_castTimeLeft > 0 || _playerCharging.GetChargePercentage() == 0 || _playerCharging.GetReleasedEarly) return; //dismiss press
 
-        if (CheckAndHandleEarlyRelease()) return; //released too early
+        if (_playerCharging.CheckAndHandleEarlyRelease()) return; //released too early
 
         switch (_currentChargedAttack)
         {
@@ -99,13 +100,13 @@ public class UnarmedMoveset : MeleeMoveset
                 break;
         }
 
-        ResetCharge();
+        _playerCharging.ResetCharge();
         BreakCombo();
     }
 
     private void PerformHeavyAttackDownExplosive(HeavyDownAttack attack)
     {
-        float chargePercentage = GetChargePercentage();
+        float chargePercentage = _playerCharging.GetChargePercentage();
         float damage = Mathf.Lerp(attack.MinDamage, attack.MaxDamage, chargePercentage);
         Vector2 knockback = Vector2.Lerp(attack.MinKnockback, attack.MaxKnockback, chargePercentage);
         float radius = Mathf.Lerp(attack.MinRadius, attack.MaxRadius, chargePercentage);

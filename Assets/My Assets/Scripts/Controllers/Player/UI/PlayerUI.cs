@@ -13,7 +13,8 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
     private PlayerComponentsRefrences _playerComponents;
     private PlayerHealth _playerHealth;
-    private PlayerCombatSystem _playerCombatSystem;
+   // private PlayerCombatSystem _playerCombatSystem;
+    private PlayerCharging _playerCharging;
     private PlayerKnockout _playerKnockout;
     private PlayerDeath _playerDeath;
     private PlayerAcidation _playerAcidation;
@@ -28,14 +29,15 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
 
         
         _playerHealth = _playerComponents.GetPlayerHealth;
-        _playerCombatSystem = _playerComponents.GetPlayerCombatSystem;
+       // _playerCombatSystem = _playerComponents.GetPlayerCombatSystem;
         _playerKnockout = _playerComponents.GetPlayerKnockout;
         _playerDeath = _playerComponents.GetPlayerDeath;
         _playerAcidation = _playerComponents.GetPlayerAcidation;
         _playerInputsHandler = _playerComponents.GetPlayerInputsHandler;
+        _playerCharging = _playerComponents.GetPlayerCharging;
 
         _playerHealth.OnPlayerHealthChange += UpdateHealthUI;
-        _playerCombatSystem.OnChargeChange += UpdateChargeUI;
+        _playerCharging.OnChargeChange += UpdateChargeUI;
         _playerKnockout.OnCanGetUp += PressSpaceToGetUp;
         _playerDeath.OnRespawnCountdown += UpdateRespawnTime;
         _playerAcidation.OnAcidationChange += UpdateAcidUI;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCombatSystem : CombatSystem, IPlayerComponent
 {
-    public Action<float> OnChargeChange;
+    //public Action<float> OnChargeChange;
 
     private PlayerComponentsRefrences _playerComponentsRefrences;
     private PlayerGlide _glide;
@@ -19,7 +19,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     InventoryItemUI _currentMeleeItemUI, _currentRangeItemUI, _currentDynamicItemUI, _currentStaticItemUI;
 
 
-    private float _currentChargePercentage;
+    //private float _currentChargePercentage;
 
     [SerializeField] private PlayerCombatMoveSet _defaultMeleeMoveSet;
     [ReadOnly][SerializeField] private PlayerCombatMoveSet _currentMeleeMoveSet;
@@ -61,7 +61,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     public bool GetIsBusyAttacking => _busyAttacking;
     public bool GetAcidation => _acidation;
     private bool CanPlayerAttack => !_glide.IsGliding() && _canAttack;
-    public float GetChargePercentage => _currentChargePercentage;
+    //public float GetChargePercentage => _currentChargePercentage;
     public List<Damage> GetDamagers => _damagers;
     public Transform GetRightHand => _rightHand;
     public Transform GetLeftHand => _leftHand;
@@ -138,11 +138,11 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     {
         _busyAttacking = busyAttacking;
     }
-    public void SetChargePercentage(float charge)
-    {
-        _currentChargePercentage = charge;
-        OnChargeChange?.Invoke(charge);
-    }
+    //public void SetChargePercentage(float charge)
+    //{
+    //    _currentChargePercentage = charge;
+    //    OnChargeChange?.Invoke(charge);
+    //}
 
     public void SetUsingRanged(bool usingRanged)
     {

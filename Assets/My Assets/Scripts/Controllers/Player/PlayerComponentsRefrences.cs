@@ -20,6 +20,7 @@ public class PlayerComponentsRefrences : ComponentsRefrences
     [SerializeField] private PlayerKnockout _playerKnockout;
     [SerializeField] private PlayerAttackMovement _playerAttackMovement;
     [SerializeField] private PlayerCombatSystem _playerCombatSystem;
+    [SerializeField] private PlayerCharging _playerCharging;
     [SerializeField] private PlayerAcidation _playerAcidation;
     [SerializeField] private PlayerDeath _playerDeath;
     [SerializeField] private PlayerTeleporter _playerTeleporter;
@@ -46,6 +47,7 @@ public class PlayerComponentsRefrences : ComponentsRefrences
         _playerKnockback.InitializePlayerComponent(this);
         _playerAttackMovement.InitializePlayerComponent(this);
         _playerCombatSystem.InitializePlayerComponent(this);
+        _playerCharging.InitializePlayerComponent(this);
         _playerKnockout.InitializePlayerComponent(this);
         _playerDeath.InitializePlayerComponent(this);
         _playerTeleporter.InitializePlayerComponent(this);
@@ -70,6 +72,7 @@ public class PlayerComponentsRefrences : ComponentsRefrences
     public PlayerAnimations GetPlayerAnimations => _playerAnimations;
     public PlayerKnockback GetPlayerKnockback => _playerKnockback;
     public PlayerCombatSystem GetPlayerCombatSystem => _playerCombatSystem;
+    public PlayerCharging GetPlayerCharging => _playerCharging;
     public PlayerHealth GetPlayerHealth => _playerHealth;
     public PlayerAttackMovement GetPlayerAttackMovement => _playerAttackMovement;
     public PlayerKnockout GetPlayerKnockout => _playerKnockout;

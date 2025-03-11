@@ -22,7 +22,7 @@ public abstract class MeleeMoveset : ChargeableMoveSet
 
     public override void MoveSetUpdate()
     {
-        base.MoveSetUpdate();
+        //base.MoveSetUpdate();
         ComboTimer();
         AttacksCooldown();
         if (_lightAttacking)
@@ -37,7 +37,7 @@ public abstract class MeleeMoveset : ChargeableMoveSet
 
     protected void OnTryLightAttack()
     {
-        if (_isCharging || _castTimeLeft > 0) return;
+        if (_playerCharging.GetIsCharging || _castTimeLeft > 0) return;
 
         _playerCombatSystem.SetBusyAttacking(true);
 
@@ -63,7 +63,7 @@ public abstract class MeleeMoveset : ChargeableMoveSet
 
     protected void OnTryHeavyAttack()
     {
-        if (_castTimeLeft > 0 || _releasedEarly || _playerCombatSystem.GetIsBusyAttacking) return;
+        if (_castTimeLeft > 0 || _playerCharging.GetReleasedEarly || _playerCombatSystem.GetIsBusyAttacking) return;
 
         if (_playerGroundCheck.IsGrounded())
         {
@@ -154,7 +154,7 @@ public abstract class MeleeMoveset : ChargeableMoveSet
 
     protected void PerformHeavyAttack(HeavyAttack attack)
     {
-        float chargePercentage = GetChargePercentage();
+        float chargePercentage = _playerCharging.GetChargePercentage();
         float damage = Mathf.Lerp(attack.MinDamage, attack.MaxDamage, chargePercentage);
         Vector2 knockback = Vector2.Lerp(attack.MinKnockback, attack.MaxKnockback, chargePercentage);
 
