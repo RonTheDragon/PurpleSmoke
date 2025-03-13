@@ -128,9 +128,9 @@ public class FangsMoveset : MeleeMoveset
     public override void OnReleaseHeavyAttack()
     {
         base.OnReleaseHeavyAttack();
-        if (_castTimeLeft > 0 || _playerCharging.GetChargePercentage() == 0 || _playerCharging.GetReleasedEarly) return; //dismiss press
-
+        if (_castTimeLeft > 0 ) return; //dismiss press
         if (_playerCharging.CheckAndHandleEarlyRelease()) return; //released too early
+
 
         switch (_currentChargedAttack)
         {
@@ -150,7 +150,7 @@ public class FangsMoveset : MeleeMoveset
             default:
                 break;
         }
-        _playerCharging.ResetCharge();
+        _playerCharging.ResetCharge(this);
         BreakCombo();
     }
 

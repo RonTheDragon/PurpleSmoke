@@ -65,7 +65,7 @@ MonoBehaviour:
     GroundFire_Fire: 5
   _chargeStats:
     ChargeAnimationName: Throw1
-    MinChargeTime: 0.5
+    MinChargeTime: 0.2
     MaxChargeTime: 2
     ReleaseOnFull: 0
 --- !u!1 &8692987538792167578

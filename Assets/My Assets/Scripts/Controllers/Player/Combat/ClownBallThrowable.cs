@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static ClownMoveSet;
 
@@ -23,6 +21,7 @@ public class ClownBallThrowable : UseableAbility
         _playerCharging = _refs.GetPlayerCharging;
         _projectilePooler = GameManager.Instance.GetProjectilePooler;
         _playerAimMode = _refs.GetPlayerAimMode;
+        
     }
 
     public override void OnPress()
@@ -30,7 +29,8 @@ public class ClownBallThrowable : UseableAbility
         if (!_playerCombatSystem.GetIsBusyAttacking)
         {
             _playerCharging.PerformCharging(_chargeStats, OnRelease);
-            _playerCharging.ActivateCharge();
+           // _playerCharging.ResetCharge();
+            _playerCharging.ActivateCharge(this);
             //_playerAnimations.PlayAnimation(ChargeThrowAnim);
             _clownBall.SetParent(_playerCombatSystem.GetRightHand);
             _clownBall.localPosition = Vector3.zero;
@@ -42,7 +42,7 @@ public class ClownBallThrowable : UseableAbility
     public override void OnRelease()
     {
         _playerAnimations.PlayAnimation(_ballthrow.Animation);
-        _playerCharging.ResetCharge();
+        _playerCharging.ResetCharge(this);
         _playerCombatSystem.SetCustomAction(ThrowBall);
     }
 
@@ -53,5 +53,10 @@ public class ClownBallThrowable : UseableAbility
         _clownBall.gameObject.SetActive(false);
         _playerAimMode.TempAim(false);
     }
-    
+
+    public override void OnCancel()
+    {
+        ThrowBall();
+        _playerAnimations.PlayAnimation("Cancel");
+    }
 }

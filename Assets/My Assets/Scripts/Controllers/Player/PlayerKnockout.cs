@@ -3,6 +3,7 @@ public class PlayerKnockout : CharacterKnockout, IPlayerComponent
 {
     private PlayerAnimations _playerAnimations;
     private PlayerCombatSystem _playerCombatSystem;
+    private PlayerCharging _playerCharging;
     private PlayerWalk _playerWalk;
     private PlayerJump _playerJump;
     private PlayerHealth _playerHealth;
@@ -19,6 +20,7 @@ public class PlayerKnockout : CharacterKnockout, IPlayerComponent
         _playerGravity = playerComponents.GetPlayerGravity;
         _playerAimMode = playerComponents.GetPlayerAimMode;
         _playerHealth = playerComponents.GetPlayerHealth;
+        _playerCharging = playerComponents.GetPlayerCharging;
         playerComponents.OnUpdate += PlayerUpdate;
 
         // Check if caps are set correctly
@@ -45,6 +47,7 @@ public class PlayerKnockout : CharacterKnockout, IPlayerComponent
     protected override void ClearAttacks()
     {
         _playerCombatSystem.ClearAttacks();
+        _playerCharging.ForceResetCharge();
     }
 
     public override void StunCharacter()

@@ -8,6 +8,12 @@ public class AcidHealingAbility : UseableAbility
     private PlayerHealth _playerHealth;
     [SerializeField] private ParticleSystem _particle;
     [SerializeField] private float _acidPercentCost, _healthPercentHealed;
+
+    public override void OnCancel()
+    {
+       
+    }
+
     public override void OnPress()
     {
         AcidHealing();

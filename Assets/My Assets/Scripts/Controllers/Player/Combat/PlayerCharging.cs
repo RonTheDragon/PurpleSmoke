@@ -7,6 +7,7 @@ public class PlayerCharging : MonoBehaviour, IPlayerComponent
     private Action _onReleaseCharge; // Store release method (no parameters)
     //private float _currentChargePercentage;
     private PlayerAnimations _playerAnimations;
+    private MonoBehaviour _classUsingCharge;
 
     [ReadOnly][SerializeField] protected float _maxCharge;
     [ReadOnly][SerializeField] protected float _minCharge;
@@ -64,12 +65,33 @@ public class PlayerCharging : MonoBehaviour, IPlayerComponent
         OnChargeChange?.Invoke(charge);
     }
 
-    public void ActivateCharge()
+    public void ActivateCharge(MonoBehaviour classUsingCharge)
     {
+        _classUsingCharge = classUsingCharge;
         _isCharging = true;
     }
 
-    public void ResetCharge()
+    public void ResetCharge(MonoBehaviour classUsingCharge)
+    {
+        if (_classUsingCharge != classUsingCharge) return;
+        ResetingCharge();
+        _classUsingCharge = null;
+    }
+
+    public void ForceResetCharge()
+    {
+        ResetingCharge();
+       
+        if (_classUsingCharge is UseableAbility)
+        {
+            UseableAbility u = (UseableAbility)_classUsingCharge;
+            u.OnCancel();
+            
+        }
+        _classUsingCharge = null;
+    }
+
+    private void ResetingCharge()
     {
         _releasedEarly = false;
         _isCharging = false;
@@ -99,7 +121,7 @@ public class PlayerCharging : MonoBehaviour, IPlayerComponent
     private void ReleaseCharge()
     {
         _onReleaseCharge?.Invoke(); // Call stored action (no parameters)
-        ResetCharge();
+        ResetCharge(this);
     }
 
     public bool GetReleasedEarly => _releasedEarly;

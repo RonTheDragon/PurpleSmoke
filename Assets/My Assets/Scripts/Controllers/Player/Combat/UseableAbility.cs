@@ -11,4 +11,6 @@ public abstract class UseableAbility : MonoBehaviour
     {
         _playerCombatSystem = playerCombatSystem;
     }
+
+    public abstract void OnCancel();
 }

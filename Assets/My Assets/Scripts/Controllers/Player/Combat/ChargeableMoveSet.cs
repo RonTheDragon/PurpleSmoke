@@ -7,17 +7,17 @@ public abstract class ChargeableMoveSet : PlayerCombatMoveSet
 
     public override void OnHeavyAttack()
     {
-        _playerCharging.ActivateCharge();
+        _playerCharging.ActivateCharge(this);
     }
 
     public override void OnReleaseHeavyAttack()
     {
-        _playerCharging.ResetCharge();
+        _playerCharging.ResetCharge(this);
     }
 
     public override void ResetAttacks()
     {
-        _playerCharging.ResetCharge();
+        _playerCharging.ResetCharge(this);
     } 
 
 }

@@ -49,13 +49,13 @@ public class AcidSpitMoveset : ChargeableMoveSet
 
     public override void OnReleaseHeavyAttack()
     {
-        if (_castTimeLeft > 0 || _playerCharging.GetChargePercentage() == 0 || _playerCharging.GetReleasedEarly) return; //dismiss press
-
+        if (_castTimeLeft > 0 ) return; //dismiss press
         if (_playerCharging.CheckAndHandleEarlyRelease()) return; //released too early
+
 
         PerformAcidShotgun();
 
-        _playerCharging.ResetCharge();
+        _playerCharging.ResetCharge(this);
     }
 
     private void PerformAcidShotgun()
@@ -84,7 +84,8 @@ public class AcidSpitMoveset : ChargeableMoveSet
 
     public override void MoveSetUpdate()
     {
-        //base.MoveSetUpdate();
+       // base.MoveSetUpdate();
+
 
         if (_spittingAcid)
         {
@@ -113,7 +114,7 @@ public class AcidSpitMoveset : ChargeableMoveSet
         _castTimeLeft = 0;
         _playerCombatSystem.SetBusyAttacking(false);
         _spittingAcid = false;
-        _playerCharging.ResetCharge();
+        _playerCharging.ResetCharge(this);
     }
 
     private void TrySpitAcid()

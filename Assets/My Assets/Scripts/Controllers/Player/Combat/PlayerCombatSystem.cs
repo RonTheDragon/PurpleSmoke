@@ -10,6 +10,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     private PlayerGlide _glide;
     private PlayerAcidation _playerAcidation;
     private PlayerInventory _playerInventory;
+    private PlayerCharging _playerCharging;
     private bool _acidation = false;
     private bool _usingRanged;
     private bool _busyAttacking;
@@ -34,7 +35,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
         _glide = _playerComponentsRefrences.GetPlayerGlide;
         _playerAcidation = _playerComponentsRefrences.GetPlayerAcidation;
         _playerInventory = _playerComponentsRefrences.GetPlayerInventory;
-
+        _playerCharging = _playerComponentsRefrences.GetPlayerCharging;
 
         TemporaryStart();
         _glide.OnGlide += ClearAttacks;
