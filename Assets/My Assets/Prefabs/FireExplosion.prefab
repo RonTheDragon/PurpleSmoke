@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8542547554587028346}
   - component: {fileID: 462542204126980862}
   - component: {fileID: 379138827619582568}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fire Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3437973015548382791}
   - component: {fileID: 6820099217097740896}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FireExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,10 +182,35 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3437973015548382791}
     m_Modifications:
+    - target: {fileID: 690532171949894270, guid: 5db62d426877f58498663323c8cf1a0c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3924004732110193353, guid: 5db62d426877f58498663323c8cf1a0c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6821947721535501679, guid: 5db62d426877f58498663323c8cf1a0c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 7968740907377483844, guid: 5db62d426877f58498663323c8cf1a0c,
         type: 3}
       propertyPath: m_Name
       value: Red Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968740907377483844, guid: 5db62d426877f58498663323c8cf1a0c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033080550260511558, guid: 5db62d426877f58498663323c8cf1a0c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 9221867792960379958, guid: 5db62d426877f58498663323c8cf1a0c,
         type: 3}

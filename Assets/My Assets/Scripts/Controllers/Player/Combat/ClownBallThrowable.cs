@@ -35,7 +35,7 @@ public class ClownBallThrowable : UseableAbility
             _clownBall.SetParent(_playerCombatSystem.GetRightHand);
             _clownBall.localPosition = Vector3.zero;
             _clownBall.gameObject.SetActive(true);
-            
+            _playerAimMode.TempAim(true);
         }
     }
 
@@ -51,6 +51,7 @@ public class ClownBallThrowable : UseableAbility
         Projectile projectile = _projectilePooler.CreateOrSpawnFromPool(_ballthrow.BallPoolName, _clownBall.position, _playerAimMode.GetCrosshairAimAtRotation());
         projectile.SetProjectile(_refs.GetCombatRules, _ballthrow);
         _clownBall.gameObject.SetActive(false);
+        _playerAimMode.TempAim(false);
     }
     
 }

@@ -402,13 +402,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerCinemachineCameraLayers:
   - serializedVersion: 2
-    m_Bits: 11359
+    m_Bits: 15455
   - serializedVersion: 2
-    m_Bits: 11423
+    m_Bits: 15519
   - serializedVersion: 2
-    m_Bits: 11551
+    m_Bits: 15647
   - serializedVersion: 2
-    m_Bits: 11807
+    m_Bits: 15903
   _playerColors:
   - {fileID: 2100000, guid: 3ea4b48da56b1a9449fc32d3cd411d37, type: 2}
   - {fileID: 2100000, guid: 281ea59703407d54c86046d3a8387bf7, type: 2}

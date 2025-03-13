@@ -9,12 +9,13 @@ public class ProjectileFlameExplosionDamage : ExplosionDamage
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == _owner)
+        if (other.gameObject == _owner || other.isTrigger)
         {
             return; // Prevent damaging the owner itself
         }
         else
         {
+            //Debug.Log($"{other.gameObject} == {_owner}");
             Explode();
             gameObject.SetActive(false);
         } 

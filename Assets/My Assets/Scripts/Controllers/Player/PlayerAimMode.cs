@@ -15,6 +15,7 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
     private Transform _shootFromObject;
 
     private bool _isAiming;
+    private bool _tempAiming;
     private bool _lockHeadAim;
 
     public Action<bool> OnToggleAim;
@@ -86,17 +87,32 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         if (_isAiming)
         {
             TurnAimOff();
+            _isAiming = false;
         }
         else
         {
             TurnAimOn();
+            _isAiming = true;
+        }
+    }
+
+    public void TempAim(bool mode)
+    {
+        _tempAiming = mode; // Store temp aiming state
+
+        if (mode) // Enable temp aiming
+        {
+            if (!_isAiming) TurnAimOn(); // Only turn on if it's not already on
+        }
+        else // Disable temp aiming, restore original state
+        {
+            if (!_isAiming) TurnAimOff(); // Only turn off if it wasn't originally aiming
         }
     }
 
     private void TurnAimOn()
     {
         OnToggleAim?.Invoke(true);
-        _isAiming = true;
         _playerWalk.AddSpeedModifier("Aiming", _playerAimMovementSpeedMultiplier);
         _playerComponentsRefrences.OnUpdate += PlayerUpdate;
         _playerAnimations.SetHeadAimWeight(1);
@@ -105,7 +121,6 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
     private void TurnAimOff()
     {
         OnToggleAim?.Invoke(false);
-        _isAiming = false;
         _playerWalk.RemoveSpeedModifier("Aiming");
         _playerComponentsRefrences.OnUpdate -= PlayerUpdate;
         _playerAnimations.SetHeadAimWeight(0);
