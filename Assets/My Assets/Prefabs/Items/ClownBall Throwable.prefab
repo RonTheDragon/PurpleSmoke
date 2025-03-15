@@ -73,6 +73,9 @@ MonoBehaviour:
   _lineRenderer: {fileID: 8188147795090881100}
   _linePoints: 100
   _timeBetweenPoints: 0.096
+  _lineRenderHitMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &8289147022411284670
 GameObject:
   m_ObjectHideFlags: 0

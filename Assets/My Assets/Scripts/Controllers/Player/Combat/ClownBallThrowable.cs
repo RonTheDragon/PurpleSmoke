@@ -17,6 +17,7 @@ public class ClownBallThrowable : UseableAbility
     [SerializeField] private LineRenderer _lineRenderer;
     [SerializeField][Range(10, 100)] private int _linePoints = 25;
     [SerializeField][Range(0.01f, 0.25f)] private float _timeBetweenPoints = 0.1f;
+    [SerializeField] private LayerMask _lineRenderHitMask;
 
     public override void UseableStart(PlayerCombatSystem playerCombatSystem,InventoryItemUI item)
     {
@@ -49,6 +50,14 @@ public class ClownBallThrowable : UseableAbility
             point.y = startpos.y + velocity.y * time + (Physics.gravity.y / 2f * time * time);
 
             _lineRenderer.SetPosition(i,point);
+
+            Vector3 lastPos = _lineRenderer.GetPosition(i - 1);
+            if (Physics.Raycast(lastPos, (point - lastPos).normalized, out RaycastHit hit, (point - lastPos).magnitude, _lineRenderHitMask))
+            {
+                _lineRenderer.SetPosition(i,hit.point);
+                _lineRenderer.positionCount = i + 1;
+                return;
+            }
         }
     }
 
