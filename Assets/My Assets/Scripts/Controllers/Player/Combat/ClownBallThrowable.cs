@@ -9,6 +9,7 @@ public class ClownBallThrowable : UseableAbility
     private ProjectilePooler _projectilePooler;
     private PlayerAimMode _playerAimMode;
     private PlayerComponentsRefrences _refs;
+    private float _currentCharge;
 
     [SerializeField] private BallThrow _ballthrow;
     [SerializeField] private ChargeableStats _chargeStats;
@@ -34,6 +35,7 @@ public class ClownBallThrowable : UseableAbility
             //_playerAnimations.PlayAnimation(ChargeThrowAnim);
             _clownBall.SetParent(_playerCombatSystem.GetRightHand);
             _clownBall.localPosition = Vector3.zero;
+            _clownBall.localRotation = Quaternion.identity;
             _clownBall.gameObject.SetActive(true);
             _playerAimMode.TempAim(true);
         }
@@ -42,6 +44,7 @@ public class ClownBallThrowable : UseableAbility
     public override void OnRelease()
     {
         _playerAnimations.PlayAnimation(_ballthrow.Animation);
+        _currentCharge = _playerCharging.GetChargePercentage();
         _playerCharging.ResetCharge(this);
         _playerCombatSystem.SetCustomAction(ThrowBall);
     }
@@ -49,6 +52,7 @@ public class ClownBallThrowable : UseableAbility
     public void ThrowBall()
     {
         Projectile projectile = _projectilePooler.CreateOrSpawnFromPool(_ballthrow.BallPoolName, _clownBall.position, _playerAimMode.GetCrosshairAimAtRotation());
+        _ballthrow.Charge = _currentCharge;
         projectile.SetProjectile(_refs.GetCombatRules, _ballthrow);
         _clownBall.gameObject.SetActive(false);
         _playerAimMode.TempAim(false);

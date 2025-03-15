@@ -11,7 +11,7 @@ public class ClownBallProjectile : MovingProjectile
         if (projectileAttack is BallThrow)
         {
             BallThrow ball = (BallThrow)projectileAttack;
-            _movement.SetVariablesAndLaunch(ball.Velocity, ball.Gravity);
+            _movement.SetVariablesAndLaunch(Mathf.Lerp(ball.MinVelocity,ball.Velocity,ball.Charge), ball.Gravity);
             damager.SetOwner(owner);
             damager.SetDamage(ball.Damage);
             damager.SetAcidDamage(ball.AcidDamage);

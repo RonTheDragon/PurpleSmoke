@@ -2,13 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class ProjectileMovement : MonoBehaviour
+public abstract class ProjectileMovement : MonoBehaviour
 {
-    private float _speed;
-    private float _gravity;
-    [SerializeField] Transform _modelTransform;
-    [SerializeField] VisualEffect _visualEffect;
+    protected float _speed;
+    protected float _gravity;
+    [SerializeField] protected Transform _modelTransform;
+    [SerializeField] protected VisualEffect _visualEffect;
 
+    // Call this to set up the speed and gravity, and launch the projectile.
     public void SetVariablesAndLaunch(float speed, float gravity)
     {
         SetVariables(speed, gravity);
@@ -21,28 +22,9 @@ public class ProjectileMovement : MonoBehaviour
         _gravity = gravity;
     }
 
-    private void Launch()
-    {
-        float randomRotation = UnityEngine.Random.Range(0f, 360f);
-        _modelTransform.Rotate(randomRotation, 0f, 0f);
-        if (_visualEffect != null)
-        {
-            _visualEffect.Reinit();
-        }
-        transform.Rotate(Vector3.left, 10);
-    }
+    // Abstract Launch method that will be implemented in child classes.
+    protected abstract void Launch();
 
-    public void ActivateLoop(ref Action loop)
-    {
-            loop += ProjectileUpdate;
-    }
-
-
-    private void ProjectileUpdate()
-    {
-        transform.position += transform.forward * _speed * Time.deltaTime;
-
-        if (transform.rotation.x < 0.6f) { transform.Rotate(Vector3.left, -_gravity * Time.deltaTime); }
-    }
-
+    // Abstract method for projectile updates that can be used in a loop.
+    public abstract void ActivateLoop(ref Action loop);
 }

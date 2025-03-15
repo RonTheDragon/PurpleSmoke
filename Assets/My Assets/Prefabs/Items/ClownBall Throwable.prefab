@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8558800628386021152}
+  - {fileID: 5263098537151657230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2937664047995388611
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4357cfa8f4a462e448cf0ece0b69efcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _clownBall: {fileID: 8558800628386021152}
+  _clownBall: {fileID: 5263098537151657230}
   _ballthrow:
     Range: 10
     TooClose: 3
@@ -53,6 +53,7 @@ MonoBehaviour:
     Animation: Throw2
     BallPoolName: ClownBall
     Velocity: 15
+    MinVelocity: 5
     Gravity: 30
     Damage: 30
     AcidDamage: 0
@@ -63,11 +64,44 @@ MonoBehaviour:
     GroundFire_Time: 5
     GroundFire_Damage: 5
     GroundFire_Fire: 5
+    Charge: 1
   _chargeStats:
     ChargeAnimationName: Throw1
     MinChargeTime: 0.2
     MaxChargeTime: 2
     ReleaseOnFull: 0
+--- !u!1 &8289147022411284670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5263098537151657230}
+  m_Layer: 0
+  m_Name: Ball Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5263098537151657230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8289147022411284670}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8558800628386021152}
+  m_Father: {fileID: 6758728084219908502}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8692987538792167578
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,11 +129,11 @@ Transform:
   m_GameObject: {fileID: 8692987538792167578}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071069, y: -0.000000029802322, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -12.676089, y: -2.4357371, z: -3.8777082}
+  m_LocalPosition: {x: 0.011, y: 0.055, z: 0.102}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 6758728084219908502}
+  m_Father: {fileID: 5263098537151657230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6017056062398909465
 MeshFilter:

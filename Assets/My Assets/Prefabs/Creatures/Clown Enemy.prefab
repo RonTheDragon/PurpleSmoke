@@ -1790,6 +1790,7 @@ MonoBehaviour:
     Animation: BallThrow
     BallPoolName: ClownBall
     Velocity: 15
+    MinVelocity: 0
     Gravity: 30
     Damage: 30
     AcidDamage: 0
@@ -1800,6 +1801,7 @@ MonoBehaviour:
     GroundFire_Time: 5
     GroundFire_Damage: 5
     GroundFire_Fire: 5
+    Charge: 1
   _spitFire:
     Range: 3
     TooClose: 0

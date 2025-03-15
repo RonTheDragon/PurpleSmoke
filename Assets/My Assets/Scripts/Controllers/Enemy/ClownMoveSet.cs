@@ -60,7 +60,7 @@ public class ClownMoveSet : EnemyCombatMoveSet
     {
         public string Animation;
         public string BallPoolName;
-        public float Velocity;
+        public float Velocity, MinVelocity;
         public float Gravity;
         public float Damage;
         public float AcidDamage;
@@ -68,6 +68,7 @@ public class ClownMoveSet : EnemyCombatMoveSet
         public Vector2 Knockback, Knockout;
         public float Radius;
         public float GroundFire_Time, GroundFire_Damage, GroundFire_Fire;
+        public float Charge = 1;
     }
 
     [System.Serializable]

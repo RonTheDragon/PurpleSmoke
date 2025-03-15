@@ -7,7 +7,7 @@ public class ProjectileDecalExplosionDamage : ExplosionDamage
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == _owner || other.isTrigger)
+        if (other.gameObject == _owner.gameObject || other.isTrigger)
         {
             return; // Prevent damaging the owner itself
         }

@@ -18,7 +18,7 @@ public class MovingProjectile : Projectile
         if (!_loopStarted)
         {
             _loopStarted = true;
-            _movement.ActivateLoop(ref _loop);
+            _movement?.ActivateLoop(ref _loop);
         }
     }
 

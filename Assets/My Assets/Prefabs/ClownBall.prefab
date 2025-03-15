@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8116737111386604429}
   - component: {fileID: 3404017283224835458}
-  - component: {fileID: 6635062672369433596}
+  - component: {fileID: 3732207117851888043}
   - component: {fileID: 5870545744876279426}
   - component: {fileID: 4989529827177253617}
   - component: {fileID: 2834120297865201121}
@@ -176,7 +176,7 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6635062672369433596
+--- !u!114 &3732207117851888043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,11 +185,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5565384879688059584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 508c53bf28fc0ce42b55e38b661733be, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d0deb572ee97fc418b2de6c551f18b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modelTransform: {fileID: 5570930217312643585}
+  _modelTransform: {fileID: 8116737111386604429}
   _visualEffect: {fileID: 0}
+  _rigidbody: {fileID: 2834120297865201121}
 --- !u!114 &5870545744876279426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fde64ea88b4c094e9697a1dc5fed7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movement: {fileID: 6635062672369433596}
+  _movement: {fileID: 3732207117851888043}
   damager: {fileID: 4989529827177253617}
 --- !u!114 &4989529827177253617
 MonoBehaviour:
@@ -243,8 +244,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3

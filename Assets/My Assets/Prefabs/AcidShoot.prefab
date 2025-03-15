@@ -259,7 +259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9076755506014189050}
   - component: {fileID: 6301342496689165946}
-  - component: {fileID: 4089149564560887147}
+  - component: {fileID: 9200348571480265176}
   - component: {fileID: 6847307818092735801}
   - component: {fileID: 524350674282121159}
   - component: {fileID: 6596749998716795977}
@@ -309,7 +309,7 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4089149564560887147
+--- !u!114 &9200348571480265176
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -318,7 +318,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1694940552184526342}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 508c53bf28fc0ce42b55e38b661733be, type: 3}
+  m_Script: {fileID: 11500000, guid: 0321cfd1dd9c9e04db50e9031bb5c939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 1430301047739780779}
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0aced45c8cb79247bec71ed6f1d35d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movement: {fileID: 4089149564560887147}
+  _movement: {fileID: 9200348571480265176}
   damager: {fileID: 524350674282121159}
 --- !u!114 &524350674282121159
 MonoBehaviour:
