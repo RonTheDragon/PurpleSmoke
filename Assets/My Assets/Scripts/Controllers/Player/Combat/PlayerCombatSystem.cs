@@ -95,6 +95,7 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     public void ClearAttacks()
     {
         PerformMoveSetAction(moveset => moveset.ResetAttacks());
+        _playerCharging.ForceResetCharge();
     }
 
     public void SetCustomAction(Action action)

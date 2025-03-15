@@ -47,7 +47,7 @@ public class PlayerKnockout : CharacterKnockout, IPlayerComponent
     protected override void ClearAttacks()
     {
         _playerCombatSystem.ClearAttacks();
-        _playerCharging.ForceResetCharge();
+       // _playerCharging.ForceResetCharge();
     }
 
     public override void StunCharacter()

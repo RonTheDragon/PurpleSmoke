@@ -32,7 +32,7 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         _playerHealth = playerComponents.GetPlayerHealth;
         _playerKnockout = playerComponents.GetPlayerKnockout;
 
-        OnToggleAim += _playerWalk.SetLockOnForward;
+        //OnToggleAim += _playerWalk.SetLockOnForward;
         OnToggleAim += _playerCombatSystem.SetUsingRanged;
         OnToggleAim += _playerUI.SetAcidCrosshair;
     }
@@ -88,11 +88,13 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
         {
             TurnAimOff();
             _isAiming = false;
+            OnToggleAim?.Invoke(false);
         }
         else
         {
             TurnAimOn();
             _isAiming = true;
+            OnToggleAim?.Invoke(true);
         }
     }
 
@@ -112,7 +114,7 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
 
     private void TurnAimOn()
     {
-        OnToggleAim?.Invoke(true);
+        _playerWalk.SetLockOnForward(true);
         _playerWalk.AddSpeedModifier("Aiming", _playerAimMovementSpeedMultiplier);
         _playerComponentsRefrences.OnUpdate += PlayerUpdate;
         _playerAnimations.SetHeadAimWeight(1);
@@ -120,7 +122,7 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
 
     private void TurnAimOff()
     {
-        OnToggleAim?.Invoke(false);
+        _playerWalk.SetLockOnForward(false);
         _playerWalk.RemoveSpeedModifier("Aiming");
         _playerComponentsRefrences.OnUpdate -= PlayerUpdate;
         _playerAnimations.SetHeadAimWeight(0);
