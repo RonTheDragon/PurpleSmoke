@@ -1791,7 +1791,7 @@ MonoBehaviour:
     BallPoolName: ClownBall
     Velocity: 15
     MinVelocity: 0
-    Gravity: 30
+    Gravity: 1
     Damage: 30
     AcidDamage: 0
     FireDamage: 30

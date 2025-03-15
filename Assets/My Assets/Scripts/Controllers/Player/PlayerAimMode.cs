@@ -144,4 +144,6 @@ public class PlayerAimMode : MonoBehaviour , IPlayerComponent
     }
 
     public bool GetIsAiming => _isAiming;
+
+    public Camera GetCamera => _camera;
 }

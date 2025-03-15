@@ -12,7 +12,7 @@ public class ProjectileThrownMovement : ProjectileMovement
         // Apply force to the Rigidbody for the thrown projectile
         if (_rigidbody != null)
         {
-            _rigidbody.AddForce(transform.forward * _speed, ForceMode.VelocityChange);
+            _rigidbody.AddForce(transform.forward * _speed, ForceMode.Impulse);
             _rigidbody.mass = _gravity;
         }
 

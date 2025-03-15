@@ -14,6 +14,10 @@ public class ClownBallThrowable : UseableAbility
     [SerializeField] private BallThrow _ballthrow;
     [SerializeField] private ChargeableStats _chargeStats;
 
+    [SerializeField] private LineRenderer _lineRenderer;
+    [SerializeField][Range(10, 100)] private int _linePoints = 25;
+    [SerializeField][Range(0.01f, 0.25f)] private float _timeBetweenPoints = 0.1f;
+
     public override void UseableStart(PlayerCombatSystem playerCombatSystem,InventoryItemUI item)
     {
         base.UseableStart(playerCombatSystem, item);
@@ -22,7 +26,30 @@ public class ClownBallThrowable : UseableAbility
         _playerCharging = _refs.GetPlayerCharging;
         _projectilePooler = GameManager.Instance.GetProjectilePooler;
         _playerAimMode = _refs.GetPlayerAimMode;
-        
+        _refs.GetPlayerGroundCheck.OnGroundCheckChange += (b) => ThrowBall();
+    }
+
+    private void PlayerUpdate()
+    {
+        DrawProjection();
+    }
+
+    private void DrawProjection()
+    {
+        _lineRenderer.positionCount = Mathf.CeilToInt(_linePoints/_timeBetweenPoints)+1;
+        Vector3 startpos = _clownBall.position;
+        Vector3 velocity = Mathf.Lerp(_ballthrow.MinVelocity, _ballthrow.Velocity, _playerCharging.GetChargePercentage())
+            * _playerAimMode.GetCamera.transform.forward  / _ballthrow.Gravity;
+        int i = 0;
+        _lineRenderer.SetPosition(i, startpos);
+        for(float time = 0; time < _linePoints; time += _timeBetweenPoints)
+        {
+            i++;
+            Vector3 point = startpos + time * velocity;
+            point.y = startpos.y + velocity.y * time + (Physics.gravity.y / 2f * time * time);
+
+            _lineRenderer.SetPosition(i,point);
+        }
     }
 
     public override void OnPress()
@@ -38,6 +65,7 @@ public class ClownBallThrowable : UseableAbility
             _clownBall.localRotation = Quaternion.identity;
             _clownBall.gameObject.SetActive(true);
             _playerAimMode.TempAim(true);
+            _refs.OnUpdate += PlayerUpdate;
         }
     }
 
@@ -47,10 +75,12 @@ public class ClownBallThrowable : UseableAbility
         _currentCharge = _playerCharging.GetChargePercentage();
         _playerCharging.ResetCharge(this);
         _playerCombatSystem.SetCustomAction(ThrowBall);
+        _refs.OnUpdate -= PlayerUpdate;
     }
 
     public void ThrowBall()
     {
+        if (_clownBall.gameObject.activeSelf == false) return;
         Projectile projectile = _projectilePooler.CreateOrSpawnFromPool(_ballthrow.BallPoolName, _clownBall.position, _playerAimMode.GetCrosshairAimAtRotation());
         _ballthrow.Charge = _currentCharge;
         projectile.SetProjectile(_refs.GetCombatRules, _ballthrow);
@@ -63,5 +93,6 @@ public class ClownBallThrowable : UseableAbility
     {
         ThrowBall();
         _playerAnimations.PlayAnimation("Cancel");
+        _refs.OnUpdate -= PlayerUpdate;
     }
 }
