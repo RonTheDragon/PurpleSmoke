@@ -14,9 +14,9 @@ public class ClownBallThrowable : UseableAbility
     [SerializeField] private BallThrow _ballthrow;
     [SerializeField] private ChargeableStats _chargeStats;
 
-    public override void UseableStart(PlayerCombatSystem playerCombatSystem)
+    public override void UseableStart(PlayerCombatSystem playerCombatSystem,InventoryItemUI item)
     {
-        _playerCombatSystem = playerCombatSystem;
+        base.UseableStart(playerCombatSystem, item);
         _refs = playerCombatSystem.GetPlayerRefs;
         _playerAnimations = _refs.GetPlayerAnimations;
         _playerCharging = _refs.GetPlayerCharging;
@@ -56,6 +56,7 @@ public class ClownBallThrowable : UseableAbility
         projectile.SetProjectile(_refs.GetCombatRules, _ballthrow);
         _clownBall.gameObject.SetActive(false);
         _playerAimMode.TempAim(false);
+        _playerCombatSystem.SpendUseable(_item);
     }
 
     public override void OnCancel()

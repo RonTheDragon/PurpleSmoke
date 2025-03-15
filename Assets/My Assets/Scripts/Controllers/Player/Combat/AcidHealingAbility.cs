@@ -24,9 +24,9 @@ public class AcidHealingAbility : UseableAbility
         
     }
 
-    public override void UseableStart(PlayerCombatSystem playerCombatSystem)
+    public override void UseableStart(PlayerCombatSystem playerCombatSystem, InventoryItemUI item)
     {
-        _playerCombatSystem = playerCombatSystem;
+        base.UseableStart(playerCombatSystem, item);
         PlayerComponentsRefrences refs = playerCombatSystem.GetPlayerRefs;
         _playerAcid = refs.GetPlayerAcidation;
         _playerHealth = refs.GetPlayerHealth;

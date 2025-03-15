@@ -188,22 +188,22 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
 
     public void SetStaticUseable(UseableAbility useable, InventoryItemUI item)
     {
-        SetUseable(ref _staticUseable, useable);
+        SetUseable(ref _staticUseable, useable, item);
         _currentStaticItemUI = item;
     }
 
     public void SetDynamicUseable(UseableAbility useable, InventoryItemUI item)
     {
-        SetUseable(ref _dynamicUseable, useable);
+        SetUseable(ref _dynamicUseable, useable,item);
         _currentDynamicItemUI = item;
     }
 
-    private void SetUseable(ref UseableAbility currentUseable, UseableAbility newUseable)
+    private void SetUseable(ref UseableAbility currentUseable, UseableAbility newUseable, InventoryItemUI item)
     {
         SetOrDestroy(ref currentUseable, newUseable);
         if (currentUseable != null)
         {
-            currentUseable.UseableStart(this);
+            currentUseable.UseableStart(this,item);
         }
     }
 
@@ -227,11 +227,6 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
         consumable.Consume(this);
         _consumedConsumables.Add(consumable);
         return true;
-    }
-
-    public void ConsumeMelee()
-    {
-        
     }
 
     private void SetOrDestroy<T>(ref T current, T newInstance, T defaultInstance = null) where T : Component
@@ -273,6 +268,47 @@ public class PlayerCombatSystem : CombatSystem, IPlayerComponent
     {
         _playerInventory.RemoveAmountFromItem(_currentMeleeItemUI,amount);
     }
+
+    public void SpendUseable(InventoryItemUI item,int amount = 1)
+    {
+        _playerInventory.RemoveAmountFromItem(item,amount);
+        DeleteIfEmptyUseable();
+    }
+
+    public void DeleteIfEmptyUseable()
+    {
+        // If both slots are using the same item, delete them both if one of them is empty
+        if (_currentStaticItemUI == _currentDynamicItemUI && _currentStaticItemUI != null)
+        {
+            if (_playerInventory.IsItemEmpty(_currentStaticItemUI))
+            {
+                _playerInventory.RemoveWholeItem(_currentStaticItemUI);
+                SetStaticUseable(null, null);
+                SetDynamicUseable(null, null);
+                _playerInventory.DynamicSlotClear();
+                _playerInventory.StaticSlotClear();
+            }
+        }
+        else
+        {
+            // Check Static Useable
+            if (_currentStaticItemUI != null && _playerInventory.IsItemEmpty(_currentStaticItemUI))
+            {
+                _playerInventory.RemoveWholeItem(_currentStaticItemUI);
+                SetStaticUseable(null, null);
+                _playerInventory.StaticSlotClear();
+            }
+
+            // Check Dynamic Useable
+            if (_currentDynamicItemUI != null && _playerInventory.IsItemEmpty(_currentDynamicItemUI))
+            {
+                _playerInventory.RemoveWholeItem(_currentDynamicItemUI);
+                SetDynamicUseable(null, null);
+                _playerInventory.DynamicSlotClear();
+            }
+        }
+    }
+
 
     public bool IsMeleeEmpty()
     {
