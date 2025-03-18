@@ -12,9 +12,9 @@ public class PlayersSetUp : MonoBehaviour
     private void Start()
     {
         _gm = GameManager.Instance;
+        ChangeFinsMaterial();
         _cinemachine.layer = LayerMask.NameToLayer("Player"+ _gm.PlayerCount);
         _camera.cullingMask = _gm.GetLayerMaskForCinemachine();
-        ChangeFinsMaterial();
         FixCanvas();
         _gm.OnPlayerAmountChange += FixCanvas;
     }

@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7701399407666839084
 Transform:
   m_ObjectHideFlags: 0
@@ -329,7 +329,7 @@ MonoBehaviour:
       - m_Target: {fileID: 839092206634498332}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnPlayerJoined
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -356,7 +356,7 @@ MonoBehaviour:
       - m_Target: {fileID: 839092206634498332}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnPlayerLeave
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -423,3 +423,5 @@ MonoBehaviour:
   _staticColor: {r: 0, g: 0.18552971, b: 1, a: 1}
   _dynamicColor: {r: 0, g: 0.7877617, b: 1, a: 1}
   _consumableColor: {r: 0.38845253, g: 0, b: 1, a: 1}
+  _playerInputManager: {fileID: 8644008644729610474}
+  _devicesIds: {fileID: 11400000, guid: 9aafcd24aa2e1504c92aa661d075cd45, type: 2}
