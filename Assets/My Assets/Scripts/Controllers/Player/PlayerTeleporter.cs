@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerTeleporter : MonoBehaviour, IPlayerComponent
 {
-    CharacterController controller;
+    [SerializeField] private CharacterController controller;
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
-        controller = playerComponents.GetCharacterController;
+        
     }
 
     public void Teleport(Vector3 pos)
