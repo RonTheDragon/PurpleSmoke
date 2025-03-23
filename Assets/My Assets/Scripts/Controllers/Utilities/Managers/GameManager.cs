@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Color _meleeColor, _rangeColor, _staticColor, _dynamicColor, _consumableColor;
     [SerializeField] private PlayerInputManager _playerInputManager;
     [SerializeField] private SOdeviceId _devicesIds;
+    [SerializeField] private GamemodeManager _gamemodeManager;
 
     public enum ItemColor { Melee, Range, Static, Dynamic, Consumable }
 
@@ -77,7 +78,8 @@ public class GameManager : MonoBehaviour
     public ProjectilePooler GetProjectilePooler => _projectilePooler;
     public VEPooler GetVEPooler => _visualEffectsPooler;
     public PickupPooler GetPickupPooler => _pickupPooler;
-    public EnemyPooler GetEnemyPooler => _enemyPooler;
+    public EnemyPooler GetEnemyPooler => _enemyPooler;  
+    public GamemodeManager GetGamemodeManager => _gamemodeManager;
 
     public Color GetItemColor(ItemColor c)
     {

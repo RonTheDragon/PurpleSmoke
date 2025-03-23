@@ -9,12 +9,14 @@ public class EnemyDeath : CharacterDeath , IEnemyComponent
     [SerializeField] private float _despawnTime = 10;
     private PickupPooler _pickupPooler;
     [SerializeField] private List<Loot> _loot;
+    private GameManager _gm;
     public void InitializeEnemyComponent(EnemyComponentRefrences enemyComponents)
     {
         //_enemyWalk = enemyComponents.GetEnemyWalk;
         _enemyKnockout = enemyComponents.GetEnemyKnockout;
         _enemyAnimations = enemyComponents.GetEnemyAnimations;
-        _pickupPooler = GameManager.Instance.GetPickupPooler;
+        _gm = GameManager.Instance;
+        _pickupPooler = _gm.GetPickupPooler;
     }
 
     public override void Die()

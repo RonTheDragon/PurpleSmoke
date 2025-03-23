@@ -25,12 +25,14 @@ public abstract class Health : MonoBehaviour , IDamageable
     private float _currentKnockDelay;
     private float _highestKnockback;
     [SerializeField] private float _knockDelay = 0.1f;
+    private CombatRules _lastAttacker;
 
     protected bool _isDead = false;
 
     public Action OnDeath;
     public virtual void TakeDamage(float damageAmount, CombatRules Attacker)
     {
+        _lastAttacker = Attacker;
         _currentHealth -= CalculateDamage(damageAmount);
         CheckIfDied();
     }
@@ -167,4 +169,6 @@ public abstract class Health : MonoBehaviour , IDamageable
     }
 
     public bool GetIsDead => _isDead;
+
+    public CombatRules GetLastAttacker => _lastAttacker;
 }

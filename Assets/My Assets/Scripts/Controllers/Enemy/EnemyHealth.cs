@@ -1,4 +1,4 @@
-using UnityEngine;
+
 
 public class EnemyHealth : Health , IEnemyComponent
 {
@@ -24,7 +24,7 @@ public class EnemyHealth : Health , IEnemyComponent
 
     public override void TakeDamage(float damageAmount, CombatRules Attacker)
     {
-        if (GetIsDead) return; 
+        if (GetIsDead) return;
         _enemyChase.Agro();
         _enemyDetection.TargetAgro(Attacker.transform);
         base.TakeDamage(damageAmount, Attacker);
