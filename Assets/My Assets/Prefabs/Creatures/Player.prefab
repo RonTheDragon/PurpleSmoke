@@ -4990,6 +4990,8 @@ MonoBehaviour:
   _cinemachine: {fileID: 2864857502938737504}
   _skinnedMeshRenderer: {fileID: 4909403118593040636}
   _teleporter: {fileID: 300154325113233337}
+  _combatRules: {fileID: 6336001288569791745}
+  _playerDeath: {fileID: 1674787408233449612}
   _spawnRadius: 5
 --- !u!1 &9189180581869928458
 GameObject:

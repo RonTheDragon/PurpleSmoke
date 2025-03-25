@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class CombatRules : MonoBehaviour
 {
+    public Action OnKill;
     public enum CombatMode
     {
         Team,   // Only enemies from different teams can be damaged
@@ -38,4 +40,11 @@ public class CombatRules : MonoBehaviour
 
     // Getter for the team string
     public string GetTeam => _team;
+
+    public void SetTeam(string team) { _team = team; }
+
+    public void KilledEnemy()
+    {
+        OnKill?.Invoke();
+    }
 }

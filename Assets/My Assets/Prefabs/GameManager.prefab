@@ -272,6 +272,10 @@ MonoBehaviour:
       Object: {fileID: 3902768569550905331, guid: 12922f73d8a2d7248b688c61a8f9b7c1,
         type: 3}
       StartAmount: 0
+    - Tag: Clown
+      Object: {fileID: 8668510648054786660, guid: 5ab4758af1cf8574b8c4088d406da8a2,
+        type: 3}
+      StartAmount: 0
 --- !u!1 &6678245051165398795
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,3 +429,4 @@ MonoBehaviour:
   _consumableColor: {r: 0.38845253, g: 0, b: 1, a: 1}
   _playerInputManager: {fileID: 8644008644729610474}
   _devicesIds: {fileID: 11400000, guid: 9aafcd24aa2e1504c92aa661d075cd45, type: 2}
+  _gamemodeManager: {fileID: 0}

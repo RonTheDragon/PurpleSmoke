@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private PlayerInputManager _playerInputManager;
     [SerializeField] private SOdeviceId _devicesIds;
+    [SerializeField] private SOgamemodeSelected _gamemodeSelected;
     [SerializeField] private GameObject[] _players; // UI slots, not actual players
     private int _playerCount = 0;
     private int _currentGameMode = 0;
@@ -44,6 +45,21 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
+        // Update _gamemodeSelected before loading the next scene
+        if (gamemodes.Count == 0 || _gamemodeSelected == null)
+        {
+            Debug.LogWarning("Gamemodes or SOgamemodeSelected is missing!");
+            return;
+        }
+
+        Gamemode selectedGamemode = gamemodes[_currentGameMode];
+        Mode selectedMode = selectedGamemode.modes[selectedGamemode.currentMode];
+
+        _gamemodeSelected.Pvp = selectedGamemode.name == "PVP";
+        _gamemodeSelected.Mode = selectedGamemode.currentMode;
+        _gamemodeSelected.Amount = selectedMode.Amount.Count > 0 ? selectedMode.Amount[selectedMode.CurrentAmountSelected] : 0;
+
+        // Load the next scene
         SceneManager.LoadScene(1);
     }
 

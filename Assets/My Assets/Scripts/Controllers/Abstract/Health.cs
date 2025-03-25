@@ -25,7 +25,7 @@ public abstract class Health : MonoBehaviour , IDamageable
     private float _currentKnockDelay;
     private float _highestKnockback;
     [SerializeField] private float _knockDelay = 0.1f;
-    private CombatRules _lastAttacker;
+    protected CombatRules _lastAttacker;
 
     protected bool _isDead = false;
 
@@ -161,6 +161,7 @@ public abstract class Health : MonoBehaviour , IDamageable
         _isDead = true;
         OnDeath?.Invoke();
         OnDeath = null;
+        _lastAttacker.KilledEnemy();
     }
 
     public void TakeFireDamage(float fire)

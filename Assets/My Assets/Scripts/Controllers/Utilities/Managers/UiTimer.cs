@@ -11,17 +11,18 @@ public class UiTimer : MonoBehaviour
     private bool _isRunning;    // Controls whether timer updates
     private bool _isCountingDown; // True for countdown, false for count-up
 
-    private void Start()
-    {
-        StartTimer(60);
-    }
-
     public void StartTimer(int CountDownTime = 0) // Time in seconds
     {
-        CountDownTime++;
+        // Only increment if counting down (CountDownTime > 0)
+        if (CountDownTime > 0)
+        {
+            CountDownTime++;
+        }
         _currentTime = CountDownTime;
         _isCountingDown = CountDownTime > 0; // Count down if positive, up if 0 or negative
         _isRunning = true;
+
+        Debug.Log($"Timer started: CountDownTime={CountDownTime}, CurrentTime={_currentTime}, IsCountingDown={_isCountingDown}, IsRunning={_isRunning}");
 
         // Initial display
         UpdateTimerDisplay();
@@ -39,6 +40,7 @@ public class UiTimer : MonoBehaviour
             {
                 _currentTime = 0; // Clamp to zero
                 _isRunning = false;
+                Debug.Log("Timer reached zero, invoking OnTimesUp");
                 OnTimesUp?.Invoke(); // Trigger event if assigned
             }
         }
@@ -66,6 +68,7 @@ public class UiTimer : MonoBehaviour
 
         // Format: Minutes can expand, seconds always 2 digits
         _timerText.text = $"{minutes:D2}:{seconds:D2}"; // D2 ensures at least 2 digits
+       // Debug.Log($"Timer display updated: {_timerText.text}, CurrentTime={_currentTime}");
     }
 
     public float GetTime()
@@ -76,5 +79,6 @@ public class UiTimer : MonoBehaviour
     public void StopTimer()
     {
         _isRunning = false; // Stop the timer from updating
+        Debug.Log("Timer stopped");
     }
 }

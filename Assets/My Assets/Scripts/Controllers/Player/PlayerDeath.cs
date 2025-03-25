@@ -17,6 +17,7 @@ public class PlayerDeath : CharacterDeath, IPlayerComponent
     PlayerComponentsRefrences _playerComponents;
 
     public Action<int> OnRespawnCountdown;
+    public Action OnDeath;
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
@@ -40,6 +41,7 @@ public class PlayerDeath : CharacterDeath, IPlayerComponent
         OnRespawnCountdown?.Invoke(_respawnCountdown);
 
         _playerComponents.OnUpdate += PlayerUpdate;
+        OnDeath?.Invoke();
     }
 
     private void PlayerUpdate()

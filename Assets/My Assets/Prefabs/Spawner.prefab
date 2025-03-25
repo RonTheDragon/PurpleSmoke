@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &295987418831113234
 Transform:
   m_ObjectHideFlags: 0
@@ -53,14 +53,22 @@ MonoBehaviour:
     MaxExtraEnemiesSpawnAtOnce: 1
     SpawnLocations:
     - {fileID: 295987418831113234}
-    SpawnedEnemies:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    SpawnedEnemies: []
+    LimitedAmount: 0
+    MinEnemies: 0
+    MaxEnemies: 0
+    EnemiesLeftToSpawn: 0
+    ToggleTag: 
+    StartsOff: 0
+  - TagToSpawn: Clown
+    MaxAmountAlive: 20
+    MinCooldown: 5
+    MaxCooldown: 10
+    MinExtraEnemiesSpawnAtOnce: 0
+    MaxExtraEnemiesSpawnAtOnce: 1
+    SpawnLocations:
+    - {fileID: 295987418831113234}
+    SpawnedEnemies: []
     LimitedAmount: 0
     MinEnemies: 0
     MaxEnemies: 0

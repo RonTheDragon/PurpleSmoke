@@ -170,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerInputManager: {fileID: 65287354}
   _devicesIds: {fileID: 11400000, guid: 9aafcd24aa2e1504c92aa661d075cd45, type: 2}
+  _gamemodeSelected: {fileID: 11400000, guid: 3ff1c83715fbc824697472240b72df81, type: 2}
   _players:
   - {fileID: 2022900965}
   - {fileID: 135426227}

@@ -1,20 +1,21 @@
 using TMPro;
 using UnityEngine;
 using System.Linq;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement; // Added for scene transitions
+using System.Collections; // Added for coroutines
 
 public class UiScoreboard : MonoBehaviour
 {
     [SerializeField] private GameObject _scoreboardPanel;
     [SerializeField] private PlayerScoreUI[] scores = new PlayerScoreUI[4];
     [SerializeField] private GameObject[] Players = new GameObject[4];
-    [SerializeField] private GameObject[] TimeIcons = new GameObject[4];
 
     [System.Serializable]
     class PlayerScoreUI
     {
         public GameObject ScoreGameObject;
         public TMP_Text Kills, Deaths, Time;
+        public GameObject TimeIcon;
     }
 
     public class ScoreBoardResults
@@ -34,8 +35,8 @@ public class UiScoreboard : MonoBehaviour
     {
         // Validate inputs
         if (score == null || score.scores == null || score.scores.Length != 4 ||
-            scores.Any(s => s == null || s.ScoreGameObject == null || s.Kills == null || s.Deaths == null || s.Time == null) ||
-            Players.Any(p => p == null) || TimeIcons.Any(t => t == null))
+            scores.Any(s => s == null || s.ScoreGameObject == null || s.Kills == null || s.Deaths == null || s.Time == null || s.TimeIcon == null) ||
+            Players.Any(p => p == null))
         {
             Debug.LogWarning("Scoreboard setup is invalid!");
             return;
@@ -119,18 +120,34 @@ public class UiScoreboard : MonoBehaviour
             // Handle Time display based on IsShowingTime
             if (score.IsShowingTime)
             {
-                TimeIcons[rank].SetActive(true);
+                scores[rank].TimeIcon.SetActive(true);
                 scores[rank].Time.text = FormatTime(playerScore.Time);
             }
             else
             {
-                TimeIcons[rank].SetActive(false);
+                scores[rank].TimeIcon.SetActive(false);
                 scores[rank].Time.text = "";
             }
         }
 
         // Step 5: Show the scoreboard
         _scoreboardPanel.SetActive(true);
+
+        // Step 6: Calculate delay and transition to scene 0
+        float baseDelay = 5f; // Base delay for 1 player
+        float extraDelayPerPlayer = 3f; // Additional delay per extra player
+        float totalDelay = baseDelay + (activePlayerCount - 1) * extraDelayPerPlayer;
+        Debug.Log($"Active players: {activePlayerCount}, Total delay: {totalDelay} seconds");
+        StartCoroutine(TransitionToSceneAfterDelay(totalDelay));
+    }
+
+    private IEnumerator TransitionToSceneAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Debug.Log("Transitioning to scene 0");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene(0); // Load scene 0 (main menu or lobby)
     }
 
     private string FormatTime(float timeInSeconds)
