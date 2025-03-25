@@ -89,6 +89,7 @@ public class ClownBallThrowable : UseableAbility
 
     public void ThrowBall()
     {
+        if (_clownBall == null) return;
         if (_clownBall.gameObject.activeSelf == false) return;
         Projectile projectile = _projectilePooler.CreateOrSpawnFromPool(_ballthrow.BallPoolName, _clownBall.position, _playerAimMode.GetCrosshairAimAtRotation());
         _ballthrow.Charge = _currentCharge;

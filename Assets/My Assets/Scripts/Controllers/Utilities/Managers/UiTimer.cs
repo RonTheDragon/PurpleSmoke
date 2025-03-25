@@ -13,10 +13,12 @@ public class UiTimer : MonoBehaviour
 
     private void Start()
     {
-        StartTimer(152626);
+        StartTimer(60);
     }
-    public void StartTimer(int CountDownTime=0) // Time in seconds
+
+    public void StartTimer(int CountDownTime = 0) // Time in seconds
     {
+        CountDownTime++;
         _currentTime = CountDownTime;
         _isCountingDown = CountDownTime > 0; // Count down if positive, up if 0 or negative
         _isRunning = true;
@@ -69,5 +71,10 @@ public class UiTimer : MonoBehaviour
     public float GetTime()
     {
         return _currentTime; // Positive if counting up, negative or decreasing if down
+    }
+
+    public void StopTimer()
+    {
+        _isRunning = false; // Stop the timer from updating
     }
 }
