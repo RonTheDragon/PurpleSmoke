@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0211feffa417c2a4a88884eb3c16e136, type: 3}
   m_Name: gamemodeData
   m_EditorClassIdentifier: 
-  Pvp: 0
+  Pvp: 1
   Mode: 0
-  Amount: 0
+  Amount: 2

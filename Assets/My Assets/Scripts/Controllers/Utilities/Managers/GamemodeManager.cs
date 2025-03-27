@@ -12,6 +12,7 @@ public class GamemodeManager : MonoBehaviour
     private List<Action> _onKillActions = new List<Action>();
     private List<Action> _onDeathActions = new List<Action>();
     [SerializeField] private List<GameObject> Monsters = new List<GameObject>();
+    private bool _forceRespawn;
 
     private void Start()
     {
@@ -32,7 +33,7 @@ public class GamemodeManager : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Starting GamemodeManager: Mode={_gamemodeSelected.Mode}, Pvp={_gamemodeSelected.Pvp}, Amount={_gamemodeSelected.Amount}");
+        //Debug.Log($"Starting GamemodeManager: Mode={_gamemodeSelected.Mode}, Pvp={_gamemodeSelected.Pvp}, Amount={_gamemodeSelected.Amount}");
 
         if (_gamemodeSelected.Pvp == false) { foreach (GameObject a in Monsters) a.SetActive(true); }
 
@@ -40,14 +41,14 @@ public class GamemodeManager : MonoBehaviour
         // Set up the timer based on the mode
         switch (_gamemodeSelected.Mode)
         {
-            case 0: // Survival/Till Death
+            case 0: // Survival/Till Death 
             case 1: // Kill Race
             case 3: // Infinity
-                Debug.Log("Starting timer in count-up mode");
+                //Debug.Log("Starting timer in count-up mode");
                 UiTimer.StartTimer(0); // Count up
                 break;
             case 2: // Count Down
-                Debug.Log($"Starting timer in count-down mode with {_gamemodeSelected.Amount} seconds");
+                //Debug.Log($"Starting timer in count-down mode with {_gamemodeSelected.Amount} seconds");
                 UiTimer.StartTimer(_gamemodeSelected.Amount); // Count down from Amount
                 UiTimer.OnTimesUp += EndGame; // End game when timer reaches 0
                 break;
@@ -59,7 +60,7 @@ public class GamemodeManager : MonoBehaviour
         return _gamemodeSelected.Pvp;
     }
 
-    public (int playerIndex, Action onKillAction, Action onDeathAction) AddPlayer()
+    public (int playerIndex, Action onKillAction, Action onDeathAction) AddPlayer(PlayerComponentsRefrences refs)
     {
         PlayerScoreData playerData = new PlayerScoreData();
         int playerIndex = _players.Count;
@@ -68,17 +69,17 @@ public class GamemodeManager : MonoBehaviour
         if (_gamemodeSelected.Mode == 0)
         {
             playerData.Lives = _gamemodeSelected.Amount;
-            Debug.Log($"Player {playerIndex + 1} starts with {playerData.Lives} lives");
+            //Debug.Log($"Player {playerIndex + 1} starts with {playerData.Lives} lives");
         }
 
         _players.Add(playerData);
-        Debug.Log($"Added Player {playerIndex + 1} to GamemodeManager. Total players: {_players.Count}");
+        //Debug.Log($"Added Player {playerIndex + 1} to GamemodeManager. Total players: {_players.Count}");
 
         // Define the kill action
         Action onKillAction = () =>
         {
             playerData.Kills++;
-            Debug.Log($"Player {playerIndex + 1} now has {playerData.Kills} kills");
+            //Debug.Log($"Player {playerIndex + 1} now has {playerData.Kills} kills");
 
             // Mode 1: Check if player reached the kill goal
             if (_gamemodeSelected.Mode == 1 && playerData.Kills >= _gamemodeSelected.Amount)
@@ -91,16 +92,17 @@ public class GamemodeManager : MonoBehaviour
         // Define the death action
         Action onDeathAction = () =>
         {
-            Debug.Log($"Player {playerIndex + 1} died");
+            //Debug.Log($"Player {playerIndex + 1} died");
             playerData.Deaths++;
-            Debug.Log($"Player {playerIndex + 1} now has {playerData.Deaths} deaths");
+            //Debug.Log($"Player {playerIndex + 1} now has {playerData.Deaths} deaths");
             if (_gamemodeSelected.Mode == 0) // Survival mode
             {
                 playerData.Lives--;
-                Debug.Log($"Player {playerIndex + 1} has {playerData.Lives} lives left");
+                //Debug.Log($"Player {playerIndex + 1} has {playerData.Lives} lives left");
                 if (playerData.Lives <= 0 && playerData.TimeOfDeath == 0)
                 {
                     playerData.TimeOfDeath = UiTimer.GetTime();
+                    refs.GetPlayerDeath.SetOutOfLives();
                     Debug.Log($"Player {playerIndex + 1} is out of lives! Survived for {playerData.TimeOfDeath} seconds");
                 }
             }
@@ -119,27 +121,27 @@ public class GamemodeManager : MonoBehaviour
 
     public void OnPlayerKill(int playerIndex)
     {
-        Debug.Log($"OnPlayerKill called for Player {playerIndex + 1}. Total kill actions: {_onKillActions.Count}");
+        //Debug.Log($"OnPlayerKill called for Player {playerIndex + 1}. Total kill actions: {_onKillActions.Count}");
         if (playerIndex >= 0 && playerIndex < _onKillActions.Count)
         {
             _onKillActions[playerIndex]?.Invoke();
         }
         else
         {
-            Debug.LogWarning($"Invalid playerIndex {playerIndex} for OnPlayerKill. Valid range: 0 to {_onKillActions.Count - 1}");
+            //Debug.LogWarning($"Invalid playerIndex {playerIndex} for OnPlayerKill. Valid range: 0 to {_onKillActions.Count - 1}");
         }
     }
 
     public void OnPlayerDeath(int playerIndex)
     {
-        Debug.Log($"OnPlayerDeath called for Player {playerIndex + 1}. Total death actions: {_onDeathActions.Count}");
+        //Debug.Log($"OnPlayerDeath called for Player {playerIndex + 1}. Total death actions: {_onDeathActions.Count}");
         if (playerIndex >= 0 && playerIndex < _onDeathActions.Count)
         {
             _onDeathActions[playerIndex]?.Invoke();
         }
         else
         {
-            Debug.LogWarning($"Invalid playerIndex {playerIndex} for OnPlayerDeath. Valid range: 0 to {_onDeathActions.Count - 1}");
+            //Debug.LogWarning($"Invalid playerIndex {playerIndex} for OnPlayerDeath. Valid range: 0 to {_onDeathActions.Count - 1}");
         }
     }
 
@@ -161,14 +163,14 @@ public class GamemodeManager : MonoBehaviour
                     }
                 }
 
-                Debug.Log($"Players with lives remaining: {playersWithLives}");
+                //Debug.Log($"Players with lives remaining: {playersWithLives}");
                 if (playersWithLives <= 1)
                 {
                     // Add 1 second to the last player's time
                     if (lastPlayerIndex >= 0 && _players[lastPlayerIndex].TimeOfDeath == 0)
                     {
                         _players[lastPlayerIndex].TimeOfDeath = UiTimer.GetTime() + 1f;
-                        Debug.Log($"Last player (Player {lastPlayerIndex + 1}) survived for {_players[lastPlayerIndex].TimeOfDeath} seconds");
+                       // Debug.Log($"Last player (Player {lastPlayerIndex + 1}) survived for {_players[lastPlayerIndex].TimeOfDeath} seconds");
                     }
                     EndGame();
                 }
@@ -188,7 +190,7 @@ public class GamemodeManager : MonoBehaviour
 
                 if (allOutOfLives)
                 {
-                    Debug.Log("All players are out of lives in PvE!");
+                   // Debug.Log("All players are out of lives in PvE!");
                     EndGame();
                 }
             }
@@ -197,7 +199,7 @@ public class GamemodeManager : MonoBehaviour
 
     private void EndGame()
     {
-        Debug.Log("Ending game");
+       // Debug.Log("Ending game");
         UiTimer.StopTimer();
 
         UiScoreboard.ScoreBoardResults results = new UiScoreboard.ScoreBoardResults
@@ -217,7 +219,7 @@ public class GamemodeManager : MonoBehaviour
                     Deaths = _players[i].Deaths,
                     Time = _players[i].TimeOfDeath > 0 ? _players[i].TimeOfDeath : UiTimer.GetTime()
                 };
-                Debug.Log($"Player {i + 1} final stats: Kills={_players[i].Kills}, Deaths={_players[i].Deaths}, Time={results.scores[i].Time}");
+               // Debug.Log($"Player {i + 1} final stats: Kills={_players[i].Kills}, Deaths={_players[i].Deaths}, Time={results.scores[i].Time}");
             }
             else
             {
@@ -251,5 +253,8 @@ public class GamemodeManager : MonoBehaviour
         public int Deaths;
         public float TimeOfDeath;
         public int Lives; // Added for Mode 0
+        public PlayerComponentsRefrences Refs;
     }
+
+    public bool IsForceRespawn => _gamemodeSelected.Mode == 0;
 }

@@ -19,8 +19,13 @@ public class PlayerDeath : CharacterDeath, IPlayerComponent
     public Action<int> OnRespawnCountdown;
     public Action OnDeath;
 
+    private bool _forcedRespawn;
+    private bool _outOfLives;
+
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
     {
+        
+        _forcedRespawn = GameManager.Instance.GetGamemodeManager.IsForceRespawn;
         _health = playerComponents.GetPlayerHealth;
         _playerKnockout = playerComponents.GetPlayerKnockout;
         _playerAnimations = playerComponents.GetPlayerAnimations;
@@ -36,12 +41,15 @@ public class PlayerDeath : CharacterDeath, IPlayerComponent
         _playerKnockout.StunCharacter();
         _playerAnimations.PlayAnimation("Death");
 
-        _respawnTimeLeft = _respawnTime;
-        _respawnCountdown = (int)_respawnTime;
-        OnRespawnCountdown?.Invoke(_respawnCountdown);
-
-        _playerComponents.OnUpdate += PlayerUpdate;
         OnDeath?.Invoke();
+        if (!_outOfLives)
+        {
+            _respawnTimeLeft = _respawnTime;
+            _respawnCountdown = (int)_respawnTime;
+            OnRespawnCountdown?.Invoke(_respawnCountdown);
+            _playerComponents.OnUpdate += PlayerUpdate;
+        }
+
     }
 
     private void PlayerUpdate()
@@ -58,7 +66,16 @@ public class PlayerDeath : CharacterDeath, IPlayerComponent
         else if (_respawnTimeLeft < 0)
         {
             _respawnTimeLeft = 0;
-            _canRespawn = true;
+            if (_forcedRespawn)
+            {
+                Respawn();
+                _canRespawn = false;
+                OnRespawnCountdown?.Invoke(-1);
+            }
+            else
+            {
+                _canRespawn = true;
+            }
             _playerComponents.OnUpdate -= PlayerUpdate;
         }
     }
@@ -84,5 +101,10 @@ public class PlayerDeath : CharacterDeath, IPlayerComponent
         _health.HealToMax();
         _playerKnockout.UnStunCharacter();
         _playerAnimations.PlayAnimation("Revive");
+    }
+
+    public void SetOutOfLives(bool b = true)
+    {
+        _outOfLives = b;
     }
 }

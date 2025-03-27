@@ -7,9 +7,10 @@ public class PlayersSetUp : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private GameObject _cinemachine;
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
-    [SerializeField] private PlayerTeleporter _teleporter;
-    [SerializeField] private CombatRules _combatRules;
-    [SerializeField] private PlayerDeath _playerDeath;
+    [SerializeField] private PlayerComponentsRefrences _refs;
+    private PlayerTeleporter _teleporter;
+    private CombatRules _combatRules;
+    private PlayerDeath _playerDeath;
     private UniversalAdditionalCameraData _cameraData;
     [SerializeField] private float _spawnRadius = 3;
     private int _playerIndex;
@@ -19,6 +20,9 @@ public class PlayersSetUp : MonoBehaviour
     {
         _gm = GameManager.Instance;
         _ggm = _gm.GetGamemodeManager;
+        _teleporter = _refs.GetPlayerTeleporter;
+        _combatRules = _refs.GetCombatRules;
+        _playerDeath = _refs.GetPlayerDeath;
 
         // Validate references
         if (_combatRules == null)
@@ -36,21 +40,21 @@ public class PlayersSetUp : MonoBehaviour
         }
 
         // Get the player index and actions from GamemodeManager
-        var (playerIndex, onKillAction, onDeathAction) = _ggm.AddPlayer();
+        var (playerIndex, onKillAction, onDeathAction) = _ggm.AddPlayer(_refs);
         _playerIndex = playerIndex;
-        Debug.Log($"Player {_playerIndex + 1} assigned index {_playerIndex} from GamemodeManager");
+       // Debug.Log($"Player {_playerIndex + 1} assigned index {_playerIndex} from GamemodeManager");
         _combatRules.SetTeam(_ggm.IsPvp() ? "" : "Player");
 
         // Subscribe the actions to the events
         if (_combatRules != null)
         {
             _combatRules.OnKill += onKillAction;
-            Debug.Log($"Subscribed OnKill for Player {_playerIndex + 1}");
+         //   Debug.Log($"Subscribed OnKill for Player {_playerIndex + 1}");
         }
         if (_playerDeath != null)
         {
             _playerDeath.OnDeath += onDeathAction;
-            Debug.Log($"Subscribed OnDeath for Player {_playerIndex + 1}");
+         //   Debug.Log($"Subscribed OnDeath for Player {_playerIndex + 1}");
         }
 
         ChangeFinsMaterial();

@@ -106,7 +106,7 @@ public class UiScoreboard : MonoBehaviour
             int playerIndex = rankedPlayer.OriginalIndex;
             var playerScore = rankedPlayer.PlayerScore;
 
-            Debug.Log($"Rank {rank + 1}: Player{playerIndex + 1} (Kills={playerScore.Kills})");
+            //Debug.Log($"Rank {rank + 1}: Player{playerIndex + 1} (Kills={playerScore.Kills})");
 
             // Position the player GameObject at the ranked spot
             Vector3 scorePosition = scores[rank].ScoreGameObject.transform.position;

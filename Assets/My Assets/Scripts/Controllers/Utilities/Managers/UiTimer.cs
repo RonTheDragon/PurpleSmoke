@@ -22,7 +22,7 @@ public class UiTimer : MonoBehaviour
         _isCountingDown = CountDownTime > 0; // Count down if positive, up if 0 or negative
         _isRunning = true;
 
-        Debug.Log($"Timer started: CountDownTime={CountDownTime}, CurrentTime={_currentTime}, IsCountingDown={_isCountingDown}, IsRunning={_isRunning}");
+        //Debug.Log($"Timer started: CountDownTime={CountDownTime}, CurrentTime={_currentTime}, IsCountingDown={_isCountingDown}, IsRunning={_isRunning}");
 
         // Initial display
         UpdateTimerDisplay();
