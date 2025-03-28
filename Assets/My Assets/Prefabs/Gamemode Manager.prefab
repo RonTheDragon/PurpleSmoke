@@ -45,3 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gamemodeSelected: {fileID: 11400000, guid: 3ff1c83715fbc824697472240b72df81, type: 2}
+  _uiScoreboard: {fileID: 0}
+  _uiTimer: {fileID: 0}
+  _monstersSpawners: []
+  _killsIcon: {fileID: 21300000, guid: 6d55b59dca75ae14a994c42176216c43, type: 3}
+  _livesIcon: {fileID: 21300000, guid: 1a86bf9599107ee459c5bd3249b56b3a, type: 3}

@@ -760,6 +760,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9080644734375132973, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2159,22 +2164,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4927531297053945108, guid: 62d38505854f37141bef427b55f62aa3,
         type: 3}
-      propertyPath: UiTimer
+      propertyPath: _uiTimer
       value: 
       objectReference: {fileID: 1833602820479554965}
     - target: {fileID: 4927531297053945108, guid: 62d38505854f37141bef427b55f62aa3,
         type: 3}
-      propertyPath: uiScoreboard
+      propertyPath: _uiScoreboard
       value: 
       objectReference: {fileID: 1833602820479554966}
     - target: {fileID: 4927531297053945108, guid: 62d38505854f37141bef427b55f62aa3,
         type: 3}
-      propertyPath: Monsters.Array.size
+      propertyPath: _monstersSpawners.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4927531297053945108, guid: 62d38505854f37141bef427b55f62aa3,
         type: 3}
-      propertyPath: Monsters.Array.data[0]
+      propertyPath: _monstersSpawners.Array.data[0]
       value: 
       objectReference: {fileID: 7016889984737358326}
     - target: {fileID: 5313046864563497417, guid: 62d38505854f37141bef427b55f62aa3,

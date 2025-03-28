@@ -10,6 +10,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     [SerializeField] private TMP_Text _pressSpaceToGetUp;
     [SerializeField] private TMP_Text _respawnCountDown;
     [SerializeField] private GameObject _acidCrosshair;
+    [SerializeField] private Image _missionCounterImage;
 
     private PlayerComponentsRefrences _playerComponents;
     private PlayerHealth _playerHealth;
@@ -19,6 +20,7 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     private PlayerDeath _playerDeath;
     private PlayerAcidation _playerAcidation;
     private PlayerInputsHandler _playerInputsHandler;
+    [SerializeField] private TMP_Text _missionCounterText;
 
     private Color _green = Color.green * Color.gray;
     private string _jumpKey;
@@ -97,5 +99,15 @@ public class PlayerUI : MonoBehaviour, IPlayerComponent
     }
 
     public void SetAcidCrosshair(bool b) => _acidCrosshair.SetActive(b);
+
+    public void SetMissionCounter(string text)
+    {
+        _missionCounterText.text = text;
+    }
+    public void SetMissionCounter(string text, Sprite sprite)
+    {
+        _missionCounterImage.sprite = sprite;
+        _missionCounterText.text = text;
+    }
 
 }
