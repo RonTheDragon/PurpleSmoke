@@ -6,6 +6,7 @@ using UnityEngine;
 public class ProjectileThrownMovement : ProjectileMovement
 {
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private TrailRenderer _trailRenderer;
 
     protected override void Launch()
     {
@@ -20,6 +21,11 @@ public class ProjectileThrownMovement : ProjectileMovement
         if (_visualEffect != null)
         {
             _visualEffect.Reinit();
+        }
+
+        if (_trailRenderer != null) 
+        { 
+            _trailRenderer.Clear();
         }
     }
 

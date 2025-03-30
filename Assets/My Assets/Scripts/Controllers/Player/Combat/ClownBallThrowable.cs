@@ -18,6 +18,7 @@ public class ClownBallThrowable : UseableAbility
     [SerializeField][Range(10, 100)] private int _linePoints = 25;
     [SerializeField][Range(0.01f, 0.25f)] private float _timeBetweenPoints = 0.1f;
     [SerializeField] private LayerMask _lineRenderHitMask;
+    [SerializeField] private GameObject _sphereRender;
 
     public override void UseableStart(PlayerCombatSystem playerCombatSystem,InventoryItemUI item)
     {
@@ -56,7 +57,15 @@ public class ClownBallThrowable : UseableAbility
             {
                 _lineRenderer.SetPosition(i,hit.point);
                 _lineRenderer.positionCount = i + 1;
+                if (!_sphereRender.activeSelf)
+                    _sphereRender.SetActive(true);
+                _sphereRender.transform.position = hit.point;
                 return;
+            }
+            else
+            {
+                if (_sphereRender.activeSelf)
+                    _sphereRender.SetActive(false);
             }
         }
     }
@@ -97,6 +106,7 @@ public class ClownBallThrowable : UseableAbility
         _clownBall.gameObject.SetActive(false);
         _playerAimMode.TempAim(false);
         _playerCombatSystem.SpendUseable(_item);
+        _sphereRender.SetActive(false);
     }
 
     public override void OnCancel()
@@ -104,5 +114,6 @@ public class ClownBallThrowable : UseableAbility
         ThrowBall();
         _playerAnimations.PlayAnimation("Cancel");
         _refs.OnUpdate -= PlayerUpdate;
+        _sphereRender.SetActive(false);
     }
 }

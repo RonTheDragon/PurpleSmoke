@@ -161,6 +161,7 @@ public abstract class Health : MonoBehaviour , IDamageable
         _isDead = true;
         OnDeath?.Invoke();
         OnDeath = null;
+        if (_lastAttacker != null)
         _lastAttacker.KilledEnemy();
     }
 
