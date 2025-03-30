@@ -760,11 +760,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 9080644734375132973, guid: 77e4e83e7c238624fb474b9b2c7d3ef5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1660,6 +1655,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 839092206634498332, guid: 8fad4a27655674841bbd830ecf52c9e1,
         type: 3}
+      propertyPath: _uiPauseMenu
+      value: 
+      objectReference: {fileID: 1833602820479554971}
+    - target: {fileID: 839092206634498332, guid: 8fad4a27655674841bbd830ecf52c9e1,
+        type: 3}
       propertyPath: _gamemodeManager
       value: 
       objectReference: {fileID: 4883391396261571534}
@@ -2081,6 +2081,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b3b6f26333f6b4aaa7ca9153e918b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1833602820479554971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7494178468547402305, guid: dd32dce34e7e2a040abe3ace279f2b28,
+    type: 3}
+  m_PrefabInstance: {fileID: 1833602820479554964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587e30c2642e4104a8d93f9d337bda1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3449931598526849129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2172,11 +2184,6 @@ PrefabInstance:
       propertyPath: _uiScoreboard
       value: 
       objectReference: {fileID: 1833602820479554966}
-    - target: {fileID: 4927531297053945108, guid: 62d38505854f37141bef427b55f62aa3,
-        type: 3}
-      propertyPath: _monstersSpawners.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4927531297053945108, guid: 62d38505854f37141bef427b55f62aa3,
         type: 3}
       propertyPath: _monstersSpawners.Array.data[0]

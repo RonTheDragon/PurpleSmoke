@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerInputManager _playerInputManager;
     [SerializeField] private SOdeviceId _devicesIds;
     [SerializeField] private GamemodeManager _gamemodeManager;
+    [SerializeField] private UiPauseMenu _uiPauseMenu;
 
     public enum ItemColor { Melee, Range, Static, Dynamic, Consumable }
 
@@ -108,5 +109,15 @@ public class GameManager : MonoBehaviour
     {
         _playerCount++;
         return _playerColors[_playerCount-1];
+    }
+
+    public void OpenPauseMenu()
+    {
+        if (_uiPauseMenu == null)
+        {
+            Debug.LogError("Ui Pause Menu Missing");
+            return;
+        }
+        _uiPauseMenu.PauseGame();
     }
 }

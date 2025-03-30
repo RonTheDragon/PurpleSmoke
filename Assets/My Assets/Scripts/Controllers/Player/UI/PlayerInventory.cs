@@ -11,7 +11,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
     [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private Transform _inventoryContent;
 
-    [SerializeField] private MultiplayerEventSystem _multiplayerEventSystem;
+    private MultiplayerEventSystem _multiplayerEventSystem;
 
     [SerializeField] private InventoryItemUI _itemUItoSpawn;
     [SerializeField] private InventoryItemSlot _meleeSlot, _rangeSlot, _dynamicSlot, _staticSlot;
@@ -35,6 +35,7 @@ public class PlayerInventory : MonoBehaviour , IPlayerComponent
         _playerHealth = _playerComponents.GetPlayerHealth;
         _playerCombatSystem = _playerComponents.GetPlayerCombatSystem;
         _playerEquipUI = _playerComponents.GetPlayerEquipUI;
+        _multiplayerEventSystem = FindObjectOfType<MultiplayerEventSystem>();
 
         _meleeSlot.GetButton.onClick.AddListener(MeleeSlotClear);
         _rangeSlot.GetButton.onClick.AddListener(RangeSlotClear);

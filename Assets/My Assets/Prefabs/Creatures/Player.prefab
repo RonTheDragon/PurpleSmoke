@@ -981,7 +981,7 @@ MonoBehaviour:
   m_Actions: {fileID: -944628639613478452, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
     type: 3}
   m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 5713676140307218916}
+  m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1416,6 +1416,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 24651ef3-35b1-42e3-915b-50f3083b8561
     m_ActionName: Player/Switch Shortcuts[/XInputControllerWindows/leftStickPress,/XInputControllerWindows1/leftStickPress,/XInputControllerWindows2/leftStickPress,/XInputControllerWindows3/leftStickPress]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5677476338889415264}
+        m_TargetAssemblyTypeName: PlayerInputsHandler, Assembly-CSharp
+        m_MethodName: PauseMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 56a24814-b183-483f-9c58-085314c50b5c
+    m_ActionName: Player/Exit[/Keyboard/escape,/XInputControllerWindows/start,/XInputControllerWindows1/start,/XInputControllerWindows2/start,/XInputControllerWindows3/start]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b581514d-0ef7-4343-a8fc-93ab639272b4
+    m_ActionName: Player/Point[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1830,92 +1850,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &2106034568899617309
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7933399836690995926}
-  - component: {fileID: 2015241115389390583}
-  - component: {fileID: 5713676140307218916}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7933399836690995926
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2106034568899617309}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.062137436, z: -0, w: 0.9980676}
-  m_LocalPosition: {x: -0.000041528085, y: -2159.8494, z: 2111.8652}
-  m_LocalScale: {x: 696.72565, y: 696.72565, z: 696.72565}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 963904063760905480}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2015241115389390583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2106034568899617309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16c6f78230fa4964a222622d8aae332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
-  m_PlayerRoot: {fileID: 9080644734375132973}
---- !u!114 &5713676140307218916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2106034568899617309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
-  m_PointAction: {fileID: 0}
-  m_MoveAction: {fileID: -6528041232455428321, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
-  m_SubmitAction: {fileID: 2506431386872123748, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
-  m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: -2481825785604869644, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
-  m_MiddleClickAction: {fileID: -7369887778855799578, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
-  m_RightClickAction: {fileID: 4791994383399395645, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
-  m_ScrollWheelAction: {fileID: -6414671030436757674, guid: f9a848fa33b1c8b418f8f4f7ebe82a74,
-    type: 3}
-  m_TrackedDevicePositionAction: {fileID: 0}
-  m_TrackedDeviceOrientationAction: {fileID: 0}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
 --- !u!1 &2268515771155053853
 GameObject:
   m_ObjectHideFlags: 0
@@ -4885,7 +4819,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7933399836690995926}
   - {fileID: 2312978010788274131}
   - {fileID: 7200040025855755886}
   - {fileID: 3282191916598421960}
@@ -5000,7 +4933,6 @@ MonoBehaviour:
   _inventoryFirstSelected: {fileID: 7227695630505895919}
   _scrollRect: {fileID: 7363951666240108005}
   _inventoryContent: {fileID: 1480964231399961259}
-  _multiplayerEventSystem: {fileID: 2015241115389390583}
   _itemUItoSpawn: {fileID: 2015129143685865487, guid: 78070d4c315361f42b85735b1564777c,
     type: 3}
   _meleeSlot: {fileID: 5386900147893706963}
@@ -5205,7 +5137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5461088288509020780
 Transform:
   m_ObjectHideFlags: 0

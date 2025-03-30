@@ -255,6 +255,14 @@ public class PlayerInputsHandler : MonoBehaviour,IPlayerComponent
         _playerInventory.CloseInventory();
     }
 
+    public void PauseMenu(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            GameManager.Instance.OpenPauseMenu();
+        }
+    }
+
     public void UseableStatic(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started && !_uiOpen)
