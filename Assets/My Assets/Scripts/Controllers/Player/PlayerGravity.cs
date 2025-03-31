@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class PlayerGravity : MonoBehaviour, IPlayerComponent
 {
@@ -10,7 +9,7 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     private PlayerGroundCheck _groundCheck;
     [ReadOnly][SerializeField] private float _currentFallingSpeed = 0f;
     [ReadOnly][SerializeField] private List<string> _notFallingReasons = new List<string>();
-    private bool _canFall=true;
+    private bool _canFall = true;
 
     private void PlayerUpdate()
     {
@@ -21,7 +20,7 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
     {
         _characterController = playerComponents.GetCharacterController;
         _groundCheck = playerComponents.GetPlayerGroundCheck;
-        _groundCheck.OnGroundCheckChange += (b) => { ResetFall(); };
+        _groundCheck.OnGroundCheckChange += (b) => { if (b) ResetFall(); }; // Only reset when grounded
         playerComponents.OnUpdate += PlayerUpdate;
     }
 
@@ -39,7 +38,8 @@ public class PlayerGravity : MonoBehaviour, IPlayerComponent
 
     private bool IsFalling()
     {
-        return _canFall && !_groundCheck.IsGrounded();
+        // Use the immediate physical truth for gravity
+        return _canFall && !_groundCheck.IsPhysicallyGrounded;
     }
 
     private void FallDown()
