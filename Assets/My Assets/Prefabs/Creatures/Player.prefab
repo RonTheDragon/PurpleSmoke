@@ -1593,6 +1593,7 @@ MonoBehaviour:
   _jumpableLayer:
     serializedVersion: 2
     m_Bits: 8
+  _ungroundedDelay: 1
 --- !u!114 &6015236659870033800
 MonoBehaviour:
   m_ObjectHideFlags: 0

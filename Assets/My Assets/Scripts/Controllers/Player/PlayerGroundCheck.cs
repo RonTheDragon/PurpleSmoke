@@ -11,9 +11,8 @@ public class PlayerGroundCheck : MonoBehaviour
     public Action<bool> OnGroundCheckChange;
     private bool _onGround;
     private float _ungroundedTimer = 0f;
-    private bool _isPhysicallyGrounded; // This will be the "truth"
+    private bool _isPhysicallyGrounded;
 
-    // Public getter for the immediate physical state
     public bool IsPhysicallyGrounded => _isPhysicallyGrounded;
 
     public bool IsGrounded()
@@ -21,7 +20,7 @@ public class PlayerGroundCheck : MonoBehaviour
         bool currentGroundState = Physics.CheckBox(transform.position + GroundedPosition,
             GroundedSize, Quaternion.identity, _jumpableLayer);
 
-        _isPhysicallyGrounded = currentGroundState; // Always update the true state
+        _isPhysicallyGrounded = currentGroundState;
 
         if (currentGroundState)
         {
@@ -31,7 +30,7 @@ public class PlayerGroundCheck : MonoBehaviour
         }
         else
         {
-            if (_onGround) // Only start counting if we were previously grounded
+            if (_onGround)
             {
                 _ungroundedTimer += Time.deltaTime;
                 if (_ungroundedTimer >= _ungroundedDelay)
@@ -42,6 +41,16 @@ public class PlayerGroundCheck : MonoBehaviour
                 return true; // Still report as grounded during delay
             }
             return false;
+        }
+    }
+
+    // New method to force immediate "not grounded" state when jumping
+    public void ForceNotGrounded()
+    {
+        _ungroundedTimer = _ungroundedDelay; // Skip the delay
+        if (_onGround) // Only invoke if state is changing
+        {
+            InvokeActionOnChange(false);
         }
     }
 

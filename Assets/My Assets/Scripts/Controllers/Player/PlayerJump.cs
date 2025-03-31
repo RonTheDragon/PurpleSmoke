@@ -34,7 +34,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
     {
         TryToMoveUpwards();
         JumpCooldown();
-        _groundCheck.IsGrounded();
+        _groundCheck.IsGrounded(); // Keep this for regular checks
     }
 
     public void InitializePlayerComponent(PlayerComponentsRefrences playerComponents)
@@ -142,6 +142,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
         _gravity.ResetFall();
         HandleJumpMovement();
         _currentJumpCooldown = _jumpCooldown;
+        _groundCheck.ForceNotGrounded(); // Instantly tell everyone we're not grounded
     }
 
     private void StopCharacterController()
@@ -179,7 +180,7 @@ public class PlayerJump : MonoBehaviour, IPlayerComponent
 
     public bool CanGlide()
     {
-        return _currentJumpCooldown <= 0 && !_isDoubleJump && !_jumpButtonPressed; ;
+        return _currentJumpCooldown <= 0 && !_isDoubleJump && !_jumpButtonPressed;
     }
 
     public void SetCanJump(bool canJump)
