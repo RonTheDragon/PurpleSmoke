@@ -9,7 +9,6 @@ public class ClownBallThrowable : UseableAbility
     private ProjectilePooler _projectilePooler;
     private PlayerAimMode _playerAimMode;
     private PlayerComponentsRefrences _refs;
-    private PlayerCombatSystem _playerCombatSystem;
     private float _currentCharge;
 
     [SerializeField] private BallThrow _ballthrow;
