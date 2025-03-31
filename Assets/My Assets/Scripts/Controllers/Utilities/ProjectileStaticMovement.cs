@@ -36,11 +36,11 @@ public class ProjectileStaticMovement : ProjectileMovement
                 transform.Rotate(Vector3.left, -_gravity * Time.deltaTime); // Gravity is applied here
             }
 
-            // Example condition to stop movement when hitting the ground
-            if (transform.position.y < 0f)
-            {
-                _isMoving = false;
-            }
+            //// Example condition to stop movement when hitting the ground
+            //if (transform.position.y < 0f)
+            //{
+            //    _isMoving = false;
+            //}
         }
     }
 }
