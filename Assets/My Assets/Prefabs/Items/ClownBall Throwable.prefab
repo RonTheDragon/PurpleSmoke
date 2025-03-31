@@ -57,7 +57,8 @@ MonoBehaviour:
     MinVelocity: 5
     Gravity: 1
     Damage: 30
-    AcidDamage: 0
+    AcidDamage: 50
+    AcidUsed: 0
     FireDamage: 30
     Knockback: {x: 5, y: 5}
     Knockout: {x: 10, y: 100}

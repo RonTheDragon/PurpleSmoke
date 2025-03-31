@@ -9,6 +9,7 @@ public class ClownBallThrowable : UseableAbility
     private ProjectilePooler _projectilePooler;
     private PlayerAimMode _playerAimMode;
     private PlayerComponentsRefrences _refs;
+    private PlayerCombatSystem _playerCombatSystem;
     private float _currentCharge;
 
     [SerializeField] private BallThrow _ballthrow;
@@ -26,6 +27,7 @@ public class ClownBallThrowable : UseableAbility
         _refs = playerCombatSystem.GetPlayerRefs;
         _playerAnimations = _refs.GetPlayerAnimations;
         _playerCharging = _refs.GetPlayerCharging;
+        _playerCombatSystem = _refs.GetPlayerCombatSystem;
         _projectilePooler = GameManager.Instance.GetProjectilePooler;
         _playerAimMode = _refs.GetPlayerAimMode;
         _refs.GetPlayerGroundCheck.OnGroundCheckChange += (b) => ThrowBall();
@@ -72,13 +74,13 @@ public class ClownBallThrowable : UseableAbility
 
     public override void OnPress()
     {
-        if (!_playerCombatSystem.GetIsBusyAttacking)
+        if (!base._playerCombatSystem.GetIsBusyAttacking)
         {
             _playerCharging.PerformCharging(_chargeStats, OnRelease);
-           // _playerCharging.ResetCharge();
+            // _playerCharging.ResetCharge();
             _playerCharging.ActivateCharge(this);
             //_playerAnimations.PlayAnimation(ChargeThrowAnim);
-            _clownBall.SetParent(_playerCombatSystem.GetRightHand);
+            _clownBall.SetParent(base._playerCombatSystem.GetRightHand);
             _clownBall.localPosition = Vector3.zero;
             _clownBall.localRotation = Quaternion.identity;
             _clownBall.gameObject.SetActive(true);
@@ -92,7 +94,7 @@ public class ClownBallThrowable : UseableAbility
         _playerAnimations.PlayAnimation(_ballthrow.Animation);
         _currentCharge = _playerCharging.GetChargePercentage();
         _playerCharging.ResetCharge(this);
-        _playerCombatSystem.SetCustomAction(ThrowBall);
+        base._playerCombatSystem.SetCustomAction(ThrowBall);
         _refs.OnUpdate -= PlayerUpdate;
     }
 
@@ -101,11 +103,12 @@ public class ClownBallThrowable : UseableAbility
         if (_clownBall == null) return;
         if (_clownBall.gameObject.activeSelf == false) return;
         Projectile projectile = _projectilePooler.CreateOrSpawnFromPool(_ballthrow.BallPoolName, _clownBall.position, _playerAimMode.GetCrosshairAimAtRotation());
+        _ballthrow.AcidUsed = _playerCombatSystem.GetAcidation;
         _ballthrow.Charge = _currentCharge;
         projectile.SetProjectile(_refs.GetCombatRules, _ballthrow);
         _clownBall.gameObject.SetActive(false);
         _playerAimMode.TempAim(false);
-        _playerCombatSystem.SpendUseable(_item);
+        base._playerCombatSystem.SpendUseable(_item);
         _sphereRender.SetActive(false);
     }
 

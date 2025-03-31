@@ -64,6 +64,7 @@ public class ClownMoveSet : EnemyCombatMoveSet
         public float Gravity;
         public float Damage;
         public float AcidDamage;
+        public bool AcidUsed;
         public float FireDamage;
         public Vector2 Knockback, Knockout;
         public float Radius;
