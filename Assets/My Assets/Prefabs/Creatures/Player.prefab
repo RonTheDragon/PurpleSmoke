@@ -1589,7 +1589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GroundedPosition: {x: 0, y: -1, z: 0}
-  GroundedSize: {x: 0.5, y: 0.1, z: 0.5}
+  GroundedSize: {x: 0.2, y: 0.1, z: 0.2}
   _jumpableLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -3144,7 +3144,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8094321619930251964}
   - component: {fileID: 5310138974357565822}
-  - component: {fileID: 2053033681500538512}
   - component: {fileID: 4866529261631285850}
   - component: {fileID: 3037319330423852548}
   m_Layer: 10
@@ -3222,14 +3221,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &2053033681500538512
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5199014077824960364}
-  m_Enabled: 0
 --- !u!114 &4866529261631285850
 MonoBehaviour:
   m_ObjectHideFlags: 0

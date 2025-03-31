@@ -46,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawns:
   - TagToSpawn: Biter
-    MaxAmountAlive: 20
-    MinCooldown: 5
-    MaxCooldown: 10
+    MaxAmountAlive: 5
+    MinCooldown: 10
+    MaxCooldown: 30
     MinExtraEnemiesSpawnAtOnce: 0
     MaxExtraEnemiesSpawnAtOnce: 1
     SpawnLocations:
@@ -61,9 +61,9 @@ MonoBehaviour:
     ToggleTag: 
     StartsOff: 0
   - TagToSpawn: Clown
-    MaxAmountAlive: 20
-    MinCooldown: 5
-    MaxCooldown: 10
+    MaxAmountAlive: 5
+    MinCooldown: 10
+    MaxCooldown: 30
     MinExtraEnemiesSpawnAtOnce: 0
     MaxExtraEnemiesSpawnAtOnce: 1
     SpawnLocations:

@@ -99,6 +99,9 @@ public class ClownBallThrowable : UseableAbility
 
     public void ThrowBall()
     {
+        _refs.OnUpdate -= PlayerUpdate;
+        if (_sphereRender != null)
+        _sphereRender.SetActive(false);
         if (_clownBall == null) return;
         if (_clownBall.gameObject.activeSelf == false) return;
         Projectile projectile = _projectilePooler.CreateOrSpawnFromPool(_ballthrow.BallPoolName, _clownBall.position, _playerAimMode.GetCrosshairAimAtRotation());
@@ -108,14 +111,13 @@ public class ClownBallThrowable : UseableAbility
         _clownBall.gameObject.SetActive(false);
         _playerAimMode.TempAim(false);
         base._playerCombatSystem.SpendUseable(_item);
-        _sphereRender.SetActive(false);
     }
 
     public override void OnCancel()
     {
+        _sphereRender.SetActive(false);
         ThrowBall();
         _playerAnimations.PlayAnimation("Cancel");
         _refs.OnUpdate -= PlayerUpdate;
-        _sphereRender.SetActive(false);
     }
 }
