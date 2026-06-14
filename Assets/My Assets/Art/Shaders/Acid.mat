@@ -15,7 +15,8 @@ Material:
   m_ValidKeywords:
   - _RECEIVE_SHADOWS_OFF
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,6 +25,7 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - SHADOWCASTER
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -49,6 +51,7 @@ Material:
     - _CastShadows: 0
     - _Cull: 0
     - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _Metallic: 0.1
     - _NormalsStrength: 0
     - _QueueControl: 1
@@ -56,6 +59,7 @@ Material:
     - _ReceiveShadows: 0
     - _Smoothness: 0.5
     - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
     - _Surface: 1
     - _Trasparency: 0.2
     - _TrasparencyMask: 0
@@ -78,6 +82,7 @@ Material:
     - _VoronoiSpeed: {r: 0, g: 0.3, b: 0, a: 0}
     - _VoronoiTiling: {r: 1.2, g: 0.8, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &8659632709964923911
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -90,4 +95,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 7
+  version: 10
